@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_alreadauth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_alreadauth"
+            android:layout_width="72dp"
+            android:background="@mipmap/up_yuangong"
+            android:layout_height="72dp" />
+
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/iv_alreadauth"
+            android:id="@+id/tv_alreadauth_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            android:textSize="17sp"
+            android:textColor="#2b2b2b"
+            />
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:padding="4dp"
+            android:layout_toRightOf="@id/tv_alreadauth_name"
+            android:id="@+id/tv_alreadauth_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_corner_blue"
+            android:text="已实名"
+            android:textSize="10sp"
+            android:textColor="#ffffff"
+            />
+
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/tv_alreadauth_name"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/iv_alreadauth"
+            android:id="@+id/tv_alreadauth_identity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="身份证:"
+            android:textSize="14sp"
+            android:textColor="#909090"
+            />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line"
+        ></View>
+    </LinearLayout>
+
+      <com.betterda.mylibrary.LoadingPager
+          android:id="@+id/loadpager_alreaauth"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+      </com.betterda.mylibrary.LoadingPager>
+
+  </FrameLayout>
+</LinearLayout>

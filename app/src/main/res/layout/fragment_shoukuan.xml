@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+
+
+    <RelativeLayout
+        android:id="@+id/relative_shouye2_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#16d9cf"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/linear_location"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:gravity="center">
+
+            <ImageView
+
+                android:layout_width="12dp"
+                android:layout_height="17dp"
+                android:background="@mipmap/location_title_icon" />
+
+            <TextView
+                android:id="@+id/tv_shouye_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:text="厦门市"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_xlarge" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="收款"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+
+        <ImageView
+            android:id="@+id/iv_shouye_search"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/saomiao" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ffffff">
+
+        <TextView
+
+            android:id="@+id/tv_shoukuan_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="0"
+            android:textSize="25sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_shoukuan_money"
+            android:text="￥"
+            android:textSize="25sp" />
+
+    </RelativeLayout>
+
+  <!--  <View
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#aeadad"></View>-->
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_marginRight="@dimen/shoukuan_magin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:clickable="true"
+                android:id="@+id/iv_shoukuan_one"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                android:background="@drawable/tx_selector"
+                />
+
+
+
+            <TextView
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_four"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+
+
+
+            <TextView
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_seven"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="7"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+
+
+
+            <TextView
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_zero"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_marginLeft="@dimen/shoukuan_magin"
+            android:layout_marginRight="@dimen/shoukuan_magin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_two"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+
+            <TextView
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_five"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+
+
+            <TextView
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_eight"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="8"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+
+
+
+            <TextView
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_zero2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="00"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="@dimen/shoukuan_magin"
+            android:layout_marginRight="@dimen/shoukuan_magin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_three"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+
+
+
+            <TextView
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_six"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="6"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+
+            <TextView
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_nine"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="9"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+
+
+
+            <TextView
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:id="@+id/iv_shoukuan_point"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="."
+                android:textColor="@color/black"
+                android:textSize="@dimen/textsize_largest_38sp"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginLeft="@dimen/shoukuan_magin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:background="@drawable/tx_selector"
+                android:gravity="center"
+                android:id="@+id/iv_shoukuan_del"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="C"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                 />
+
+
+            <RelativeLayout
+                android:id="@+id/relative_shoukuan_qr"
+                android:layout_marginTop="@dimen/shoukuan_magin2"
+                android:background="@drawable/tx_selector"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <ImageView
+
+                    android:layout_centerInParent="true"
+                    android:id="@+id/iv_shoukuan_qr"
+                    android:layout_width="41dp"
+                    android:layout_height="26dp"
+                    android:background="@mipmap/del"
+
+                     />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_shoukuan"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_corner_white_green"
+        android:text="收款"
+        android:textColor="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+
+</LinearLayout>

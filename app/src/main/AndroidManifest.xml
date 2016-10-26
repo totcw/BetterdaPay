@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.betterda.betterdapay">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--危险权限 拍照-->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!--危险  使用的地方 上传照片-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!--  从SDCard读取数据权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--在SDCard中创建与删除文件权限  -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+    <application
+        android:name=".application.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.HomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ForgetPwdActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ChoosePayTypeActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.CollectionActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.JieSuanActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.TuiGuangActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MyEweiMaActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".activity.MingXiActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ChooseCityActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MyRatingActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AddBankCardActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AddBankCardActivity2"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.RealNameAuthActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MyYinHangKa"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ShangHuActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MyTuiGuangAcitivty"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AlreadAuthAcitity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.FeedbackActivity"
+            android:screenOrientation="portrait"></activity>
+
+    </application>
+
+</manifest>

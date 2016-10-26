@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.betterda.betterdapay.view.NormalTopBar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#ffffff">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:id="@+id/relative_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <ImageView
+                        android:id="@+id/iv_up_back"
+                        android:layout_width="8dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/jiantou_left" />
+
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/iv_up_back"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@mipmap/up_yuangong" />
+                </RelativeLayout>
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="9dp"
+                    android:text="等级"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_up_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text=""
+                    android:textColor="@color/bg_green"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_up_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="9dp"
+                    android:text="下一等级"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_up_nextrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="10dp"
+                    android:text=""
+                    android:textColor="@color/bg_green"
+                    android:textSize="14sp" />
+
+                <ImageView
+
+                    android:layout_width="8dp"
+                    android:layout_height="15dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@mipmap/jiantou_right" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lv_divider"></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_up_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:textColor="@color/shouye_renmen_tv"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/tv_up_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_corner_red"
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="8dp"
+                android:text="升级"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lv_divider"></View>
+        <View
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lv_divider"></View>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/shouye_renmen_tv"
+                android:text="各支付通道费率详细" />
+
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lv_divider"></View>
+
+    </LinearLayout>
+
+
+    <com.betterda.betterdapay.view.HorizontalScrollViewPager
+        android:id="@+id/vp_up"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.betterda.betterdapay.view.HorizontalScrollViewPager>
+
+
+</LinearLayout>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+
+        <LinearLayout
+            android:id="@+id/linear_search_starttime"
+            android:padding="10dp"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_corner_white_gray"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@mipmap/calendar" />
+
+            <TextView
+                android:id="@+id/tv_search_starttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="选择起始时间"
+                android:textColor="@color/shouye_lv_tv"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="1dp"
+            android:background="@color/gray_line"
+            ></View>
+
+        <LinearLayout
+            android:id="@+id/linear_search_endtime"
+            android:padding="10dp"
+            android:minHeight="40dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_corner_white_gray"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@mipmap/calendar" />
+
+            <TextView
+                android:id="@+id/tv_search_endtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="选择结束日期"
+                android:textColor="@color/shouye_lv_tv"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_line"
+        ></View>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+            </android.support.v7.widget.RecyclerView>
+
+            <com.betterda.mylibrary.LoadingPager
+                android:id="@+id/loadpager_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></com.betterda.mylibrary.LoadingPager>
+
+        </FrameLayout>
+
+</LinearLayout>

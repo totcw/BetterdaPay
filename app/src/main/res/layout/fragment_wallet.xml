@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.betterda.betterdapay.view.NormalTopBar>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="#ffffff"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lv_divider"></View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="累计收款"
+                            android:textColor="@color/shouye_renmen_tv"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_wallet_shoukuan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="0元"
+                            android:textColor="@color/shouye_renmen_tv"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lv_divider"></View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="40dp">
+
+                        <TextView
+                            android:id="@+id/tv_wallet_shoukuan2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="0.00元"
+                            android:textColor="@color/shouye_fenlei_red"
+                            android:textSize="35sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="13dp">
+
+                        <LinearLayout
+                            android:id="@+id/linear_wallet_jiesuanshoukuan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:text="我要结算"
+                                android:textColor="@color/shouye_renmen_tv"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:id="@+id/iv_wallet_jiantou2"
+                                android:layout_width="8dp"
+                                android:layout_height="15dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@mipmap/jiantou" />
+
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lv_divider"></View>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="#ffffff"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lv_divider"></View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="累计分润"
+                            android:textColor="@color/shouye_renmen_tv"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_wallet_fenrun"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="0元"
+                            android:textColor="@color/shouye_renmen_tv"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lv_divider"></View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="40dp">
+
+                        <TextView
+                            android:id="@+id/tv_wallet_fenrun2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="0.00元"
+                            android:textColor="@color/shouye_fenlei_red"
+                            android:textSize="35sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="13dp">
+
+
+                        <LinearLayout
+                            android:id="@+id/linear_wallet_jiesuanfenrun"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:text="我要结算"
+                                android:textColor="@color/shouye_renmen_tv"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:id="@+id/iv_wallet_jiantou"
+                                android:layout_width="8dp"
+                                android:layout_height="15dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@mipmap/jiantou" />
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lv_divider"></View>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <com.betterda.mylibrary.LoadingPager
+                android:id="@+id/loadpager_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></com.betterda.mylibrary.LoadingPager>
+        </FrameLayout>
+    </ScrollView>
+
+</LinearLayout>

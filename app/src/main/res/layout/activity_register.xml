@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.betterda.betterdapay.view.NormalTopBar>
+
+
+    <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_corner_white_gray"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_register_number"
+            android:layout_width="16dp"
+            android:layout_height="23dp"
+            android:background="@mipmap/phone"
+            />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/iv_register_number"
+            android:layout_centerVertical="true"
+
+            >
+        <android.support.design.widget.TextInputEditText
+            android:inputType="phone"
+            android:textSize="@dimen/textsize_little"
+            android:id="@+id/et_register_number"
+
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入手机号"
+
+
+            />
+        </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_corner_white_gray"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="16dp"
+            android:layout_height="18dp"
+            android:background="@mipmap/yzm"
+            />
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_weight="10"
+            >
+        <android.support.design.widget.TextInputEditText
+
+            android:textSize="@dimen/textsize_little"
+
+            android:id="@+id/et_register_yzm"
+
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入验证码"
+
+
+
+            />
+        </android.support.design.widget.TextInputLayout>
+        <com.betterda.mylibrary.view.CountDown
+            android:id="@+id/countdown_register"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+        </com.betterda.mylibrary.view.CountDown>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_corner_white_gray"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_register_password"
+            android:layout_width="16dp"
+            android:layout_height="18dp"
+            android:background="@mipmap/password"
+            />
+        <android.support.design.widget.TextInputLayout
+            android:layout_toRightOf="@id/iv_register_password"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            >
+
+
+        <android.support.design.widget.TextInputEditText
+            android:inputType="textPassword"
+            android:textSize="@dimen/textsize_little"
+            android:id="@+id/et_register_pwd"
+
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入6-20位密码"
+
+
+            />
+        </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_corner_white_gray"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_register_password2"
+            android:layout_width="16dp"
+            android:layout_height="18dp"
+            android:background="@mipmap/password"
+            />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_toRightOf="@id/iv_register_password2"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            >
+
+
+        <android.support.design.widget.TextInputEditText
+            android:inputType="textPassword"
+            android:textSize="@dimen/textsize_little"
+            android:id="@+id/et_register_pwd2"
+
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请再次输入密码"
+
+
+            />
+        </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_corner_white_gray"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_register_phone"
+            android:layout_width="16dp"
+            android:layout_height="23dp"
+            android:background="@mipmap/phone"
+            />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_register_phone"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+        <android.support.design.widget.TextInputEditText
+            android:inputType="textPassword"
+            android:textSize="@dimen/textsize_little"
+            android:id="@+id/et_register_phone"
+
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="请输入邀请人手机号码"
+
+            />
+        </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+
+
+    <LinearLayout
+
+        android:layout_marginTop="12dp"
+        android:id="@+id/linear_register_xieyi"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_register_choose"
+            android:layout_marginLeft="12dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/iv_login_selector"
+            />
+
+        <TextView
+            android:text="本人已阅读并同意"
+            android:layout_marginLeft="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/shouye_lv_tv"
+            />
+        <TextView
+            android:text="《用户服务协议》"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/bg_green"
+            />
+    </LinearLayout>
+
+
+    <Button
+
+        android:id="@+id/btn_register"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/btn_login_selector"
+        android:layout_width="match_parent"
+        android:text="注册"
+        android:textColor="#ffffff"
+        android:layout_height="48dp" />
+
+
+</LinearLayout>

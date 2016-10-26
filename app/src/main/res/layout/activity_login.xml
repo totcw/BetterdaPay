@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_gray"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/shape_corner_white_gray">
+
+                <ImageView
+                    android:id="@+id/iv_login_my"
+                    android:layout_width="16dp"
+                    android:layout_height="23dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/phone" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/iv_login_my"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+
+                    >
+                    <android.support.design.widget.TextInputEditText
+
+                        android:id="@+id/et_login_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入手机号"
+                        android:inputType="phone"
+                        android:textSize="@dimen/textsize_small"
+
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/shape_corner_white_gray">
+
+                <ImageView
+                    android:id="@+id/iv_login_pwd"
+                    android:layout_width="16dp"
+                    android:layout_height="18dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/password" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/iv_login_pwd"
+                    >
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/et_login_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入密码"
+                    android:inputType="textPassword"
+                    android:textSize="@dimen/textsize_small"
+
+                    />
+                </android.support.design.widget.TextInputLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+
+
+                <LinearLayout
+                    android:id="@+id/linear_login_pwd"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv_login_jizhu"
+                        android:layout_marginLeft="12dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/iv_login_selector"
+                        />
+
+                    <TextView
+                        android:text="记住密码"
+                        android:layout_marginLeft="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/shouye_lv_tv"
+                        />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_login_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="忘记密码?"
+                    android:textSize="12sp"
+                    android:textColor="@color/shouye_lv_tv" />
+
+            </RelativeLayout>
+
+
+            <Button
+
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_login_selector"
+                android:text="登录"
+                android:textColor="#ffffff" />
+
+
+            <RelativeLayout
+                android:id="@+id/relative_login_register"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/tv_login_register"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="免费注册"
+                    android:textColor="@color/bg_green" />
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_login_register2"
+                    android:layout_toLeftOf="@id/tv_login_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerVertical="true"
+                    android:text="还没有帐号?现在去"
+                    android:textColor="@color/shouye_renmen_tv" />
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <com.betterda.mylibrary.cityView.ChooseCityView
+        android:id="@+id/dd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.betterda.mylibrary.cityView.ChooseCityView>
+
+</LinearLayout>
