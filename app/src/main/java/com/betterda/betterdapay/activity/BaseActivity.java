@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.betterda.betterdapay.application.MyApplication;
 import com.betterda.betterdapay.util.UtilMethod;
 
 import butterknife.ButterKnife;
@@ -33,7 +34,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //   ((MyApplication)getApplication()).addActivity(this);
+        ((MyApplication)getApplication()).addActivity(this);
         initView();
         ButterKnife.bind(this);
         initListener();
@@ -277,5 +278,9 @@ public class BaseActivity extends FragmentActivity {
 
     public void log(String msg) {
         Log.i("BaseActivity", msg);
+    }
+
+    public void close() {
+
     }
 }
