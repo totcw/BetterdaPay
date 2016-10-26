@@ -44,6 +44,7 @@ public class HomeActivity extends BaseActivity {
     public void initView() {
         super.initView();
         setContentView(R.layout.activity_home);
+        //主页
 
     }
 
