@@ -34,6 +34,7 @@ public class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //   ((MyApplication)getApplication()).addActivity(this);
+        //base
         initView();
         ButterKnife.bind(this);
         initListener();
