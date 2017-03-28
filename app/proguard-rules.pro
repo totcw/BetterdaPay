@@ -297,3 +297,9 @@
         @butterknife.* <methods>;
     }
     #end
+
+
+   #极光推送 start
+    -dontwarn cn.jpush.**
+    -keep class cn.jpush.** { *; }
+    #end

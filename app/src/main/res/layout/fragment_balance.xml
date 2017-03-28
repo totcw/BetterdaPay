@@ -15,12 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <com.betterda.mylibrary.xrecycleview.XRecyclerView
         android:id="@+id/rv_balance"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.betterda.mylibrary.xrecycleview.XRecyclerView>
 
         <com.betterda.mylibrary.LoadingPager
             android:id="@+id/loadpager_balance"

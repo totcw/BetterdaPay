@@ -45,6 +45,7 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
     private int currentScrollState = 0;
     private int count;
     private int visableCount;
+    private int firstCompletelyVisibleItemPosition;
 
 
     public EndlessRecyclerOnScrollListener(Activity mContext) {
@@ -123,21 +124,36 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
         int totalItemCount = layoutManager.getItemCount();
 
 
-        if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItemPosition) >= totalItemCount - 1)) {
-
-            onLoadNextPage(recyclerView);
-        }
         //判断当获取的数据超过一屏幕时候才显示已经到底了,
-        int firstCompletelyVisibleItemPosition = ((LinearLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
-        int lastCompletelyVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
+        int firstCompletelyVisibleItemPosition = 0;
+        int lastCompletelyVisibleItemPosition = 0;
+        if (layoutManager instanceof LinearLayoutManager) {
+             firstCompletelyVisibleItemPosition =  ((LinearLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
+             lastCompletelyVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
+        } else if (layoutManager instanceof GridLayoutManager) {
+            firstCompletelyVisibleItemPosition = ((GridLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition();
+            lastCompletelyVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition();
+        }
         int vieable = lastCompletelyVisibleItemPosition - firstCompletelyVisibleItemPosition;
-        count = ((LinearLayoutManager) layoutManager).getItemCount();
+        count =  layoutManager.getItemCount();
+        System.out.println("fir:"+firstCompletelyVisibleItemPosition);
+        System.out.println("lastCompletelyVisibleItemPosition:"+lastCompletelyVisibleItemPosition);
+        System.out.println("vieable:"+vieable);
+        System.out.println("count:"+count);
+        if (count <= 0) {
+            return;
+        }
         if (vieable + 1 < count) {//当可见的数目小于总的数目时,表示超过一屏幕的个数,就显示
             show(true);
         } else {
             //当个数小于一个屏幕时,就不显示
             show(false);
         }
+        //这个在后面 否则有可能footer为null
+        if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItemPosition) >= totalItemCount - 1)) {
+            onLoadNextPage(recyclerView);
+        }
+
 
     }
 

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -48,8 +49,9 @@ import okhttp3.RequestBody;
  * Created by Administrator on 2016/8/17.
  */
 public class AddBankCardActivity2 extends BaseActivity implements View.OnClickListener {
-    private String[] REQUEST_PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+    private String[] REQUEST_PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
     private static final int REQUEST_PERMISSION_CODE_TAKE_PIC = 9; //权限的请求码
+    private static final int REQUEST_PERMISSION_SEETING = 8; //去设置界面的请求码
 
     @BindView(R.id.topbar_addbankcard2)
     NormalTopBar topbarAddbankcard2;
@@ -163,12 +165,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                 back();
                 break;
             case R.id.tv_photo_cameral://拍照
-                PermissionUtil.checkPermission(getmActivity(), linearAddbankcard2Bankcard, REQUEST_PERMISSIONS, REQUEST_PERMISSION_CODE_TAKE_PIC, new PermissionUtil.permissionInterface() {
-                    @Override
-                    public void success() {
-                        UtilMethod.paizhao(getmActivity(), Constants.PHOTOHRAPH);
-                    }
-                });
+                requestPermiss();
                 closePopupWindow();
                 break;
             case R.id.tv_photo_photo://图片库
@@ -179,6 +176,18 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                 closePopupWindow();
                 break;
         }
+    }
+
+    /**
+     * 请求拍照的权限
+     */
+    private void requestPermiss() {
+        PermissionUtil.checkPermission(getmActivity(), linearAddbankcard2Bankcard, REQUEST_PERMISSIONS, REQUEST_PERMISSION_CODE_TAKE_PIC, new PermissionUtil.permissionInterface() {
+            @Override
+            public void success() {
+                UtilMethod.paizhao(getmActivity(), Constants.PHOTOHRAPH);
+            }
+        });
     }
 
     private void commit() {
@@ -273,7 +282,13 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        result(requestCode, resultCode, data);
+
+        //如果是从设置界面返回,就继续判断权限
+        if (requestCode == REQUEST_PERMISSION_SEETING) {
+            requestPermiss();
+        } else {
+            result(requestCode, resultCode, data);
+        }
 
     }
 
@@ -452,11 +467,26 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
         if (requestCode == REQUEST_PERMISSION_CODE_TAKE_PIC) {
             if (PermissionUtil.verifyPermissions(grantResults)) {//有权限
                 ImageTools.paizhao(getmActivity(), Constants.PHOTOHRAPH);
-            } else {//没有权限
-                showSnackBar(linearAddbankcard2Bankcard, "没有拍照的权限,请开启权限");
+            } else {
+                //没有权限
+                if (!PermissionUtil.shouldShowPermissions(this,permissions)) {//这个返回false 表示勾选了不再提示
+                    showSnackBar(linearAddbankcard2Bankcard, "请去设置界面设置权限","去设置");
+                } else {
+                    //表示没有权限 ,但是没勾选不再提示
+                    showSnackBar(linearAddbankcard2Bankcard, "请允许权限请求!");
+                }
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    @Override
+    public void doSnack() {
+        super.doSnack();
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, REQUEST_PERMISSION_SEETING);
     }
 }

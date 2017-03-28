@@ -52,6 +52,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
     @Override
     public void initData() {
         super.initData();
+
     }
 
     /**
@@ -142,6 +143,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
      */
     public void setRecycleview(final RecyclerView rvYuangong, final LoadingPager loadingPager) {
         list = new ArrayList<>();
+        rateDetail = new ArrayList<>();
         rvYuangong.setLayoutManager(new LinearLayoutManager(getmActivity()));
         adapter = new HeaderAndFooterRecyclerViewAdapter(new CommonAdapter<Rating.RateDetail>(getmActivity(), R.layout.item_recycleview_up, list) {
 
@@ -172,6 +174,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
 
             @Override
             public void onLoadNextPage(View view) {
+                System.out.println("footer:"+RecyclerViewStateUtils.getFooterViewState(rvYuangong));
                 //滑到了最后,如果是正常状态才开始加载
                 if (LoadingFooter.State.Normal == RecyclerViewStateUtils.getFooterViewState(rvYuangong)) {
                     //设置为加载状态
@@ -190,7 +193,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
                 if (isShow) {
                     RecyclerViewStateUtils.setLoad(rateDetail, rvYuangong, getmActivity());
                 } else {
-                    RecyclerViewStateUtils.change(rvYuangong, LoadingFooter.State.TheEnd, null);
+                    RecyclerViewStateUtils.change(getmActivity(),rvYuangong, LoadingFooter.State.TheEnd, null);
                 }
             }
         };
@@ -205,6 +208,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
         if (BuildConfig.LOG_DEBUG) {
             Log.i(TAG, "getdata");
         }
+
         loadingPager.setLoadVisable();
         final String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
         final String token = CacheUtils.getString(getmActivity(), account + Constants.Cache.TOKEN, "");

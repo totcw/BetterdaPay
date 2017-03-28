@@ -11,6 +11,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by Administrator on 2016/7/28.
  */
@@ -39,6 +41,10 @@ public class MyApplication extends Application {
         Fresco.initialize(getApplicationContext());
         //捕获异常
        // CrashHandler.getInstance().init(getApplicationContext());
+
+        //极光推送
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
 
         inject();
     }

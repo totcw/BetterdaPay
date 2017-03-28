@@ -13,6 +13,7 @@ public class BankCard {
     private String number;//预留手机号码
     private String cardType;//银行卡类型
 
+
     public String getId() {
         return id;
     }

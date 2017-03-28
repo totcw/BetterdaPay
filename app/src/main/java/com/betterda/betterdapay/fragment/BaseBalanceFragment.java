@@ -2,7 +2,6 @@ package com.betterda.betterdapay.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.betterda.betterdapay.R;
@@ -26,7 +25,7 @@ import java.util.List;
  */
 public abstract class BaseBalanceFragment extends BaseFragment {
 
-    private HeaderAndFooterRecyclerViewAdapter adapter;
+    public HeaderAndFooterRecyclerViewAdapter adapter;
     public List<Order> list;
     public List<Order> listOrder;
     public String account;
@@ -41,6 +40,11 @@ public abstract class BaseBalanceFragment extends BaseFragment {
 
     public void setRecycleview(final RecyclerView rvBalance) {
         list = new ArrayList<>();
+        for (int i=0;i<10;i++) {
+            list.add(null);
+        }
+
+
         adapter = new HeaderAndFooterRecyclerViewAdapter(new CommonAdapter<Order>(getmActivity(), R.layout.item_recycleview_balance, list) {
 
             @Override
@@ -51,30 +55,44 @@ public abstract class BaseBalanceFragment extends BaseFragment {
                     viewHolder.setText(R.id.tv_item_balance_type, order.getChannel());
                     viewHolder.setText(R.id.tv_item_balance_money, order.getMoney() + "元");
                     viewHolder.setText(R.id.tv_item_balance_money2, order.getBalance() + "元");
-                    setOrderType(viewHolder, order);
+                    //setOrderType(viewHolder, order);
                 }
 
             }
         });
+       /* adapter.setmItems(list);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(rvBalance);*/
+       // rvBalance.addItemDecoration(new TitleItemDecoration(getmActivity()));
         rvBalance.setLayoutManager(new LinearLayoutManager(getmActivity()));
+
         rvBalance.setAdapter(adapter);
-        rvBalance.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
+        /*rvBalance.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
             @Override
             public void onLoadNextPage(View view) {
+                System.out.println("ss"+RecyclerViewStateUtils.getFooterViewState(rvBalance));
                 //滑到了最后,如果是正常状态才开始加载
                 if (LoadingFooter.State.Normal == RecyclerViewStateUtils.getFooterViewState(rvBalance)) {
-
+                    //设置为加载状态
                     RecyclerViewStateUtils.setFooterViewState(getmActivity(), rvBalance, LoadingFooter.State.Loading, null);
-
+                    //网络请求
+                    System.out.println("请求");
                     getData();
                 }
             }
 
             @Override
             public void show(boolean isShow) {
-                RecyclerViewStateUtils.show(isShow, listOrder, rvBalance, getmActivity());
+                *//**
+                 * listOrder表示rv每次从服务器获取到的数据
+                 * rvBalance 表示rv
+                 * size 表示你分页请求的数量
+                 *//*
+                System.out.println("show:"+isShow);
+
+               RecyclerViewStateUtils.show(isShow, listOrder, rvBalance, getmActivity());
             }
-        });
+        });*/
     }
 
     public void getData() {

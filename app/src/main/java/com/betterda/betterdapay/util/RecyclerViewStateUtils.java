@@ -31,6 +31,14 @@ public class RecyclerViewStateUtils {
      */
     public static void setFooterViewState(Activity instance, RecyclerView recyclerView, LoadingFooter.State state, View.OnClickListener errorListener) {
 
+        setViewState(instance, recyclerView, state, errorListener,true);
+    }
+    public static void setFooterViewState(Activity instance, RecyclerView recyclerView, LoadingFooter.State state, View.OnClickListener errorListener,boolean isShow) {
+
+        setViewState(instance, recyclerView, state, errorListener,isShow);
+    }
+
+    private static void setViewState(Activity instance, RecyclerView recyclerView, LoadingFooter.State state, View.OnClickListener errorListener,boolean isShow) {
         if(instance==null || instance.isFinishing()||recyclerView==null) {
             return;
         }
@@ -44,33 +52,29 @@ public class RecyclerViewStateUtils {
 
         HeaderAndFooterRecyclerViewAdapter headerAndFooterAdapter = (HeaderAndFooterRecyclerViewAdapter) outerAdapter;
 
-        //只有一页的时候，就别加什么FooterView了
-      /*  if (headerAndFooterAdapter.getInnerAdapter().getItemCount() < pageSize) {
-            return;
-        }*/
-
         LoadingFooter footerView;
 
         //已经有footerView了
         if (headerAndFooterAdapter.getFooterViewsCount() > 0) {
             footerView = (LoadingFooter) headerAndFooterAdapter.getFooterView();
-            footerView.setState(state,true);
+
+            footerView.setState(state,isShow);
 
             if (state == LoadingFooter.State.NetWorkError) {
                 footerView.setOnClickListener(errorListener);
             }
-           // recyclerView.scrollToPosition(headerAndFooterAdapter.getItemCount() - 1);
+
         } else {
             //加载底部布局但是不显示
             footerView = new LoadingFooter(instance);
-            footerView.setState(state,true);
+            footerView.setState(state,false);
 
             if (state == LoadingFooter.State.NetWorkError) {
                 footerView.setOnClickListener(errorListener);
             }
 
             headerAndFooterAdapter.addFooterView(footerView);
-            //recyclerView.scrollToPosition(headerAndFooterAdapter.getItemCount() - 1);
+
         }
     }
 
@@ -105,20 +109,21 @@ public class RecyclerViewStateUtils {
     public static   void setLoad(List list,RecyclerView rv_query,Activity activity) {
 
 
-        if (list != null && rv_query != null && activity != null) {
-            if (list.size() >= Constants.PAGE_SIZE) {
-                //加载完成就设置为正常
-                RecyclerViewStateUtils.setFooterViewState(activity,
-                        rv_query,  LoadingFooter.State.Normal, null);
+                if (list != null&&list.size() >= Constants.PAGE_SIZE) {
 
-            } else {
+                    //加载完成就设置为正常
+                    RecyclerViewStateUtils.setFooterViewState(activity,
+                            rv_query, LoadingFooter.State.Normal, null);
 
-                //返回的数据小于一页那就加载到底了
-                RecyclerViewStateUtils.setFooterViewState(activity,
-                        rv_query, LoadingFooter.State.TheEnd, null);
+                } else {
 
-            }
-        }
+                    //返回的数据小于一页那就加载到底了
+                    RecyclerViewStateUtils.setFooterViewState(activity,
+                            rv_query, LoadingFooter.State.TheEnd, null);
+
+                }
+
+
 
     }
 
@@ -129,7 +134,7 @@ public class RecyclerViewStateUtils {
      * @param state
      * @param errorListener
      */
-    public static void change(RecyclerView recyclerView,LoadingFooter.State state,View.OnClickListener errorListener) {
+    public static void change(Activity activity,  RecyclerView recyclerView,LoadingFooter.State state,View.OnClickListener errorListener) {
 
         if(recyclerView==null) {
             return;
@@ -145,18 +150,21 @@ public class RecyclerViewStateUtils {
 
         if (headerAndFooterAdapter.getFooterViewsCount() > 0) {
             LoadingFooter footerView = (LoadingFooter) headerAndFooterAdapter.getFooterView();
-            footerView.setState(state,false);
+            footerView.setState(state, false);
 
             if (state == LoadingFooter.State.NetWorkError) {
                 footerView.setOnClickListener(errorListener);
             }
 
+        } else {
 
+            RecyclerViewStateUtils.setFooterViewState(activity,
+                    recyclerView, LoadingFooter.State.Normal, null);
         }
     }
 
     /**
-     * 判断是否显示
+     * 判断是否显示 footer
      * @param isShow
      * @param list
      * @param recyclerView
@@ -166,7 +174,7 @@ public class RecyclerViewStateUtils {
         if (isShow) {
             RecyclerViewStateUtils.setLoad(list, recyclerView, activity);
         } else {
-            RecyclerViewStateUtils.change(recyclerView, LoadingFooter.State.TheEnd, null);
+            RecyclerViewStateUtils.change(activity,recyclerView, LoadingFooter.State.TheEnd, null);
         }
     }
 

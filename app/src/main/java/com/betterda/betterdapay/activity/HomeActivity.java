@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.fragment.BalanceFragment;
@@ -28,16 +31,19 @@ public class HomeActivity extends BaseActivity {
     IndicatorView idvShoukuan;
     @BindView(R.id.idv_wallet)
     IndicatorView idvWallet;
-    @BindView(R.id.idv_up)
-    IndicatorView idvUp;
     @BindView(R.id.idv_banlance)
     IndicatorView idvBanlance;
     @BindView(R.id.idv_my)
     IndicatorView idvMy;
     @BindView(R.id.frame)
     FrameLayout frame;
+    @BindView(R.id.iv_home_oval)
+    ImageView mIvOval;
+    @BindView(R.id.tv_home_oval)
+    TextView mTvOval;
+
     private FragmentManager fm;
-    private Fragment shoukuanFragment,walletFragment,upFragment,balanceFragment,myFragment;
+    private Fragment shoukuanFragment, walletFragment, upFragment, balanceFragment, myFragment;
 
 
     @Override
@@ -57,18 +63,15 @@ public class HomeActivity extends BaseActivity {
          */
         idvShoukuan.setIvBackground(R.mipmap.shoukuan_normal, R.mipmap.shoukuan_pressed);
         idvWallet.setIvBackground(R.mipmap.wallet_normal, R.mipmap.wallet_pressed);
-        idvUp.setIvBackground(R.mipmap.up_normal, R.mipmap.up_pressed);
         idvBanlance.setIvBackground(R.mipmap.banlance_normal, R.mipmap.balance_pressed);
         idvMy.setIvBackground(R.mipmap.my_normal, R.mipmap.my_pressed);
-        idvShoukuan.setLineBackground(0xff909090, 0xff16d9cf);
-        idvWallet.setLineBackground(0xff909090, 0xff16d9cf);
-        idvUp.setLineBackground(0xff909090, 0xff16d9cf);
-        idvBanlance.setLineBackground(0xff909090, 0xff16d9cf);
-        idvMy.setLineBackground(0xff909090, 0xff16d9cf);
-        idvShoukuan.setTitle("收款");
-        idvWallet.setTitle("钱包");
-        idvUp.setTitle("升级");
-        idvBanlance.setTitle("账单");
+        idvShoukuan.setLineBackground(0xff909090, 0xff00aaee);
+        idvWallet.setLineBackground(0xff909090, 0xff00aaee);
+        idvBanlance.setLineBackground(0xff909090, 0xff00aaee);
+        idvMy.setLineBackground(0xff909090, 0xff00aaee);
+        idvShoukuan.setTitle("钱包");
+        idvWallet.setTitle("等级");
+        idvBanlance.setTitle("分享");
         idvMy.setTitle("我的");
 
         //默认选中收款
@@ -83,6 +86,7 @@ public class HomeActivity extends BaseActivity {
             fragmentTransaction.commitAllowingStateLoss();
         }
     }
+
     private void replace(Fragment fragment) {
         if (!HomeActivity.this.isFinishing()) {
 
@@ -94,25 +98,32 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-    public void change(IndicatorView idv) {
+    public void change(IndicatorView idv, ImageView imageView) {
         /**
          * 设置收款为选中,其它为默认
          */
-        if (null != idvShoukuan && null != idvWallet && null != idvUp
-                && null != idv && idvBanlance != null && null != idvMy) {
+        if (null != idvShoukuan && null != idvWallet && null != mIvOval
+                 && idvBanlance != null && null != idvMy) {
 
             idvShoukuan.setTabSelected(false);
             idvWallet.setTabSelected(false);
-            idvUp.setTabSelected(false);
+            mIvOval.setSelected(false);
             idvBanlance.setTabSelected(false);
             idvMy.setTabSelected(false);
-            idv.setTabSelected(true);
+            mTvOval.setTextColor(0xff909090);
+            if (imageView != null) {
+                imageView.setSelected(true);
+                mTvOval.setTextColor(0xff00aaee);
+            } else if ( null != idv){
+                idv.setTabSelected(true);
+            }
+
 
         }
 
     }
 
-    @OnClick({R.id.idv_shoukuan, R.id.idv_wallet, R.id.idv_up, R.id.idv_banlance, R.id.idv_my})
+    @OnClick({R.id.idv_shoukuan, R.id.idv_wallet, R.id.relative_home_oval, R.id.idv_banlance, R.id.idv_my})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.idv_shoukuan:
@@ -121,28 +132,28 @@ public class HomeActivity extends BaseActivity {
                     shoukuanFragment = new ShouKuanFragment();
                 }
                 replace(shoukuanFragment);
-                change(idvShoukuan);
+                change(idvShoukuan,null);
                 break;
             case R.id.idv_wallet:
                 if (null == walletFragment) {
                     walletFragment = new WalletFragment();
                 }
                 replace(walletFragment);
-                change(idvWallet);
+                change(idvWallet,null);
                 break;
-            case R.id.idv_up:
+            case R.id.relative_home_oval:
                 if (null == upFragment) {
                     upFragment = new UpFragment();
                 }
                 replace(upFragment);
-                change(idvUp);
+                change(null,mIvOval);
                 break;
             case R.id.idv_banlance:
                 if (null == balanceFragment) {
                     balanceFragment = new BalanceFragment();
                 }
                 replace(balanceFragment);
-                change(idvBanlance);
+                change(idvBanlance,null);
                 break;
             case R.id.idv_my:
                 if (null == myFragment) {
@@ -150,14 +161,14 @@ public class HomeActivity extends BaseActivity {
 
                 }
                 replace(myFragment);
-                change(idvMy);
+                change(idvMy,null);
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        RxBus.get().post("LoginActivity","");
+        RxBus.get().post("LoginActivity", "");
         super.onBackPressed();
     }
 }

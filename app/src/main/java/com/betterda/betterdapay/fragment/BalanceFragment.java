@@ -1,12 +1,8 @@
 package com.betterda.betterdapay.fragment;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
@@ -14,26 +10,15 @@ import com.betterda.betterdapay.activity.MingXiActivity;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.javabean.Order;
 import com.betterda.betterdapay.javabean.OrderALL;
-import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
-import com.betterda.betterdapay.util.RecyclerViewStateUtils;
 import com.betterda.betterdapay.util.UtilMethod;
-import com.betterda.betterdapay.view.EndlessRecyclerOnScrollListener;
-import com.betterda.betterdapay.view.HeaderAndFooterRecyclerViewAdapter;
-import com.betterda.betterdapay.view.LoadingFooter;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
-import com.zhy.base.adapter.ViewHolder;
-import com.zhy.base.adapter.recyclerview.CommonAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.betterda.mylibrary.xrecycleview.XRecyclerView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 账单
@@ -43,7 +28,7 @@ public class BalanceFragment extends BaseBalanceFragment implements View.OnClick
     @BindView(R.id.topbar_balance)
     NormalTopBar topbarBalance;
     @BindView(R.id.rv_balance)
-    RecyclerView rvBalance;
+    XRecyclerView rvBalance;
     @BindView(R.id.loadpager_balance)
     LoadingPager loadpager_balance;
 
@@ -62,6 +47,23 @@ public class BalanceFragment extends BaseBalanceFragment implements View.OnClick
         setTopBar();
 
         setRecycleview(rvBalance);
+        rvBalance.setLoadingMoreEnabled(true);
+        rvBalance.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                for (int i=0;i<5;i++) {
+                    list.add(null);
+                }
+                adapter.notifyDataSetChanged();
+                rvBalance.loadMoreComplete();
+
+            }
+        });
         getDataAndPage(1);
 
 
@@ -77,8 +79,9 @@ public class BalanceFragment extends BaseBalanceFragment implements View.OnClick
 
 
     private void getDataAndPage(int p) {
-        loadpager_balance.setLoadVisable();
-        getData();
+
+      // loadpager_balance.setLoadVisable();
+      // getData();
     }
 
     public void getData() {

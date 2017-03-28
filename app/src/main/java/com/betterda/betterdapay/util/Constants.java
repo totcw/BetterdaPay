@@ -17,7 +17,7 @@ public class Constants {
     public static final String IMAGE_UNSPECIFIED = "image/*";
     public static String PHOTONAME = "photo"; //存放照片的名字
     public static final int TITLE_COUNT = 3;//APP底部的title个数
-    public static final int PAGE_SIZE = 10;//一页加载的个数
+    public static final int PAGE_SIZE = 1;//一页加载的个数
     //判断输入金额的正则
     public static final String str = "^(([0-9]|([1-9][0-9]{0,9}))((\\.[0-9]{1,2})?))$";
 

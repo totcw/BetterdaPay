@@ -23,12 +23,6 @@ public abstract class MyObserver<T> extends Subscriber<BaseCallModel<T>> {
         start();
     }
 
-    /**
-     * 访问网络之前调用的方法,比如可以显示对话框
-     */
-    private void start() {
-
-    }
 
     @Override
     public void onCompleted() {
@@ -65,6 +59,15 @@ public abstract class MyObserver<T> extends Subscriber<BaseCallModel<T>> {
 
     }
 
+
+
+    /**
+     * 访问网络之前调用的方法,比如可以显示对话框
+     */
+    private void start() {
+
+    }
+
     /**
      * 请求成功的方法
      * @param data
@@ -77,7 +80,6 @@ public abstract class MyObserver<T> extends Subscriber<BaseCallModel<T>> {
      * @param resultMsg
      */
     public abstract void onFail(String resultMsg);
-
 
 
     /**

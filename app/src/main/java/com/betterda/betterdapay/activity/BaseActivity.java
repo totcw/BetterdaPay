@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.betterda.betterdapay.util.UtilMethod;
 
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 import rx.Subscription;
 
 /**
@@ -33,8 +34,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //   ((MyApplication)getApplication()).addActivity(this);
-        //base
+
         initView();
         ButterKnife.bind(this);
         initListener();
@@ -242,7 +242,6 @@ public class BaseActivity extends FragmentActivity {
         //防止内存泄漏
         // ((MyApplication)getApplication()).removeAcitivty(this);
         closePopupWindow();
-
         //取消订阅
         unsubscribe();
     }
@@ -278,5 +277,18 @@ public class BaseActivity extends FragmentActivity {
 
     public void log(String msg) {
         Log.i("BaseActivity", msg);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
     }
 }
