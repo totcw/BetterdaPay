@@ -6,7 +6,8 @@
     <color name="bg_blue">#ff0694f5</color>
     <color name="black">#ff000000</color>
     <color name="bg_gray">#f8f9fa</color>
-    <color name="bg_green">#16d9cf</color>
+    <color name="bg_green">#45e6cb</color>
+    <color name="divierLine">#dcdcdc</color>
     <color name="gray_line">#ffd6d7dc</color>
     <color name="tv_get_yzm">#000000</color> <!--注册页面点击获取验证码-->
     <color name="tv_countdown">#ff0000</color> <!--注册页面倒计时-->

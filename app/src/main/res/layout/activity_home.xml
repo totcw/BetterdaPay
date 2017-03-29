@@ -1,11 +1,26 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:orientation="vertical"
+    android:background="@color/transparent"
     >
+
+
+    <FrameLayout
+
+        android:id="@+id/frame"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="-10dp"
+       >
+
+    </FrameLayout>
 
     <!-- 底部布局 -->
     <LinearLayout
+        android:layout_below="@id/frame"
+
         android:id="@+id/linear_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,18 +29,21 @@
 
 
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-      <!--      <View
-                android:layout_marginTop="9dp"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#dcdcdc"></View>-->
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/divierLine"
+                ></View>
+
+
             <ImageView
                 android:layout_centerHorizontal="true"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_height="10dp"
                 android:background="@mipmap/oval"
                 />
 
@@ -103,14 +121,6 @@
 
     </LinearLayout>
 
-    <FrameLayout
-
-        android:id="@+id/frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/linear_main">
-
-    </FrameLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

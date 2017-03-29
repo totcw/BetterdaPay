@@ -79,10 +79,10 @@ public class HomeActivity extends BaseActivity {
         fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         if (!HomeActivity.this.isFinishing()) {
-            if (null == shoukuanFragment) {
-                shoukuanFragment = new ShouKuanFragment();
+            if (null == walletFragment) {
+                walletFragment = new WalletFragment();
             }
-            fragmentTransaction.replace(R.id.frame, shoukuanFragment);
+            fragmentTransaction.replace(R.id.frame, walletFragment);
             fragmentTransaction.commitAllowingStateLoss();
         }
     }
@@ -126,36 +126,39 @@ public class HomeActivity extends BaseActivity {
     @OnClick({R.id.idv_shoukuan, R.id.idv_wallet, R.id.relative_home_oval, R.id.idv_banlance, R.id.idv_my})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.idv_shoukuan:
+            case R.id.idv_shoukuan://钱包
+                if (null == walletFragment) {
+                    walletFragment = new WalletFragment();
+                }
+                replace(walletFragment);
+                change(idvShoukuan,null);
+                break;
+            case R.id.idv_wallet: //等级
+                if (null == upFragment) {
+                    upFragment = new UpFragment();
+                }
+                replace(upFragment);
+                change(idvWallet,null);
+
+                break;
+            case R.id.relative_home_oval://收款
                 //只要activity没被销毁,fragment就不会真正的为空
                 if (null == shoukuanFragment) {
                     shoukuanFragment = new ShouKuanFragment();
                 }
                 replace(shoukuanFragment);
-                change(idvShoukuan,null);
-                break;
-            case R.id.idv_wallet:
-                if (null == walletFragment) {
-                    walletFragment = new WalletFragment();
-                }
-                replace(walletFragment);
-                change(idvWallet,null);
-                break;
-            case R.id.relative_home_oval:
-                if (null == upFragment) {
-                    upFragment = new UpFragment();
-                }
-                replace(upFragment);
                 change(null,mIvOval);
+
+
                 break;
-            case R.id.idv_banlance:
+            case R.id.idv_banlance://分享
                 if (null == balanceFragment) {
                     balanceFragment = new BalanceFragment();
                 }
                 replace(balanceFragment);
                 change(idvBanlance,null);
                 break;
-            case R.id.idv_my:
+            case R.id.idv_my://我的
                 if (null == myFragment) {
                     myFragment = new MyFragment();
 
