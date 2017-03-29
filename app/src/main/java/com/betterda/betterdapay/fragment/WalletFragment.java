@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.activity.BanLiActivity;
 import com.betterda.betterdapay.activity.BianJieDaiKuanActivity;
 import com.betterda.betterdapay.javabean.Wallet;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -95,6 +96,7 @@ public class WalletFragment extends BaseFragment {
             case R.id.btn_wallet_tixian:
                 break;
             case R.id.relative_wallet_banli:
+                UtilMethod.startIntent(getmActivity(), BanLiActivity.class);
                 break;
             case R.id.relative_shouye_check:
                 break;
