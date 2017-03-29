@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
@@ -120,10 +121,13 @@ public class MyEweiMaActivity extends BaseActivity implements View.OnClickListen
         RelativeLayout relative_pyquan = (RelativeLayout) view.findViewById(R.id.relative_share_pyquan);
         RelativeLayout relative_qq = (RelativeLayout) view.findViewById(R.id.relative_qqfriend);
         RelativeLayout relative_qqzone = (RelativeLayout) view.findViewById(R.id.relative_share_qqzone);
+        TextView tv_cancel = (TextView) view.findViewById(R.id.tv_share_cancel);
+
         relative_wxfriend.setOnClickListener(this);
         relative_pyquan.setOnClickListener(this);
         relative_qq.setOnClickListener(this);
         relative_qqzone.setOnClickListener(this);
+        tv_cancel.setOnClickListener(this);
         setUpPopupWindow(view, null);
     }
 
@@ -143,6 +147,9 @@ public class MyEweiMaActivity extends BaseActivity implements View.OnClickListen
             case R.id.relative_qqfriend:
                 break;
             case R.id.relative_share_qqzone:
+                break;
+            case R.id.tv_share_cancel:
+                closePopupWindow();
                 break;
             case R.id.bar_back:
                 back();

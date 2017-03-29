@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.fragment.BalanceFragment;
 import com.betterda.betterdapay.fragment.MyFragment;
+import com.betterda.betterdapay.fragment.ShareFragment;
 import com.betterda.betterdapay.fragment.ShouKuanFragment;
 import com.betterda.betterdapay.fragment.UpFragment;
 import com.betterda.betterdapay.fragment.WalletFragment;
@@ -43,7 +44,7 @@ public class HomeActivity extends BaseActivity {
     TextView mTvOval;
 
     private FragmentManager fm;
-    private Fragment shoukuanFragment, walletFragment, upFragment, balanceFragment, myFragment;
+    private Fragment shoukuanFragment, walletFragment, upFragment, shareFragment, myFragment;
 
 
     @Override
@@ -152,10 +153,10 @@ public class HomeActivity extends BaseActivity {
 
                 break;
             case R.id.idv_banlance://分享
-                if (null == balanceFragment) {
-                    balanceFragment = new BalanceFragment();
+                if (null == shareFragment) {
+                    shareFragment = new ShareFragment();
                 }
-                replace(balanceFragment);
+                replace(shareFragment);
                 change(idvBanlance,null);
                 break;
             case R.id.idv_my://我的

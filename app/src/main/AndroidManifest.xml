@@ -121,6 +121,9 @@
         <activity
             android:name=".activity.FeedbackActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.BianJieDaiKuanActivity"
+            android:screenOrientation="portrait"></activity>
 
         <receiver
             android:name=".receiver.JpushReceiver"

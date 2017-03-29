@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.LoginActivity;
 import com.betterda.betterdapay.dialog.CallDialog;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -201,6 +202,7 @@ public abstract class BaseFragment extends Fragment {
         if (popupWindow != null) {
             if (!popupWindow.isShowing()) {
                 if (null == showView) {
+                    popupWindow.setAnimationStyle(R.style.popwin_anim_style);
                     popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 } else {
 

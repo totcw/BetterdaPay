@@ -18,5 +18,7 @@
     <dimen name="textsize_largest_44sp">44.0sp</dimen>
     <dimen name="shoukuan_magin">4dp</dimen>
     <dimen name="shoukuan_magin2">8dp</dimen>
+    <dimen name="fragment_my_iv">30dp</dimen>
+    <dimen name="fragment_my_left">40dp</dimen>
 
 </resources>

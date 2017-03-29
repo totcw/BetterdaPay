@@ -57,10 +57,7 @@ public class MyFragment extends BaseFragment {
     RelativeLayout relativeMyInformation;
     @BindView(R.id.relative_my_shanghu)
     RelativeLayout relativeMyShanghu;
-    @BindView(R.id.relative_my_shengqing)
-    RelativeLayout relativeMyShengqing;
-    @BindView(R.id.relative_my_message)
-    RelativeLayout relativeMyMessage;
+
 
     private String rate="员工";
 
@@ -127,7 +124,7 @@ public class MyFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.relative_my_rating, R.id.relative_my_yinhangka, R.id.relative_my_erweima, R.id.relative_my_information, R.id.relative_my_shanghu, R.id.relative_my_shengqing, R.id.relative_my_message, R.id.bar_relative_bus})
+    @OnClick({R.id.relative_my_rating, R.id.relative_my_yinhangka, R.id.relative_my_erweima, R.id.relative_my_information, R.id.relative_my_shanghu , R.id.bar_relative_bus})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_my_rating://我的汇率
@@ -144,10 +141,6 @@ public class MyFragment extends BaseFragment {
                 break;
             case R.id.relative_my_shanghu://我的商户
                 UtilMethod.startIntent(getmActivity(), ShangHuActivity.class);
-                break;
-            case R.id.relative_my_shengqing:
-                break;
-            case R.id.relative_my_message:
                 break;
             case R.id.bar_relative_bus://设置
                 UtilMethod.startIntent(getmActivity(), SettingActivity.class);

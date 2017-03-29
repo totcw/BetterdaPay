@@ -21,4 +21,9 @@
         <!-- 屏幕背景是否变暗 -->
         <item name="android:backgroundDimAmount">0.3</item>
     </style>
+
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popupwindow_show</item>
+        <item name="android:windowExitAnimation">@anim/popupwindow_hide</item>
+    </style>
 </resources>

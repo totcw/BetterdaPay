@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.util.UtilMethod;
 
 import butterknife.ButterKnife;
@@ -177,13 +178,12 @@ public class BaseActivity extends FragmentActivity {
         //设置可以触摸
         popupWindow.setTouchable(true);
 
-
-            UtilMethod.backgroundAlpha(0.7f, this);
-
+        UtilMethod.backgroundAlpha(0.7f, this);
 
         if (popupWindow != null) {
             if (!popupWindow.isShowing()) {
                 if (null == showView) {
+                    popupWindow.setAnimationStyle(R.style.popwin_anim_style);
                     popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 } else {
                     popupWindow.showAsDropDown(showView);

@@ -1,27 +1,16 @@
 package com.betterda.betterdapay.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.activity.JieSuanActivity;
-import com.betterda.betterdapay.activity.RealNameAuthActivity;
-import com.betterda.betterdapay.callback.MyObserver;
-import com.betterda.betterdapay.http.NetWork;
-import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.javabean.TuiGuang;
+import com.betterda.betterdapay.activity.BianJieDaiKuanActivity;
 import com.betterda.betterdapay.javabean.Wallet;
-import com.betterda.betterdapay.util.CacheUtils;
-import com.betterda.betterdapay.util.Constants;
-import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
-import com.betterda.betterdapay.view.NormalTopBar;
-import com.betterda.mylibrary.LoadingPager;
+import com.betterda.betterdapay.view.GradientTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +22,11 @@ import butterknife.OnClick;
  */
 public class WalletFragment extends BaseFragment {
 
+
+    @BindView(R.id.gttv_wallet_money)
+    GradientTextView mGttvWalletMoney;
+    @BindView(R.id.relative_shouye_bianjie)
+    RelativeLayout mRelativeShouyeBianjie;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -91,6 +85,29 @@ public class WalletFragment extends BaseFragment {
 
     }
 
+
+
+    @OnClick({R.id.iv_wallet_meassage, R.id.btn_wallet_tixian,R.id.relative_shouye_bianjie, R.id.relative_wallet_banli, R.id.relative_shouye_check, R.id.relative_shouye_haidai, R.id.relative_shouye_life})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_wallet_meassage:
+                break;
+            case R.id.btn_wallet_tixian:
+                break;
+            case R.id.relative_wallet_banli:
+                break;
+            case R.id.relative_shouye_check:
+                break;
+            case R.id.relative_shouye_haidai:
+                break;
+            case R.id.relative_shouye_life:
+                break;
+            case R.id.relative_shouye_bianjie:
+                UtilMethod.startIntent(getmActivity(), BianJieDaiKuanActivity.class);
+                break;
+        }
+    }
+
 /*    @OnClick({R.id.linear_wallet_jiesuanshoukuan, R.id.linear_wallet_jiesuanfenrun})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -102,9 +119,6 @@ public class WalletFragment extends BaseFragment {
                 break;
         }
     }*/
-
-
-
 
 
 }
