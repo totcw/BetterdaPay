@@ -7,9 +7,9 @@ import android.view.View;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.view.NormalTopBar;
+import com.betterda.mylibrary.LoadingPager;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
-import com.zhy.base.adapter.recyclerview.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,23 +19,25 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 办理信用卡
- * Created by Administrator on 2017/3/29.
+ * 交易记录
+ * Created by Administrator on 2017/3/30.
  */
 
-public class BanLiActivity extends BaseActivity {
-    @BindView(R.id.topbar_banli)
-    NormalTopBar mTopbarBanli;
-    @BindView(R.id.rv_banli)
-    RecyclerView mRvBanli;
+public class TransactionRecordActivity extends BaseActivity {
+
+    @BindView(R.id.topbar_tranastionrecord)
+    NormalTopBar mTopbarTranastionrecord;
+    @BindView(R.id.rv_layout)
+    RecyclerView mRvLayout;
+    @BindView(R.id.loadpager_layout)
+    LoadingPager mLoadpagerLayout;
 
     private List<String> list;
 
     @Override
     public void initView() {
         super.initView();
-        setContentView(R.layout.activity_banli);
-
+        setContentView(R.layout.activity_transactionrecord);
     }
 
     @Override
@@ -50,9 +52,8 @@ public class BanLiActivity extends BaseActivity {
         list.add(null);
         list.add(null);
         list.add(null);
-        mRvBanli.setLayoutManager(new LinearLayoutManager(getmActivity()));
-        mRvBanli.addItemDecoration(new DividerItemDecoration(getmActivity(),DividerItemDecoration.VERTICAL_LIST));
-        mRvBanli.setAdapter(new CommonAdapter<String>(getmActivity(),R.layout.item_rv_tyepcard,list) {
+        mRvLayout.setLayoutManager(new LinearLayoutManager(getmActivity()));
+        mRvLayout.setAdapter(new CommonAdapter<String>(getmActivity(),R.layout.item_recycleview_tranastionreord,list) {
             @Override
             public void convert(ViewHolder holder, String o) {
 
@@ -62,19 +63,13 @@ public class BanLiActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.linear_banli_xingye, R.id.linear_banli_xbk, R.id.linear_banli_adls, R.id.linear_banli_lbs, R.id.linear_banli_more})
+    @OnClick({R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.linear_banli_xingye:
+            case R.id.bar_back:
+
                 break;
-            case R.id.linear_banli_xbk:
-                break;
-            case R.id.linear_banli_adls:
-                break;
-            case R.id.linear_banli_lbs:
-                break;
-            case R.id.linear_banli_more:
-                break;
+
         }
     }
 }

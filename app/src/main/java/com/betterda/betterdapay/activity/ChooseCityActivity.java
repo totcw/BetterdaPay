@@ -11,6 +11,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
+ * 选择城市
  * Created by Administrator on 2016/8/15.
  */
 public class ChooseCityActivity extends BaseActivity {

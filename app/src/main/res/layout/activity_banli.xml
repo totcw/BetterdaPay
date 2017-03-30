@@ -69,6 +69,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/linear_banli_xingye"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -94,6 +95,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:id="@+id/linear_banli_xbk"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -117,6 +119,7 @@
                             android:layout_weight="1">
 
                             <LinearLayout
+                                android:id="@+id/linear_banli_adls"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -137,6 +140,7 @@
 
 
                             <LinearLayout
+                                android:id="@+id/linear_banli_lbs"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
@@ -175,6 +179,7 @@
                 android:layout_height="40dp">
 
                 <TextView
+                    android:layout_marginLeft="14dp"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -182,25 +187,38 @@
                     android:textSize="15sp"
                     android:textColor="@color/shouye_renmen_tv"
                     />
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="更多"
-                    android:textSize="13sp"
-                    android:textColor="@color/shouye_lv_tv"
-                    />
+                    <LinearLayout
+                        android:id="@+id/linear_banli_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                
-                <ImageView
-                    android:layout_marginRight="14dp"
-                    android:layout_marginLeft="14dp"
-                    android:layout_width="8dp"
-                    android:layout_height="15dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多"
+                            android:textSize="13sp"
+                            android:textColor="@color/shouye_lv_tv"
+                            />
+
+
+                        <ImageView
+                            android:layout_marginRight="14dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@mipmap/jiantou"
+                            android:layout_width="8dp"
+                            android:layout_height="15dp"/>
+                    </LinearLayout>
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divierLine"
+                ></View>
+
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_banli"
                 android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>

@@ -11,12 +11,16 @@ import android.widget.TextView;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.AddBankCardActivity;
 import com.betterda.betterdapay.activity.AlreadAuthAcitity;
+import com.betterda.betterdapay.activity.InformationActivity;
+import com.betterda.betterdapay.activity.MemberActivity;
 import com.betterda.betterdapay.activity.MyEweiMaActivity;
 import com.betterda.betterdapay.activity.MyRatingActivity;
 import com.betterda.betterdapay.activity.MyYinHangKa;
 import com.betterda.betterdapay.activity.RealNameAuthActivity;
 import com.betterda.betterdapay.activity.SettingActivity;
 import com.betterda.betterdapay.activity.ShangHuActivity;
+import com.betterda.betterdapay.activity.TransactionRecordActivity;
+import com.betterda.betterdapay.activity.WalletActivity;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.RateData;
 import com.betterda.betterdapay.http.NetWork;
@@ -127,20 +131,20 @@ public class MyFragment extends BaseFragment {
     @OnClick({R.id.relative_my_rating, R.id.relative_my_yinhangka, R.id.relative_my_erweima, R.id.relative_my_information, R.id.relative_my_shanghu , R.id.bar_relative_bus})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.relative_my_rating://我的汇率
+            case R.id.relative_my_rating://我的钱包
+                UtilMethod.startIntent(getmActivity(), WalletActivity.class);
+                break;
+            case R.id.relative_my_yinhangka://个人信息
+                UtilMethod.startIntent(getmActivity(), InformationActivity.class);
+                break;
+            case R.id.relative_my_erweima://交易记录
+                UtilMethod.startIntent(getmActivity(), TransactionRecordActivity.class);
+                break;
+            case R.id.relative_my_information://会员管理
+                UtilMethod.startIntent(getmActivity(), MemberActivity.class);
+                break;
+            case R.id.relative_my_shanghu://我的扣率
                 UtilMethod.startIntent(getmActivity(), MyRatingActivity.class,"rate",rate);
-                break;
-            case R.id.relative_my_yinhangka://我的银行卡
-                UtilMethod.startIntent(getmActivity(), MyYinHangKa.class);
-                break;
-            case R.id.relative_my_erweima://我的二维码
-                UtilMethod.startIntent(getmActivity(), MyEweiMaActivity.class);
-                break;
-            case R.id.relative_my_information://认证
-                auth();
-                break;
-            case R.id.relative_my_shanghu://我的商户
-                UtilMethod.startIntent(getmActivity(), ShangHuActivity.class);
                 break;
             case R.id.bar_relative_bus://设置
                 UtilMethod.startIntent(getmActivity(), SettingActivity.class);
