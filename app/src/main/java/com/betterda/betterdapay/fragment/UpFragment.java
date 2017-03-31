@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.TuiGuangActivity;
+import com.betterda.betterdapay.activity.UpActivity;
 import com.betterda.betterdapay.adapter.MyAdapter;
 import com.betterda.betterdapay.util.RxBus;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -131,7 +132,7 @@ public class UpFragment extends BaseFragment implements ViewPager.OnPageChangeLi
                 post();
                 break;
             case R.id.tv_up_up:
-                UtilMethod.startIntent(getmActivity(), TuiGuangActivity.class);
+                UtilMethod.startIntent(getmActivity(), UpActivity.class);
                 break;
         }
     }

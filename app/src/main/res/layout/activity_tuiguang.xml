@@ -11,27 +11,75 @@
         android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
 
     <LinearLayout
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_bottom_top_line"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="50dp">
+
+            <ImageView
+
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@mipmap/huojian"
+                />
+
+
+            <TextView
+                android:layout_marginLeft="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="升级到店长"
+                android:textColor="@color/shouye_renmen_tv"
+                android:textSize="13sp" />
+
+
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="15dp"
+
+                android:background="@mipmap/jiantou" />
+
+
+        </LinearLayout>
 
         <View
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/divierLine"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/lv_divider">
-
-        </View>
+            android:layout_height="1dp"></View>
 
         <RelativeLayout
             android:id="@+id/relative_tuiguang_my"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:padding="10dp">
+            android:layout_height="50dp"
 
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/iv_tuiguang_tuguang"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@mipmap/tuiguang"
+                />
+            
 
                 <TextView
+                    android:layout_marginLeft="12dp"
+                    android:layout_toRightOf="@id/iv_tuiguang_tuguang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -52,13 +100,7 @@
 
 
         </RelativeLayout>
-        <View
-
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/lv_divider">
-
-        </View>
+    
 
     </LinearLayout>
 

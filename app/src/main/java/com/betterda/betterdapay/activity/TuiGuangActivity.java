@@ -39,7 +39,7 @@ public class TuiGuangActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_tuiguang_my:
-                UtilMethod.startIntent(getmActivity(),MyEweiMaActivity.class);
+                UtilMethod.startIntent(getmActivity(),TuiguangActivity2.class);
                 break;
             case R.id.bar_back:
                 back();

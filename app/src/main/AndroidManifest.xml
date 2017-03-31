@@ -155,6 +155,12 @@
         <activity
             android:name=".activity.TiXianActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.UpActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.TuiguangActivity2"
+            android:screenOrientation="portrait"></activity>
 
         <receiver
             android:name=".receiver.JpushReceiver"
