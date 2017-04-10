@@ -91,6 +91,9 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     //compile 'com.betterda:mylibrary:2.2.9'
 
+    /*togglebutton*/
+    compile 'com.zcw:togglebutton-library:1.0.0'
+
     compile 'com.zhy:base-adapter:2.0.0'
     compile 'com.facebook.fresco:fresco:0.10.0'
     compile files('libs/core-3.1.0.jar')

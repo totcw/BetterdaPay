@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_creditrepay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.betterda.betterdapay.view.NormalTopBar>
+
+    <LinearLayout
+        android:id="@+id/linear_creditrepay"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_margin="10dp"
+        android:background="@mipmap/virrect"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/add_credit"
+            android:drawablePadding="5dp"
+            android:text="添加信用卡"
+            android:textColor="@color/shouye_lv_tv"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/credit_repay"
+            android:gravity="center_horizontal"
+            android:text="信用卡还贷"
+            android:textColor="@color/shouye_lv_tv"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/repay_notice"
+            android:gravity="center_horizontal"
+            android:text="还贷提醒"
+            android:textColor="@color/shouye_lv_tv"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/bill_check"
+            android:gravity="center_horizontal"
+            android:text="账单查询"
+            android:textColor="@color/shouye_lv_tv"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/auto_repay"
+            android:gravity="center_horizontal"
+            android:text="自动还贷"
+            android:textColor="@color/shouye_lv_tv"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

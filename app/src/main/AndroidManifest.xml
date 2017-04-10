@@ -161,6 +161,15 @@
         <activity
             android:name=".activity.TuiguangActivity2"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.CreditpayActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AddCreditrepayActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.MessageActivity"
+            android:screenOrientation="portrait"></activity>
 
         <receiver
             android:name=".receiver.JpushReceiver"

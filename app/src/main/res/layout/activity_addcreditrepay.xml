@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:toggle="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/bg_gray"
+    android:layout_height="match_parent">
+
+    <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_addcreditrepay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="卡号"
+                android:textSize="15sp"
+                android:textColor="@color/shouye_renmen_tv"
+                />
+            <EditText
+                android:background="@null"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="信用卡号"
+                android:textSize="15sp"
+                android:textColor="@color/shouye_renmen_tv"
+                />
+
+        </LinearLayout>
+        <View
+            android:background="@color/divierLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="银行"
+                android:textSize="15sp"
+                android:textColor="@color/shouye_renmen_tv"
+                />
+            <TextView
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="选择发卡银行"
+                android:textSize="15sp"
+                android:textColor="@color/shouye_renmen_tv"
+                />
+
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_width="8dp"
+                android:layout_height="15dp"
+                android:background="@mipmap/jiantou" />
+
+
+        </LinearLayout>
+        <View
+            android:background="@color/divierLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名"
+                android:textSize="15sp"
+                android:textColor="@color/shouye_renmen_tv"
+                />
+            <EditText
+                android:background="@null"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="持卡人姓名"
+                android:textSize="15sp"
+                android:textColor="@color/shouye_renmen_tv"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="还款提醒"
+            android:textSize="15sp"
+            android:textColor="@color/shouye_renmen_tv"
+            />
+
+
+        <com.zcw.togglebutton.ToggleButton
+
+            android:id="@+id/tbtn_addcredirepay"
+            android:layout_width="54dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            toggle:tbOffColor="#dcdcdc"
+            toggle:tbOnColor="#f75555"
+            toggle:tbSpotColor="#ffffff"></com.zcw.togglebutton.ToggleButton>
+
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/shape_corner_blue"
+        android:text="确定"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        />
+
+
+</LinearLayout>

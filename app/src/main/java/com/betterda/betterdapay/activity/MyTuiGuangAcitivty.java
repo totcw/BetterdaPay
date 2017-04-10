@@ -1,5 +1,6 @@
 package com.betterda.betterdapay.activity;
 
+import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -115,7 +116,6 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
                 if (tuiGuang != null) {
                     viewHolder.setText(R.id.tv_item_mytuiguang_account, tuiGuang.getSubAccount());
                     viewHolder.setText(R.id.tv_item_mytuiguang_time, "注册时间:"+tuiGuang.getTime());
-                    viewHolder.setText(R.id.tv_item_mytuiguang_status, "状态:" + tuiGuang.getStatus());
                     if (!TextUtils.isEmpty(tuiGuang.getRate())) {
                         viewHolder.setImageResource(R.id.iv_item_mytuiguang, RateData.getRate(tuiGuang.getRate()));
                     }
@@ -124,6 +124,13 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
             }
         });
         rvLayout.setLayoutManager(new LinearLayoutManager(getmActivity()));
+        rvLayout.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+               // super.getItemOffsets(outRect, view, parent, state);
+                outRect.set(10,10,10,10);
+            }
+        });
         rvLayout.setAdapter(adapter);
         rvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()){
             @Override
