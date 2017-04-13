@@ -93,6 +93,10 @@ dependencies {
 
     /*togglebutton*/
     compile 'com.zcw:togglebutton-library:1.0.0'
+    /*vlayout*/
+    compile ('com.alibaba.android:vlayout:1.0.4@aar') {
+        transitive = true
+    }
 
     compile 'com.zhy:base-adapter:2.0.0'
     compile 'com.facebook.fresco:fresco:0.10.0'
