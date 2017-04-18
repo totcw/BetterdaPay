@@ -43,7 +43,8 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://192.168.1.104:8080/yunfus_web/";
+       // public static final String URL = "http://192.168.1.104:8080/yunfus_web/";
+        public static final String URL = "http://192.168.1.106:8080/book/";
         public static final String URL_LOGIN = URL + "appAPI.do?api/account/login";
         public static final String URL_REGISTER = URL + "appAPI.do?api/account/register";
         public static final String URL_PWD_UPDATE = URL + "appAPI.do?api/account/update";//忘记密码
@@ -64,6 +65,7 @@ public class Constants {
         public static final String URL_SEARCH_POST = URL + "appAPI.do?api/account/search/post";//搜索接口
         public static final String URL_IMG_UPLOAD = URL + "appAPI.do?api/android/img/upload";//图片上传
         public static final String URL_GET_INFORMATION = "appAPI.do?api/account/auth/get";//我的资料获取
+        public static final String book = "Test";//我的资料获取
 
 
     }

@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -20,6 +21,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linear_realname"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:gravity="center_vertical"
@@ -29,7 +31,7 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="银行卡信息"
+                android:text="实名认证"
                 android:textSize="15sp"
                 android:textColor="@color/shouye_renmen_tv"
                 />
@@ -48,6 +50,7 @@
             android:background="@color/divierLine"
             ></View>
     <LinearLayout
+        android:id="@+id/linear_photo"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:gravity="center_vertical"
@@ -82,6 +85,7 @@
         ></View>
 
     <LinearLayout
+        android:id="@+id/linear_reset"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="center_vertical"

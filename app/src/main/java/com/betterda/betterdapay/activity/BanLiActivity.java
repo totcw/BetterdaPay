@@ -12,6 +12,10 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.adapter.BanliCreditBannerAdapter;
 import com.betterda.betterdapay.adapter.BanliCreditItemAdapter;
 import com.betterda.betterdapay.adapter.BanliCreditThemeAdapter;
+import com.betterda.betterdapay.callback.MyObserver;
+import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
@@ -70,6 +74,30 @@ public class BanLiActivity extends BaseActivity {
         delegateAdapter.addAdapter(new BanliCreditBannerAdapter(getmActivity(),new LinearLayoutHelper(),1));
         delegateAdapter.addAdapter(new BanliCreditThemeAdapter(getmActivity(),new LinearLayoutHelper(),1));
         delegateAdapter.addAdapter(new BanliCreditItemAdapter(getmActivity(),new LinearLayoutHelper(),list));
+
+
+        subscription = NetWork.getNetService(subscription)
+                .getBook("book")
+                .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                .subscribe(new MyObserver<String>() {
+                    @Override
+                    protected void onSuccess(String data, String resultMsg) {
+                        showToast(resultMsg);
+                        System.out.println("s:"+resultMsg);
+                    }
+
+                    @Override
+                    public void onFail(String resultMsg) {
+                        showToast(resultMsg);
+
+                    }
+
+                    @Override
+                    public void onExit() {
+                        ExitToLogin();
+                    }
+                });
+
     }
 
 }

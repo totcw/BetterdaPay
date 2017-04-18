@@ -367,6 +367,10 @@ public interface NetService {
                                                 @Field("pageSize") String pageSize
     );
 
+    @FormUrlEncoded
+    @POST(Constants.Url.book)
+    Observable<BaseCallModel<String>> getBook(@Field("book") String account);
+
     /**
      * 图片上传
      * @param account
