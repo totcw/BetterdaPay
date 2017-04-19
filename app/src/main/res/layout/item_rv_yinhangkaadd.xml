@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/linear_item_yinghangkaadd"
+    android:gravity="center_vertical"
+    android:layout_height="48dp">
+
+    <ImageView
+        android:layout_marginLeft="10dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@mipmap/item_add"
+        />
+
+    <TextView
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加信用卡"
+        android:textSize="15sp"
+        android:textColor="@color/shouye_renmen_tv"
+        />
+
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="15dp"
+
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/jiantou" />
+
+</LinearLayout>

@@ -2,14 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_gray"
     android:orientation="vertical">
 
     <com.betterda.betterdapay.view.NormalTopBar
         android:id="@+id/topbar_myyinhangka"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
+        android:layout_height="wrap_content">
 
-    <include layout="@layout/layout_recycleview"></include>
+    </com.betterda.betterdapay.view.NormalTopBar>
 
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_corner_white"
+            android:id="@+id/rv_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <com.betterda.mylibrary.LoadingPager
+            android:id="@+id/loadpager_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.betterda.mylibrary.LoadingPager>
+
+    </FrameLayout>
 
 </LinearLayout>

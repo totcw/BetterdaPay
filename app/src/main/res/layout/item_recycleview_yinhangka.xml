@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
     android:id="@+id/linear_yinhangka"
-    android:background="@color/bg_gray"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@mipmap/bg_yinhangka"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
+        android:layout_height="48dp"
+        android:layout_marginLeft="10dp"
+
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical">
+
         <ImageView
             android:id="@+id/iv_yinhangka_icon"
             android:layout_width="40dp"
@@ -22,40 +20,36 @@
 
             />
 
-        <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_yinhangka_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="中国农业银行"
-                android:textColor="#ffffff"
-                android:textSize="14sp"
-                />
-            <TextView
-                android:id="@+id/tv_yinhangka_number"
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4564464864684"
-                android:textColor="#ffffff"
-                android:textSize="14sp"
-                />
-
-        </LinearLayout>
-
         <TextView
-            android:id="@+id/tv_yinhangka_type"
+            android:id="@+id/tv_yinhangka_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="信用卡"
-            android:textColor="#ffffff"
-            android:textSize="14sp"
-            />
+            android:text="中国农业银行"
+            android:textColor="@color/shouye_renmen_tv"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:id="@+id/tv_yinhangka_number"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="信用卡(**** 6625)"
+            android:textColor="@color/shouye_lv_tv"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="15dp"
+            android:background="@mipmap/jiantou" />
+
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/divierLine"></View>
 </LinearLayout>

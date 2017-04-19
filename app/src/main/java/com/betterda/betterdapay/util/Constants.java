@@ -44,7 +44,7 @@ public class Constants {
 
     public static class Url {
        // public static final String URL = "http://192.168.1.104:8080/yunfus_web/";
-        public static final String URL = "http://192.168.1.106:8080/book/";
+        public static final String URL = "http://192.168.0.111:8080/book/";
         public static final String URL_LOGIN = URL + "appAPI.do?api/account/login";
         public static final String URL_REGISTER = URL + "appAPI.do?api/account/register";
         public static final String URL_PWD_UPDATE = URL + "appAPI.do?api/account/update";//忘记密码

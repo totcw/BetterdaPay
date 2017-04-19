@@ -369,7 +369,7 @@ public interface NetService {
 
     @FormUrlEncoded
     @POST(Constants.Url.book)
-    Observable<BaseCallModel<String>> getBook(@Field("book") String account);
+    Observable<BaseCallModel<String>> getBook(@Field("bookname") String bookname,@Field("page") String page);
 
     /**
      * 图片上传

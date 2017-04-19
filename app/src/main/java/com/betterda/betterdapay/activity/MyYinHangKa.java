@@ -4,8 +4,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.android.vlayout.DelegateAdapter;
+import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.adapter.MyYinHangKaAddAdapter;
+import com.betterda.betterdapay.adapter.MyYinHangKaItemAdapter;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.NetWork;
@@ -42,8 +47,8 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.loadpager_layout)
     LoadingPager loadpagerLayout;
 
+    private MyYinHangKaItemAdapter<BankCard> mItemAdapter;
     private List<BankCard> list, bankCardList;
-    private HeaderAndFooterRecyclerViewAdapter adapter;
     private ShapeLoadingDialog dialog;
     private int page = 1;
     private int position;
@@ -62,7 +67,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onStart() {
         super.onStart();
-        getData();
+       // getData();
     }
 
     /**
@@ -117,34 +122,17 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
                 }
             }
         }
-        if (adapter != null) {
+      /*  if (adapter != null) {
             adapter.notifyDataSetChanged();
-        }
+        }*/
     }
 
     private void setRecycleview() {
         list = new ArrayList<>();
+        list.add(null);
+        list.add(null);
+        list.add(null);
         bankCardList = new ArrayList<>();
-        adapter = new HeaderAndFooterRecyclerViewAdapter(new CommonAdapter<BankCard>(getmActivity(), R.layout.item_recycleview_yinhangka, list) {
-
-            @Override
-            public void convert(final ViewHolder viewHolder, BankCard bankCard) {
-                if (bankCard != null) {
-                    viewHolder.setText(R.id.tv_yinhangka_name, bankCard.getBank());
-                    viewHolder.setText(R.id.tv_yinhangka_number, bankCard.getCardNum());
-                    viewHolder.setText(R.id.tv_yinhangka_type, bankCard.getType());
-                    viewHolder.setImageResource(R.id.iv_yinhangka_icon, BankData.getBank(bankCard.getBank()));
-                    viewHolder.setOnClickListener(R.id.linear_yinhangka, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            position = viewHolder.getPosition();
-                            showDialog("温馨提示", "确定要删除该银行卡吗?");
-                        }
-                    });
-                }
-
-            }
-        });
         rvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
             @Override
             public void onLoadNextPage(View view) {
@@ -163,8 +151,22 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
             }
         });
 
-        rvLayout.setAdapter(adapter);
-        rvLayout.setLayoutManager(new LinearLayoutManager(getmActivity()));
+
+        VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(getmActivity());
+
+        //设置回收复用池大小，（如果一屏内相同类型的 View 个数比较多，需要设置一个合适的大小，防止来回滚动时重新创建 View）：
+        RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
+        rvLayout.setRecycledViewPool(viewPool);
+        viewPool.setMaxRecycledViews(0, 10);
+        rvLayout.setLayoutManager(virtualLayoutManager);
+        DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
+        rvLayout.setAdapter(delegateAdapter);
+
+        mItemAdapter = new MyYinHangKaItemAdapter<>(getmActivity(),new LinearLayoutHelper(),list);
+        delegateAdapter.addAdapter(mItemAdapter);
+
+        delegateAdapter.addAdapter(new MyYinHangKaAddAdapter(getmActivity(),new LinearLayoutHelper(),1));
+
     }
 
     private void setTopBar() {
@@ -220,10 +222,8 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
                                         if (list != null) {
                                             list.remove(position);
                                         }
-                                        //更新适配器
-                                        if (adapter != null) {
-                                            adapter.notifyDataSetChanged();
-                                        }
+                                        // TODO 更新适配器
+
                                         UtilMethod.judgeData(list,loadpagerLayout);
                                         //取消进度显示
                                         UtilMethod.dissmissDialog(getmActivity(), dialog);

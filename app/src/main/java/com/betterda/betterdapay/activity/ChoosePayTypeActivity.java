@@ -108,7 +108,8 @@ public class ChoosePayTypeActivity extends BaseActivity {
             case R.id.relative_choose_yinlian:
                 channel = "银联支付";
                // getData(2);
-                toActivity();
+               // toActivity();
+                UtilMethod.startIntent(getmActivity(),MyYinHangKa.class);
                 break;
             case R.id.bar_back:
                  back();

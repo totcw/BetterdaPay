@@ -77,7 +77,7 @@ public class BanLiActivity extends BaseActivity {
 
 
         subscription = NetWork.getNetService(subscription)
-                .getBook("book")
+                .getBook("万事如易全文阅读", 1 + "")
                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                 .subscribe(new MyObserver<String>() {
                     @Override
