@@ -48,7 +48,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     LoadingPager loadpagerLayout;
 
     private MyYinHangKaItemAdapter<BankCard> mItemAdapter;
-    private List<BankCard> list, bankCardList;
+    private List<BankCard> list;
     private ShapeLoadingDialog dialog;
     private int page = 1;
     private int position;
@@ -109,48 +109,22 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
      * @param data
      */
     private void parser(List<BankCard> data) {
-        bankCardList = data;
-        if (page == 1) {
-            list.clear();
-        }
-        if (bankCardList != null) {
 
-            for (BankCard order : bankCardList) {
+
+            for (BankCard order : data) {
                 if (null != list) {
                     list.add(order);
 
                 }
             }
+
+        if (mItemAdapter != null) {
+            mItemAdapter.notifyDataSetChanged();
         }
-      /*  if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }*/
     }
 
     private void setRecycleview() {
         list = new ArrayList<>();
-        list.add(null);
-        list.add(null);
-        list.add(null);
-        bankCardList = new ArrayList<>();
-        rvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
-            @Override
-            public void onLoadNextPage(View view) {
-                //滑到了最后,如果是正常状态才开始加载
-                if (LoadingFooter.State.Normal == RecyclerViewStateUtils.getFooterViewState(rvLayout)) {
-
-                    RecyclerViewStateUtils.setFooterViewState(getmActivity(), rvLayout, LoadingFooter.State.Loading, null);
-
-                    getData();
-                }
-            }
-
-            @Override
-            public void show(boolean isShow) {
-                RecyclerViewStateUtils.show(isShow, bankCardList, rvLayout, getmActivity());
-            }
-        });
-
 
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(getmActivity());
 
@@ -171,8 +145,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
 
     private void setTopBar() {
         topbarMyyinhangka.setTitle("我的银行卡");
-        topbarMyyinhangka.setActionText("添加");
-        topbarMyyinhangka.setActionTextVisibility(true);
+
     }
 
     @Override
@@ -188,9 +161,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
             case R.id.bar_back:
                 back();
                 break;
-            case R.id.bar_action:
-                UtilMethod.startIntent(getmActivity(), AddBankCardActivity.class);
-                break;
+
         }
     }
 
