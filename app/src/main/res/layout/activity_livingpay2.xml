@@ -16,33 +16,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:padding="10dp">
+        android:padding="20dp">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_marginLeft="5dp"
                 android:id="@+id/iv_livingpay2_icon"
+                android:layout_centerInParent="true"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+
                  />
 
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/tv_livingpay2_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/iv_livingpay2_icon"
-                android:text="水费"
-                android:textColor="@color/shouye_lv_tv"
-                android:textSize="13sp"
-                android:layout_centerHorizontal="true"
-
-                />
-        </RelativeLayout>
     </RelativeLayout>
     <View
 
@@ -51,14 +37,14 @@
         android:background="@color/lv_divider"></View>
 
     <View
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/lv_divider"></View>
 
 
     <LinearLayout
-        android:visibility="gone"
+
         android:background="#ffffff"
         android:padding="15dp"
         android:layout_width="match_parent"
@@ -76,7 +62,7 @@
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="青岛西海岸水务有限公司"
+            android:text="厦门市电费"
             android:textSize="13sp"
             android:textColor="@color/shouye_lv_tv"
             />

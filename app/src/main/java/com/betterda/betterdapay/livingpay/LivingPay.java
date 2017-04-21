@@ -22,7 +22,6 @@ import com.betterda.betterdapay.view.NormalTopBar;
 public class LivingPay extends BaseActivity implements View.OnClickListener {
     private NormalTopBar topBar;
     private Button btnNext;
-    private TextView tvLivingpayType;
     private ImageView ivLivingpayIcon;
     private EditText tv_livingpay2_number;
     private String type;
@@ -37,7 +36,6 @@ public class LivingPay extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_livingpay2);
         btnNext = (Button) findViewById(R.id.btn_livingpay2_next);
         topBar = (NormalTopBar) findViewById(R.id.topbar_livingpay2);
-        tvLivingpayType = (TextView) findViewById(R.id.tv_livingpay2_type);
         ivLivingpayIcon = (ImageView) findViewById(R.id.iv_livingpay2_icon);
         tv_livingpay2_number = (EditText) findViewById(R.id.tv_livingpay2_number);
     }
@@ -62,7 +60,6 @@ public class LivingPay extends BaseActivity implements View.OnClickListener {
      * 设置充值类型
      */
     private void setType() {
-        tvLivingpayType.setText(type);
         int id = R.mipmap.pay_shui;
         switch (type) {
             case "水费":
@@ -96,7 +93,13 @@ public class LivingPay extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_livingpay2_next:
-                next();
+                Intent intent = new Intent(getmActivity(), LivingPayActivity.class);
+                intent.putExtra("type", type);
+                intent.putExtra("name", name);
+                intent.putExtra("company", company);
+                intent.putExtra("arrearage", arrearage);
+                intent.putExtra("balance", balance);
+                startActivity(intent);
                 break;
             case R.id.bar_back:
                 back();

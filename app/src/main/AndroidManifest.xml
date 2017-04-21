@@ -179,6 +179,9 @@
         <activity
             android:name=".livingpay.LivingPayActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".livingpay.LivingRecordActivity"
+            android:screenOrientation="portrait"></activity>
 
         <receiver
             android:name=".receiver.JpushReceiver"

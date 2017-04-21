@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.livingpay.LivingPay;
+import com.betterda.betterdapay.util.UtilMethod;
 
 /**
  * 生活缴费普通itme的适配器
@@ -46,32 +48,21 @@ public class LivingPayItemAdapter extends DelegateAdapter.Adapter<LivingPayItemA
         if ("水费".equals(type)) {
             holder.mTextView.setText("水费");
             holder.mImageView.setImageResource(R.mipmap.small_shui);
-            holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         } else if ("电费".equals(type)) {
             holder.mTextView.setText(type);
             holder.mImageView.setImageResource(R.mipmap.small_dian);
-            holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                }
-            });
         } else if ("燃气费".equals(type)) {
             holder.mTextView.setText(type);
             holder.mImageView.setImageResource(R.mipmap.small_ranqi);
-            holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                }
-            });
         }
-
+        holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UtilMethod.startIntent(mContext, LivingPay.class,"type",type);
+            }
+        });
     }
 
     @Override

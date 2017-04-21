@@ -14,6 +14,7 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.BaseActivity;
 import com.betterda.betterdapay.adapter.LivingPayItemAdapter;
 import com.betterda.betterdapay.adapter.LivingPayItemAdapter2;
+import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 
 import java.util.ArrayList;
@@ -102,8 +103,10 @@ public class BaseLivingActiivty extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bar_back:
+                back();
                 break;
             case R.id.bar_action:
+                UtilMethod.startIntent(getmActivity(),LivingRecordActivity.class);
                 break;
             case R.id.relative_baseliving:
                 break;
