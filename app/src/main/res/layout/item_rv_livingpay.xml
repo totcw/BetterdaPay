@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:background="@color/white"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <View
+        android:background="@color/divierLine"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="12dp"
+        android:layout_height="1dp"></View>
+
+    <LinearLayout
+        android:id="@+id/linear_item_livingpaynormal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+
+
+        <TextView
+            android:id="@+id/tv_item_livingpaynormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+
+            android:text="姓名"
+            android:textColor="@color/shouye_lv_tv"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="12dp"
+            android:text="添加帐号"
+            android:textColor="@color/shouye_lv_tv"
+            android:textSize="14sp"
+            />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="15dp"
+
+            android:background="@mipmap/jiantou"/>
+
+    </LinearLayout>
+</LinearLayout>

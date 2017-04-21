@@ -12,6 +12,7 @@ import com.betterda.betterdapay.activity.BianJieDaiKuanActivity;
 import com.betterda.betterdapay.activity.CreditpayActivity;
 import com.betterda.betterdapay.activity.MessageActivity;
 import com.betterda.betterdapay.javabean.Wallet;
+import com.betterda.betterdapay.livingpay.BaseLivingActiivty;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.GradientTextView;
 
@@ -107,6 +108,7 @@ public class WalletFragment extends BaseFragment {
                 UtilMethod.startIntent(getmActivity(), CreditpayActivity.class);
                 break;
             case R.id.relative_shouye_life://生活缴费
+                UtilMethod.startIntent(getmActivity(), BaseLivingActiivty.class);
                 break;
             case R.id.relative_shouye_bianjie://便捷贷款
                 UtilMethod.startIntent(getmActivity(), BianJieDaiKuanActivity.class);
