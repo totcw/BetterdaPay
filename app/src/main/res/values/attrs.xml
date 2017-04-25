@@ -5,8 +5,11 @@
 
     <!--viewpager指示器-->
     <attr name="item_count" format="integer"></attr>
+    <attr name="item_id" format="integer"></attr>
 
     <declare-styleable name="ViewPagerIndicator">
         <attr name="item_count" />
+        <attr name="item_id" />
+
     </declare-styleable>
 </resources>

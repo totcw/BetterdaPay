@@ -27,9 +27,13 @@ public class UpActivity extends BaseActivity {
         setContentView(R.layout.activity_up);
     }
 
+    @Override
+    public void init() {
+        super.init();
+        topbarUp.setTitle("升级");
+    }
 
-
-    @OnClick({R.id.tv_up_dianzhang, R.id.tv_up_jingli, R.id.tv_up_zongjingli, R.id.tv_up_boss})
+    @OnClick({R.id.tv_up_dianzhang, R.id.tv_up_jingli, R.id.tv_up_zongjingli, R.id.tv_up_boss,R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_up_dianzhang:
@@ -40,6 +44,9 @@ public class UpActivity extends BaseActivity {
             case R.id.tv_up_zongjingli:
                 break;
             case R.id.tv_up_boss:
+                break;
+            case R.id.bar_back:
+                back();
                 break;
         }
     }

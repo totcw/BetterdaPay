@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <com.betterda.betterdapay.view.NormalTopBar
-        android:id="@+id/topbar_daikuan"
+        android:id="@+id/topbar_loan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -35,7 +35,7 @@
                 android:textSize="15sp" />
 
             <com.betterda.betterdapay.view.GradientTextView
-
+                android:id="@+id/gdtv_loadn_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -99,6 +99,7 @@
                             android:textSize="15sp" />
 
                         <TextView
+                            android:id="@+id/tv_loadn_money"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -148,6 +149,7 @@
                             android:textSize="15sp" />
 
                         <TextView
+                            android:id="@+id/tv_loadn_deanline"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -192,7 +194,7 @@
                             android:orientation="vertical">
 
                             <TextView
-
+                                android:id="@+id/tv_loadn_accountamount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -202,6 +204,7 @@
                                 android:textSize="24sp" />
 
                             <TextView
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -221,7 +224,7 @@
                             android:orientation="vertical">
 
                             <TextView
-
+                                android:id="@+id/tv_loadn_repayamount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -231,12 +234,13 @@
                                 android:textSize="24sp" />
 
                             <TextView
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="10dp"
-                                android:text="到账金额(元)"
+                                android:text="还款金额(元)"
                                 android:textColor="@color/shouye_lv_tv"
                                 android:textSize="12sp" />
 
@@ -247,6 +251,7 @@
 
 
                     <Button
+                        android:id="@+id/btn_loan_loan"
                         android:layout_width="160dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_horizontal"
@@ -282,7 +287,7 @@
                             android:orientation="vertical">
 
                             <TextView
-
+                                android:id="@+id/tv_loan_repayamount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -297,7 +302,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="10dp"
-                                android:text="到账金额(元)"
+                                android:text="还款金额(元)"
                                 android:textColor="@color/shouye_lv_tv"
                                 android:textSize="12sp" />
 
@@ -310,12 +315,13 @@
 
 
                     <Button
+                        android:id="@+id/gdtv_loan_repayment"
                         android:layout_width="160dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="35dp"
                         android:background="@drawable/shape_corner_origne2"
-                        android:text="申请贷款"
+                        android:text="立即还款"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 

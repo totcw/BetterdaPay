@@ -29,7 +29,11 @@ public class CreditpayActivity extends BaseActivity {
         setContentView(R.layout.activity_creditrepay);
     }
 
-
+    @Override
+    public void init() {
+        super.init();
+        mTopbarCreditrepay.setTitle("信用卡还贷");
+    }
 
     @OnClick({R.id.bar_back, R.id.linear_creditrepay})
     public void onClick(View view) {

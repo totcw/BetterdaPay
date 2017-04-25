@@ -328,6 +328,7 @@
                 app:ratio="2">
 
                 <ImageView
+                    android:id="@+id/iv_wallet_bg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@mipmap/shouye_bg2" />

@@ -1,9 +1,6 @@
 package com.betterda.betterdapay.activity;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -12,20 +9,14 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.adapter.BanliCreditBannerAdapter;
 import com.betterda.betterdapay.adapter.BanliCreditItemAdapter;
 import com.betterda.betterdapay.adapter.BanliCreditThemeAdapter;
-import com.betterda.betterdapay.callback.MyObserver;
-import com.betterda.betterdapay.http.NetWork;
-import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.javabean.CreditType;
 import com.betterda.betterdapay.view.NormalTopBar;
-import com.zhy.base.adapter.ViewHolder;
-import com.zhy.base.adapter.recyclerview.CommonAdapter;
 import com.zhy.base.adapter.recyclerview.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -39,7 +30,7 @@ public class BanLiActivity extends BaseActivity {
     @BindView(R.id.rv_banli)
     RecyclerView mRvBanli;
 
-    private List<String> list;
+    private List<CreditType> mBanliList;
 
     @Override
     public void initView() {
@@ -51,19 +42,20 @@ public class BanLiActivity extends BaseActivity {
     @Override
     public void init() {
         super.init();
-        initRv();
+        mTopbarBanli.setTitle("办理信用卡");
+        initRecycleview();
     }
 
-    private void initRv() {
-        list = new ArrayList<>();
-        list.add(null);
-        list.add(null);
-        list.add(null);
-        list.add(null);
+    private void initRecycleview() {
+        mBanliList = new ArrayList<>();
+        mBanliList.add(null);
+        mBanliList.add(null);
+        mBanliList.add(null);
+        mBanliList.add(null);
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(getmActivity());
         mRvBanli.setLayoutManager(virtualLayoutManager);
-        mRvBanli.addItemDecoration(new DividerItemDecoration(getmActivity(),DividerItemDecoration.VERTICAL_LIST));
-//设置回收复用池大小，（如果一屏内相同类型的 View 个数比较多，需要设置一个合适的大小，防止来回滚动时重新创建 View）：
+        mRvBanli.addItemDecoration(new DividerItemDecoration(getmActivity(), DividerItemDecoration.VERTICAL_LIST));
+        //设置回收复用池大小，（如果一屏内相同类型的 View 个数比较多，需要设置一个合适的大小，防止来回滚动时重新创建 View）：
         RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
         mRvBanli.setRecycledViewPool(viewPool);
         viewPool.setMaxRecycledViews(0, 10);
@@ -71,33 +63,18 @@ public class BanLiActivity extends BaseActivity {
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         //给rv 设置 一个adapter
         mRvBanli.setAdapter(delegateAdapter);
-        delegateAdapter.addAdapter(new BanliCreditBannerAdapter(getmActivity(),new LinearLayoutHelper(),1));
-        delegateAdapter.addAdapter(new BanliCreditThemeAdapter(getmActivity(),new LinearLayoutHelper(),1));
-        delegateAdapter.addAdapter(new BanliCreditItemAdapter(getmActivity(),new LinearLayoutHelper(),list));
+        delegateAdapter.addAdapter(new BanliCreditBannerAdapter(getmActivity(), new LinearLayoutHelper(), 1));
+        delegateAdapter.addAdapter(new BanliCreditThemeAdapter(getmActivity(), new LinearLayoutHelper(), 1));
+        delegateAdapter.addAdapter(new BanliCreditItemAdapter(getmActivity(), new LinearLayoutHelper(), mBanliList));
 
 
-        subscription = NetWork.getNetService(subscription)
-                .getBook("万事如易全文阅读", 1 + "")
-                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                .subscribe(new MyObserver<String>() {
-                    @Override
-                    protected void onSuccess(String data, String resultMsg) {
-                        showToast(resultMsg);
-                        System.out.println("s:"+resultMsg);
-                    }
-
-                    @Override
-                    public void onFail(String resultMsg) {
-                        showToast(resultMsg);
-
-                    }
-
-                    @Override
-                    public void onExit() {
-                        ExitToLogin();
-                    }
-                });
 
     }
 
+
+
+    @OnClick(R.id.bar_back)
+    public void onClick() {
+        back();
+    }
 }
