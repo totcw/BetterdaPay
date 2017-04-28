@@ -27,7 +27,11 @@ public class InformationActivity extends BaseActivity {
         setContentView(R.layout.activity_information);
     }
 
-
+    @Override
+    public void init() {
+        super.init();
+        topbarInformation.setTitle("个人信息");
+    }
 
     @OnClick({R.id.linear_realname, R.id.linear_photo, R.id.linear_reset,R.id.bar_back})
     public void onClick(View view) {

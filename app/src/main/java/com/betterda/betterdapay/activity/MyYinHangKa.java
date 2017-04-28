@@ -35,7 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 我的银行卡
+ * 我的信用卡
  * Created by Administrator on 2016/8/16.
  */
 public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
@@ -144,7 +144,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     }
 
     private void setTopBar() {
-        topbarMyyinhangka.setTitle("我的银行卡");
+        topbarMyyinhangka.setTitle("我的信用卡");
 
     }
 

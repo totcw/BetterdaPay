@@ -26,9 +26,13 @@ public class WalletActivity extends BaseActivity {
         setContentView(R.layout.activity_wallet);
     }
 
+    @Override
+    public void init() {
+        super.init();
+        topbarMyWallet.setTitle("我的钱包");
+    }
 
-
-    @OnClick({R.id.linear_wallet, R.id.linear_fwallet})
+    @OnClick({R.id.linear_wallet, R.id.linear_fwallet,R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_wallet://余额钱包
@@ -36,6 +40,9 @@ public class WalletActivity extends BaseActivity {
                 break;
             case R.id.linear_fwallet://分润钱包
                 UtilMethod.startIntent(getmActivity(),FWalletActivity.class);
+                break;
+            case R.id.bar_back:
+                back();
                 break;
         }
     }

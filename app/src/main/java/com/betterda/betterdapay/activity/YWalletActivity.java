@@ -35,8 +35,13 @@ public class YWalletActivity extends BaseActivity {
         setContentView(R.layout.activity_ywallet);
     }
 
+    @Override
+    public void init() {
+        super.init();
+        topbarFwallet.setTitle("余额钱包");
+    }
 
-    @OnClick({R.id.linear_ywallet_tixian, R.id.linear_ywallet_mingxi})
+    @OnClick({R.id.linear_ywallet_tixian, R.id.linear_ywallet_mingxi,R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_ywallet_tixian:
@@ -44,6 +49,9 @@ public class YWalletActivity extends BaseActivity {
                 break;
             case R.id.linear_ywallet_mingxi:
                 UtilMethod.startIntent(getmActivity(),WalletDetailActivity.class);
+                break;
+            case R.id.bar_back:
+                 back();
                 break;
         }
     }

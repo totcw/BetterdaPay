@@ -183,6 +183,7 @@ public class ShouKuanFragment extends BaseFragment {
     }
 
     private void write(String number) {
+
         //为0时,替换,其他情况就直接添加
         if ("0".equals(sb.toString())) {
             if (".".equals(number)) {

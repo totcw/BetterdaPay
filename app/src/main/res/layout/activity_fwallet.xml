@@ -46,7 +46,7 @@
                     android:orientation="vertical">
 
                     <TextView
-
+                        android:id="@+id/tv_fwallet_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -86,7 +86,7 @@
                         android:orientation="vertical">
 
                         <TextView
-
+                            android:id="@+id/tv_fwallet_yesterday"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -121,7 +121,7 @@
                         android:orientation="vertical">
 
                         <TextView
-
+                            android:id="@+id/tv_fwallet_addup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -157,6 +157,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/linear_fwallet_withdraw"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical"
@@ -196,6 +197,7 @@
                     android:background="@color/divierLine"></View>
 
                 <LinearLayout
+                    android:id="@+id/linear_fwallet_details"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical"

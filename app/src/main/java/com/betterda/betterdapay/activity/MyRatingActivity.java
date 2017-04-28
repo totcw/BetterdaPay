@@ -56,7 +56,7 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     public void initListener() {
         super.initListener();
         topbarMyrating.setOnBackListener(this);
-        topbarMyrating.setOnActionListener(this);
+       // topbarMyrating.setOnActionListener(this);
     }
 
     @Override
@@ -151,9 +151,9 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void setTopBar() {
-        topbarMyrating.setActionText("升级");
-        topbarMyrating.setTitle("我的费率");
-        topbarMyrating.setActionTextVisibility(true);
+      //  topbarMyrating.setActionText("升级");
+        topbarMyrating.setTitle("我的扣率");
+        //topbarMyrating.setActionTextVisibility(true);
     }
 
     @Override

@@ -40,9 +40,12 @@ public class WalletDetailActivity extends BaseActivity {
         setContentView(R.layout.walletdetail);
     }
 
+
+
     @Override
     public void init() {
         super.init();
+        mTopbarWalletdetail.setTitle("明细");
         list = new ArrayList<>();
         list.add(null);
         list.add(null);
@@ -62,6 +65,7 @@ public class WalletDetailActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bar_back:
+                back();
                 break;
 
         }
