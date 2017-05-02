@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_gray"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/bg_gray"
+              android:orientation="vertical">
 
     <com.betterda.betterdapay.view.NormalTopBar
         android:id="@+id/topbar_forgetpwd"
@@ -33,6 +34,7 @@
 
 
         <android.support.design.widget.TextInputLayout
+            app:hintEnabled="false"
             android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -74,6 +76,7 @@
             android:background="@mipmap/yzm"
             />
         <android.support.design.widget.TextInputLayout
+            app:hintEnabled="false"
             android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -122,6 +125,7 @@
             android:background="@mipmap/password"
             />
         <android.support.design.widget.TextInputLayout
+            app:hintEnabled="false"
             android:layout_toRightOf="@id/iv_register_password"
             android:layout_centerVertical="true"
             android:layout_width="match_parent"
@@ -134,7 +138,7 @@
             android:inputType="textPassword"
             android:textSize="@dimen/textsize_little"
             android:id="@+id/et_forgetpwd_pwd"
-
+            android:paddingRight="10dp"
             android:background="@null"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -164,6 +168,7 @@
             />
 
         <android.support.design.widget.TextInputLayout
+            app:hintEnabled="false"
             android:layout_toRightOf="@id/iv_register_password2"
             android:layout_centerVertical="true"
             android:layout_width="match_parent"
@@ -176,7 +181,7 @@
             android:inputType="textPassword"
             android:textSize="@dimen/textsize_little"
             android:id="@+id/et_forgetpwd_pwd2"
-
+            android:paddingRight="10dp"
             android:background="@null"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
