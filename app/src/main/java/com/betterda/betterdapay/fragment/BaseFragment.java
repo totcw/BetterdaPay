@@ -31,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
 
     private Activity mActivity;
     private PopupWindow popupWindow;
-    public Subscription subscription;
+
     private String TAG = BaseFragment.class.getSimpleName();
 
     @Override
@@ -256,13 +256,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         closePopupWindow();
-        //取消订阅
-        if (subscription != null) {
-            if (!subscription.isUnsubscribed()) {
-                subscription.unsubscribe();
-            }
-            subscription = null;
-        }
+
     }
 
     /**

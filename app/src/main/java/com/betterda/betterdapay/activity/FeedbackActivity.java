@@ -79,7 +79,7 @@ public class FeedbackActivity extends BaseActivity {
                     dialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
                 }
                 UtilMethod.showDialog(getmActivity(),dialog);
-                subscription=NetWork.getNetService(subscription)
+                NetWork.getNetService()
                         .getFeedBack(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()),content)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {

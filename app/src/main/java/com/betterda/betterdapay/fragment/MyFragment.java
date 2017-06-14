@@ -96,7 +96,7 @@ public class MyFragment extends BaseFragment {
         NetworkUtils.isNetWork(getmActivity(), topbarMy, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-               subscription = NetWork.getNetService(subscription)
+                NetWork.getNetService()
                        .getInformation(UtilMethod.getAccout(getmActivity()),UtilMethod.getToken(getmActivity()))
                        .compose(NetWork.handleResult(new BaseCallModel<Information>()))
                        .subscribe(new MyObserver<Information>() {

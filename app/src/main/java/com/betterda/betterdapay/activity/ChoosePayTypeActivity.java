@@ -122,7 +122,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
         NetworkUtils.isNetWork(getmActivity(), topbarChose, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription = NetWork.getNetService(subscription)
+                 NetWork.getNetService()
                         .getOrder(account, token, type, money, orderType, channel)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {

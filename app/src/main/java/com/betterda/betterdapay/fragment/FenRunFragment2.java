@@ -123,7 +123,7 @@ public class FenRunFragment2 extends BaseFragment {
         NetworkUtils.isNetWork(getmActivity(), loadpager_fenrun2, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription = NetWork.getNetService(subscription)
+                NetWork.getNetService()
                         .getOrderFenRun(UtilMethod.getAccout(getmActivity()),
                                 UtilMethod.getToken(getmActivity()), item + "", page + "",
                                 Constants.PAGE_SIZE + "")

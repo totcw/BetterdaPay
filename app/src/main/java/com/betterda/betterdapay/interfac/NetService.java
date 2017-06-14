@@ -386,6 +386,15 @@ public interface NetService {
     );
 
 
+    /**
+     * 版本更新
+
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.book)
+    Observable<BaseCallModel<String>> getUpdate(@Field("version") String version);
 
 
 }

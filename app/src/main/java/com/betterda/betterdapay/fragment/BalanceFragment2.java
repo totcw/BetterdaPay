@@ -71,7 +71,7 @@ public class BalanceFragment2 extends BaseBalanceFragment {
         NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription= NetWork.getNetService(subscription)
+                NetWork.getNetService()
                         .getOrderGet(account, token, orderType, page + "", Constants.PAGE_SIZE + "")
                         .compose(NetWork.handleResult(new BaseCallModel<OrderALL>()))
                         .subscribe(new MyObserver<OrderALL>() {

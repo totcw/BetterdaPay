@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.util.PermissionUtil;
+import com.betterda.betterdapay.util.RxManager;
 import com.betterda.betterdapay.util.UtilMethod;
 
 import java.util.List;
@@ -34,13 +35,13 @@ public class BaseActivity extends FragmentActivity {
     private String[] REQUEST_PERMISSIONS = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE};
     private PopupWindow popupWindow;
-    protected Subscription subscription;
+    protected RxManager mRxManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mRxManager = new RxManager();
         initView();
         ButterKnife.bind(this);
         initListener();
@@ -268,18 +269,10 @@ public class BaseActivity extends FragmentActivity {
         //防止内存泄漏
         // ((MyApplication)getApplication()).removeAcitivty(this);
         closePopupWindow();
-        //取消订阅
-        unsubscribe();
+        mRxManager.clear();
     }
 
-    public void unsubscribe() {
-        if (subscription != null) {
-            if (!subscription.isUnsubscribed()) {
-                subscription.unsubscribe();
-            }
-            subscription = null;
-        }
-    }
+
 
     /**
      * 强制跳转到登录界面

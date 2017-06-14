@@ -137,7 +137,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void getDataApi() {
                 UtilMethod.showDialog(getmActivity(), dialog);
-                subscription = NetWork.getNetService(subscription)
+                 NetWork.getNetService()
                         .getBandAdd(UtilMethod.getAccout(getmActivity()),UtilMethod.getToken(getmActivity()),truename,identitycard,bank,cardnum,number,cardType)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {

@@ -63,7 +63,7 @@ public class MyEweiMaActivity extends BaseActivity implements View.OnClickListen
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription = NetWork.getNetService(subscription)
+                 NetWork.getNetService()
                         .getCode(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()))
                         .compose(NetWork.handleResult(new BaseCallModel<EWeiMa>()))
                         .subscribe(new MyObserver<EWeiMa>() {

@@ -78,7 +78,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
         NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription = NetWork.getNetService(subscription)
+                  NetWork.getNetService()
                         .getBandGet(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()))
                         .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
                         .subscribe(new MyObserver<List<BankCard>>() {
@@ -183,7 +183,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
                     //获取要删除对象
                     BankCard bankCard = list.get(position);
                     if (bankCard != null) {
-                        subscription =  NetWork.getNetService(subscription)
+                          NetWork.getNetService()
                                 .getBandDelete(UtilMethod.getAccout(getmActivity()),UtilMethod.getToken(getmActivity()),bankCard.getId())
                                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                 .subscribe(new MyObserver<String>() {

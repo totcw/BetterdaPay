@@ -61,7 +61,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
         NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription = NetWork.getNetService(subscription)
+                  NetWork.getNetService()
                         .getSub(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()), "1", page + "", Constants.PAGE_SIZE + "")
                         .compose(NetWork.handleResult(new BaseCallModel<List<TuiGuang>>()))
                         .subscribe(new MyObserver<List<TuiGuang>>() {

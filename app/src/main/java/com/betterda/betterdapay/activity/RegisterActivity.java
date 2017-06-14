@@ -161,7 +161,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void getdata(String number, String password, String phone) {
         UtilMethod.showDialog(getmActivity(), dialog);
-        subscription = NetWork.getNetService(subscription)
+         NetWork.getNetService()
                 .getRegister(number, password, phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

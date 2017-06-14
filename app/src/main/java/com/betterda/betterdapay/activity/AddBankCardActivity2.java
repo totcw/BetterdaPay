@@ -211,7 +211,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             @Override
             public void getDataApi() {
                 UtilMethod.showDialog(getmActivity(),dialog);
-               subscription= NetWork.getNetService(subscription)
+                NetWork.getNetService()
                        .getAuth(UtilMethod.getAccout(getmActivity()),realName,
                        identityCard,cardNum,bank,number,cardType,url_identity,url_identity2,url_handidntity,url_bank,url_bank2,UtilMethod.getToken(getmActivity()),url_handbank)
                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
@@ -386,7 +386,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                 RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATH, name + ".png"));
                 //第一个参数是key,第二是文件名,如果没有文件名不会被当成文件
                 MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", name + ".png", file);
-                subscription = NetWork.getNetService(subscription)
+                NetWork.getNetService()
                         .getImgUpload(account, token, filePart)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {

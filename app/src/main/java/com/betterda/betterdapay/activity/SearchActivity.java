@@ -235,7 +235,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription = NetWork.getNetService(subscription)
+                 NetWork.getNetService()
                         .getSearch2(account, token, startTime, endTime, orderType, profitType, page + "", Constants.PAGE_SIZE + "")
                         .compose(NetWork.handleResult(new BaseCallModel<List<FenRun>>()))
                         .subscribe(new MyObserver<List<FenRun>>() {
@@ -285,7 +285,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription = NetWork.getNetService(subscription)
+                 NetWork.getNetService()
                         .getSearch(account, token, startTime, endTime, orderType, profitType, page + "", Constants.PAGE_SIZE + "")
                         .compose(NetWork.handleResult(new BaseCallModel<OrderALL>()))
                         .subscribe(new MyObserver<OrderALL>() {

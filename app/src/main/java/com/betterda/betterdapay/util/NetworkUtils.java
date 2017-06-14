@@ -113,12 +113,12 @@ public class NetworkUtils {
         boolean netAvailable = NetworkUtils.isNetAvailable(context);
         if (!netAvailable) {
             showSnackBar(view, "网络异常", "立即设置", context);
-            if (view instanceof LoadingPager) {//显示加载错误
-                if (view != null) {
+            if (view != null) {
+                if (view instanceof LoadingPager) {//显示加载错误
                     ((LoadingPager) view).setErrorVisable();
+
                 }
             }
-
         } else {
             //如果有网络就请求服务器获取数据
             if (setDataInterface != null) {

@@ -127,7 +127,7 @@ public class JieSuanActivity extends BaseActivity {
                 NetworkUtils.isNetWork(getmActivity(), topbarJiesuan, new NetworkUtils.SetDataInterface() {
                     @Override
                     public void getDataApi() {
-                        subscription = NetWork.getNetService(subscription)
+                        NetWork.getNetService()
                                 .getJiesuan(UtilMethod.getAccout(getmActivity()),UtilMethod.getToken(getmActivity()),sum+"")
                                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                 .subscribe(new MyObserver<String>() {

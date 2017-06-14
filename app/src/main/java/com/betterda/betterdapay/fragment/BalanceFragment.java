@@ -88,7 +88,7 @@ public class BalanceFragment extends BaseBalanceFragment implements View.OnClick
         NetworkUtils.isNetWork(getmActivity(), loadpager_balance, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription=   NetWork.getNetService(subscription)
+                  NetWork.getNetService()
                         .getOrderGet(account, token, orderType, page + "", Constants.PAGE_SIZE + "")
                         .compose(NetWork.handleResult(new BaseCallModel<OrderALL>()))
                         .subscribe(new MyObserver<OrderALL>() {

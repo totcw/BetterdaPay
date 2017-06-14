@@ -126,7 +126,7 @@ public class ForgetPwdActivity extends BaseActivity {
             @Override
             public void getDataApi() {
                 UtilMethod.showDialog(getmActivity(),dialog);
-                subscription = NetWork.getNetService(subscription)
+                 NetWork.getNetService()
                         .getPwdUpdate(UtilMethod.getAccout(getmActivity()),pwd)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {

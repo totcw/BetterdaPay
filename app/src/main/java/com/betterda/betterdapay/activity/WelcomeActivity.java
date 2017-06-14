@@ -17,11 +17,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.dialog.DeleteDialog;
 import com.betterda.betterdapay.dialog.PermissionDialog;
+import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
+import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.PermissionUtil;
+import com.betterda.betterdapay.util.RxManager;
 import com.betterda.betterdapay.util.UtilMethod;
 
 import java.util.HashMap;
@@ -52,10 +57,11 @@ public class WelcomeActivity extends FragmentActivity {
     private static final int REQUEST_PERMISSION_CODE_TAKE_PIC = 9; //权限的请求码
     private static final int REQUEST_PERMISSION_SEETING = 8; //去设置界面的请求码
     private PermissionDialog permissionDialog;//权限请求对话框
-
+    protected RxManager mRxManager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRxManager = new RxManager();
         startTopermission();
     }
 
@@ -76,7 +82,11 @@ public class WelcomeActivity extends FragmentActivity {
     //跳转到首页
     public void starToHome() {
         //TODO 访问网络获取更新信息
+        getData();
 
+    }
+
+    public void showUpdateDialog(String url) {
         View view = LayoutInflater.from(WelcomeActivity.this).inflate(R.layout.dialog_update, null);
         TextView mTvCancel = (TextView) view.findViewById(R.id.tv_update_cancel);
         TextView mTvComfirm = (TextView) view.findViewById(R.id.tv_update_comfirm);
@@ -86,8 +96,7 @@ public class WelcomeActivity extends FragmentActivity {
         mTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    isToGuide();
-                    finish();
+                startToLogin();
 
             }
         });
@@ -98,7 +107,42 @@ public class WelcomeActivity extends FragmentActivity {
                 //TODO
             }
         });
+    }
 
+    public void startToLogin() {
+        isToGuide();
+        finish();
+    }
+
+    private void getData() {
+
+        int appVersionCode = UtilMethod.getAppVersionCode(WelcomeActivity.this);
+
+        boolean netAvailable = NetworkUtils.isNetAvailable(WelcomeActivity.this);
+        if (netAvailable) {
+            mRxManager.add(
+                    NetWork.getNetService().getUpdate(appVersionCode+"")
+                    .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                    .subscribe(new MyObserver<String>() {
+                        @Override
+                        protected void onSuccess(String data, String resultMsg) {
+                            showUpdateDialog(data);
+                        }
+
+                        @Override
+                        public void onFail(String resultMsg) {
+                            startToLogin();
+                        }
+
+                        @Override
+                        public void onExit() {
+
+                        }
+                    })
+            );
+        } else {
+            startToLogin();
+        }
     }
 
     /**

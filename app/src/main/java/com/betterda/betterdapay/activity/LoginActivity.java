@@ -69,7 +69,7 @@ public class LoginActivity extends BaseActivity {
     @Inject
     ShapeLoadingDialog dialog;
     private Observable<Object> observable;//rxus
-    private Subscription subscribe; //网络请求
+
 
 
     @Override
@@ -108,7 +108,7 @@ public class LoginActivity extends BaseActivity {
      */
     private void register() {
         observable = RxBus.get().register(LoginActivity.class.getSimpleName());
-        subscription = observable.observeOn(AndroidSchedulers.mainThread())
+        observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object o) {
@@ -211,7 +211,7 @@ public class LoginActivity extends BaseActivity {
     private void getData() {
         //显示进度对话框
         UtilMethod.showDialog(getmActivity(), dialog);
-        subscribe = NetWork.getNetService(subscribe)
+         NetWork.getNetService()
                 .getLogin(account, pwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -270,7 +270,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        UtilMethod.unSubscribe(subscribe);
+
 
     }
 

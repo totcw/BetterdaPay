@@ -53,7 +53,7 @@ public class ShangHuActivity extends BaseActivity implements View.OnClickListene
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                subscription = NetWork.getNetService(subscription)
+                 NetWork.getNetService()
                         .getSubnum(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()))
                         .compose(NetWork.handleResult(new BaseCallModel<MyShangHu>()))
                         .subscribe(new MyObserver<MyShangHu>() {
