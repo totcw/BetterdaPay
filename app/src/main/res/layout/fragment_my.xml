@@ -60,7 +60,7 @@
                         android:maxLines="1"
                         android:maxWidth="200dp"
                         android:text="137799"
-                        android:textColor="#ffffff"
+                        android:textColor="@color/text_color"
                         android:textSize="@dimen/textsize_little" />
 
                     <TextView
@@ -75,7 +75,7 @@
                         android:maxLines="1"
                         android:maxWidth="200dp"
                         android:text="当前等级:员工"
-                        android:textColor="#ffffff"
+                        android:textColor="@color/text_color"
                         android:textSize="@dimen/textsize_little" />
 
                 </RelativeLayout>

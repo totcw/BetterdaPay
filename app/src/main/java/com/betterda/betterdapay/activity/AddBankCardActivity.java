@@ -66,6 +66,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
         dialog = UtilMethod.createDialog(getmActivity(), "正在上传...");
         setTextChange();
 
+
     }
 
     /**

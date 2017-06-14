@@ -42,6 +42,7 @@ public class MessageActivity extends BaseActivity {
     @Override
     public void init() {
         super.init();
+        mTopbarMeassage.setTitle("消息");
         list = new ArrayList<>();
         list.add(null);
         list.add(null);

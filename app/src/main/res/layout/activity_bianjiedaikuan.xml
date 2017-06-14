@@ -31,7 +31,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:text="当前额度(元)"
-                android:textColor="@color/shouye_renmen_tv"
+                android:textColor="@color/text_color"
                 android:textSize="15sp" />
 
             <com.betterda.betterdapay.view.GradientTextView
@@ -108,12 +108,7 @@
                             android:textColor="@color/bg_blue"
                             android:textSize="14sp" />
 
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="12dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="12dp"
-                            android:background="@mipmap/jiantou_down" />
+
 
                     </LinearLayout>
 
@@ -158,12 +153,7 @@
                             android:textColor="@color/bg_blue"
                             android:textSize="14sp" />
 
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="12dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="12dp"
-                            android:background="@mipmap/jiantou_down" />
+
 
                     </LinearLayout>
 
