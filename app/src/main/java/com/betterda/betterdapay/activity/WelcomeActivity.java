@@ -1,6 +1,7 @@
 package com.betterda.betterdapay.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -9,8 +10,13 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
+import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.dialog.DeleteDialog;
 import com.betterda.betterdapay.dialog.PermissionDialog;
 import com.betterda.betterdapay.util.CacheUtils;
@@ -20,6 +26,8 @@ import com.betterda.betterdapay.util.UtilMethod;
 
 import java.util.HashMap;
 import java.util.List;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 版权：版权所有 (厦门北特达软件有限公司) 2017
@@ -67,13 +75,30 @@ public class WelcomeActivity extends FragmentActivity {
 
     //跳转到首页
     public void starToHome() {
-        if (Build.VERSION.SDK_INT < 23) {
-            isToGuide();
-            finish();
-        } else {
-            isToGuide();
-            finish();
-        }
+        //TODO 访问网络获取更新信息
+
+        View view = LayoutInflater.from(WelcomeActivity.this).inflate(R.layout.dialog_update, null);
+        TextView mTvCancel = (TextView) view.findViewById(R.id.tv_update_cancel);
+        TextView mTvComfirm = (TextView) view.findViewById(R.id.tv_update_comfirm);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view)
+                .show();
+        mTvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    isToGuide();
+                    finish();
+
+            }
+        });
+
+        mTvComfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+            }
+        });
+
     }
 
     /**
@@ -108,7 +133,6 @@ public class WelcomeActivity extends FragmentActivity {
                     map.put("android.permission.WRITE_EXTERNAL_STORAGE", "存储空间");
                     map.put("android.permission.READ_PHONE_STATE", "电话状态");
                     map.put("android.permission.WRITE_SETTINGS", "系统设置");
-
 
                 }
 
@@ -266,6 +290,18 @@ public class WelcomeActivity extends FragmentActivity {
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

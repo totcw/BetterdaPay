@@ -53,15 +53,16 @@ public class GuideActivity extends BaseActivity {
         ImageView imageView = new ImageView(this);
         ViewPager.LayoutParams params = new ViewPager.LayoutParams();
         imageView.setLayoutParams(params);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setImageResource(R.mipmap.guide1);
 
         ImageView imageView2 = new ImageView(this);
-
+        imageView2.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView2.setLayoutParams(params);
         imageView2.setImageResource(R.mipmap.guide2);
 
         ImageView imageView3 = new ImageView(this);
-
+        imageView3.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView3.setLayoutParams(params);
         imageView3.setImageResource(R.mipmap.guide3);
 

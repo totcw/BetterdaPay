@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingTop="15dp"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@mipmap/ic_launcher"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="版本更新"
+        android:textColor="@color/shouye_renmen_tv"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="钱包新版发布啦,马上下载体验!"
+        android:textColor="@color/shouye_renmen_tv"
+        android:textSize="12sp"
+        />
+
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/divierLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/tv_update_cancel"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="以后在说"
+                android:textSize="16sp"
+                android:textColor="@color/bg_blue"
+                android:layout_height="match_parent"/>
+            <View
+
+                android:background="@color/divierLine"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"></View>
+            <TextView
+                android:id="@+id/tv_update_comfirm"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="立即安装"
+                android:textSize="16sp"
+                android:textColor="@color/bg_blue"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+
+</LinearLayout>
