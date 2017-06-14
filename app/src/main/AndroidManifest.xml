@@ -64,6 +64,9 @@
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".activity.GuideActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".activity.ForgetPwdActivity"
             android:screenOrientation="portrait"></activity>
         <activity

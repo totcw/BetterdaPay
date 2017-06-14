@@ -38,6 +38,7 @@ public class Constants {
         public static final String ACCOUNT = "account";
         public static final String AUTH = "auth";//是否认证
         public static final String REMEMBER = "remember";//是否记住密码
+        public static final String GUIDE = "guide";//是否进入过引导界面
 
     }
 

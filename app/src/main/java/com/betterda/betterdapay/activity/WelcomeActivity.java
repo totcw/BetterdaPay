@@ -13,6 +13,8 @@ import android.text.TextUtils;
 
 import com.betterda.betterdapay.dialog.DeleteDialog;
 import com.betterda.betterdapay.dialog.PermissionDialog;
+import com.betterda.betterdapay.util.CacheUtils;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.PermissionUtil;
 import com.betterda.betterdapay.util.UtilMethod;
 
@@ -38,10 +40,11 @@ import java.util.List;
 public class WelcomeActivity extends FragmentActivity {
     private String[] REQUEST_PERMISSIONS = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE};
-    private HashMap<String,String> map;//管理权限的map
+    private HashMap<String, String> map;//管理权限的map
     private static final int REQUEST_PERMISSION_CODE_TAKE_PIC = 9; //权限的请求码
     private static final int REQUEST_PERMISSION_SEETING = 8; //去设置界面的请求码
     private PermissionDialog permissionDialog;//权限请求对话框
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +66,25 @@ public class WelcomeActivity extends FragmentActivity {
     }
 
     //跳转到首页
-    public void  starToHome(){
+    public void starToHome() {
         if (Build.VERSION.SDK_INT < 23) {
-            UtilMethod.startIntent(this, LoginActivity.class);
+            isToGuide();
             finish();
         } else {
-            UtilMethod.startIntent(this, LoginActivity.class);
+            isToGuide();
             finish();
+        }
+    }
+
+    /**
+     * 是否去引导界面
+     */
+    public void isToGuide() {
+        boolean isGuide = CacheUtils.getBoolean(WelcomeActivity.this, Constants.Cache.GUIDE, false);
+        if (isGuide) {
+            UtilMethod.startIntent(this, LoginActivity.class);
+        } else {
+            UtilMethod.startIntent(this, GuideActivity.class);
         }
     }
 
@@ -77,7 +92,7 @@ public class WelcomeActivity extends FragmentActivity {
      * 请求权限
      */
     private void checkPermiss() {
-        PermissionUtil.checkPermission(this,  REQUEST_PERMISSIONS, new PermissionUtil.permissionInterface() {
+        PermissionUtil.checkPermission(this, REQUEST_PERMISSIONS, new PermissionUtil.permissionInterface() {
             @Override
             public void success() {
                 //请求成功
@@ -107,6 +122,7 @@ public class WelcomeActivity extends FragmentActivity {
 
     /**
      * 请求权限
+     *
      * @param permissions
      */
     private void requestPermission(final String[] permissions) {
@@ -120,7 +136,7 @@ public class WelcomeActivity extends FragmentActivity {
             @Override
             public void comfirm() {
                 //请求权限
-                PermissionUtil.requestContactsPermissions(WelcomeActivity.this,permissions,REQUEST_PERMISSION_CODE_TAKE_PIC);
+                PermissionUtil.requestContactsPermissions(WelcomeActivity.this, permissions, REQUEST_PERMISSION_CODE_TAKE_PIC);
             }
 
             @Override
@@ -146,6 +162,7 @@ public class WelcomeActivity extends FragmentActivity {
 
     /**
      * 请求权限2
+     *
      * @param permissions
      */
     private void requestPermission2(final String[] permissions) {
@@ -155,7 +172,7 @@ public class WelcomeActivity extends FragmentActivity {
                 //去掉已经请求过的权限
                 List<String> deniedPermissions = PermissionUtil.findDeniedPermissions(WelcomeActivity.this, permissions);
                 //请求权限
-                PermissionUtil.requestContactsPermissions(WelcomeActivity.this,deniedPermissions.toArray(new String[deniedPermissions.size()]),REQUEST_PERMISSION_CODE_TAKE_PIC);
+                PermissionUtil.requestContactsPermissions(WelcomeActivity.this, deniedPermissions.toArray(new String[deniedPermissions.size()]), REQUEST_PERMISSION_CODE_TAKE_PIC);
             }
 
             @Override
@@ -173,7 +190,7 @@ public class WelcomeActivity extends FragmentActivity {
                 }
             }
         }
-        deleteDialog.setTvcontent("请允许"+sb+"权限请求");
+        deleteDialog.setTvcontent("请允许" + sb + "权限请求");
         deleteDialog.show();
     }
 
@@ -197,7 +214,6 @@ public class WelcomeActivity extends FragmentActivity {
         deleteDialog.setTvcontent("去设置界面开启权限?");
         deleteDialog.show();
     }
-
 
 
     /**
@@ -237,7 +253,6 @@ public class WelcomeActivity extends FragmentActivity {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
 
 
     @Override
