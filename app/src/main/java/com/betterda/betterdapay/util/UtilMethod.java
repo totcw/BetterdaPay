@@ -121,7 +121,57 @@ public class UtilMethod {
         }
         return tel;
     }
+    /**
+     * 获取apk程序信息[packageName,versionName...]
+     *
+     * @param context Context
+     * @param path    apk path
+     */
+    public static PackageInfo getApkInfo(Context context, String path) {
 
+        PackageManager pm = context.getPackageManager();
+        PackageInfo info = pm.getPackageArchiveInfo(path, PackageManager.GET_ACTIVITIES);
+        if (info != null) {
+            return info;
+        }
+        return null;
+    }
+    /**
+     * 下载的apk和当前程序版本比较
+     *
+     * @param apkInfo apk file's packageInfo
+     * @param context Context
+     * @return 如果当前应用版本小于apk的版本则返回true
+     */
+    public static boolean compare(PackageInfo apkInfo, Context context) {
+        if (apkInfo == null) {
+            return false;
+        }
+        String localPackage = context.getPackageName();
+        if (apkInfo.packageName.equals(localPackage)) {
+            try {
+                PackageInfo packageInfo = context.getPackageManager().getPackageInfo(localPackage, 0);
+                if (apkInfo.versionCode > packageInfo.versionCode) {
+                    return true;
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 安装apk
+     * @param context
+     * @param uri
+     */
+    public static void startInstall(Context context, Uri uri) {
+        Intent install = new Intent(Intent.ACTION_VIEW);
+        install.setDataAndType(uri, "application/vnd.android.package-archive");
+        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(install);
+    }
 
     /**
      * close the soft keyboard

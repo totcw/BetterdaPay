@@ -1,11 +1,12 @@
 package com.betterda.betterdapay.activity;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -15,24 +16,35 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.dialog.DeleteDialog;
 import com.betterda.betterdapay.dialog.PermissionDialog;
+import com.betterda.betterdapay.http.DownloadAPI;
 import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.interfac.DownloadProgressListener;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.javabean.Download;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
+import com.betterda.betterdapay.util.FileUtils;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.PermissionUtil;
 import com.betterda.betterdapay.util.RxManager;
 import com.betterda.betterdapay.util.UtilMethod;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
+import okhttp3.ResponseBody;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 版权：版权所有 (厦门北特达软件有限公司) 2017
@@ -58,6 +70,7 @@ public class WelcomeActivity extends FragmentActivity {
     private static final int REQUEST_PERMISSION_SEETING = 8; //去设置界面的请求码
     private PermissionDialog permissionDialog;//权限请求对话框
     protected RxManager mRxManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +109,7 @@ public class WelcomeActivity extends FragmentActivity {
         mTvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startToLogin();
 
             }
@@ -104,10 +118,86 @@ public class WelcomeActivity extends FragmentActivity {
         mTvComfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+
+                if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                    Toast.makeText(WelcomeActivity.this, "sd卡不可用", 0).show();
+                    return;
+                }
+                final File externalFilesDir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/" + "update.apk");
+
+                if (null != externalFilesDir && externalFilesDir.exists()) {
+                    PackageInfo apkInfo = UtilMethod.getApkInfo(WelcomeActivity.this, externalFilesDir.getAbsolutePath());
+                    //如果apk没问题就不会为null
+                    if (null != apkInfo) {
+                        //检测是否是有一个apk的版本高于当前app,那么就直接安装
+                        if (UtilMethod.compare(apkInfo, WelcomeActivity.this)) {
+                            UtilMethod.startInstall(WelcomeActivity.this, Uri.fromFile(externalFilesDir));
+                            return;
+                        }
+                    }
+                }
+
+                //如果没有就重新下载
+                DownloadAPI.downloadService("http://gdown.baidu.com/data/wisegame/41a04ccb443cd61a/", new DownloadProgressListener() {
+                    @Override
+                    public void update(long bytesRead, long contentLength, boolean done) {
+                        Download download = new Download();
+                        download.setTotalFileSize(contentLength);
+                        download.setCurrentFileSize(bytesRead);
+                        int progress = (int) ((bytesRead * 100) / contentLength);
+                        download.setProgress(progress);
+                        //TODO 做成图形界面
+                        if (progress == 100) {//进度到100 就启动安装
+                            if (null != externalFilesDir && externalFilesDir.exists()) {
+                                UtilMethod.startInstall(WelcomeActivity.this, Uri.fromFile(externalFilesDir));
+                                //检测是否是通过一个应用,且下载的apk的版本高于当前app
+                                //检测是否是有一个apk的版本高于当前app,那么就直接安装
+                                PackageInfo apkInfo = UtilMethod.getApkInfo(WelcomeActivity.this, externalFilesDir.getAbsolutePath());
+                                if (null != apkInfo) {
+                                    if (UtilMethod.compare(apkInfo, WelcomeActivity.this)) {
+                                        //UtilMethod.startInstall(WelcomeActivity.this, Uri.fromFile(externalFilesDir));
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }).download("QQ_692.apk")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())
+                        .subscribe(new Observer<ResponseBody>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                //如果下载出错,就删除当前apk
+                                /*if (null != externalFilesDir && externalFilesDir.exists()) {
+                                    externalFilesDir.delete();
+                                }*/
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onNext(ResponseBody responseBody) {
+
+                                try {
+                                    FileUtils.writeFile(responseBody.byteStream(), externalFilesDir);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    throw new RuntimeException(e.getMessage(), e);
+                                }
+
+
+                            }
+                        });
+
             }
         });
     }
+
 
     public void startToLogin() {
         isToGuide();
@@ -121,24 +211,25 @@ public class WelcomeActivity extends FragmentActivity {
         boolean netAvailable = NetworkUtils.isNetAvailable(WelcomeActivity.this);
         if (netAvailable) {
             mRxManager.add(
-                    NetWork.getNetService().getUpdate(appVersionCode+"")
-                    .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                    .subscribe(new MyObserver<String>() {
-                        @Override
-                        protected void onSuccess(String data, String resultMsg) {
-                            showUpdateDialog(data);
-                        }
+                    NetWork.getNetService().getUpdate(appVersionCode + "")
+                            .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                            .subscribe(new MyObserver<String>() {
+                                @Override
+                                protected void onSuccess(String data, String resultMsg) {
+                                    showUpdateDialog(data);
+                                }
 
-                        @Override
-                        public void onFail(String resultMsg) {
-                            startToLogin();
-                        }
+                                @Override
+                                public void onFail(String resultMsg) {
+                                    // startToLogin();
+                                    showUpdateDialog(resultMsg);
+                                }
 
-                        @Override
-                        public void onExit() {
+                                @Override
+                                public void onExit() {
 
-                        }
-                    })
+                                }
+                            })
             );
         } else {
             startToLogin();
@@ -346,6 +437,7 @@ public class WelcomeActivity extends FragmentActivity {
         super.onPause();
         JPushInterface.onPause(this);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
