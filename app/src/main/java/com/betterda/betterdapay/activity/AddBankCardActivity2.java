@@ -1,20 +1,12 @@
 package com.betterda.betterdapay.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.nfc.Tag;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +22,6 @@ import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.ImageTools;
 import com.betterda.betterdapay.util.NetworkUtils;
-import com.betterda.betterdapay.util.PermissionUtil;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.ShapeLoadingDialog;
@@ -38,7 +29,6 @@ import com.betterda.mylibrary.ShapeLoadingDialog;
 import java.io.File;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -49,9 +39,6 @@ import okhttp3.RequestBody;
  * Created by Administrator on 2016/8/17.
  */
 public class AddBankCardActivity2 extends BaseActivity implements View.OnClickListener {
-    private String[] REQUEST_PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA};
-    private static final int REQUEST_PERMISSION_CODE_TAKE_PIC = 9; //权限的请求码
-    private static final int REQUEST_PERMISSION_SEETING = 8; //去设置界面的请求码
 
     @BindView(R.id.topbar_addbankcard2)
     NormalTopBar topbarAddbankcard2;
@@ -182,12 +169,8 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
      * 请求拍照的权限
      */
     private void requestPermiss() {
-        PermissionUtil.checkPermission(getmActivity(), linearAddbankcard2Bankcard, REQUEST_PERMISSIONS, REQUEST_PERMISSION_CODE_TAKE_PIC, new PermissionUtil.permissionInterface() {
-            @Override
-            public void success() {
-                UtilMethod.paizhao(getmActivity(), Constants.PHOTOHRAPH);
-            }
-        });
+
+        UtilMethod.paizhao(getmActivity(), Constants.PHOTOHRAPH);
     }
 
     private void commit() {
@@ -283,12 +266,8 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //如果是从设置界面返回,就继续判断权限
-        if (requestCode == REQUEST_PERMISSION_SEETING) {
-            requestPermiss();
-        } else {
-            result(requestCode, resultCode, data);
-        }
+        result(requestCode, resultCode, data);
+
 
     }
 
@@ -455,38 +434,6 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     }
 
 
-    /**
-     * 检测权限的回调
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
-    public void onRequestPermissionsResult(int requestCode, final String[] permissions, int[] grantResults) {
 
-        if (requestCode == REQUEST_PERMISSION_CODE_TAKE_PIC) {
-            if (PermissionUtil.verifyPermissions(grantResults)) {//有权限
-                ImageTools.paizhao(getmActivity(), Constants.PHOTOHRAPH);
-            } else {
-                //没有权限
-                if (!PermissionUtil.shouldShowPermissions(this,permissions)) {//这个返回false 表示勾选了不再提示
-                    showSnackBar(linearAddbankcard2Bankcard, "请去设置界面设置权限","去设置");
-                } else {
-                    //表示没有权限 ,但是没勾选不再提示
-                    showSnackBar(linearAddbankcard2Bankcard, "请允许权限请求!");
-                }
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
 
-    @Override
-    public void doSnack() {
-        super.doSnack();
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", getPackageName(), null);
-        intent.setData(uri);
-        startActivityForResult(intent, REQUEST_PERMISSION_SEETING);
-    }
 }

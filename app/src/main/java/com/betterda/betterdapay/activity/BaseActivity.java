@@ -1,5 +1,6 @@
 package com.betterda.betterdapay.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +17,10 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.util.PermissionUtil;
 import com.betterda.betterdapay.util.UtilMethod;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
@@ -27,7 +31,8 @@ import rx.Subscription;
  * Created by Administrator on 2016/7/27.
  */
 public class BaseActivity extends FragmentActivity {
-
+    private String[] REQUEST_PERMISSIONS = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE};
     private PopupWindow popupWindow;
     protected Subscription subscription;
 
@@ -40,6 +45,27 @@ public class BaseActivity extends FragmentActivity {
         ButterKnife.bind(this);
         initListener();
         init();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+        //统一检查权限
+        PermissionUtil.checkPermission(getmActivity(), REQUEST_PERMISSIONS, new PermissionUtil.permissionInterface() {
+            @Override
+            public void success() {
+
+            }
+
+            @Override
+            public void fail(List<String> permissions) {
+                //没有权限就回到欢迎页面
+                UtilMethod.startIntent(getmActivity(), WelcomeActivity.class);
+
+            }
+        });
     }
 
     /**
@@ -259,7 +285,7 @@ public class BaseActivity extends FragmentActivity {
      * 强制跳转到登录界面
      */
     public void ExitToLogin() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
 
         builder.setTitle("温馨提示")
                 .setMessage("您的帐号已在别处登录,请重新登录")
@@ -271,7 +297,7 @@ public class BaseActivity extends FragmentActivity {
                     }
                 })
                 .setCancelable(false)
-                .show();
+                .show();*/
 
     }
 
@@ -280,11 +306,6 @@ public class BaseActivity extends FragmentActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        JPushInterface.onResume(this);
-    }
 
     @Override
     protected void onPause() {

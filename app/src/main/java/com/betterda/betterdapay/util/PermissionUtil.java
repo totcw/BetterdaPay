@@ -1,44 +1,41 @@
 package com.betterda.betterdapay.util;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
-
-import com.betterda.betterdapay.activity.AddBankCardActivity2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 6.0Dynamic authorization application
  * Created by Administrator on 2016/8/26.
  */
 public class PermissionUtil {
 
 
     /**
-     * 检测权限
+     * Detection authority
      * @param activity
-     * @param view //随便一个view 来用现象snackbar
-     * @param permissions  //请求的权限组
-     * @param requestCode  //请求码
+     * @param permissions  //Requested permission group
      */
-    public  static void checkPermission(final Activity activity,View view, final String[] permissions, final int requestCode,permissionInterface permissionInterface) {
-        //小于23 就什么都不做
+    public  static void checkPermission(final Activity activity, final String[] permissions, permissionInterface permissionInterface) {
+        //Less than 23 do nothing.
         if (Build.VERSION.SDK_INT < 23) {
+            permissionInterface.success();
             return;
         }
-        List<String> deniedPermissions = findDeniedPermissions(activity, permissions);
+        final List<String> deniedPermissions = findDeniedPermissions(activity, permissions);
+
         if (deniedPermissions!=null&&deniedPermissions.size()>0) {
-            //大于0,表示有权限没申请
-            PermissionUtil.requestContactsPermissions(activity, view,  deniedPermissions.toArray(new String[deniedPermissions.size()]), requestCode);
+            //Greater than 0, said there is no application for permission
+
+            permissionInterface.fail(deniedPermissions);
+
         } else {
-            //拥有权限
+            //have authority
             permissionInterface.success();
 
         }
@@ -50,26 +47,18 @@ public class PermissionUtil {
 
 
     /**
-     * 请求权限
+     * Request permission
      */
-    public static void requestContactsPermissions(final Activity activity,View view, final String[] permissions, final int requestCode) {
-        //默认是false,但是只要请求过一次权限就会为true,除非点了不再询问才会重新变为false
+    public static void requestContactsPermissions(final Activity activity, final String[] permissions, final int requestCode) {
+        //The default is false, but as long as the request once permission will be true, unless the point is no longer asked to be re changed to false
         if (shouldShowPermissions(activity,permissions)) {
 
-            Snackbar.make(view, "需要一些权限",
-                    Snackbar.LENGTH_INDEFINITE)
-                    .setAction("确定", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ActivityCompat
-                                    .requestPermissions(activity, permissions,
-                                            requestCode);
-                        }
-                    })
-                    .show();
+            ActivityCompat
+                    .requestPermissions(activity, permissions,
+                            requestCode);
         } else {
 
-            // 无需向用户界面提示，直接请求权限,如果用户点了不再询问,即使调用请求权限也不会出现请求权限的对话框
+            // No need to prompt the user interface, the direct request permissions, if the user points are no longer asked, even if the request does not have the right to request permissions dialog box
             ActivityCompat.requestPermissions(activity,
                     permissions,
                     requestCode);
@@ -77,7 +66,7 @@ public class PermissionUtil {
     }
 
     /**
-     * 判断请求权限是否成功
+     * To determine whether the requested permission is successful
      * @param grantResults
      * @return
      */
@@ -101,23 +90,27 @@ public class PermissionUtil {
 
     public interface permissionInterface{
         void success();
+
+        void fail(List<String> permissions);
     }
 
     /**
-     * 找到没有授权的权限
+     * To find no authorization
      * @param activity
      * @param permission
      * @return
      */
     public static List<String> findDeniedPermissions(Activity activity, String... permission)
     {
-        //存储没有授权的权限
+        //Storing permissions without authorization
         List<String> denyPermissions = new ArrayList<>();
         for (String value : permission)
         {
+            System.out.println("value:"+value);
             if (ContextCompat.checkSelfPermission(activity,value) != PackageManager.PERMISSION_GRANTED)
             {
-                //没有权限 就添加
+
+                //Add without permission
                 denyPermissions.add(value);
             }
         }
@@ -125,7 +118,7 @@ public class PermissionUtil {
     }
 
     /**
-     * 检测这些权限中是否有 没有授权需要提示的
+     * To detect if there is no authorization required for these permissions
      * @param activity
      * @param permission
      * @return
