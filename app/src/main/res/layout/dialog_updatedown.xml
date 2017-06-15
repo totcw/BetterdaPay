@@ -15,23 +15,13 @@
         android:textSize="16sp"
         />
 
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
+    <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <ProgressBar
-            android:layout_weight="1"
-            android:id="@+id/pb_updatedown"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:max="100"
-            />
-
         <TextView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:id="@+id/tv_updatedown_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,8 +29,22 @@
             android:textColor="@color/shouye_renmen_tv"
             android:textSize="16sp"
             />
+        <ProgressBar
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_updatedown_progress"
+            android:id="@+id/pb_updatedown"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:progressDrawable="@drawable/shape_progressbar_mini"
+            android:max="100"
+            android:layout_marginRight="5dp"
+            />
 
-    </LinearLayout>
+
+
+    </RelativeLayout>
 
 
     <Button

@@ -1,24 +1,18 @@
 package com.betterda.betterdapay.fragment;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.activity.AddBankCardActivity;
 import com.betterda.betterdapay.activity.AlreadAuthAcitity;
 import com.betterda.betterdapay.activity.InformationActivity;
 import com.betterda.betterdapay.activity.MemberActivity;
-import com.betterda.betterdapay.activity.MyEweiMaActivity;
 import com.betterda.betterdapay.activity.MyRatingActivity;
-import com.betterda.betterdapay.activity.MyYinHangKa;
 import com.betterda.betterdapay.activity.RealNameAuthActivity;
 import com.betterda.betterdapay.activity.SettingActivity;
-import com.betterda.betterdapay.activity.ShangHuActivity;
 import com.betterda.betterdapay.activity.TransactionRecordActivity;
 import com.betterda.betterdapay.activity.WalletActivity;
 import com.betterda.betterdapay.callback.MyObserver;
@@ -31,10 +25,8 @@ import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

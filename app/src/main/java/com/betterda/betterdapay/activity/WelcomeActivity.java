@@ -30,7 +30,6 @@ import com.betterda.betterdapay.http.DownloadAPI;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.interfac.DownloadProgressListener;
 import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.javabean.Download;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.FileUtils;
@@ -47,7 +46,6 @@ import java.util.List;
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.ResponseBody;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -84,6 +82,7 @@ public class WelcomeActivity extends FragmentActivity {
             if (msg != null) {
                 int progress = msg.arg1;
                 if (mMProgressBar != null) {
+                    //更新进度条
                     mMTvProgress.setText(progress + "%");
                     mMProgressBar.setProgress(progress);
                 }
@@ -124,7 +123,7 @@ public class WelcomeActivity extends FragmentActivity {
     }
 
     /**
-     * 现在更新对话框
+     * 显示更新对话框
      *
      * @param url
      */
@@ -242,6 +241,9 @@ public class WelcomeActivity extends FragmentActivity {
                 }));
     }
 
+    /**
+     * 创建下载对话框
+     */
     private void createDownDialog() {
         if (mAlertDialog == null) {
             View downView = LayoutInflater.from(WelcomeActivity.this).inflate(R.layout.dialog_updatedown, null);
@@ -273,6 +275,9 @@ public class WelcomeActivity extends FragmentActivity {
         finish();
     }
 
+    /**
+     * 获取版本信息
+     */
     private void getData() {
 
         int appVersionCode = UtilMethod.getAppVersionCode(WelcomeActivity.this);

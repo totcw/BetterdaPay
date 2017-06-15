@@ -6,7 +6,6 @@ import android.app.Application;
 import com.betterda.betterdapay.component.AppComponent;
 import com.betterda.betterdapay.component.DaggerAppComponent;
 import com.betterda.betterdapay.modules.AppModules;
-import com.facebook.drawee.backends.pipeline.Fresco;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +36,6 @@ public class MyApplication extends Application {
             list = new ArrayList<>();
         }
 
-        //Fresco初始化
-        Fresco.initialize(getApplicationContext());
         //捕获异常
        // CrashHandler.getInstance().init(getApplicationContext());
 
