@@ -1,4 +1,4 @@
-package com.betterda.betterdapay.interfac;
+package com.betterda.betterdapay.http;
 
 import com.betterda.betterdapay.javabean.BankCard;
 import com.betterda.betterdapay.javabean.BaseCallModel;
@@ -36,14 +36,24 @@ public interface NetService {
      *
      * @param account
      * @param password
-     * @param number
+     * @param inviteCode
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_REGISTER)
     Observable<BaseCallModel<String>> getRegister(@Field("account") String account,
                                                   @Field("password") String password,
-                                                  @Field("number") String number);
+                                                  @Field("inviteCode") String inviteCode);
+
+    /**
+     * 短信验证
+     *
+     * @param phone
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_SENDMSG)
+    Observable<BaseCallModel<String>> getSendMsg(@Field("phone") String phone);
 
     /**
      * 登录

@@ -44,10 +44,10 @@ public class Constants {
 
 
     public static class Url {
-       // public static final String URL = "http://192.168.1.104:8080/yunfus_web/";
-        public static final String URL = "http://192.168.0.111:8080/book/";
+        public static final String URL = "http://a93e3937.ngrok.io/wallet/";
         public static final String URL_LOGIN = URL + "appAPI.do?api/account/login";
-        public static final String URL_REGISTER = URL + "appAPI.do?api/account/register";
+        public static final String URL_REGISTER = URL + "api/registerController.do?register";
+        public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
         public static final String URL_PWD_UPDATE = URL + "appAPI.do?api/account/update";//忘记密码
         public static final String URL_ORDER_CREATE = URL + "appAPI.do?api/account/order/add";//订单生成
         public static final String URL_ORDER_GET = URL + "appAPI.do?api/account/order/get";//账单获取

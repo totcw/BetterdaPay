@@ -1,9 +1,6 @@
 package com.betterda.betterdapay.http;
 
-import android.text.TextUtils;
-
 import com.betterda.betterdapay.application.MyApplication;
-import com.betterda.betterdapay.interfac.NetService;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
@@ -23,7 +20,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

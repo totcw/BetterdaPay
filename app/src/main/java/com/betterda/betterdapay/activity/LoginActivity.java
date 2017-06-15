@@ -82,14 +82,12 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void init() {
+        btnLogin.setSelected(true);
         inject();
         setTopBar();
         judgePwd();
         register();
 
-        Intent intent = new Intent();
-        intent.setAction("com.test2.my");
-        sendBroadcast(intent);
     }
 
     /**

@@ -29,18 +29,15 @@ public class DownloadAPI {
     private static DownloadService mDownloadService;
 
 
-    public static DownloadService downloadService(String url ,DownloadProgressListener listener) {
+    public static DownloadService downloadService(String url ,DownloadProgressInterceptor interceptor) {
 
+            //因为interceptor涉及到界面的更新,所以每次都需要重新创建对象
 
-        if (mDownloadService == null) {
-            DownloadProgressInterceptor interceptor = new DownloadProgressInterceptor(listener);
-
-            OkHttpClient client = new OkHttpClient.Builder()
+            OkHttpClient client =  new OkHttpClient.Builder()
                     .retryOnConnectionFailure(true)
                     .addInterceptor(interceptor)
                     .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                     .build();
-
 
             Retrofit retrofit = new Retrofit.Builder()
                     .client(client)
@@ -48,12 +45,13 @@ public class DownloadAPI {
                     .baseUrl(url)
                     .build();
             mDownloadService = retrofit.create(DownloadService.class);
-        }
+
+
 
 
         return mDownloadService;
     }
-    static class DownloadProgressInterceptor implements Interceptor {
+    public static class DownloadProgressInterceptor implements Interceptor {
 
         private DownloadProgressListener listener;
 

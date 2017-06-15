@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -151,6 +152,8 @@ public class UtilMethod {
         if (apkInfo.packageName.equals(localPackage)) {
             try {
                 PackageInfo packageInfo = context.getPackageManager().getPackageInfo(localPackage, 0);
+                System.out.println("apk:"+apkInfo.versionCode);
+                System.out.println("packageInfo:"+packageInfo.versionCode);
                 if (apkInfo.versionCode > packageInfo.versionCode) {
                     return true;
                 }
@@ -438,10 +441,28 @@ public class UtilMethod {
         }
     }
 
+    public static void showDialog(Activity activity, AlertDialog dialog) {
+        if (!activity.isFinishing()) {
+            if (dialog != null) {
+                dialog.show();
+            }
+        }
+    }
+
+
     /**
      * 关闭对话框
      */
     public static void dissmissDialog(Activity activity, ShapeLoadingDialog dialog) {
+        if (!activity.isFinishing()) {
+            if (dialog != null) {
+
+                dialog.dismiss();
+            }
+        }
+    }
+
+    public static void dissmissDialog(Activity activity, AlertDialog dialog) {
         if (!activity.isFinishing()) {
             if (dialog != null) {
 
@@ -520,6 +541,9 @@ public class UtilMethod {
         }
         loadingPager.hide();
     }
+
+
+
 
 
 }

@@ -23,12 +23,13 @@ public class RxManager {
 
     /**
      * RxBus订阅
+     *
      * @param eventName
      * @param action1
      */
-    public <T>void on(String eventName, Action1<T> action1) {
+    public <T> void on(String eventName, Action1<T> action1) {
         Observable<T> mObservable = mRxBus.register(eventName);
-         mObservables.put(eventName, mObservable);
+        mObservables.put(eventName, mObservable);
 
         /*订阅管理*/
         mCompositeSubscription.add(mObservable.observeOn(AndroidSchedulers.mainThread())
@@ -43,25 +44,32 @@ public class RxManager {
 
     /**
      * 单纯的Observables 和 Subscribers管理
+     *
      * @param m
      */
     public void add(Subscription m) {
         /*订阅管理*/
         mCompositeSubscription.add(m);
     }
+
     /**
      * 单个presenter生命周期结束，取消订阅和所有rxbus观察
      */
     public void clear() {
-        mCompositeSubscription.unsubscribe();// 取消所有订阅
-        for (Map.Entry<String, Observable<?>> entry : mObservables.entrySet()) {
-            mRxBus.unregister(entry.getKey(), entry.getValue());// 移除rxbus观察
+        if (mCompositeSubscription != null&&mObservables!=null&&mRxBus!=null) {
+
+            mCompositeSubscription.unsubscribe();// 取消所有订阅
+            for (Map.Entry<String, Observable<?>> entry : mObservables.entrySet()) {
+                mRxBus.unregister(entry.getKey(), entry.getValue());// 移除rxbus观察
+            }
+            mObservables.clear();
+            mObservables = null;
+            mRxBus = null;
+            mCompositeSubscription = null;
         }
-        mObservables.clear();
-        mObservables = null;
-        mRxBus = null;
-        mCompositeSubscription = null;
+
     }
+
     //发送rxbus
     public void post(Object tag, Object content) {
         mRxBus.post(tag, content);
