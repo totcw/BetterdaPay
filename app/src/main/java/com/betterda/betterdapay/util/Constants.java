@@ -66,7 +66,8 @@ public class Constants {
         public static final String URL_SEARCH_POST = URL + "appAPI.do?api/account/search/post";//搜索接口
         public static final String URL_IMG_UPLOAD = URL + "appAPI.do?api/android/img/upload";//图片上传
         public static final String URL_GET_INFORMATION = "appAPI.do?api/account/auth/get";//我的资料获取
-        public static final String book = "Test";//我的资料获取
+        public static final String URL_GET_MEMBERS = "api/memberNumController.do?memberNum";//获取会员个数
+
 
 
     }

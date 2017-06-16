@@ -25,8 +25,17 @@
 
 
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="180dp">
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
 
             </RelativeLayout>
 

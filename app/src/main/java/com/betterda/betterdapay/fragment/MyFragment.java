@@ -83,6 +83,10 @@ public class MyFragment extends BaseFragment {
         if (tvMyNumber != null) {
             tvMyNumber.setText(CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, ""));
         }
+        if (svTouxiang != null) {
+            svTouxiang.setImageResource(RateData.getRate(rate));
+        }
+
         getData();
     }
 

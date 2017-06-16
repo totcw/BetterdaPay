@@ -170,6 +170,7 @@ public class WelcomeActivity extends FragmentActivity {
                 //检测是否是有一个apk的版本高于当前app,那么就直接安装
                 if (UtilMethod.compare(apkInfo, WelcomeActivity.this)) {
                     UtilMethod.startInstall(WelcomeActivity.this, Uri.fromFile(externalFilesDir));
+                    finish();
                     return;
                 }
             }
@@ -195,10 +196,11 @@ public class WelcomeActivity extends FragmentActivity {
                         //检测是否是有一个apk的版本高于当前app,那么就直接安装
                         PackageInfo apkInfo = UtilMethod.getApkInfo(WelcomeActivity.this, externalFilesDir.getAbsolutePath());
                         if (null != apkInfo) {
-                            System.out.println("apkinfo:"+apkInfo);
+
                             if (UtilMethod.compare(apkInfo, WelcomeActivity.this)) {
                                 UtilMethod.startInstall(WelcomeActivity.this, Uri.fromFile(externalFilesDir));
-                            }
+                                finish();
+                             }
                         }
                     }
 

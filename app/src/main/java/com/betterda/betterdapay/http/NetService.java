@@ -5,6 +5,7 @@ import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.EWeiMa;
 import com.betterda.betterdapay.javabean.FenRun;
 import com.betterda.betterdapay.javabean.Information;
+import com.betterda.betterdapay.javabean.MemberCounts;
 import com.betterda.betterdapay.javabean.MyShangHu;
 import com.betterda.betterdapay.javabean.Order;
 import com.betterda.betterdapay.javabean.OrderALL;
@@ -376,10 +377,14 @@ public interface NetService {
                                                 @Field("pageNo") String pageNo,
                                                 @Field("pageSize") String pageSize
     );
-
+   /**
+    *@author : lyf
+    *@创建日期： 2017/6/16
+    *@功能说明：获取会员个数
+    */
     @FormUrlEncoded
-    @POST(Constants.Url.book)
-    Observable<BaseCallModel<String>> getBook(@Field("bookname") String bookname,@Field("page") String page);
+    @POST(Constants.Url.URL_GET_MEMBERS)
+    Observable<BaseCallModel<MemberCounts>> getMemberCounts(@Field("account") String account);
 
     /**
      * 图片上传
@@ -403,7 +408,7 @@ public interface NetService {
      */
 
     @FormUrlEncoded
-    @POST(Constants.Url.book)
+    @POST(Constants.Url.URL_IMG_UPLOAD)
     Observable<BaseCallModel<String>> getUpdate(@Field("version") String version);
 
 

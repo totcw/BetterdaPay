@@ -226,7 +226,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     protected void onSuccess(UserInfo userInfo, String resultMsg) {
                         parseAndSave(userInfo);
-                        showToast(resultMsg);
+
                     }
 
                     @Override
