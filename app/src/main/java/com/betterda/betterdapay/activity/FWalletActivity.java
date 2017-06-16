@@ -26,7 +26,10 @@ public class FWalletActivity extends BaseActivity {
     TextView mTvFwalletYesterday;
     @BindView(R.id.tv_fwallet_addup)
     TextView mTvFwalletAddup;
-
+    @BindView(R.id.tv_ywallet_money_yesterday)
+    TextView tvYwalletMoneyYesterday;
+    @BindView(R.id.tv_ywallet_money_acount)
+    TextView tvYwalletMoneyAcount;
     @Override
     public void initView() {
         super.initView();
@@ -36,7 +39,7 @@ public class FWalletActivity extends BaseActivity {
     @Override
     public void init() {
         super.init();
-        mTopbarFwallet.setTitle("分润钱包");
+        mTopbarFwallet.setTitle("钱包");
     }
 
     @OnClick({R.id.linear_fwallet_withdraw, R.id.linear_fwallet_details, R.id.bar_back})
