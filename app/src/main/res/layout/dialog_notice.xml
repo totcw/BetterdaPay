@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingTop="15dp"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="温馨提示"
+        android:textColor="@color/shouye_renmen_tv"
+        android:textSize="16sp"
+        />
+    <View
+        android:layout_marginTop="15dp"
+        android:background="@color/bg_blue"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+    <TextView
+
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="您暂未进行实名认证,需要进行实名认证且通过后才能正常使用收款功能,是否前往认证?"
+        android:textColor="@color/shouye_renmen_tv"
+        android:textSize="14sp"
+        />
+
+        <View
+            android:layout_marginTop="15dp"
+            android:background="@color/divierLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/tv_update_cancel"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="以后在说"
+                android:textSize="16sp"
+                android:textColor="@color/bg_blue"
+                android:layout_height="match_parent"/>
+            <View
+
+                android:background="@color/divierLine"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"></View>
+            <TextView
+                android:id="@+id/tv_update_comfirm"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="立即认证"
+                android:textSize="16sp"
+                android:textColor="@color/bg_blue"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+
+</LinearLayout>

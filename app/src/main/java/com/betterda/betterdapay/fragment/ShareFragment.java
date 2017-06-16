@@ -1,15 +1,19 @@
 package com.betterda.betterdapay.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.view.NormalTopBar;
+import com.betterda.mylibrary.Utils.StatusBarCompat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,13 +27,25 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
 
     @BindView(R.id.btn_fragment_share)
     Button btnFragmentShare;
+    @BindView(R.id.topbar_share)
+    NormalTopBar mNormalTopBar;
+    private View mView;
 
     @Override
     public View initView(LayoutInflater inflater) {
-        View view = inflater.inflate(R.layout.fragment_share, null);
-        return view;
+         mView =  inflater.inflate(R.layout.fragment_share, null);
+        return mView;
+
     }
 
+
+
+    @Override
+    public void initData() {
+        super.initData();
+        mNormalTopBar.setTitle("分享");
+        mNormalTopBar.setBackVisibility(false);
+    }
 
     /**
      * 分享

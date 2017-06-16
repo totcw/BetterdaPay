@@ -54,7 +54,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
     ImageView ivRegisterChoose;
     private String number, pwd, pwd2, yzm, phone;
     private ShapeLoadingDialog dialog;
-    private String verfication;//服务器返回的验证码
+    private String verfication,verficationNumber;//服务器返回的验证码和验证时的手机号
 
     @Override
     public void initView() {
@@ -149,6 +149,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
             if (!TextUtils.isEmpty(number)) {
                 boolean ismobile = number.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
                 if (ismobile) {
+                    verficationNumber = number;
                     getVerification();
                     //显示倒计时
                     countdownRegister.showCountDown("秒后重新获取","60秒后重新获取");
@@ -217,7 +218,20 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
             if (!ismobile) {
                 showToast("请填写正确的手机号码");
                 return;
+            } else {
+                if (!number.equals(verficationNumber)) {
+                    showToast("验证码错误");
+                    return;
+                } else {
+                    if (!yzm.equals(verfication)) {
+                        showToast("验证码错误");
+                        return;
+                    }
+                }
             }
+
+
+
         }
 
         if (phone != null) {
@@ -286,11 +300,8 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
 
                     @Override
                     public void onNext(BaseCallModel<String> stringBaseCallModel) {
-                        System.out.println("result:"+stringBaseCallModel);
+
                         UtilMethod.dissmissDialog(getmActivity(), dialog);
-                        if (stringBaseCallModel != null) {
-                            showToast(stringBaseCallModel.getResultMsg());
-                        }
                         finish();
                     }
                 });

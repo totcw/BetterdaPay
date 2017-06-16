@@ -1,27 +1,28 @@
 package com.betterda.betterdapay.activity;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.fragment.BalanceFragment;
 import com.betterda.betterdapay.fragment.MyFragment;
 import com.betterda.betterdapay.fragment.ShareFragment;
 import com.betterda.betterdapay.fragment.ShouKuanFragment;
 import com.betterda.betterdapay.fragment.UpFragment;
 import com.betterda.betterdapay.fragment.WalletFragment;
+import com.betterda.betterdapay.util.CacheUtils;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.RxBus;
+import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.mylibrary.view.IndicatorView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -51,8 +52,7 @@ public class HomeActivity extends BaseActivity {
     public void initView() {
         super.initView();
         setContentView(R.layout.activity_home);
-        //主页
-        //随便
+
     }
 
 
@@ -75,18 +75,25 @@ public class HomeActivity extends BaseActivity {
         idvBanlance.setTitle("分享");
         idvMy.setTitle("我的");
 
-        //默认选中收款
-        idvShoukuan.setTabSelected(true);
+
         fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         if (!HomeActivity.this.isFinishing()) {
-            if (null == walletFragment) {
-                walletFragment = new WalletFragment();
+            if (null == shoukuanFragment) {
+                shoukuanFragment = new ShouKuanFragment();
             }
-            fragmentTransaction.replace(R.id.frame, walletFragment);
+            fragmentTransaction.replace(R.id.frame, shoukuanFragment);
             fragmentTransaction.commitAllowingStateLoss();
         }
+        mIvOval.setSelected(true);
+        mTvOval.setTextColor(0xff00aaee);
+
+        UtilMethod.showNotice(this);
+
+
     }
+
+
 
     private void replace(Fragment fragment) {
         if (!HomeActivity.this.isFinishing()) {

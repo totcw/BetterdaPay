@@ -1,5 +1,7 @@
 package com.betterda.betterdapay.fragment;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +24,7 @@ import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.HorizontalScrollViewPager;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.mylibrary.Utils.StatusBarCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +83,8 @@ public class UpFragment extends BaseFragment implements ViewPager.OnPageChangeLi
 
 
     }
+
+
 
     private void setTopBar() {
         topbarUp.setBackVisibility(false);
@@ -205,6 +210,7 @@ public class UpFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     @Override
     public void onStart() {
         super.onStart();
+
     }
 
 

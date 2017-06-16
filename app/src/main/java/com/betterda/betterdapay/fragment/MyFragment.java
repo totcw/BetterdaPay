@@ -25,6 +25,7 @@ import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
+import com.betterda.mylibrary.Utils.StatusBarCompat;
 
 import butterknife.BindView;
 import butterknife.OnClick;

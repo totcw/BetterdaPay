@@ -39,14 +39,16 @@ public class FWalletActivity extends BaseActivity {
         mTopbarFwallet.setTitle("分润钱包");
     }
 
-    @OnClick({R.id.linear_fwallet_withdraw, R.id.linear_fwallet_details,R.id.bar_back})
+    @OnClick({R.id.linear_fwallet_withdraw, R.id.linear_fwallet_details, R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_fwallet_withdraw:
-                UtilMethod.startIntent(getmActivity(),TiXianActivity.class);
+                if (UtilMethod.showNotice(getmActivity())) {
+                    UtilMethod.startIntent(getmActivity(), TiXianActivity.class);
+                }
                 break;
             case R.id.linear_fwallet_details:
-                UtilMethod.startIntent(getmActivity(),WalletDetailActivity.class);
+                UtilMethod.startIntent(getmActivity(), WalletDetailActivity.class);
                 break;
             case R.id.bar_back:
                 back();

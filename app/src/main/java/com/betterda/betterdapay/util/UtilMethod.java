@@ -13,11 +13,16 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.activity.HomeActivity;
+import com.betterda.betterdapay.activity.RealNameAuthActivity;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.ShapeLoadingDialog;
 
@@ -188,7 +193,21 @@ public class UtilMethod {
         imm.hideSoftInputFromWindow(v.getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
     }
-
+    /**
+     * 获取状态栏高度
+     *
+     * @param activity
+     * @return
+     */
+    public static int statusHeight(Activity activity) {
+        //获取状态栏高度
+        int result = 0;
+        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = activity.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 
     public static int getWeight(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
@@ -543,6 +562,40 @@ public class UtilMethod {
     }
 
 
+
+    /**
+     * 显示温馨提示对话框
+     */
+    public  static boolean showNotice(final Context context) {
+
+        boolean auth = CacheUtils.getBoolean(context, Constants.Cache.AUTH, false);
+        if (!auth) {
+            View view = LayoutInflater.from(context).inflate(R.layout.dialog_notice, null);
+            TextView mTvCancel = (TextView) view.findViewById(R.id.tv_update_cancel);
+            TextView mTvComfirm = (TextView) view.findViewById(R.id.tv_update_comfirm);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            final AlertDialog alertDialog = builder.setCancelable(false).setView(view).create();
+            UtilMethod.showDialog((Activity) context, alertDialog);
+
+            mTvCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UtilMethod.dissmissDialog((Activity) context, alertDialog);
+                }
+            });
+
+            mTvComfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UtilMethod.dissmissDialog((Activity) context, alertDialog);
+                    UtilMethod.startIntent(context, RealNameAuthActivity.class);
+                }
+            });
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 
 

@@ -36,33 +36,14 @@
                 android:textColor="@color/shouye_renmen_tv"
                 />
 
-            <ImageView
-                android:layout_width="8dp"
-                android:layout_height="15dp"
-                android:layout_marginRight="10dp"
-                android:background="@mipmap/jiantou" />
-
-        </LinearLayout>
-        <View
-            android:layout_marginLeft="14dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divierLine"
-            ></View>
-    <LinearLayout
-        android:id="@+id/linear_photo"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:layout_height="48dp">
             <TextView
-                android:layout_marginLeft="14dp"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
+
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="照片信息"
-                android:textSize="15sp"
-                android:textColor="@color/shouye_renmen_tv"
+                android:text="未实名"
+                android:textSize="14sp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/shouye_fenlei_red"
                 />
 
             <ImageView
@@ -72,6 +53,8 @@
                 android:background="@mipmap/jiantou" />
 
         </LinearLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

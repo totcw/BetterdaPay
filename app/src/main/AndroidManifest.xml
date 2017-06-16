@@ -86,9 +86,6 @@
             android:screenOrientation="portrait"></activity>
 
         <activity
-            android:name=".activity.MingXiActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
             android:name=".activity.ChooseCityActivity"
             android:screenOrientation="portrait"></activity>
         <activity
