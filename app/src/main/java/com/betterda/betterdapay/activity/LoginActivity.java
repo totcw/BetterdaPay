@@ -181,8 +181,8 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.btn_login://登录
                 //setAlias();
-                // UtilMethod.startIntent(getmActivity(), HomeActivity.class);
-                Login();
+                 UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+               // Login();
                 break;
             case R.id.relative_login_register://注册
                 UtilMethod.startIntent(getmActivity(), RegisterActivity.class);

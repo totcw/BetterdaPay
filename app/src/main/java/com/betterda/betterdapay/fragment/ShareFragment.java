@@ -15,6 +15,7 @@ import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.Utils.StatusBarCompat;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -97,30 +98,40 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
 
 
     public void shareToWx(SHARE_MEDIA platform) {
-        new ShareAction(getmActivity()).setPlatform(platform)
-                .withText("hello")
-                .setCallback(new UMShareListener() {
-                    @Override
-                    public void onStart(SHARE_MEDIA share_media) {
 
-                    }
+        UMShareAPI mShareAPI = UMShareAPI.get(getmActivity());
+        boolean install = mShareAPI.isInstall(getmActivity(), SHARE_MEDIA.WEIXIN);
+        if (install) {
+            new ShareAction(getmActivity()).setPlatform(platform)
+                    .withText("hello")
+                    .setCallback(new UMShareListener() {
+                        @Override
+                        public void onStart(SHARE_MEDIA share_media) {
+                            System.out.println(share_media);
+                        }
 
-                    @Override
-                    public void onResult(SHARE_MEDIA share_media) {
+                        @Override
+                        public void onResult(SHARE_MEDIA share_media) {
+                            System.out.println(share_media);
+                        }
 
-                    }
+                        @Override
+                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                            System.out.println(share_media);
+                            throwable.printStackTrace();
+                        }
 
-                    @Override
-                    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                        @Override
+                        public void onCancel(SHARE_MEDIA share_media) {
+                            System.out.println(share_media);
+                        }
+                    })
+                    .share();
+        } else {
+            showToast("请先安装微信!");
+        }
 
-                    }
 
-                    @Override
-                    public void onCancel(SHARE_MEDIA share_media) {
-
-                    }
-                })
-                .share();
     }
 
 
