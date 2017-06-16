@@ -567,8 +567,8 @@ public class UtilMethod {
      * 显示温馨提示对话框
      */
     public  static boolean showNotice(final Context context) {
-
-        boolean auth = CacheUtils.getBoolean(context, Constants.Cache.AUTH, false);
+        String accout = UtilMethod.getAccout(context);
+        boolean auth = CacheUtils.getBoolean(context, accout+Constants.Cache.AUTH, false);
         if (!auth) {
             View view = LayoutInflater.from(context).inflate(R.layout.dialog_notice, null);
             TextView mTvCancel = (TextView) view.findViewById(R.id.tv_update_cancel);

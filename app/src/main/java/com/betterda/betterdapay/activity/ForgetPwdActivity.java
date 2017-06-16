@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.callback.MyTextWatcher;
@@ -24,7 +25,7 @@ import butterknife.OnClick;
  * 忘记密码
  * Created by Administrator on 2016/8/1.
  */
-public class ForgetPwdActivity extends BaseActivity {
+public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelectListener {
 
     @BindView(R.id.topbar_forgetpwd)
     NormalTopBar topbarForgetpwd;
@@ -42,6 +43,8 @@ public class ForgetPwdActivity extends BaseActivity {
     Button btnForgetpwd;
     private String number, pwd, pwd2, yzm;
     private ShapeLoadingDialog dialog;
+    private String verfication, verficationNumber;//服务器返回的验证码和验证时的手机号
+
     @Override
     public void initView() {
         super.initView();
@@ -52,6 +55,7 @@ public class ForgetPwdActivity extends BaseActivity {
     public void init() {
         super.init();
         topbarForgetpwd.setTitle("忘记密码");
+        countdownRegister.setListener(this);
         setTextListener();
     }
 
@@ -61,6 +65,7 @@ public class ForgetPwdActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 number = s.toString();
                 judge();
+                isGetVerification();
             }
         });
         et_forgetpwd_yzm.addTextChangedListener(new MyTextWatcher(et_forgetpwd_yzm) {
@@ -98,6 +103,7 @@ public class ForgetPwdActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.countdown_register:
+                countDown();
                 break;
             case R.id.btn_forgetpwd:
                 register();
@@ -109,14 +115,43 @@ public class ForgetPwdActivity extends BaseActivity {
     }
 
     private void register() {
-        if (pwd != number) {
+
+        if (!btnForgetpwd.isSelected()) {
+            return;
+        }
+
+
+        if (number != null) {
+            boolean ismobile = number.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
+            if (!ismobile) {
+                showToast("请填写正确的手机号码");
+                return;
+            } else {
+                if (!number.equals(verficationNumber)) {
+                    showToast("验证码错误");
+                    return;
+                } else {
+                    if (!yzm.equals(verfication)) {
+                        showToast("验证码错误");
+                        return;
+                    }
+                }
+            }
+        }
+
+        if (pwd != null) {
             if (!pwd.equals(pwd2)) {
                 showToast("密码不一致");
                 return;
             }
+            boolean isPwd = pwd.matches("^[a-zA-Z0-9]{6,20}+$");
+            if (!isPwd) {
+                showToast("请输入正确的密码位数");
+                return;
+            }
         }
         if (dialog == null) {
-            dialog = UtilMethod.createDialog(getmActivity(), "");
+            dialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
         }
         getData();
     }
@@ -125,28 +160,113 @@ public class ForgetPwdActivity extends BaseActivity {
         NetworkUtils.isNetWork(getmActivity(), et_forgetpwd_yzm, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(),dialog);
-                 NetWork.getNetService()
-                        .getPwdUpdate(UtilMethod.getAccout(getmActivity()),pwd)
+                UtilMethod.showDialog(getmActivity(), dialog);
+                NetWork.getNetService()
+                        .getPwdUpdate(UtilMethod.getAccout(getmActivity()), pwd)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {
                             @Override
                             protected void onSuccess(String data, String resultMsg) {
+
                                 showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(),dialog);
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
                                 finish();
                             }
 
                             @Override
                             public void onFail(String resultMsg) {
+
                                 showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(),dialog);
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
                             }
 
                             @Override
                             public void onExit() {
-                                ExitToLogin();
                                 UtilMethod.dissmissDialog(getmActivity(), dialog);
+                            }
+                        });
+            }
+        });
+    }
+
+    /**
+     * 短信验证
+     */
+    private void countDown() {
+        //处理验证码
+        if (countdownRegister.isSelected()) {
+            //用正则判断是否是手机号码
+            if (!TextUtils.isEmpty(number)) {
+                boolean ismobile = number.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
+                if (ismobile) {
+                    verficationNumber = number;
+                    getVerification();
+                    //显示倒计时
+                    countdownRegister.showCountDown("秒后重新获取", "60秒后重新获取");
+                } else {
+                    UtilMethod.Toast(this, "请输入正确的手机号码");
+                }
+            }
+
+        }
+    }
+
+
+    @Override
+    public void setSelect(CountDown countDown) {
+        //倒计时完了要判断手机号是否为空
+        if (TextUtils.isEmpty(number)) {
+            countDown.setSelected(false);
+        } else {
+            countDown.setSelected(true);
+        }
+    }
+
+    /**
+     * 是否可以获取验证码
+     */
+    private void isGetVerification() {
+        //如果是不可以点击的状态,就一直设置为不选中
+        if (countdownRegister.isClickable()) {
+            if (!TextUtils.isEmpty(number)) {
+                countdownRegister.setSelected(true);
+            } else {
+                countdownRegister.setSelected(false);
+            }
+        } else {
+            countdownRegister.setSelected(false);
+        }
+
+
+    }
+
+    /**
+     * 获取验证码
+     */
+    private void getVerification() {
+        NetworkUtils.isNetWork(this, null, new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                NetWork.getNetService().getSendMsg(number)
+                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                        .subscribe(new MyObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data, String resultMsg) {
+                                verfication = data;
+                                if (BuildConfig.LOG_DEBUG) {
+
+                                    System.out.println("yzm:" + data);
+                                }
+                            }
+
+                            @Override
+                            public void onFail(String resultMsg) {
+
+                            }
+
+                            @Override
+                            public void onExit() {
+
                             }
                         });
             }

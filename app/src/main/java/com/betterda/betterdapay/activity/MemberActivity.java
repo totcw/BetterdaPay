@@ -43,7 +43,10 @@ public class MemberActivity extends BaseActivity {
     public void init() {
         super.init();
         topbarMember.setTitle("会员管理");
+        getData();
     }
+
+
 
     @OnClick({R.id.linear_member, R.id.bar_back})
     public void onClick(View view) {
@@ -55,5 +58,9 @@ public class MemberActivity extends BaseActivity {
                 back();
                 break;
         }
+    }
+
+    private void getData() {
+
     }
 }

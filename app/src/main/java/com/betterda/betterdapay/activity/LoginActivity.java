@@ -127,7 +127,7 @@ public class LoginActivity extends BaseActivity {
             Log.i(Tag, CacheUtils.getString(getmActivity(), accout + Constants.Cache.PWD, "") + "密码");
             etLoginPwd.setText(CacheUtils.getString(getmActivity(), accout + Constants.Cache.PWD, ""));
             iv_login_jizhu.setSelected(remember);
-            isLogin();
+          //  isLogin();
         }
     }
 
@@ -135,7 +135,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initListener() {
         super.initListener();
-        etLoginNumber.addTextChangedListener(new MyTextWatcher(etLoginNumber) {
+    /*    etLoginNumber.addTextChangedListener(new MyTextWatcher(etLoginNumber) {
             @Override
             public void afterTextChanged(Editable s) {
                 account = s.toString();
@@ -148,7 +148,7 @@ public class LoginActivity extends BaseActivity {
                 pwd = s.toString();
                 isLogin();
             }
-        });
+        });*/
     }
 
     private void setTopBar() {
@@ -181,8 +181,8 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.btn_login://登录
                 //setAlias();
-                 UtilMethod.startIntent(getmActivity(), HomeActivity.class);
-              // Login();
+                // UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+                Login();
                 break;
             case R.id.relative_login_register://注册
                 UtilMethod.startIntent(getmActivity(), RegisterActivity.class);
@@ -191,7 +191,16 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void Login() {
-        if (btnLogin.isSelected()) {//是否是选中状态
+        account = etLoginNumber.getText().toString().trim();
+        pwd = etLoginPwd.getText().toString().trim();
+        if (TextUtils.isEmpty(account)) {
+            showToast("请输入帐号");
+            return;
+        }
+        if (TextUtils.isEmpty(pwd)) {
+            showToast("请输入密码");
+            return;
+        }
            NetworkUtils.isNetWork(getmActivity(), etLoginNumber, new NetworkUtils.SetDataInterface() {
                @Override
                public void getDataApi() {
@@ -202,7 +211,7 @@ public class LoginActivity extends BaseActivity {
 
 
 
-        }
+
 
     }
 
@@ -216,21 +225,19 @@ public class LoginActivity extends BaseActivity {
                 .subscribe(new MyObserver<UserInfo>() {
                     @Override
                     protected void onSuccess(UserInfo userInfo, String resultMsg) {
-                        System.out.println("成功");
                         parseAndSave(userInfo);
                         showToast(resultMsg);
                     }
 
                     @Override
                     public void onFail(String resultMsg) {
-                        System.out.println("失败");
+
                         UtilMethod.dissmissDialog(getmActivity(), dialog);
                         showToast(resultMsg);
                     }
 
                     @Override
                     public void onExit() {
-                        System.out.println("exit");
                         UtilMethod.dissmissDialog(getmActivity(), dialog);
                     }
 
@@ -247,13 +254,8 @@ public class LoginActivity extends BaseActivity {
         if (userInfo != null) {
             String account = userInfo.getAccount();
             String rate = userInfo.getRate();
-            String role = userInfo.getRole();
-            String cardNo = userInfo.getCardNo();
-            String token = userInfo.getToken();
-            String trueName = userInfo.getTrueName();
             boolean auth = userInfo.isAuth();
             CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, account);
-            CacheUtils.putString(getmActivity(), account + Constants.Cache.TOKEN, token);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.PWD, pwd);
             CacheUtils.getBoolean(getmActivity(), account + Constants.Cache.AUTH, auth);
             UtilMethod.startIntent(getmActivity(), HomeActivity.class);

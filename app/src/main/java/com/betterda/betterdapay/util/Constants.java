@@ -44,11 +44,11 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://a93e3937.ngrok.io/wallet/";
-        public static final String URL_LOGIN = URL + "appAPI.do?api/account/login";
+        public static final String URL = "http://69b2f3c8.ngrok.io/wallet/";
+        public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
-        public static final String URL_PWD_UPDATE = URL + "appAPI.do?api/account/update";//忘记密码
+        public static final String URL_PWD_UPDATE = URL + "api/resetPwdController.do?reset";//忘记密码
         public static final String URL_ORDER_CREATE = URL + "appAPI.do?api/account/order/add";//订单生成
         public static final String URL_ORDER_GET = URL + "appAPI.do?api/account/order/get";//账单获取
         public static final String URL_ORDER_FENRUN = URL + "appAPI.do?api/account/tProfit/get";//分润获取

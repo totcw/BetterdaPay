@@ -215,7 +215,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                NetWork.getNetService().getRating(account, token, rate)
+                NetWork.getNetService().getRating(account, rate)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new MyObserver<Rating>() {

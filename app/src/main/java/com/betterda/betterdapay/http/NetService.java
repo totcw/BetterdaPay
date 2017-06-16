@@ -127,7 +127,7 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_RATING)
     Observable<BaseCallModel<Rating>> getRating(@Field("account") String account,
-                                                @Field("token") String token, @Field("rate") String rate);
+                                                 @Field("rate") String rate);
 
     /**
      * 分润接口

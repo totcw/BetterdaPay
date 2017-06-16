@@ -14,6 +14,9 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.Utils.StatusBarCompat;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,10 +77,12 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                 share();
                 break;
             case R.id.relative_share_wxfriend:
-                showToast("微信好友");
+                shareToWx(SHARE_MEDIA.WEIXIN);
                 closePopupWindow();
                 break;
             case R.id.relative_share_pyquan:
+                shareToWx(SHARE_MEDIA.WEIXIN_CIRCLE);
+                closePopupWindow();
                 break;
             case R.id.relative_qqfriend:
                 break;
@@ -89,6 +94,35 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
 
         }
     }
+
+
+    public void shareToWx(SHARE_MEDIA platform) {
+        new ShareAction(getmActivity()).setPlatform(platform)
+                .withText("hello")
+                .setCallback(new UMShareListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+
+                    }
+
+                    @Override
+                    public void onResult(SHARE_MEDIA share_media) {
+
+                    }
+
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media) {
+
+                    }
+                })
+                .share();
+    }
+
 
     @Override
     public void dismiss() {

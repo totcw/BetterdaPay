@@ -66,7 +66,7 @@ import rx.schedulers.Schedulers;
 
 public class WelcomeActivity extends FragmentActivity {
     private String[] REQUEST_PERMISSIONS = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE};
+            Manifest.permission.READ_PHONE_STATE,Manifest.permission.ACCESS_COARSE_LOCATION};
     private HashMap<String, String> map;//管理权限的map
     private static final int REQUEST_PERMISSION_CODE_TAKE_PIC = 9; //权限的请求码
     private static final int REQUEST_PERMISSION_SEETING = 8; //去设置界面的请求码
@@ -342,7 +342,7 @@ public class WelcomeActivity extends FragmentActivity {
                     map.put("android.permission.CAMERA", "拍照");
                     map.put("android.permission.WRITE_EXTERNAL_STORAGE", "存储空间");
                     map.put("android.permission.READ_PHONE_STATE", "电话状态");
-                    map.put("android.permission.WRITE_SETTINGS", "系统设置");
+                    map.put("android.permission.ACCESS_COARSE_LOCATION", "位置信息");
 
                 }
 
