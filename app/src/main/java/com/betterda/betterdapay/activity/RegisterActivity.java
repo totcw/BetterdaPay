@@ -257,24 +257,26 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
         NetworkUtils.isNetWork(this, null, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                NetWork.getNetService().getSendMsg(number)
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
-                                verfication = data;
-                            }
+              mRxManager.add(
+                      NetWork.getNetService().getSendMsg(number)
+                              .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                              .subscribe(new MyObserver<String>() {
+                                  @Override
+                                  protected void onSuccess(String data, String resultMsg) {
+                                      verfication = data;
+                                  }
 
-                            @Override
-                            public void onFail(String resultMsg) {
+                                  @Override
+                                  public void onFail(String resultMsg) {
 
-                            }
+                                  }
 
-                            @Override
-                            public void onExit() {
+                                  @Override
+                                  public void onExit() {
 
-                            }
-                        });
+                                  }
+                              })
+              );
             }
         });
     }
@@ -282,29 +284,31 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
 
     private void getdata(final String number, final String password, final String phone) {
         UtilMethod.showDialog(getmActivity(), dialog);
-        NetWork.getNetService()
-                .getRegister(number, password, phone)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BaseCallModel<String>>() {
-                    @Override
-                    public void onCompleted() {
+        mRxManager.add(
+                NetWork.getNetService()
+                        .getRegister(number, password, phone)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<BaseCallModel<String>>() {
+                            @Override
+                            public void onCompleted() {
 
-                    }
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        showToast(e.toString());
-                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                    }
+                            @Override
+                            public void onError(Throwable e) {
+                                showToast(e.toString());
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                            }
 
-                    @Override
-                    public void onNext(BaseCallModel<String> stringBaseCallModel) {
+                            @Override
+                            public void onNext(BaseCallModel<String> stringBaseCallModel) {
 
-                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                        finish();
-                    }
-                });
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                finish();
+                            }
+                        })
+        );
     }
 
 

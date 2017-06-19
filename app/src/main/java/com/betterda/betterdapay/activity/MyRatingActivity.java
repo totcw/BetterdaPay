@@ -73,7 +73,7 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void getDataApi() {
                  NetWork.getNetService()
-                        .getRating(UtilMethod.getAccout(getmActivity()), rate)
+                        .getRatingForMe(UtilMethod.getAccout(getmActivity()))
                         .compose(NetWork.handleResult(new BaseCallModel<Rating>()))
                         .subscribe(new MyObserver<Rating>() {
                             @Override

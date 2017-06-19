@@ -69,38 +69,40 @@ public class MemberActivity extends BaseActivity {
         NetworkUtils.isNetWork(this, null, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                NetWork.getNetService().getMemberCounts(UtilMethod.getAccout(MemberActivity.this))
-                        .compose(NetWork.handleResult(new BaseCallModel<MemberCounts>()))
-                        .subscribe(new MyObserver<MemberCounts>() {
-                            @Override
-                            protected void onSuccess(MemberCounts data, String resultMsg) {
+              mRxManager.add(
+                      NetWork.getNetService().getMemberCounts(UtilMethod.getAccout(MemberActivity.this))
+                              .compose(NetWork.handleResult(new BaseCallModel<MemberCounts>()))
+                              .subscribe(new MyObserver<MemberCounts>() {
+                                  @Override
+                                  protected void onSuccess(MemberCounts data, String resultMsg) {
 
-                                if (data != null) {
-                                    if (gttvMemberCount != null) {
-                                        gttvMemberCount.setText(data.getCount());
-                                    }
-                                    if (tvMemberMy != null) {
-                                        tvMemberMy.setText(data.getMySpreadCount());
-                                    }
-                                    if (tvMemberTwo != null) {
-                                        tvMemberTwo.setText(data.getTwoSpreadCount());
-                                    }
-                                    if (tvMemberThree != null) {
-                                        tvMemberThree.setText(data.getThredSpreadCount());
-                                    }
-                                }
-                            }
+                                      if (data != null) {
+                                          if (gttvMemberCount != null) {
+                                              gttvMemberCount.setText(data.getCount());
+                                          }
+                                          if (tvMemberMy != null) {
+                                              tvMemberMy.setText(data.getMySpreadCount());
+                                          }
+                                          if (tvMemberTwo != null) {
+                                              tvMemberTwo.setText(data.getTwoSpreadCount());
+                                          }
+                                          if (tvMemberThree != null) {
+                                              tvMemberThree.setText(data.getThredSpreadCount());
+                                          }
+                                      }
+                                  }
 
-                            @Override
-                            public void onFail(String resultMsg) {
+                                  @Override
+                                  public void onFail(String resultMsg) {
 
-                            }
+                                  }
 
-                            @Override
-                            public void onExit() {
+                                  @Override
+                                  public void onExit() {
 
-                            }
-                        });
+                                  }
+                              })
+              );
             }
         });
     }

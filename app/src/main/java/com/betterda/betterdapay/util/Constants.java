@@ -37,6 +37,7 @@ public class Constants {
         public static final String PWD = "pwd";
         public static final String ACCOUNT = "account";
         public static final String AUTH = "auth";//是否认证
+        public static final String RANK = "rank";//等级
         public static final String REMEMBER = "remember";//是否记住密码
         public static final String GUIDE = "guide";//是否进入过引导界面
 
@@ -52,7 +53,7 @@ public class Constants {
         public static final String URL_ORDER_CREATE = URL + "appAPI.do?api/account/order/add";//订单生成
         public static final String URL_ORDER_GET = URL + "appAPI.do?api/account/order/get";//账单获取
         public static final String URL_ORDER_FENRUN = URL + "appAPI.do?api/account/tProfit/get";//分润获取
-        public static final String URL_RATING = URL + "appAPI.do?api/account/rateDetail/get";//查询费率
+        public static final String URL_RATING = URL + "appAPI.do?api/account/rateDetail/get";//获取各等级费率
         public static final String URL_JIESUAN = URL + "appAPI.do?api/account/tSettlement/add";//结算接口
         public static final String URL_BANK_ADD = URL + "appAPI.do?api/account/bank/add";//银行卡添加接口
         public static final String URL_BANK_GET = URL + "appAPI.do?api/account/bank/get";//银行卡查询接口

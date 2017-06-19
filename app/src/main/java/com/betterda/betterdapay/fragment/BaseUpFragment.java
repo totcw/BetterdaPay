@@ -210,23 +210,18 @@ public abstract class BaseUpFragment  extends BaseFragment{
         }
 
         loadingPager.setLoadVisable();
-        final String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
-        final String token = CacheUtils.getString(getmActivity(), account + Constants.Cache.TOKEN, "");
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                NetWork.getNetService().getRating(account, rate)
+                NetWork.getNetService().getRating()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new MyObserver<Rating>() {
+                        .subscribe(new MyObserver<List<Rating>>() {
                             @Override
-                            protected void onSuccess(Rating data, String resultMsg) {
+                            protected void onSuccess(List<Rating> data, String resultMsg) {
                                 if (data != null) {
                                     parser(data);
-                                    String condition = data.getConditions();
-                                    String nextRate = data.getNextRate();
-                                    String rate = data.getRate();
-                                    edit(condition, rate, nextRate, item);
+
                                 }
                                 UtilMethod.isDataEmpty(loadingPager, list);
                             }
@@ -264,21 +259,28 @@ public abstract class BaseUpFragment  extends BaseFragment{
      *
      * @param data
      */
-    public void parser(Rating data) {
-
-        rateDetail = data.getRateDetail();
-        if (rateDetail != null) {
-            if (list != null) {
-                list.clear();
-            }
-            for (Rating.RateDetail rating : rateDetail) {
+    public void parser(List<Rating> data) {
+        if (item >= 0 && item < data.size()) {
+            Rating currentRating = data.get(item);
+            rateDetail = currentRating.getRateDetail();
+            if (rateDetail != null) {
                 if (list != null) {
-                    list.add(rating);
+                    list.clear();
+                }
+                for (Rating.RateDetail rating : rateDetail) {
+                    if (list != null) {
+                        list.add(rating);
+                    }
+                }
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
-            if (adapter != null) {
-                adapter.notifyDataSetChanged();
-            }
+
+            String condition = currentRating.getConditions();
+            String nextRate = currentRating.getNextRate();
+            String rate = currentRating.getRate();
+            edit(condition, rate, nextRate, item);
         }
 
 

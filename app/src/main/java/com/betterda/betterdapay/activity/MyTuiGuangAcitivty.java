@@ -62,7 +62,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
             @Override
             public void getDataApi() {
                   NetWork.getNetService()
-                        .getSub(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()), "1", page + "", Constants.PAGE_SIZE + "")
+                        .getSub(UtilMethod.getAccout(getmActivity()), page + "", Constants.PAGE_SIZE + "")
                         .compose(NetWork.handleResult(new BaseCallModel<List<TuiGuang>>()))
                         .subscribe(new MyObserver<List<TuiGuang>>() {
                             @Override
@@ -138,7 +138,8 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
                 RecyclerViewStateUtils.next(getmActivity(), rvLayout, new RecyclerViewStateUtils.nextListener() {
                     @Override
                     public void load() {
-
+                        page++;
+                        getData();
                     }
                 });
 
@@ -146,6 +147,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
 
             @Override
             public void show(boolean isShow) {
+                //这里是要传当前服务器返回的list
                 RecyclerViewStateUtils.show(isShow,tuiGuangList,rvLayout,getmActivity());
             }
         });

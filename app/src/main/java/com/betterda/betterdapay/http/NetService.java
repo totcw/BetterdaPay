@@ -11,6 +11,7 @@ import com.betterda.betterdapay.javabean.Order;
 import com.betterda.betterdapay.javabean.OrderALL;
 import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.javabean.TuiGuang;
+import com.betterda.betterdapay.javabean.UpdateCondition;
 import com.betterda.betterdapay.javabean.UserInfo;
 import com.betterda.betterdapay.javabean.Wallet;
 import com.betterda.betterdapay.util.Constants;
@@ -22,6 +23,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -119,7 +121,17 @@ public interface NetService {
                                                     @Field("pageSize") String pageSize);
 
     /**
-     * 费率获取
+     * 获取各等级费率
+     *
+     * @param
+     * @return
+     */
+    @GET(Constants.Url.URL_RATING)
+    Observable<BaseCallModel<List<Rating>>> getRating();
+
+
+    /**
+     * 获取我的费率
      *
      * @param account
      * @param
@@ -127,26 +139,20 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_RATING)
-    Observable<BaseCallModel<Rating>> getRating(@Field("account") String account,
-                                                 @Field("rate") String rate);
+    Observable<BaseCallModel<Rating>> getRatingForMe(@Field("account") String account);
+
 
     /**
-     * 分润接口
+     * 获取升级条件接口
      *
      * @param account
-     * @param token
-     * @param type  返还 0 推广1
-     * @param pageNo
-     * @param pageSize
+
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_ORDER_FENRUN)
-    Observable<BaseCallModel<List<FenRun>>> getOrderFenRun(@Field("account") String account,
-                                                     @Field("token") String token,
-                                                     @Field("profitType") String type,
-                                                     @Field("pageNo") String pageNo,
-                                                     @Field("pageSize") String pageSize);
+    Observable<BaseCallModel<List<UpdateCondition>>> getUpdateCondition(@Field("account") String account
+                                                    );
 
     /**
      * 结算
@@ -285,8 +291,6 @@ public interface NetService {
     /**
      * 我的推广
      * @param account
-     * @param token
-     * @param grade 推广等级
      * @param pageNo
      * @param pageSize
      * @return
@@ -294,8 +298,6 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_SUB_GET)
     Observable<BaseCallModel<List<TuiGuang>>> getSub(@Field("account") String account,
-                                                @Field("token") String token,
-                                                @Field("grade") String grade,
                                                 @Field("pageNo") String pageNo,
                                                 @Field("pageSize") String pageSize
 
@@ -318,14 +320,12 @@ public interface NetService {
     /**
      * 意见反馈
      * @param account
-     * @param token
      * @param content 反馈的内容
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_FEEDBACK_ADD)
     Observable<BaseCallModel<String>> getFeedBack(@Field("account") String account,
-                                                @Field("token") String token,
                                                 @Field("content") String content
     );
 
@@ -409,7 +409,7 @@ public interface NetService {
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_IMG_UPLOAD)
-    Observable<BaseCallModel<String>> getUpdate(@Field("version") String version);
+    Observable<BaseCallModel<String>> getUpdate(@Field("versionNo") String version);
 
 
 }

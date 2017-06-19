@@ -80,7 +80,7 @@ public class FeedbackActivity extends BaseActivity {
                 }
                 UtilMethod.showDialog(getmActivity(),dialog);
                 NetWork.getNetService()
-                        .getFeedBack(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()),content)
+                        .getFeedBack(UtilMethod.getAccout(getmActivity()),content)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {
                             @Override

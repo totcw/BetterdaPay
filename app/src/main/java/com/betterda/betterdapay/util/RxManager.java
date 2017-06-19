@@ -28,6 +28,10 @@ public class RxManager {
      * @param action1
      */
     public <T> void on(String eventName, Action1<T> action1) {
+        if (mRxBus == null || mObservables == null || mCompositeSubscription == null) {
+            return;
+        }
+
         Observable<T> mObservable = mRxBus.register(eventName);
         mObservables.put(eventName, mObservable);
 
@@ -49,14 +53,17 @@ public class RxManager {
      */
     public void add(Subscription m) {
         /*订阅管理*/
-        mCompositeSubscription.add(m);
+        if (mCompositeSubscription != null) {
+
+            mCompositeSubscription.add(m);
+        }
     }
 
     /**
      * 单个presenter生命周期结束，取消订阅和所有rxbus观察
      */
     public void clear() {
-        if (mCompositeSubscription != null&&mObservables!=null&&mRxBus!=null) {
+        if (mCompositeSubscription != null && mObservables != null && mRxBus != null) {
 
             mCompositeSubscription.unsubscribe();// 取消所有订阅
             for (Map.Entry<String, Observable<?>> entry : mObservables.entrySet()) {
@@ -72,6 +79,9 @@ public class RxManager {
 
     //发送rxbus
     public void post(Object tag, Object content) {
-        mRxBus.post(tag, content);
+        if (mRxBus != null) {
+
+            mRxBus.post(tag, content);
+        }
     }
 }

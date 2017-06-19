@@ -201,7 +201,7 @@ public class LoginActivity extends BaseActivity {
             showToast("请输入密码");
             return;
         }
-           NetworkUtils.isNetWork(getmActivity(), etLoginNumber, new NetworkUtils.SetDataInterface() {
+           NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
                @Override
                public void getDataApi() {
                    getData();
@@ -218,31 +218,33 @@ public class LoginActivity extends BaseActivity {
     private void getData() {
         //显示进度对话框
         UtilMethod.showDialog(getmActivity(), dialog);
-         NetWork.getNetService()
-                .getLogin(account, pwd)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new MyObserver<UserInfo>() {
-                    @Override
-                    protected void onSuccess(UserInfo userInfo, String resultMsg) {
-                        parseAndSave(userInfo);
+         mRxManager.add(
+                 NetWork.getNetService()
+                         .getLogin(account, pwd)
+                         .subscribeOn(Schedulers.io())
+                         .observeOn(AndroidSchedulers.mainThread())
+                         .subscribe(new MyObserver<UserInfo>() {
+                             @Override
+                             protected void onSuccess(UserInfo userInfo, String resultMsg) {
+                                 parseAndSave(userInfo);
 
-                    }
+                             }
 
-                    @Override
-                    public void onFail(String resultMsg) {
+                             @Override
+                             public void onFail(String resultMsg) {
 
-                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                        showToast(resultMsg);
-                    }
+                                 UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                 showToast(resultMsg);
+                             }
 
-                    @Override
-                    public void onExit() {
-                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                    }
+                             @Override
+                             public void onExit() {
+                                 UtilMethod.dissmissDialog(getmActivity(), dialog);
+                             }
 
 
-                });
+                         })
+         );
     }
 
     /**
@@ -257,7 +259,8 @@ public class LoginActivity extends BaseActivity {
             boolean auth = userInfo.isAuth();
             CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, account);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.PWD, pwd);
-            CacheUtils.getBoolean(getmActivity(), account + Constants.Cache.AUTH, auth);
+            CacheUtils.putBoolean(getmActivity(), account + Constants.Cache.AUTH, auth);
+            CacheUtils.putString(getmActivity(), account + Constants.Cache.RANK, rate);
             UtilMethod.startIntent(getmActivity(), HomeActivity.class);
             UtilMethod.dissmissDialog(getmActivity(), dialog);
 

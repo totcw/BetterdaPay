@@ -157,34 +157,34 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
     }
 
     private void getData() {
-        NetworkUtils.isNetWork(getmActivity(), et_forgetpwd_yzm, new NetworkUtils.SetDataInterface() {
+        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
                 UtilMethod.showDialog(getmActivity(), dialog);
-                NetWork.getNetService()
-                        .getPwdUpdate(UtilMethod.getAccout(getmActivity()), pwd)
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getPwdUpdate(UtilMethod.getAccout(getmActivity()), pwd)
+                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                                .subscribe(new MyObserver<String>() {
+                                    @Override
+                                    protected void onSuccess(String data, String resultMsg) {
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                        finish();
+                                    }
 
-                                showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                finish();
-                            }
+                                    @Override
+                                    public void onFail(String resultMsg) {
 
-                            @Override
-                            public void onFail(String resultMsg) {
+                                        showToast(resultMsg);
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    }
 
-                                showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                            }
-
-                            @Override
-                            public void onExit() {
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                            }
-                        });
+                                    @Override
+                                    public void onExit() {
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    }
+                                })
+                );
             }
         });
     }
@@ -247,28 +247,30 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
         NetworkUtils.isNetWork(this, null, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                NetWork.getNetService().getSendMsg(number)
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
-                                verfication = data;
-                                if (BuildConfig.LOG_DEBUG) {
+              mRxManager.add(
+                      NetWork.getNetService().getSendMsg(number)
+                              .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                              .subscribe(new MyObserver<String>() {
+                                  @Override
+                                  protected void onSuccess(String data, String resultMsg) {
+                                      verfication = data;
+                                      if (BuildConfig.LOG_DEBUG) {
 
-                                    System.out.println("yzm:" + data);
-                                }
-                            }
+                                          System.out.println("yzm:" + data);
+                                      }
+                                  }
 
-                            @Override
-                            public void onFail(String resultMsg) {
+                                  @Override
+                                  public void onFail(String resultMsg) {
 
-                            }
+                                  }
 
-                            @Override
-                            public void onExit() {
+                                  @Override
+                                  public void onExit() {
 
-                            }
-                        });
+                                  }
+                              })
+              );
             }
         });
     }
