@@ -138,7 +138,7 @@ public interface NetService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Constants.Url.URL_RATING)
+    @POST(Constants.Url.URL_MY_RATING)
     Observable<BaseCallModel<Rating>> getRatingForMe(@Field("account") String account);
 
 
@@ -150,9 +150,24 @@ public interface NetService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Constants.Url.URL_ORDER_FENRUN)
+    @POST(Constants.Url.URL_UPDATE_CONDITION)
     Observable<BaseCallModel<List<UpdateCondition>>> getUpdateCondition(@Field("account") String account
                                                     );
+
+
+    /**
+     * 升级到指定接口
+     *
+     * @param account
+
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_UPDATE_TO_RATE)
+    Observable<BaseCallModel<String>> getUpdateToRate(@Field("account") String account,
+                                                      @Field("rankId") String rateId
+    );
+
 
     /**
      * 结算

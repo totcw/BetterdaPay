@@ -10,7 +10,6 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.Rating;
-import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.RecyclerViewStateUtils;
@@ -121,7 +120,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
      */
     public void edit(String condition, String rate, String nextRate,int item) {
 
-        if (((UpFragment) getParentFragment()) != null) {
+        if (((UpFragment) getParentFragment()) != null&&((UpFragment) getParentFragment()).vpUp!=null) {
             if (((UpFragment) getParentFragment()).vpUp.getCurrentItem() == item) {
 
                 if (((UpFragment) getParentFragment()).tvUpRate != null) {
@@ -151,13 +150,13 @@ public abstract class BaseUpFragment  extends BaseFragment{
             @Override
             public void convert(ViewHolder viewHolder, Rating.RateDetail rating) {
                 if (rating != null) {
-                    viewHolder.setText(R.id.tv_item_up_name, rating.getIntoduce());
-                    viewHolder.setText(R.id.tv_item_up_rating, rating.getNextrating());
-                    viewHolder.setText(R.id.tv_item_up_rating2, rating.getRealrating());
-                    viewHolder.setText(R.id.tv_item_up_jiesuan, rating.getNextaccounts());
-                    viewHolder.setText(R.id.tv_item_up_jiesuan2, rating.getRealaccounts());
-                    viewHolder.setText(R.id.tv_item_up_edu, rating.getNextlimit());
-                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getReallime());
+                    viewHolder.setText(R.id.tv_item_up_name, rating.getIntroduce());
+                    viewHolder.setText(R.id.tv_item_up_rating, rating.getT1TradeRate());
+                    viewHolder.setText(R.id.tv_item_up_rating2, rating.getT0TradeRate());
+                    viewHolder.setText(R.id.tv_item_up_jiesuan, rating.getT1DrawFee());
+                    viewHolder.setText(R.id.tv_item_up_jiesuan2, rating.getT0DrawFee());
+                    viewHolder.setText(R.id.tv_item_up_edu, rating.getTradeQuota());
+                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getDayQuota());
                     if (Constants.ZHIFUBAO.equals(rating.getType())) {
                         viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.zhifubao);
                     } else if (Constants.WEIXIN.equals(rating.getType())) {
@@ -170,11 +169,10 @@ public abstract class BaseUpFragment  extends BaseFragment{
 
             }
         });
-        EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener(getmActivity()) {
+   /*     EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener(getmActivity()) {
 
             @Override
             public void onLoadNextPage(View view) {
-                System.out.println("footer:"+RecyclerViewStateUtils.getFooterViewState(rvYuangong));
                 //滑到了最后,如果是正常状态才开始加载
                 if (LoadingFooter.State.Normal == RecyclerViewStateUtils.getFooterViewState(rvYuangong)) {
                     //设置为加载状态
@@ -197,7 +195,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
                 }
             }
         };
-        rvYuangong.addOnScrollListener(endlessRecyclerOnScrollListener);
+        rvYuangong.addOnScrollListener(endlessRecyclerOnScrollListener);*/
         rvYuangong.setAdapter(adapter);
     }
 
@@ -213,40 +211,43 @@ public abstract class BaseUpFragment  extends BaseFragment{
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                NetWork.getNetService().getRating()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new MyObserver<List<Rating>>() {
-                            @Override
-                            protected void onSuccess(List<Rating> data, String resultMsg) {
-                                if (data != null) {
-                                    parser(data);
+                mRxManager.add(
+                        NetWork.getNetService().getRating()
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new MyObserver<List<Rating>>() {
+                                    @Override
+                                    protected void onSuccess(List<Rating> data, String resultMsg) {
 
-                                }
-                                UtilMethod.isDataEmpty(loadingPager, list);
-                            }
+                                        if (data != null) {
+                                            parser(data);
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG)
-                                    Log.i(TAG, resultMsg);
-                                loadingPager.setErrorVisable();
-                            }
+                                        }
+                                        UtilMethod.isDataEmpty(loadingPager, list);
+                                    }
 
-                            @Override
-                            public void onExit() {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    Log.i(TAG, "exit");
-                                }
-                                loadingPager.hide();
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG)
+                                            Log.i(TAG, resultMsg);
+                                        loadingPager.setErrorVisable();
+                                    }
 
-                                if (isCurrent || isVisible) {
-                                    isCurrent = false;
-                                    ExitToLogin();
-                                }
+                                    @Override
+                                    public void onExit() {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            Log.i(TAG, "exit");
+                                        }
+                                        loadingPager.hide();
 
-                            }
-                        });
+                                        if (isCurrent || isVisible) {
+                                            isCurrent = false;
+                                            ExitToLogin();
+                                        }
+
+                                    }
+                                })
+                );
             }
         });
 
@@ -262,24 +263,23 @@ public abstract class BaseUpFragment  extends BaseFragment{
     public void parser(List<Rating> data) {
         if (item >= 0 && item < data.size()) {
             Rating currentRating = data.get(item);
-            rateDetail = currentRating.getRateDetail();
+            rateDetail = currentRating.getRates();
             if (rateDetail != null) {
                 if (list != null) {
                     list.clear();
-                }
-                for (Rating.RateDetail rating : rateDetail) {
-                    if (list != null) {
+                    for (Rating.RateDetail rating : rateDetail) {
                         list.add(rating);
                     }
                 }
+
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
                 }
             }
 
-            String condition = currentRating.getConditions();
-            String nextRate = currentRating.getNextRate();
-            String rate = currentRating.getRate();
+            String condition = currentRating.getRemarks();
+            String nextRate = currentRating.getNextRankName();
+            String rate = currentRating.getRankName();
             edit(condition, rate, nextRate, item);
         }
 

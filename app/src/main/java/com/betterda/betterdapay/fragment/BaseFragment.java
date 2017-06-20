@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.LoginActivity;
 import com.betterda.betterdapay.dialog.CallDialog;
+import com.betterda.betterdapay.util.RxManager;
 import com.betterda.betterdapay.util.UtilMethod;
 
 import butterknife.ButterKnife;
@@ -31,7 +32,7 @@ public abstract class BaseFragment extends Fragment {
 
     private Activity mActivity;
     private PopupWindow popupWindow;
-
+    protected RxManager mRxManager;
     private String TAG = BaseFragment.class.getSimpleName();
 
     @Override
@@ -52,7 +53,7 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-
+        mRxManager = new RxManager();
         initListenr();
         initData();
     }
@@ -263,7 +264,7 @@ public abstract class BaseFragment extends Fragment {
      * 强制跳转到登录界面
      */
     public void ExitToLogin() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
+  /*      AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
 
         builder.setTitle("温馨提示")
                 .setMessage("您的帐号已在别处登录,请重新登录")
@@ -275,7 +276,7 @@ public abstract class BaseFragment extends Fragment {
                     }
                 })
                 .setCancelable(false)
-                .show();
+                .show();*/
 
     }
 

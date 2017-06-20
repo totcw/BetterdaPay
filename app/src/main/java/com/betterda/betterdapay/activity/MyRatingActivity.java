@@ -1,19 +1,15 @@
 package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
-import com.betterda.betterdapay.data.RateData;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Rating;
-import com.betterda.betterdapay.javabean.TuiGuang;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -27,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 我的费率
@@ -42,7 +37,7 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.loadpager_myrating)
     LoadingPager loadingPager;
 
-    private String rate="员工";
+    private String rate = "员工";
     private HeaderAndFooterRecyclerViewAdapter adapter;
     private List<Rating.RateDetail> list;
 
@@ -56,7 +51,7 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     public void initListener() {
         super.initListener();
         topbarMyrating.setOnBackListener(this);
-       // topbarMyrating.setOnActionListener(this);
+        // topbarMyrating.setOnActionListener(this);
     }
 
     @Override
@@ -65,6 +60,12 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
         getRate();
         setRecycleview();
         getData();
+        loadingPager.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData();
+            }
+        });
     }
 
     private void getData() {
@@ -72,30 +73,33 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                 NetWork.getNetService()
-                        .getRatingForMe(UtilMethod.getAccout(getmActivity()))
-                        .compose(NetWork.handleResult(new BaseCallModel<Rating>()))
-                        .subscribe(new MyObserver<Rating>() {
-                            @Override
-                            protected void onSuccess(Rating data, String resultMsg) {
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getRatingForMe(UtilMethod.getAccout(getmActivity()))
+                                .compose(NetWork.handleResult(new BaseCallModel<Rating>()))
+                                .subscribe(new MyObserver<Rating>() {
+                                    @Override
+                                    protected void onSuccess(Rating data, String resultMsg) {
 
-                                if (data != null) {
-                                    parser(data);
-                                }
-                                UtilMethod.judgeData(list,loadingPager);
-                            }
+                                        if (data != null) {
+                                            parser(data);
+                                        }
+                                        UtilMethod.judgeData(list, loadingPager);
+                                    }
 
-                            @Override
-                            public void onFail(String resultMsg) {
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (loadingPager != null) {
+                                            loadingPager.setErrorVisable();
+                                        }
+                                    }
 
-                                loadingPager.setErrorVisable();
-                            }
-
-                            @Override
-                            public void onExit() {
-                                ExitToLogin();
-                            }
-                        });
+                                    @Override
+                                    public void onExit() {
+                                        ExitToLogin();
+                                    }
+                                })
+                );
             }
         });
     }
@@ -104,10 +108,11 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
 
         if (list != null) {
             list.clear();
+            for (Rating.RateDetail rateDetail : data.getRates()) {
+                list.add(rateDetail);
+            }
         }
-        for (Rating.RateDetail rateDetail : data.getRateDetail()) {
-            list.add(rateDetail);
-        }
+
 
         if (adapter != null) {
             adapter.notifyDataSetChanged();
@@ -127,15 +132,15 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void convert(ViewHolder viewHolder, Rating.RateDetail rating) {
-                log(rating.getIntoduce());
+                log(rating.getIntroduce());
                 if (rating != null) {
-                    viewHolder.setText(R.id.tv_item_up_name, rating.getIntoduce());
-                    viewHolder.setText(R.id.tv_item_up_rating, rating.getNextrating());
-                    viewHolder.setText(R.id.tv_item_up_rating2, rating.getRealrating());
-                    viewHolder.setText(R.id.tv_item_up_jiesuan, rating.getNextaccounts());
-                    viewHolder.setText(R.id.tv_item_up_jiesuan2, rating.getRealaccounts());
-                    viewHolder.setText(R.id.tv_item_up_edu, rating.getNextlimit());
-                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getReallime());
+                    viewHolder.setText(R.id.tv_item_up_name, rating.getIntroduce());
+                    viewHolder.setText(R.id.tv_item_up_rating, rating.getT1TradeRate());
+                    viewHolder.setText(R.id.tv_item_up_rating2, rating.getT0TradeRate());
+                    viewHolder.setText(R.id.tv_item_up_jiesuan, rating.getT1DrawFee());
+                    viewHolder.setText(R.id.tv_item_up_jiesuan2, rating.getT0DrawFee());
+                    viewHolder.setText(R.id.tv_item_up_edu, rating.getTradeQuota());
+                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getDayQuota());
                     if (Constants.ZHIFUBAO.equals(rating.getType())) {
                         viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.zhifubao);
                     } else if (Constants.WEIXIN.equals(rating.getType())) {
@@ -151,7 +156,7 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void setTopBar() {
-      //  topbarMyrating.setActionText("升级");
+        //  topbarMyrating.setActionText("升级");
         topbarMyrating.setTitle("我的扣率");
         //topbarMyrating.setActionTextVisibility(true);
     }

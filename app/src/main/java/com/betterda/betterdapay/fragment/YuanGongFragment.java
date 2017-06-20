@@ -66,7 +66,12 @@ public class YuanGongFragment extends BaseUpFragment {
         show(item);
         regiseterRxBus(TAG,loadpager_yuangong);
 
-
+        loadpager_yuangong.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData(loadpager_yuangong);
+            }
+        });
     }
 
 

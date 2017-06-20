@@ -181,6 +181,8 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.btn_login://登录
                 //setAlias();
+                CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.RANK, "员工");
+                CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "15160700380");
                  UtilMethod.startIntent(getmActivity(), HomeActivity.class);
                // Login();
                 break;

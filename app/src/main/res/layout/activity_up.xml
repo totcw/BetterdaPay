@@ -52,7 +52,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="微信支付0.45%"
                     android:textColor="@color/shouye_renmen_tv"
                     android:textSize="15sp"/>
 
@@ -101,7 +100,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="微信支付0.40%"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -122,7 +120,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="邀请5人升级,或支付100元"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -143,7 +140,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="旗下用户升级可赚40元分成"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -208,7 +204,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="微信支付0.35%"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -229,7 +224,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="邀请5人升级,或支付200元"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -250,7 +244,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="旗下用户升级可赚80元分成"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -315,7 +308,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="微信支付0.30%"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -336,7 +328,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="邀请5人升级,或支付300元"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -357,7 +348,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="旗下用户升级可赚120元分成"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -422,7 +412,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="微信支付0.25%"
+
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -443,7 +433,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="邀请5人升级,或支付400元"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -464,7 +453,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="旗下用户升级可赚160元分成"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
                     </LinearLayout>

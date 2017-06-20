@@ -48,10 +48,14 @@ public class MemberActivity extends BaseActivity {
     public void init() {
         super.init();
         topbarMember.setTitle("会员管理");
-        getData();
+
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getData();
+    }
 
     @OnClick({R.id.linear_member, R.id.bar_back})
     public void onClick(View view) {

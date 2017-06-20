@@ -13,16 +13,14 @@ public class Constants {
     public static final Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "image.png")); //保存拍照照片的uri
     public static final int PHOTOZOOM = 1;// 相机选取
     public static final int PHOTOHRAPH = 2;// 相机拍照
-
     public static final String IMAGE_UNSPECIFIED = "image/*";
-    public static String PHOTONAME = "photo"; //存放照片的名字
-    public static final int TITLE_COUNT = 3;//APP底部的title个数
+
     public static final int PAGE_SIZE = 1;//一页加载的个数
     //判断输入金额的正则
     public static final String str = "^(([0-9]|([1-9][0-9]{0,9}))((\\.[0-9]{1,2})?))$";
 
-    public final static String ZHIFUBAO = "支付宝支付";
-    public final static String WEIXIN = "微信支付";
+    public final static String ZHIFUBAO = "支付宝";
+    public final static String WEIXIN = "微信";
     public final static String SHOU_KUAN = "0"; //收款
     public final static String FEN_RUN = "1"; //分润
     public final static String TI_XIAN = "2";//提现
@@ -45,7 +43,8 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://69b2f3c8.ngrok.io/wallet/";
+       // public static final String URL = "http://69b2f3c8.ngrok.io/wallet/";
+        public static final String URL = "http://192.168.0.122:8080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
@@ -53,7 +52,10 @@ public class Constants {
         public static final String URL_ORDER_CREATE = URL + "appAPI.do?api/account/order/add";//订单生成
         public static final String URL_ORDER_GET = URL + "appAPI.do?api/account/order/get";//账单获取
         public static final String URL_ORDER_FENRUN = URL + "appAPI.do?api/account/tProfit/get";//分润获取
-        public static final String URL_RATING = URL + "appAPI.do?api/account/rateDetail/get";//获取各等级费率
+        public static final String URL_RATING = URL + "api/memberRankController.do?getRanks";//获取各等级费率
+        public static final String URL_MY_RATING = URL + "api/memberRankController.do?getRank";//获取我的等级费率
+        public static final String URL_UPDATE_CONDITION = URL + "api/memberRankController.do?queryUpgrade";//获取升级条件
+        public static final String URL_UPDATE_TO_RATE = URL + "api/upgradeOrderController.do?upgrade";//升级到指定接口
         public static final String URL_JIESUAN = URL + "appAPI.do?api/account/tSettlement/add";//结算接口
         public static final String URL_BANK_ADD = URL + "appAPI.do?api/account/bank/add";//银行卡添加接口
         public static final String URL_BANK_GET = URL + "appAPI.do?api/account/bank/get";//银行卡查询接口

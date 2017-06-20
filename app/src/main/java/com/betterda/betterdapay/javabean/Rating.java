@@ -7,51 +7,51 @@ import java.util.List;
  * Created by Administrator on 2016/8/2.
  */
 public class Rating {
-    private String rate;//当前等级
-    private String nextRate;//下一等级
-    private String conditions;//升级条件
-    private List<RateDetail> rateDetail;
+    private String rankName;//当前等级
+    private String nextRankName;//下一等级
+    private String remarks;//升级条件
+    private List<RateDetail> rates;
 
-    public String getRate() {
-        return rate;
+    public String getRankName() {
+        return rankName;
     }
 
-    public void setRate(String rate) {
-        this.rate = rate;
+    public void setRankName(String rankName) {
+        this.rankName = rankName;
     }
 
-    public String getNextRate() {
-        return nextRate;
+    public String getNextRankName() {
+        return nextRankName;
     }
 
-    public void setNextRate(String nextRate) {
-        this.nextRate = nextRate;
+    public void setNextRankName(String nextRankName) {
+        this.nextRankName = nextRankName;
     }
 
-    public String getConditions() {
-        return conditions;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setConditions(String conditions) {
-        this.conditions = conditions;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
-    public List<RateDetail> getRateDetail() {
-        return rateDetail;
+    public List<RateDetail> getRates() {
+        return rates;
     }
 
-    public void setRateDetail(List<RateDetail> rateDetail) {
-        this.rateDetail = rateDetail;
+    public void setRates(List<RateDetail> rates) {
+        this.rates = rates;
     }
 
     public class RateDetail{
-        private String intoduce;//通道介绍
-        private String nextrating;//隔天费率
-        private String realrating;//实时费率
-        private String nextaccounts;//隔天结算笔数
-        private String realaccounts;//实时结算笔数
-        private String nextlimit;//隔天额度
-        private String reallime;//实时额度
+        private String introduce;//通道介绍
+        private String t1TradeRate;//隔天费率
+        private String t0TradeRate;//实时费率
+        private String t1DrawFee;//隔天结算笔数
+        private String t0DrawFee;//实时结算笔数
+        private String tradeQuota;//隔天额度
+        private String dayQuota;//实时额度
         private String type;//通道类型
 
         public String getType() {
@@ -62,60 +62,84 @@ public class Rating {
             this.type = type;
         }
 
-        public String getIntoduce() {
-            return intoduce;
+        public String getIntroduce() {
+            return introduce;
         }
 
-        public void setIntoduce(String intoduce) {
-            this.intoduce = intoduce;
+        public void setIntroduce(String introduce) {
+            this.introduce = introduce;
         }
 
-        public String getNextrating() {
-            return nextrating;
+        public String getT1TradeRate() {
+            return t1TradeRate;
         }
 
-        public void setNextrating(String nextrating) {
-            this.nextrating = nextrating;
+        public void setT1TradeRate(String t1TradeRate) {
+            this.t1TradeRate = t1TradeRate;
         }
 
-        public String getRealrating() {
-            return realrating;
+        public String getT0TradeRate() {
+            return t0TradeRate;
         }
 
-        public void setRealrating(String realrating) {
-            this.realrating = realrating;
+        public void setT0TradeRate(String t0TradeRate) {
+            this.t0TradeRate = t0TradeRate;
         }
 
-        public String getNextaccounts() {
-            return nextaccounts;
+        public String getT1DrawFee() {
+            return t1DrawFee;
         }
 
-        public void setNextaccounts(String nextaccounts) {
-            this.nextaccounts = nextaccounts;
+        public void setT1DrawFee(String t1DrawFee) {
+            this.t1DrawFee = t1DrawFee;
         }
 
-        public String getRealaccounts() {
-            return realaccounts;
+        public String getT0DrawFee() {
+            return t0DrawFee;
         }
 
-        public void setRealaccounts(String realaccounts) {
-            this.realaccounts = realaccounts;
+        public void setT0DrawFee(String t0DrawFee) {
+            this.t0DrawFee = t0DrawFee;
         }
 
-        public String getNextlimit() {
-            return nextlimit;
+        public String getTradeQuota() {
+            return tradeQuota;
         }
 
-        public void setNextlimit(String nextlimit) {
-            this.nextlimit = nextlimit;
+        public void setTradeQuota(String tradeQuota) {
+            this.tradeQuota = tradeQuota;
         }
 
-        public String getReallime() {
-            return reallime;
+        public String getDayQuota() {
+            return dayQuota;
         }
 
-        public void setReallime(String reallime) {
-            this.reallime = reallime;
+        public void setDayQuota(String dayQuota) {
+            this.dayQuota = dayQuota;
         }
+
+        @Override
+        public String toString() {
+            return "RateDetail{" +
+                    "introduce='" + introduce + '\'' +
+                    ", t1TradeRate='" + t1TradeRate + '\'' +
+                    ", t0TradeRate='" + t0TradeRate + '\'' +
+                    ", t1DrawFee='" + t1DrawFee + '\'' +
+                    ", t0DrawFee='" + t0DrawFee + '\'' +
+                    ", tradeQuota='" + tradeQuota + '\'' +
+                    ", dayQuota='" + dayQuota + '\'' +
+                    ", type='" + type + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Rating{" +
+                "rankName='" + rankName + '\'' +
+                ", nextRankName='" + nextRankName + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", rates=" + rates +
+                '}';
     }
 }

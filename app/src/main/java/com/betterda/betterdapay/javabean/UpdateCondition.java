@@ -17,18 +17,27 @@ package com.betterda.betterdapay.javabean;
  */
 
 public class UpdateCondition {
-    private String rate;
+    private String rankName;//等级名字
+    private String rankId; //等级id
     private String rating; //费率
-    private String condition;//升级条件
+    private String remarks;//升级条件
     private String award;//奖励加成
     private String payUp;//金额
 
-    public String getRate() {
-        return rate;
+    public String getRankId() {
+        return rankId;
     }
 
-    public void setRate(String rate) {
-        this.rate = rate;
+    public void setRankId(String rankId) {
+        this.rankId = rankId;
+    }
+
+    public String getRankName() {
+        return rankName;
+    }
+
+    public void setRankName(String rankName) {
+        this.rankName = rankName;
     }
 
     public String getRating() {
@@ -39,12 +48,12 @@ public class UpdateCondition {
         this.rating = rating;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public String getAward() {
@@ -67,9 +76,10 @@ public class UpdateCondition {
     @Override
     public String toString() {
         return "UpdateCondition{" +
-                "rate='" + rate + '\'' +
+                "rankName='" + rankName + '\'' +
+                ", rankId='" + rankId + '\'' +
                 ", rating='" + rating + '\'' +
-                ", condition='" + condition + '\'' +
+                ", remarks='" + remarks + '\'' +
                 ", award='" + award + '\'' +
                 ", payUp='" + payUp + '\'' +
                 '}';
