@@ -3,6 +3,7 @@ package com.betterda.betterdapay.http;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.Constants;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -34,5 +35,5 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("plat.do?api/four/factors/validate")
-    Observable<BaseCallModel<String>> getAuth(@Field("data ") String data,@Field("appId ") String appId );
+    Observable<ResponseBody> getAuth(@Field("data ") String data, @Field("appId ") String appId );
 }

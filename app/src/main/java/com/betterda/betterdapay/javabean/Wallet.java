@@ -5,40 +5,61 @@ package com.betterda.betterdapay.javabean;
  * Created by Administrator on 2016/8/31.
  */
 public class Wallet {
-    private String heapCollection;//累计收款
-    private String collection;//余额
-    private String heapRating;//累计分润
-    private String rating;//可计算的分润
+    private String balance;//余额
+    private String todayIncome;//今日分润
+    private String totalIncome;//累计分润
+    private String todayAmount;//今日收款
+    private String totalAmount;//累计收款
 
-    public String getHeapCollection() {
-        return heapCollection;
+
+    public String getBalance() {
+        return balance;
     }
 
-    public void setHeapCollection(String heapCollection) {
-        this.heapCollection = heapCollection;
+    public void setBalance(String balance) {
+        this.balance = balance;
     }
 
-    public String getCollection() {
-        return collection;
+    public String getTodayIncome() {
+        return todayIncome;
     }
 
-    public void setCollection(String collection) {
-        this.collection = collection;
+    public void setTodayIncome(String todayIncome) {
+        this.todayIncome = todayIncome;
     }
 
-    public String getHeapRating() {
-        return heapRating;
+    public String getTodayAmount() {
+        return todayAmount;
     }
 
-    public void setHeapRating(String heapRating) {
-        this.heapRating = heapRating;
+    public void setTodayAmount(String todayAmount) {
+        this.todayAmount = todayAmount;
     }
 
-    public String getRating() {
-        return rating;
+    public String getTotalIncome() {
+        return totalIncome;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setTotalIncome(String totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public String getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    @Override
+    public String toString() {
+        return "Wallet{" +
+                "balance='" + balance + '\'' +
+                ", todayIncome='" + todayIncome + '\'' +
+                ", totalIncome='" + totalIncome + '\'' +
+                ", todayAmount='" + todayAmount + '\'' +
+                ", totalAmount='" + totalAmount + '\'' +
+                '}';
     }
 }

@@ -53,10 +53,11 @@ public class RxManager {
      */
     public void add(Subscription m) {
         /*订阅管理*/
-        if (mCompositeSubscription != null) {
+        if (mCompositeSubscription == null) {
 
-            mCompositeSubscription.add(m);
+            mCompositeSubscription= new CompositeSubscription();
         }
+        mCompositeSubscription.add(m);
     }
 
     /**
@@ -76,6 +77,16 @@ public class RxManager {
         }
 
     }
+    /**
+     * 取消所有的observable任务
+     */
+    public void cancel() {
+        if (mCompositeSubscription != null) {
+            mCompositeSubscription.unsubscribe();// 取消所有订阅
+            mCompositeSubscription = null;
+        }
+    }
+
 
     //发送rxbus
     public void post(Object tag, Object content) {

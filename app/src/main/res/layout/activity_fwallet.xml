@@ -61,7 +61,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="分润金额(元)"
+                        android:text="分润余额(元)"
                         android:textColor="@color/shouye_lv_tv"
                         android:textSize="14sp" />
 
@@ -101,7 +101,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
-                            android:text="昨日分润(元)"
+                            android:text="金日分润(元)"
                             android:textColor="@color/shouye_lv_tv"
                             android:textSize="11sp" />
 

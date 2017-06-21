@@ -11,6 +11,7 @@ import com.betterda.betterdapay.javabean.MyShangHu;
 import com.betterda.betterdapay.javabean.Order;
 import com.betterda.betterdapay.javabean.OrderALL;
 import com.betterda.betterdapay.javabean.Rating;
+import com.betterda.betterdapay.javabean.RatingCalculateEntity;
 import com.betterda.betterdapay.javabean.TuiGuang;
 import com.betterda.betterdapay.javabean.UpdateCondition;
 import com.betterda.betterdapay.javabean.UserInfo;
@@ -88,7 +89,6 @@ public interface NetService {
      * 生成订单
      *
      * @param account   帐号
-     * @param token
      * @param type      交易类型
      * @param money
      * @param orderType 订单类型
@@ -99,7 +99,6 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_ORDER_CREATE)
     Observable<BaseCallModel<String>> getOrder(@Field("account") String account,
-                                               @Field("token") String token,
                                                @Field("type") String type,
                                                @Field("money") String money,
                                                @Field("orderType") String orderType,
@@ -141,6 +140,17 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_MY_RATING)
     Observable<BaseCallModel<Rating>> getRatingForMe(@Field("account") String account);
+
+    /**
+     * 获取我的费率用于计算
+     *
+     * @param account
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_MY_RATINGS)
+    Observable<BaseCallModel<List<RatingCalculateEntity>>> getRatingForCalculate(@Field("account") String account);
 
 
     /**
@@ -310,13 +320,11 @@ public interface NetService {
     /**
      * 我的钱包
      * @param account
-     * @param token
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_WALLET_GET)
-    Observable<BaseCallModel<Wallet>> getWallet(@Field("account") String account,
-                                                @Field("token") String token
+    Observable<BaseCallModel<Wallet>> getWallet(@Field("account") String account
 
     );
 

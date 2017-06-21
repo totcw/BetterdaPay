@@ -88,7 +88,7 @@ public class UpActivity extends BaseActivity {
     public void init() {
         super.init();
         topbarUp.setTitle("升级");
-        getData();
+
         mLoadpagerUp.setonErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +97,11 @@ public class UpActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getData();
+    }
 
     @OnClick({R.id.tv_up_dianzhang, R.id.tv_up_jingli, R.id.tv_up_zongjingli, R.id.tv_up_boss, R.id.bar_back})
     public void onClick(View view) {
@@ -179,7 +184,7 @@ public class UpActivity extends BaseActivity {
                             mIvActivityUpLogo.setImageResource(RateData.getRate(updateCondition.getRankName()));
                         }
                         if (mTvActivityUpRate != null) {
-                            mTvActivityUpRate.setText("当前等级 "+updateCondition.getRankName());
+                            mTvActivityUpRate.setText("当前等级: "+updateCondition.getRankName());
                         }
                       /*  if (mTvActivityUpCondition != null) {
                             mTvActivityUpCondition.setText(updateCondition.getRating());

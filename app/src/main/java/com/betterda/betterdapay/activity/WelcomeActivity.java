@@ -263,8 +263,9 @@ public class WelcomeActivity extends FragmentActivity {
                     //如果用户点击取消下载,就关闭对话框和停止任务下载,同时删除文件,统一在rxjava的fail删除
                     UtilMethod.dissmissDialog(WelcomeActivity.this, mAlertDialog);
                     if (mRxManager != null) {
-                        mRxManager.clear();
+                        mRxManager.cancel();
                     }
+                    startToLogin();
                 }
             });
         }

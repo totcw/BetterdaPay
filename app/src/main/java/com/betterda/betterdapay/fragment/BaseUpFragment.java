@@ -155,8 +155,8 @@ public abstract class BaseUpFragment  extends BaseFragment{
                     viewHolder.setText(R.id.tv_item_up_rating2, rating.getT0TradeRate());
                     viewHolder.setText(R.id.tv_item_up_jiesuan, rating.getT1DrawFee());
                     viewHolder.setText(R.id.tv_item_up_jiesuan2, rating.getT0DrawFee());
-                    viewHolder.setText(R.id.tv_item_up_edu, rating.getTradeQuota());
-                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getDayQuota());
+                    viewHolder.setText(R.id.tv_item_up_edu, rating.getT1TradeQuota()+","+rating.getT1DayQuota());
+                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getT0TradeQuota()+","+rating.getT0DayQuota());
                     if (Constants.ZHIFUBAO.equals(rating.getType())) {
                         viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.zhifubao);
                     } else if (Constants.WEIXIN.equals(rating.getType())) {

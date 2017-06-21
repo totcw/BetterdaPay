@@ -50,9 +50,43 @@ public class Rating {
         private String t0TradeRate;//实时费率
         private String t1DrawFee;//隔天结算笔数
         private String t0DrawFee;//实时结算笔数
-        private String tradeQuota;//隔天额度
-        private String dayQuota;//实时额度
+        private String t0TradeQuota;//t0单笔额度
+        private String t0DayQuota;//t0当天额度
+        private String t1TradeQuota;//t1当天额度
+        private String t1DayQuota;//t1当天额度
         private String type;//通道类型
+
+        public String getT0TradeQuota() {
+            return t0TradeQuota;
+        }
+
+        public void setT0TradeQuota(String t0TradeQuota) {
+            this.t0TradeQuota = t0TradeQuota;
+        }
+
+        public String getT0DayQuota() {
+            return t0DayQuota;
+        }
+
+        public void setT0DayQuota(String t0DayQuota) {
+            this.t0DayQuota = t0DayQuota;
+        }
+
+        public String getT1TradeQuota() {
+            return t1TradeQuota;
+        }
+
+        public void setT1TradeQuota(String t1TradeQuota) {
+            this.t1TradeQuota = t1TradeQuota;
+        }
+
+        public String getT1DayQuota() {
+            return t1DayQuota;
+        }
+
+        public void setT1DayQuota(String t1DayQuota) {
+            this.t1DayQuota = t1DayQuota;
+        }
 
         public String getType() {
             return type;
@@ -102,21 +136,6 @@ public class Rating {
             this.t0DrawFee = t0DrawFee;
         }
 
-        public String getTradeQuota() {
-            return tradeQuota;
-        }
-
-        public void setTradeQuota(String tradeQuota) {
-            this.tradeQuota = tradeQuota;
-        }
-
-        public String getDayQuota() {
-            return dayQuota;
-        }
-
-        public void setDayQuota(String dayQuota) {
-            this.dayQuota = dayQuota;
-        }
 
         @Override
         public String toString() {
@@ -126,8 +145,10 @@ public class Rating {
                     ", t0TradeRate='" + t0TradeRate + '\'' +
                     ", t1DrawFee='" + t1DrawFee + '\'' +
                     ", t0DrawFee='" + t0DrawFee + '\'' +
-                    ", tradeQuota='" + tradeQuota + '\'' +
-                    ", dayQuota='" + dayQuota + '\'' +
+                    ", t0TradeQuota='" + t0TradeQuota + '\'' +
+                    ", t0DayQuota='" + t0DayQuota + '\'' +
+                    ", t1TradeQuota='" + t1TradeQuota + '\'' +
+                    ", t1DayQuota='" + t1DayQuota + '\'' +
                     ", type='" + type + '\'' +
                     '}';
         }

@@ -43,8 +43,8 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://fd022887.ngrok.io/wallet/";
-       // public static final String URL = "http://192.168.0.122:8080/wallet/";
+       // public static final String URL = "http://192.168.0.121:8080/wallet/";
+        public static final String URL = "http://192.168.0.122:8080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
@@ -54,6 +54,7 @@ public class Constants {
         public static final String URL_ORDER_FENRUN = URL + "appAPI.do?api/account/tProfit/get";//分润获取
         public static final String URL_RATING = URL + "api/memberRankController.do?getRanks";//获取各等级费率
         public static final String URL_MY_RATING = URL + "api/memberRankController.do?getRank";//获取我的等级费率
+        public static final String URL_MY_RATINGS = URL + "api/memberRankController.do?getRates";//获取当前等级费率用与计算
         public static final String URL_UPDATE_CONDITION = URL + "api/memberRankController.do?queryUpgrade";//获取升级条件
         public static final String URL_UPDATE_TO_RATE = URL + "api/upgradeOrderController.do?upgrade";//升级到指定接口
         public static final String URL_JIESUAN = URL + "appAPI.do?api/account/tSettlement/add";//结算接口
@@ -64,7 +65,7 @@ public class Constants {
         public static final String URL_AUTH_ADD = URL + "appAPI.do?api/account/auth/add";//实名认证接口
         public static final String URL_SUBNUM_GET = URL + "appAPI.do?api/account/subnum/get";//我的商户接口
         public static final String URL_SUB_GET = URL + "api/mySpreadController.do?mySpread";//我的推广接口
-        public static final String URL_WALLET_GET = URL + "appAPI.do?api/account/wallet/get";//钱包获取接口
+        public static final String URL_WALLET_GET = URL + "api/balanceController.do?getBalance";//钱包获取接口
         public static final String URL_FEEDBACK_ADD = URL + "api/feedbackController.do?feedback";//意见反馈
         public static final String URL_SEARCH_POST = URL + "appAPI.do?api/account/search/post";//搜索接口
         public static final String URL_IMG_UPLOAD = URL + "appAPI.do?api/android/img/upload";//图片上传

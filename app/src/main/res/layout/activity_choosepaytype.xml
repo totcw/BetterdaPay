@@ -10,10 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="当面支付"
+                    android:text="收款"
                     android:textColor="@color/shouye_renmen_tv"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -116,192 +115,24 @@
 
             </View>
 
-            <RelativeLayout
-                android:id="@+id/relative_choose_zhifubao"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_choosepaytype"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_my_information"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-
-                    android:background="@mipmap/zhifubao" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/iv_my_information"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="支付宝支付,隔天到账,需提现"
-                        android:textColor="@color/shouye_renmen_tv"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="5dp"
-                        android:text="额度:50000元 当天:100000元"
-                        android:textColor="@color/shouye_lv_tv"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 
-                <ImageView
-                    android:id="@+id/iv_my_jiantou5"
-                    android:layout_width="8dp"
-                    android:layout_height="15dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-
-                    android:background="@mipmap/jiantou" />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lv_divider">
-
-            </View>
-
-            <RelativeLayout
-                android:id="@+id/relative_choose_weixin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_my_information2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-
-                    android:background="@mipmap/weixin" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/iv_my_information2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="支付宝支付,隔天到账,需提现"
-                        android:textColor="@color/shouye_renmen_tv"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="5dp"
-                        android:text="额度:50000元 当天:100000元"
-                        android:textColor="@color/shouye_lv_tv"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-
-                <ImageView
-                    android:id="@+id/iv_my_jiantou6"
-                    android:layout_width="8dp"
-                    android:layout_height="15dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-
-                    android:background="@mipmap/jiantou" />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lv_divider">
-
-            </View>
-
-            <RelativeLayout
-                android:id="@+id/relative_choose_yinlian"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:padding="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_my_information3"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-
-                    android:background="@mipmap/yinlian" />
-
-                <LinearLayout
-                    android:layout_marginRight="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/iv_my_information3"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="银联支付"
-                        android:textColor="@color/shouye_renmen_tv"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="5dp"
-                        android:text="单笔额度:5000元 当天额度:100000元 最低手续费0.5元"
-                        android:textColor="@color/shouye_lv_tv"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-
-                <ImageView
-                    android:id="@+id/iv_my_jiantou7"
-                    android:layout_width="8dp"
-                    android:layout_height="15dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-
-                    android:background="@mipmap/jiantou" />
-
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lv_divider">
-
-            </View>
         </LinearLayout>
 
-    </ScrollView>
+        <com.betterda.mylibrary.LoadingPager
+            android:id="@+id/loadpager_choosepaytype"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.betterda.mylibrary.LoadingPager>
+
+
+
+    </FrameLayout>
 
 
 </LinearLayout>

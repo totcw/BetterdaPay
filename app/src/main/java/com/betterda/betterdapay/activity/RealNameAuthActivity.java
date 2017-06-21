@@ -11,22 +11,34 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.Api;
+import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.view.NormalTopBar;
+import com.betterda.paycloud.sdk.util.Base64Util;
+import com.betterda.paycloud.sdk.util.KeyGenerator;
+import com.betterda.utils.GsonTools;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 实名认证
@@ -56,7 +68,9 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
     private String bank;//所属银行
     private String number;//预留手机号码
     private String cardType = "储蓄卡";//银行卡类型
-
+    String appId = "40289edd58f0d7c40158f0d7c4c50000";
+    String appCode = "40289edd58f0d7fe0158f0d7fe000000";
+    String PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNN6pMibqG6iZI7+XFzkZZUPPRis8vcLW+mHePfLIeX4/sDjFgGnXs9XueccDcIxUWZBTzffOTfRQALKxNPR7fnPWKjbdyCsgHLfMc6uIgX5GXSFpgNBmhVmhaYAAK5aumXDEscOoD5svdv+14RQA1ZuzuMAyoeWT+uKsgJuUWKQIDAQAB";
 
     @Override
     public void initView() {
@@ -128,8 +142,8 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 chooseBank();
                 break;
             case R.id.btn_realnameauth_next:
-               // authService();
-                next();
+                authService();
+                //next();
                 break;
             case R.id.bar_back:
                 back();
@@ -142,8 +156,6 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
      */
     private void authService() {
 
-        String appId = "40289edd58f0d7c40158f0d7c4c50000";
-        String appCode = "40289edd58f0d7fe0158f0d7fe000000";
 
         Map<String, String> param = new HashMap<String, String>();
         param.put("appId", appId);
@@ -152,15 +164,15 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
         param.put("idcard", identityCard);
         param.put("bankcard", cardNum);
         param.put("mobile",number);
-       // String jsonString = GsonTools.getJsonString(param);
+        String jsonString = GsonTools.getJsonString(param);
 
         String data = "";
-     /*   try {
+        try {
             byte[] encodeData = KeyGenerator.encryptByPublicKey(jsonString.getBytes("utf-8"),PUBLIC_KEY);
             data = Base64Util.encode(encodeData);
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
         OkHttpClient client =  new OkHttpClient.Builder()
                 .build();
@@ -171,6 +183,29 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 .baseUrl("http://www.meichebang.com.cn/EffersonPay/")
                 .build();
         Api api = retrofit.create(Api.class);
+        api.getAuth(data,appId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                            e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            System.out.println("res:"+responseBody.string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
     }
 

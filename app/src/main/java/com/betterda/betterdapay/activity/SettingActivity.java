@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -93,13 +94,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_my_yijian:
-                UtilMethod.startIntent(getmActivity(),FeedbackActivity.class);
+                UtilMethod.startIntent(getmActivity(), FeedbackActivity.class);
                 break;
             case R.id.relative_setting_update:
                 getData();
                 break;
             case R.id.btn_setting_exit:
-                UtilMethod.startIntent(getmActivity(),LoginActivity.class);
+                UtilMethod.startIntent(getmActivity(), LoginActivity.class);
+                finish();
                 break;
             case R.id.bar_back:
                 back();
@@ -114,7 +116,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private void getData() {
 
 
-
         int appVersionCode = UtilMethod.getAppVersionCode(SettingActivity.this);
 
         //wifi状态下才提示更新
@@ -123,7 +124,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             if (mDialog == null) {
                 mDialog = UtilMethod.createDialog(this, "正在加载...");
             }
-            UtilMethod.showDialog(this,mDialog);
+            UtilMethod.showDialog(this, mDialog);
             mRxManager.add(
                     NetWork.getNetService().getUpdate(appVersionCode + "")
                             .compose(NetWork.handleResult(new BaseCallModel<String>()))
@@ -131,24 +132,28 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 @Override
                                 protected void onSuccess(String data, String resultMsg) {
                                     if (BuildConfig.LOG_DEBUG) {
-                                        System.out.println("版本更新:"+data);
+                                        System.out.println("版本更新:" + data);
                                     }
-                                    UtilMethod.dissmissDialog(SettingActivity.this,mDialog);
-                                    showUpdateDialog(data);
+                                    UtilMethod.dissmissDialog(SettingActivity.this, mDialog);
+                                    if (!TextUtils.isEmpty(data) && data.startsWith("http://")) {
+                                        showUpdateDialog(data);
+                                    } else {
+                                        showToast(resultMsg);
+                                    }
                                 }
 
                                 @Override
                                 public void onFail(String resultMsg) {
-                                    UtilMethod.dissmissDialog(SettingActivity.this,mDialog);
+                                    UtilMethod.dissmissDialog(SettingActivity.this, mDialog);
                                     if (BuildConfig.LOG_DEBUG) {
-                                        System.out.println("版本更新fail:"+resultMsg);
+                                        System.out.println("版本更新fail:" + resultMsg);
                                     }
-
+                                    showToast(resultMsg);
                                 }
 
                                 @Override
                                 public void onExit() {
-                                    UtilMethod.dissmissDialog(SettingActivity.this,mDialog);
+                                    UtilMethod.dissmissDialog(SettingActivity.this, mDialog);
                                 }
                             })
             );
@@ -162,7 +167,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
      *
      * @param url
      */
-    public void showUpdateDialog(String url) {
+    public void showUpdateDialog(final String url) {
         View view = LayoutInflater.from(SettingActivity.this).inflate(R.layout.dialog_update, null);
         TextView mTvCancel = (TextView) view.findViewById(R.id.tv_update_cancel);
         TextView mTvComfirm = (TextView) view.findViewById(R.id.tv_update_comfirm);
@@ -182,7 +187,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 UtilMethod.dissmissDialog(SettingActivity.this, alertDialog);
-                checkApk();
+                checkApk(url);
 
             }
         });
@@ -191,7 +196,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     /**
      * 检查本地是有apk
      */
-    public void checkApk() {
+    public void checkApk(String url) {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             Toast.makeText(SettingActivity.this, "sd卡不可用", 0).show();
             return;
@@ -205,77 +210,85 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 //检测是否是有一个apk的版本高于当前app,那么就直接安装
                 if (UtilMethod.compare(apkInfo, SettingActivity.this)) {
                     UtilMethod.startInstall(SettingActivity.this, Uri.fromFile(externalFilesDir));
-                    finish();
+
                     return;
                 }
             }
         }
 
         createDownDialog();
-        download(externalFilesDir);
+        download(externalFilesDir,url);
 
 
     }
 
-    public void download(final File externalFilesDir) {
-        DownloadAPI.DownloadProgressInterceptor interceptor = new DownloadAPI.DownloadProgressInterceptor(new DownloadProgressListener() {
-            @Override
-            public void update(long bytesRead, long contentLength, boolean done) {
-                int progress = (int) ((bytesRead * 100) / contentLength);
-                Message message = Message.obtain();
-                message.arg1 = progress;
-                mHandler.sendMessage(message);
-                if (progress == 100) {//进度到100 就启动安装
-                    if (null != externalFilesDir && externalFilesDir.exists()) {
-                        //检测是否是通过一个应用,且下载的apk的版本高于当前app
-                        //检测是否是有一个apk的版本高于当前app,那么就直接安装
-                        PackageInfo apkInfo = UtilMethod.getApkInfo(SettingActivity.this, externalFilesDir.getAbsolutePath());
-                        if (null != apkInfo) {
+    public void download(final File externalFilesDir,String url) {
+        int indexOf = url.lastIndexOf("/");
+        if (indexOf > 0 && indexOf+1 < url.length()) {
+            String baseUrl = url.substring(0, indexOf);
+            String name = url.substring(indexOf + 1);
+            DownloadAPI.DownloadProgressInterceptor interceptor = new DownloadAPI.DownloadProgressInterceptor(new DownloadProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    int progress = (int) ((bytesRead * 100) / contentLength);
+                    Message message = Message.obtain();
+                    message.arg1 = progress;
+                    mHandler.sendMessage(message);
+                    if (progress == 100) {//进度到100 就启动安装
+                        if (null != externalFilesDir && externalFilesDir.exists()) {
+                            //检测是否是通过一个应用,且下载的apk的版本高于当前app
+                            //检测是否是有一个apk的版本高于当前app,那么就直接安装
+                            PackageInfo apkInfo = UtilMethod.getApkInfo(SettingActivity.this, externalFilesDir.getAbsolutePath());
+                            if (null != apkInfo) {
 
-                            if (UtilMethod.compare(apkInfo, SettingActivity.this)) {
-                                UtilMethod.startInstall(SettingActivity.this, Uri.fromFile(externalFilesDir));
-                                finish();
+                                if (UtilMethod.compare(apkInfo, SettingActivity.this)) {
+                                    UtilMethod.startInstall(SettingActivity.this, Uri.fromFile(externalFilesDir));
+
+                                }
                             }
                         }
-                    }
 
+                    }
                 }
-            }
-        });
-        //如果没有就重新下载
-        mRxManager.add(DownloadAPI.downloadService("http://139.199.178.209:8080/", interceptor).download("app-debug.apk")
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onCompleted() {
-                        UtilMethod.dissmissDialog(SettingActivity.this, mAlertDialog);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //如果下载出错,就删除当前apk
-                        if (null != externalFilesDir && externalFilesDir.exists()) {
-                            externalFilesDir.delete();
+            });
+            //如果没有就重新下载
+            mRxManager.add(DownloadAPI.downloadService(baseUrl, interceptor).download(name)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe(new Observer<ResponseBody>() {
+                        @Override
+                        public void onCompleted() {
+                            UtilMethod.dissmissDialog(SettingActivity.this, mAlertDialog);
                         }
-                        UtilMethod.dissmissDialog(SettingActivity.this, mAlertDialog);
 
-                        e.printStackTrace();
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            //如果下载出错,就删除当前apk
+                            if (null != externalFilesDir && externalFilesDir.exists()) {
+                                externalFilesDir.delete();
+                            }
+                            UtilMethod.dissmissDialog(SettingActivity.this, mAlertDialog);
 
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-
-                        try {
-                            FileUtils.writeFile(responseBody.byteStream(), externalFilesDir);
-                        } catch (IOException e) {
                             e.printStackTrace();
-                            throw new RuntimeException(e.getMessage(), e);
                         }
 
+                        @Override
+                        public void onNext(ResponseBody responseBody) {
 
-                    }
-                }));
+                            try {
+                                FileUtils.writeFile(responseBody.byteStream(), externalFilesDir);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                throw new RuntimeException(e.getMessage(), e);
+                            }
+
+
+                        }
+                    }));
+        }
+
+
+
     }
 
     /**
@@ -297,7 +310,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     //如果用户点击取消下载,就关闭对话框和停止任务下载,同时删除文件,统一在rxjava的fail删除
                     UtilMethod.dissmissDialog(SettingActivity.this, mAlertDialog);
                     if (mRxManager != null) {
-                        mRxManager.clear();
+                        mRxManager.cancel();
                     }
                 }
             });
