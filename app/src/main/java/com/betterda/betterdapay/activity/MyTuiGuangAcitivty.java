@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.RateData;
@@ -44,6 +45,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
     private List<TuiGuang> list, tuiGuangList;
     private HeaderAndFooterRecyclerViewAdapter adapter;
     private int page = 1;
+
     @Override
     public void initView() {
         setContentView(R.layout.activity_mytuiguang);
@@ -53,36 +55,55 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
     public void init() {
         topbarMytuiguang.setTitle("我的推广");
         setRecycleview();
+        loadpagerLayout.setLoadVisable();
         getData();
+        loadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadpagerLayout.setLoadVisable();
+                getData();
+            }
+        });
     }
 
     private void getData() {
-        loadpagerLayout.setLoadVisable();
+
         NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                  NetWork.getNetService()
-                        .getSub(UtilMethod.getAccout(getmActivity()), page + "", Constants.PAGE_SIZE + "")
-                        .compose(NetWork.handleResult(new BaseCallModel<List<TuiGuang>>()))
-                        .subscribe(new MyObserver<List<TuiGuang>>() {
-                            @Override
-                            protected void onSuccess(List<TuiGuang> data, String resultMsg) {
-                                if (data != null) {
-                                    parser(data);
-                                }
-                                UtilMethod.judgeData(list,loadpagerLayout);
-                            }
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getSub(UtilMethod.getAccout(getmActivity()), page + "", Constants.PAGE_SIZE + "")
+                                .compose(NetWork.handleResult(new BaseCallModel<List<TuiGuang>>()))
+                                .subscribe(new MyObserver<List<TuiGuang>>() {
+                                    @Override
+                                    protected void onSuccess(List<TuiGuang> data, String resultMsg) {
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                loadpagerLayout.setErrorVisable();
-                            }
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("我的推广:"+data);
+                                        }
+                                        if (data != null) {
+                                            parser(data);
+                                        }
+                                        UtilMethod.judgeData(list, loadpagerLayout);
+                                    }
 
-                            @Override
-                            public void onExit() {
-                                ExitToLogin();
-                            }
-                        });
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("我的推广fails:"+resultMsg);
+                                        }
+                                        if (loadpagerLayout != null) {
+                                            loadpagerLayout.setErrorVisable();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onExit() {
+                                        ExitToLogin();
+                                    }
+                                })
+                );
             }
         });
     }
@@ -114,10 +135,16 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
             @Override
             public void convert(ViewHolder viewHolder, TuiGuang tuiGuang) {
                 if (tuiGuang != null) {
-                    viewHolder.setText(R.id.tv_item_mytuiguang_account, tuiGuang.getSubAccount());
-                    viewHolder.setText(R.id.tv_item_mytuiguang_time, "注册时间:"+tuiGuang.getTime());
-                    if (!TextUtils.isEmpty(tuiGuang.getRate())) {
-                        viewHolder.setImageResource(R.id.iv_item_mytuiguang, RateData.getRate(tuiGuang.getRate()));
+                    viewHolder.setText(R.id.tv_item_mytuiguang_account, tuiGuang.getRank());
+                    viewHolder.setText(R.id.tv_item_mytuiguang_number, tuiGuang.getAccount());
+                    viewHolder.setText(R.id.tv_item_mytuiguang_time, "注册时间:" + tuiGuang.getTime());
+                    if (!TextUtils.isEmpty(tuiGuang.getRank())) {
+                        viewHolder.setImageResource(R.id.iv_item_mytuiguang, RateData.getRate(tuiGuang.getRank()));
+                    }
+                    if (tuiGuang.getAuth()) {
+                        viewHolder.setText(R.id.tv_item_mytuiguang_renzheng, "已认证");
+                    } else {
+                        viewHolder.setText(R.id.tv_item_mytuiguang_renzheng, "未认证");
                     }
 
                 }
@@ -127,12 +154,12 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
         rvLayout.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-               // super.getItemOffsets(outRect, view, parent, state);
-                outRect.set(10,10,10,10);
+                // super.getItemOffsets(outRect, view, parent, state);
+                outRect.set(10, 10, 10, 10);
             }
         });
         rvLayout.setAdapter(adapter);
-        rvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()){
+        rvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
             @Override
             public void onLoadNextPage(View view) {
                 RecyclerViewStateUtils.next(getmActivity(), rvLayout, new RecyclerViewStateUtils.nextListener() {
@@ -148,7 +175,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
             @Override
             public void show(boolean isShow) {
                 //这里是要传当前服务器返回的list
-                RecyclerViewStateUtils.show(isShow,tuiGuangList,rvLayout,getmActivity());
+                RecyclerViewStateUtils.show(isShow, tuiGuangList, rvLayout, getmActivity());
             }
         });
     }
@@ -172,7 +199,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
         super.onDestroy();
         if (RateData.rateMap != null) {
             RateData.rateMap.clear();
-            RateData.rateMap=null;
+            RateData.rateMap = null;
         }
     }
 }

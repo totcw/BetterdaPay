@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.betterda.betterdapay"
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0.0"
 
@@ -130,4 +130,6 @@ dependencies {
     compile files('libs/umeng_social_net.jar')
 
     compile files('libs/umeng_social_tool.jar')
+    /*btpay*/
+    compile 'com.betterda.btpay:btsdk:0.0.2'
 }

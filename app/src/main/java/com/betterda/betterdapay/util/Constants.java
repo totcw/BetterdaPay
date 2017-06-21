@@ -15,7 +15,7 @@ public class Constants {
     public static final int PHOTOHRAPH = 2;// 相机拍照
     public static final String IMAGE_UNSPECIFIED = "image/*";
 
-    public static final int PAGE_SIZE = 1;//一页加载的个数
+    public static final int PAGE_SIZE = 10;//一页加载的个数
     //判断输入金额的正则
     public static final String str = "^(([0-9]|([1-9][0-9]{0,9}))((\\.[0-9]{1,2})?))$";
 
@@ -43,8 +43,8 @@ public class Constants {
 
 
     public static class Url {
-       // public static final String URL = "http://69b2f3c8.ngrok.io/wallet/";
-        public static final String URL = "http://192.168.0.122:8080/wallet/";
+        public static final String URL = "http://fd022887.ngrok.io/wallet/";
+       // public static final String URL = "http://192.168.0.122:8080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
@@ -63,13 +63,15 @@ public class Constants {
         public static final String URL_CDOE_GET = URL + "appAPI.do?api/account/code/get";//我的二维码接口
         public static final String URL_AUTH_ADD = URL + "appAPI.do?api/account/auth/add";//实名认证接口
         public static final String URL_SUBNUM_GET = URL + "appAPI.do?api/account/subnum/get";//我的商户接口
-        public static final String URL_SUB_GET = URL + "appAPI.do?api/account/sub/get";//我的推广接口
+        public static final String URL_SUB_GET = URL + "api/mySpreadController.do?mySpread";//我的推广接口
         public static final String URL_WALLET_GET = URL + "appAPI.do?api/account/wallet/get";//钱包获取接口
-        public static final String URL_FEEDBACK_ADD = URL + "appAPI.do?api/account/feedback/add";//意见反馈
+        public static final String URL_FEEDBACK_ADD = URL + "api/feedbackController.do?feedback";//意见反馈
         public static final String URL_SEARCH_POST = URL + "appAPI.do?api/account/search/post";//搜索接口
         public static final String URL_IMG_UPLOAD = URL + "appAPI.do?api/android/img/upload";//图片上传
+        public static final String URL_UPDATE_VERSION = URL + "api/versionController.do?version";//版本更新
         public static final String URL_GET_INFORMATION = "appAPI.do?api/account/auth/get";//我的资料获取
         public static final String URL_GET_MEMBERS = "api/memberNumController.do?memberNum";//获取会员个数
+        public static final String URL_GET_MESSAGE_LIST = "api/infoListController.do?infoList";//获取消息列表
 
 
 

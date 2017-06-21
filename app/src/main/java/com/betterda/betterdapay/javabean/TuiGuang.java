@@ -5,17 +5,17 @@ package com.betterda.betterdapay.javabean;
  * Created by Administrator on 2016/8/17.
  */
 public class TuiGuang {
-    private String subAccount;//帐号
+    private String account;//帐号
     private String time;//注册时间
-    private String status;//状态
-    private String rate;//等级
+    private Boolean auth;//状态
+    private String rank;//等级
 
-    public String getSubAccount() {
-        return subAccount;
+    public String getAccount() {
+        return account;
     }
 
-    public void setSubAccount(String subAccount) {
-        this.subAccount = subAccount;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getTime() {
@@ -26,19 +26,29 @@ public class TuiGuang {
         this.time = time;
     }
 
-    public String getStatus() {
-        return status;
+    public Boolean getAuth() {
+        return auth;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAuth(Boolean auth) {
+        this.auth = auth;
     }
 
-    public String getRate() {
-        return rate;
+    public String getRank() {
+        return rank;
     }
 
-    public void setRate(String rate) {
-        this.rate = rate;
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    @Override
+    public String toString() {
+        return "TuiGuang{" +
+                "account='" + account + '\'' +
+                ", time='" + time + '\'' +
+                ", auth='" + auth + '\'' +
+                ", rank='" + rank + '\'' +
+                '}';
     }
 }

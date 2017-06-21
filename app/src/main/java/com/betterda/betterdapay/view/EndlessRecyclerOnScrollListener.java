@@ -136,10 +136,7 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
         }
         int vieable = lastCompletelyVisibleItemPosition - firstCompletelyVisibleItemPosition;
         count =  layoutManager.getItemCount();
-        System.out.println("fir:"+firstCompletelyVisibleItemPosition);
-        System.out.println("lastCompletelyVisibleItemPosition:"+lastCompletelyVisibleItemPosition);
-        System.out.println("vieable:"+vieable);
-        System.out.println("count:"+count);
+
         if (count <= 0) {
             return;
         }

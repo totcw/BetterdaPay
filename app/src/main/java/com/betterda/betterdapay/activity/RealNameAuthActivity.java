@@ -1,7 +1,6 @@
 package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -15,14 +14,19 @@ import android.widget.TextView;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.data.BankData;
-import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.http.Api;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 
 /**
  * 实名认证
@@ -124,12 +128,50 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 chooseBank();
                 break;
             case R.id.btn_realnameauth_next:
+               // authService();
                 next();
                 break;
             case R.id.bar_back:
                 back();
                 break;
         }
+    }
+
+    /**
+     * 四要素验证
+     */
+    private void authService() {
+
+        String appId = "40289edd58f0d7c40158f0d7c4c50000";
+        String appCode = "40289edd58f0d7fe0158f0d7fe000000";
+
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("appId", appId);
+        param.put("appCode", appCode);
+        param.put("realname", realName);
+        param.put("idcard", identityCard);
+        param.put("bankcard", cardNum);
+        param.put("mobile",number);
+       // String jsonString = GsonTools.getJsonString(param);
+
+        String data = "";
+     /*   try {
+            byte[] encodeData = KeyGenerator.encryptByPublicKey(jsonString.getBytes("utf-8"),PUBLIC_KEY);
+            data = Base64Util.encode(encodeData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+        OkHttpClient client =  new OkHttpClient.Builder()
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl("http://www.meichebang.com.cn/EffersonPay/")
+                .build();
+        Api api = retrofit.create(Api.class);
+
     }
 
     /**

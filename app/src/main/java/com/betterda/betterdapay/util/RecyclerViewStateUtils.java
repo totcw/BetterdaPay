@@ -165,8 +165,8 @@ public class RecyclerViewStateUtils {
 
     /**
      * 判断是否显示 footer
-     * @param isShow
-     * @param list
+     * @param isShow  是否显示
+     * @param list  服务返回的list
      * @param recyclerView
      * @param activity
      */
@@ -194,6 +194,9 @@ public class RecyclerViewStateUtils {
     }
 
     public interface nextListener{
+        /**
+         * 加载更多
+         */
         void load();
     }
 

@@ -110,9 +110,6 @@
             android:name=".activity.MyYinHangKa"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.ShangHuActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
             android:name=".activity.MyTuiGuangAcitivty"
             android:screenOrientation="portrait"></activity>
         <activity

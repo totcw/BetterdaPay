@@ -6,6 +6,7 @@ import com.betterda.betterdapay.javabean.EWeiMa;
 import com.betterda.betterdapay.javabean.FenRun;
 import com.betterda.betterdapay.javabean.Information;
 import com.betterda.betterdapay.javabean.MemberCounts;
+import com.betterda.betterdapay.javabean.Messages;
 import com.betterda.betterdapay.javabean.MyShangHu;
 import com.betterda.betterdapay.javabean.Order;
 import com.betterda.betterdapay.javabean.OrderALL;
@@ -289,19 +290,7 @@ public interface NetService {
 
     );
 
-    /**
-     * 我的商户
-     *
-     * @param account
-     * @param token
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Constants.Url.URL_SUBNUM_GET)
-    Observable<BaseCallModel<MyShangHu>> getSubnum(@Field("account") String account,
-                                                @Field("token") String token
 
-    );
 
     /**
      * 我的推广
@@ -328,7 +317,6 @@ public interface NetService {
     @POST(Constants.Url.URL_WALLET_GET)
     Observable<BaseCallModel<Wallet>> getWallet(@Field("account") String account,
                                                 @Field("token") String token
-
 
     );
 
@@ -423,8 +411,21 @@ public interface NetService {
      */
 
     @FormUrlEncoded
-    @POST(Constants.Url.URL_IMG_UPLOAD)
+    @POST(Constants.Url.URL_UPDATE_VERSION)
     Observable<BaseCallModel<String>> getUpdate(@Field("versionNo") String version);
 
+
+    /**
+     *获取消息列表
+
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_MESSAGE_LIST)
+    Observable<BaseCallModel<List<Messages>>> getMessageList(@Field("account") String account,
+                                                       @Field("pageNo") String pageNo,
+                                                       @Field("pageSize") String pageSize
+                                                     );
 
 }

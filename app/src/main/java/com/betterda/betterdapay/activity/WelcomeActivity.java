@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.dialog.DeleteDialog;
@@ -293,12 +294,18 @@ public class WelcomeActivity extends FragmentActivity {
                             .subscribe(new MyObserver<String>() {
                                 @Override
                                 protected void onSuccess(String data, String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("版本更新:"+data);
+                                    }
                                     showUpdateDialog(data);
                                 }
 
                                 @Override
                                 public void onFail(String resultMsg) {
                                     // startToLogin();
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("版本更新fail:"+resultMsg);
+                                    }
                                      showUpdateDialog(resultMsg);
                                 }
 

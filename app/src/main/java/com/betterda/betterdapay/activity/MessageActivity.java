@@ -5,9 +5,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.callback.MyObserver;
+import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.javabean.Messages;
+import com.betterda.betterdapay.util.Constants;
+import com.betterda.betterdapay.util.NetworkUtils;
+import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.mylibrary.recycleviehelper.HeaderAndFooterRecyclerViewAdapter;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
@@ -31,7 +40,10 @@ public class MessageActivity extends BaseActivity {
     RecyclerView mRvLayout;
     @BindView(R.id.loadpager_layout)
     LoadingPager mLoadpagerLayout;
-    private List<String> list;
+
+    private HeaderAndFooterRecyclerViewAdapter mAdapter;
+    private List<Messages> list;
+    private int page = 1;
 
     @Override
     public void initView() {
@@ -44,19 +56,29 @@ public class MessageActivity extends BaseActivity {
         super.init();
         mTopbarMeassage.setTitle("消息");
         list = new ArrayList<>();
-        list.add(null);
-        list.add(null);
-        list.add(null);
         mRvLayout.setLayoutManager(new LinearLayoutManager(getmActivity()));
-        mRvLayout.setAdapter(new CommonAdapter<String>(getmActivity(),R.layout.item_rv_meassagecontent,list) {
+        mAdapter =new HeaderAndFooterRecyclerViewAdapter(new CommonAdapter<Messages>(getmActivity(), R.layout.item_rv_meassagecontent, list) {
             @Override
-            public void convert(ViewHolder holder, String str) {
-
+            public void convert(ViewHolder holder, Messages messages) {
+                if (messages != null && holder != null) {
+                    holder.setText(R.id.tv_item_meassagecontent_time, messages.getTime());
+                    holder.setText(R.id.tv_item_meassagecontent_title, messages.getTitle());
+                    holder.setText(R.id.tv_item_meassagecontent_content, messages.getContent());
+                }
             }
 
+        });
 
+        mRvLayout.setAdapter(mAdapter);
+        getData();
+        mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData();
+            }
         });
     }
+
 
     @OnClick({R.id.bar_back})
     public void onClick(View view) {
@@ -66,5 +88,59 @@ public class MessageActivity extends BaseActivity {
                 break;
 
         }
+    }
+
+    private void getData() {
+        mLoadpagerLayout.setLoadVisable();
+        NetworkUtils.isNetWork(this, mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getMessageList(UtilMethod.getAccout(getmActivity()), page + "", Constants.PAGE_SIZE + "")
+                                .compose(NetWork.handleResult(new BaseCallModel<List<Messages>>()))
+                                .subscribe(new MyObserver<List<Messages>>() {
+                                    @Override
+                                    protected void onSuccess(List<Messages> data, String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("获取消息列表:" + data);
+                                        }
+                                        if (data != null) {
+                                            parserData(data);
+                                        }
+                                        UtilMethod.judgeData(list, mLoadpagerLayout);
+                                    }
+
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("获取消息列表fail:" + resultMsg);
+                                        }
+                                        if (mLoadpagerLayout != null) {
+                                            mLoadpagerLayout.setErrorVisable();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onExit() {
+
+                                    }
+                                })
+                );
+            }
+        });
+    }
+
+    private void parserData(List<Messages> data) {
+        if (list != null) {
+            if (page == 1) {
+                list.clear();
+                list.addAll(data);
+            }
+        }
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+
     }
 }

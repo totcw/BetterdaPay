@@ -80,51 +80,23 @@ public class MyFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
+        String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
+        rate = CacheUtils.getString(getmActivity(), account + Constants.Cache.RANK, "员工");
         if (tvMyNumber != null) {
-            tvMyNumber.setText(CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, ""));
+            tvMyNumber.setText(account);
         }
         if (svTouxiang != null) {
             svTouxiang.setImageResource(RateData.getRate(rate));
         }
 
-        getData();
+        if (tvMyRate != null) {
+            tvMyRate.setText("当前等级:" + rate);
+
+        }
+
     }
 
-    private void getData() {
-        NetworkUtils.isNetWork(getmActivity(), topbarMy, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                NetWork.getNetService()
-                       .getInformation(UtilMethod.getAccout(getmActivity()),UtilMethod.getToken(getmActivity()))
-                       .compose(NetWork.handleResult(new BaseCallModel<Information>()))
-                       .subscribe(new MyObserver<Information>() {
-                           @Override
-                           protected void onSuccess(Information data, String resultMsg) {
-                               if (data != null) {
-                                   rate = data.getRate();
-                                   if (tvMyRate != null) {
-                                       tvMyRate.setText("当前等级:" + data.getRate());
 
-                                   }
-                                   if (svTouxiang != null) {
-                                       svTouxiang.setImageResource(RateData.getRate(data.getRate()));
-                                   }
-                               }
-                           }
-
-                           @Override
-                           public void onFail(String resultMsg) {
-
-                           }
-
-                           @Override
-                           public void onExit() {
-                                ExitToLogin();
-                           }
-                       });
-            }
-        });
-    }
 
     @OnClick({R.id.relative_my_rating, R.id.relative_my_yinhangka, R.id.relative_my_erweima, R.id.relative_my_information, R.id.relative_my_shanghu , R.id.bar_relative_bus})
     public void onClick(View view) {

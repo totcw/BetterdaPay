@@ -254,6 +254,7 @@
                     android:background="@mipmap/yinlian" />
 
                 <LinearLayout
+                    android:layout_marginRight="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -264,7 +265,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="支付宝支付,隔天到账,需提现"
+                        android:text="银联支付"
                         android:textColor="@color/shouye_renmen_tv"
                         android:textSize="13sp" />
 
@@ -273,7 +274,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginTop="5dp"
-                        android:text="额度:50000元 当天:100000元"
+                        android:text="单笔额度:5000元 当天额度:100000元 最低手续费0.5元"
                         android:textColor="@color/shouye_lv_tv"
                         android:textSize="12sp" />
 

@@ -2,8 +2,11 @@ package com.betterda.betterdapay.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.util.CacheUtils;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 
@@ -20,6 +23,9 @@ public class InformationActivity extends BaseActivity {
 
     @BindView(R.id.topbar_information)
     NormalTopBar topbarInformation;
+    @BindView(R.id.tv_information_auth)
+    TextView mTvAuth;
+    private boolean mIsAuth;
 
     @Override
     public void initView() {
@@ -31,17 +37,21 @@ public class InformationActivity extends BaseActivity {
     public void init() {
         super.init();
         topbarInformation.setTitle("个人信息");
+        mIsAuth = CacheUtils.getBoolean(this, UtilMethod.getAccout(this) + Constants.Cache.AUTH, false);
+        mTvAuth.setText(mIsAuth ? "已实名" : "未实名");
     }
 
-    @OnClick({R.id.linear_realname, R.id.linear_reset,R.id.bar_back})
+    @OnClick({R.id.linear_realname, R.id.linear_reset, R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_realname:
-                UtilMethod.startIntent(getmActivity(),RealNameAuthActivity.class);
+                if (mIsAuth) {
+                    UtilMethod.startIntent(getmActivity(), RealNameAuthActivity.class);
+                }
                 break;
 
             case R.id.linear_reset:
-
+                UtilMethod.startIntent(getmActivity(), ForgetPwdActivity.class);
                 break;
             case R.id.bar_back:
                 back();
