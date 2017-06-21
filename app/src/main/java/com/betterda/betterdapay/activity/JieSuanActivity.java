@@ -57,7 +57,7 @@ public class JieSuanActivity extends BaseActivity {
     @Override
     public void init() {
         super.init();
-        topbarJiesuan.setTitle("提现");
+        topbarJiesuan.setTitle("结算");
         getIntentData();
         setTextChange();
         tvJiesuanMoney.setText("余额￥"+money);
@@ -146,6 +146,11 @@ public class JieSuanActivity extends BaseActivity {
             //判断余额是否足够
             if (sum == 0) {
                 showToast("请输入提现余额");
+                return;
+            }
+            //手续费要1元
+            if (sum <= 1) {
+                showToast("提现金额必须大于1元");
                 return;
             }
 

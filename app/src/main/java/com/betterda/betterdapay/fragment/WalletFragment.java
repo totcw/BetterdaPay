@@ -128,8 +128,8 @@ public class WalletFragment extends BaseFragment {
 
 
         if (UtilMethod.showNotice(getmActivity())) {
-            createWithDrawDialog();
-           // UtilMethod.startIntent(getmActivity(), JieSuanActivity.class, "money", mGttvWalletMoney.getText().toString().trim());
+           // createWithDrawDialog();
+            UtilMethod.startIntent(getmActivity(), JieSuanActivity.class, "money", mGttvWalletMoney.getText().toString().trim());
         }
     }
 

@@ -95,6 +95,13 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="特别提醒:提现金额必须大于1元,手续费参考费率表"
+        android:textColor="@color/shouye_fenlei_red"
+        android:textSize="13sp" />
 
     <Button
         android:id="@+id/btn_jiesuan_comfirm"
@@ -104,7 +111,7 @@
         android:background="@drawable/btn_login_selector"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="提现"
+        android:text="结算"
         android:textColor="#ffffff"
         android:textSize="16sp"
         />

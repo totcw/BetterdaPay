@@ -188,9 +188,9 @@ public class ShouKuanFragment extends BaseFragment {
     private void write(String number) {
 
         //为0时,替换,其他情况就直接添加
-        if ("0".equals(sb.toString())) {
+        if ("0".equals(sb.toString())||"00".equals(sb.toString())) {
             if (".".equals(number)) {
-                //如果为0的时候输入.就什么都不做
+                //如果为0的时候输入.就什么都不做,因为收款是要大于1块
                 return;
             }
             sb.replace(0, sb.length(), number);
