@@ -60,9 +60,7 @@ public class FWalletActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_fwallet_withdraw:
-                if (UtilMethod.showNotice(getmActivity())) {
-                    UtilMethod.startIntent(getmActivity(), TiXianActivity.class);
-                }
+                UtilMethod.startIntent(getmActivity(), TiXianDetailActivity.class);
                 break;
             case R.id.linear_fwallet_details:
                 UtilMethod.startIntent(getmActivity(), WalletDetailActivity.class);

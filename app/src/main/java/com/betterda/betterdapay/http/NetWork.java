@@ -44,7 +44,7 @@ public class NetWork {
         if (netService == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.Url.URL)
-                    .client(okHttpClient.newBuilder().addInterceptor(interceptor)//添加拦截器
+                    .client(okHttpClient.newBuilder()//添加拦截器
                             .cache(new Cache(new File(MyApplication.getInstance().getCacheDir(), "responses"),10 * 1024 * 1024)) //创建一个10M的缓存目录
                             .build())
                             .addConverterFactory(gsonConverterFactory)

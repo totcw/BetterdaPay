@@ -11,6 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
 
@@ -30,6 +34,12 @@
             android:textSize="20sp"
             />
     </RelativeLayout>
+
+        <com.betterda.mylibrary.LoadingPager
+            android:id="@+id/loadpager_fragmeng_share"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.betterda.mylibrary.LoadingPager>
+    </FrameLayout>
 </LinearLayout>
 
 

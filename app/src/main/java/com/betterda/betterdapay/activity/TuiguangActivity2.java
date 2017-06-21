@@ -6,11 +6,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.callback.MyObserver;
+import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.mylibrary.LoadingPager;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,7 +31,9 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
 
     @BindView(R.id.btn_tuiguang2_share)
     Button mBtnTuiguang2Share;
-
+    @BindView(R.id.loadpager_tuiguang)
+    LoadingPager mLoadingPager;
+    private String url = "http://www.baidu.com";
     @Override
     public void initView() {
         super.initView();
@@ -51,6 +60,44 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
     }
 
 
+    private void getData() {
+        mLoadingPager.setLoadVisable();
+        NetworkUtils.isNetWork(getmActivity(), mLoadingPager, new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getCode(UtilMethod.getAccout(getmActivity()))
+                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                                .subscribe(new MyObserver<String>() {
+                                    @Override
+                                    protected void onSuccess(String data, String resultMsg) {
+
+                                        if (mLoadingPager != null) {
+                                            mLoadingPager.hide();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (mLoadingPager != null) {
+                                            mLoadingPager.setErrorVisable();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onExit() {
+                                        if (mLoadingPager != null) {
+                                            mLoadingPager.hide();
+                                        }
+                                    }
+                                })
+                );
+            }
+        });
+
+    }
+
     /**
      * 分享
      */
@@ -76,8 +123,13 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
         UMShareAPI mShareAPI = UMShareAPI.get(getmActivity());
         boolean install = mShareAPI.isInstall(getmActivity(), SHARE_MEDIA.WEIXIN);
         if (install) {
+            UMImage image = new UMImage(getmActivity(), R.mipmap.ic_launcher);//资源文件
+            UMWeb web = new UMWeb(url);
+            web.setTitle("诚享钱包");//标题
+            web.setThumb(image);  //缩略图
+            web.setDescription("注册有礼");//描述
             new ShareAction(getmActivity()).setPlatform(platform)
-                    .withText("hello")
+                    .withMedia(web)
                     .setCallback(new UMShareListener() {
                         @Override
                         public void onStart(SHARE_MEDIA share_media) {

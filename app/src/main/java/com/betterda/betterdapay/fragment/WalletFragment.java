@@ -1,15 +1,18 @@
 package com.betterda.betterdapay.fragment;
 
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.BanLiActivity;
 import com.betterda.betterdapay.activity.BianJieDaiKuanActivity;
 import com.betterda.betterdapay.activity.CreditpayActivity;
+import com.betterda.betterdapay.activity.JieSuanActivity;
 import com.betterda.betterdapay.activity.MessageActivity;
-import com.betterda.betterdapay.activity.TiXianActivity;
 import com.betterda.betterdapay.activity.TransactionRecordActivity;
 import com.betterda.betterdapay.javabean.Wallet;
 import com.betterda.betterdapay.livingpay.BaseLivingActiivty;
@@ -30,6 +33,8 @@ public class WalletFragment extends BaseFragment {
     GradientTextView mGttvWalletMoney; //提现金额
     @BindView(R.id.iv_wallet_bg)
     ImageView mWalletBg; //图片
+
+    private AlertDialog mAlertDialog;
 
 
     @Override
@@ -95,9 +100,7 @@ public class WalletFragment extends BaseFragment {
                 UtilMethod.startIntent(getmActivity(), MessageActivity.class);
                 break;
             case R.id.btn_wallet_tixian://我要提现
-                if (UtilMethod.showNotice(getmActivity())) {
-                    UtilMethod.startIntent(getmActivity(), TiXianActivity.class, "money", mGttvWalletMoney.getText().toString().trim());
-                }
+                withdraw();
                 break;
             case R.id.relative_wallet_banli://办理信用卡
                 UtilMethod.startIntent(getmActivity(), BanLiActivity.class);
@@ -117,5 +120,46 @@ public class WalletFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 提现
+     */
+    public void withdraw() {
 
+
+
+        if (UtilMethod.showNotice(getmActivity())) {
+            createWithDrawDialog();
+           // UtilMethod.startIntent(getmActivity(), JieSuanActivity.class, "money", mGttvWalletMoney.getText().toString().trim());
+        }
+    }
+
+    /**
+     * 创建提现的提示对话框
+     */
+    public void createWithDrawDialog() {
+        if (mAlertDialog == null) {
+            View view = LayoutInflater.from(getmActivity()).inflate(R.layout.dialog_withdraw, null);
+            TextView mTvContent = (TextView) view.findViewById(R.id.tv_dialog_call_content);
+            mTvContent.setText("一笔订单正在处理中");
+            Button mBtnComfirm = (Button) view.findViewById(R.id.btn_dialog_call_comfrim);
+            mBtnComfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UtilMethod.dissmissDialog(getmActivity(),mAlertDialog);
+                }
+            });
+            AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
+            mAlertDialog = builder.setView(view).create();
+
+        }
+        UtilMethod.showDialog(getmActivity(),mAlertDialog);
+
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mAlertDialog = null;
+    }
 }

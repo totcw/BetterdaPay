@@ -84,9 +84,6 @@
         <activity
             android:name=".activity.TuiGuangActivity"
             android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activity.MyEweiMaActivity"
-            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".activity.ChooseCityActivity"
@@ -140,6 +137,9 @@
         <activity
             android:name=".activity.WalletActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.TiXianDetailActivity"
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".activity.FWalletActivity"
@@ -151,9 +151,6 @@
 
         <activity
             android:name=".activity.WalletDetailActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activity.TiXianActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.UpActivity"

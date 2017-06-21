@@ -17,11 +17,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 分润明细
+ * 提现明细
  * Created by Administrator on 2017/3/30.
  */
 
-public class WalletDetailActivity extends BaseActivity {
+public class TiXianDetailActivity extends BaseActivity {
 
     @BindView(R.id.topbar_walletdetail)
     NormalTopBar mTopbarWalletdetail;
@@ -43,7 +43,7 @@ public class WalletDetailActivity extends BaseActivity {
     @Override
     public void init() {
         super.init();
-        mTopbarWalletdetail.setTitle("分润明细");
+        mTopbarWalletdetail.setTitle("提现明细");
         list = new ArrayList<>();
         list.add(null);
         list.add(null);

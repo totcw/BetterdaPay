@@ -44,7 +44,7 @@ public class Constants {
 
     public static class Url {
        // public static final String URL = "http://192.168.0.121:8080/wallet/";
-        public static final String URL = "http://192.168.0.122:8080/wallet/";
+        public static final String URL = "http://192.168.0.113:8080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
@@ -61,7 +61,7 @@ public class Constants {
         public static final String URL_BANK_ADD = URL + "appAPI.do?api/account/bank/add";//银行卡添加接口
         public static final String URL_BANK_GET = URL + "appAPI.do?api/account/bank/get";//银行卡查询接口
         public static final String URL_BANK_DELETE = URL + "appAPI.do?api/account/bank/delete";//银行卡删除接口
-        public static final String URL_CDOE_GET = URL + "appAPI.do?api/account/code/get";//我的二维码接口
+        public static final String URL_CDOE_GET = URL + "api/shareController.do?share";//获取分享链接
         public static final String URL_AUTH_ADD = URL + "appAPI.do?api/account/auth/add";//实名认证接口
         public static final String URL_SUBNUM_GET = URL + "appAPI.do?api/account/subnum/get";//我的商户接口
         public static final String URL_SUB_GET = URL + "api/mySpreadController.do?mySpread";//我的推广接口

@@ -249,16 +249,14 @@ public interface NetService {
     );
 
     /**
-     * 我的二维码获取
+     * 获取分享链接
      *
      * @param account
-     * @param token
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_CDOE_GET)
-    Observable<BaseCallModel<EWeiMa>> getCode(@Field("account") String account,
-                                              @Field("token") String token
+    Observable<BaseCallModel<String>> getCode(@Field("account") String account
 
     );
 

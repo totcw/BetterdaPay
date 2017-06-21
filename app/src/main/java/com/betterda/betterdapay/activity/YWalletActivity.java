@@ -45,7 +45,7 @@ public class YWalletActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_ywallet_tixian:
-                UtilMethod.startIntent(getmActivity(),TiXianActivity.class);
+                UtilMethod.startIntent(getmActivity(),JieSuanActivity.class);
                 break;
             case R.id.linear_ywallet_mingxi:
                 UtilMethod.startIntent(getmActivity(),WalletDetailActivity.class);

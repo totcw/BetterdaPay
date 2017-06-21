@@ -101,7 +101,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
-                            android:text="金日分润(元)"
+                            android:text="今日分润(元)"
                             android:textColor="@color/shouye_lv_tv"
                             android:textSize="11sp" />
 
@@ -186,7 +186,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
-                            android:text="昨日收款(元)"
+                            android:text="今日收款(元)"
                             android:textColor="@color/shouye_lv_tv"
                             android:textSize="11sp" />
 
@@ -258,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="14dp"
                         android:layout_weight="1"
-                        android:text="分润提现"
+                        android:text="提现明细"
                         android:textColor="@color/shouye_renmen_tv"
                         android:textSize="15sp" />
 
