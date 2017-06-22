@@ -21,7 +21,9 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
 import com.google.zxing.BarcodeFormat;
@@ -547,18 +549,23 @@ public final class ImageTools {
 	 */
 	public static void cropImg(Uri uri, Activity activity, int width, int height, int width2, int height2) {
 
+		try {
+			Intent intent = new Intent("com.android.camera.action.CROP");
+			intent.setDataAndType(uri, "image/*");
+			intent.putExtra("crop", "true");
+			intent.putExtra("aspectX", width); //X方向上的比例
+			intent.putExtra("aspectY", height);
+			intent.putExtra("outputX", width2); //裁剪区的宽
+			intent.putExtra("outputY", height2);
+			intent.putExtra("scale", true); //是否保留比例
+			intent.putExtra("return-data", false);
+			intent.putExtra(MediaStore.EXTRA_OUTPUT,getUri(activity));
+			activity.startActivityForResult(intent, 5);
+		} catch (Exception e
+				) {
 
-		Intent intent = new Intent("com.android.camera.action.CROP");
-		intent.setDataAndType(uri, "image/*");
-		intent.putExtra("crop", "true");
-		intent.putExtra("aspectX", width); //X方向上的比例
-		intent.putExtra("aspectY", height);
-		intent.putExtra("outputX", width2); //裁剪区的宽
-		intent.putExtra("outputY", height2);
-		intent.putExtra("scale", true); //是否保留比例
-		intent.putExtra("return-data", false);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Constants.PHOTOPATHFORCROP)));
-		activity.startActivityForResult(intent, 5);
+		}
+
 	}
 
 	/**
@@ -572,7 +579,7 @@ public final class ImageTools {
 			}
 			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			// 这样就将文件的存储方式和uri指定到了Camera应用中 指定了这个 data一般为空了
-			intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Constants.PHOTOPATHFORCROP)));
+			intent.putExtra(MediaStore.EXTRA_OUTPUT,getUri(activity));
 
 			activity.startActivityForResult(intent, requestcode);
 
@@ -603,5 +610,16 @@ public final class ImageTools {
 			UtilMethod.Toast(activity, "选取照片失败");
 		}
 
+	}
+
+	/**
+	 * 在7.0以上使用FileProvider获取Uri
+	 */
+	public static   Uri getUri(Activity activity) {
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+			return FileProvider.getUriForFile(activity, activity.getPackageName(),new File(Constants.PHOTOPATHFORCROP));
+		} else {
+			return Uri.fromFile(new File(Constants.PHOTOPATHFORCROP));
+		}
 	}
 }

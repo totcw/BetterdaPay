@@ -309,7 +309,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
         if (requestCode == Constants.PHOTOHRAPH) {
             if (resultCode == RESULT_OK) {// 返回成功的时候
                 //uri 不能放在常量类里面,要实时创建
-                ImageTools.cropImg(Uri.fromFile(new File(Constants.PHOTOPATHFORCROP)), this, 2, 1, 256, 128);
+                ImageTools.cropImg(ImageTools.getUri(this), this, 2, 1, 256, 128);
             } else if (resultCode == RESULT_CANCELED) {// 取消的时候
                 UtilMethod.Toast(this, "取消拍照");
             } else {

@@ -148,7 +148,7 @@ public class ShouKuanFragment extends BaseFragment {
             float sum = Float.valueOf(sb.toString());
             if (sum < 1) {
                 showToast("收款金额必须大于1元");
-            } else if (sum < 50000) {
+            } else if (sum <= 50000) {
                 UtilMethod.startIntent(getmActivity(), ChoosePayTypeActivity.class, "money", sb.toString());
             } else {
                 showToast("每次最多收款50000");

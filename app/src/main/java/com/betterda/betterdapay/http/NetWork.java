@@ -104,7 +104,7 @@ public class NetWork {
 
             @Override
             public Observable<BaseCallModel<T>> call(Observable<BaseCallModel<T>> baseCallModelObservable) {
-                return  baseCallModelObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+                return  baseCallModelObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
             }
         };
     }

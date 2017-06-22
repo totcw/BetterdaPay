@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -24,6 +25,7 @@ import com.betterda.betterdapay.activity.RealNameAuthActivity;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.ShapeLoadingDialog;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -167,15 +169,25 @@ public class UtilMethod {
         return false;
     }
 
+
+
     /**
      * 安装apk
      * @param context
-     * @param uri
+     * @param apkPath
      */
-    public static void startInstall(Context context, Uri uri) {
+    public static void startInstall(Context context, File  apkPath) {
         Intent install = new Intent(Intent.ACTION_VIEW);
-        install.setDataAndType(uri, "application/vnd.android.package-archive");
+
         install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {//7.0以上的安装方法
+            Uri apkUri = FileProvider.getUriForFile(context, context.getPackageName(), apkPath);
+            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            install.setDataAndType(apkUri, "application/vnd.android.package-archive");
+        } else {
+            install.setDataAndType(Uri.fromFile(apkPath), "application/vnd.android.package-archive");
+        }
+
         context.startActivity(install);
     }
 

@@ -13,6 +13,7 @@ import com.betterda.betterdapay.javabean.TuiGuang;
 import com.betterda.betterdapay.javabean.UpdateCondition;
 import com.betterda.betterdapay.javabean.UserInfo;
 import com.betterda.betterdapay.javabean.Wallet;
+import com.betterda.betterdapay.javabean.WithDrawStatus;
 import com.betterda.betterdapay.util.Constants;
 
 import java.util.List;
@@ -437,6 +438,15 @@ public interface NetService {
     Observable<BaseCallModel<List<Income>>> getIncomeList(@Field("account") String account,
                                                        @Field("pageNo") String pageNo,
                                                        @Field("pageSize") String pageSize
+                                                     );
+    /**
+     *查询结算状态
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_CHECK_WITHDRAW)
+    Observable<BaseCallModel<WithDrawStatus>> getCheckWithdraw(@Field("account") String account
                                                      );
 
 }

@@ -209,7 +209,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             if (null != apkInfo) {
                 //检测是否是有一个apk的版本高于当前app,那么就直接安装
                 if (UtilMethod.compare(apkInfo, SettingActivity.this)) {
-                    UtilMethod.startInstall(SettingActivity.this, Uri.fromFile(externalFilesDir));
+                    UtilMethod.startInstall(SettingActivity.this, externalFilesDir);
 
                     return;
                 }
@@ -242,7 +242,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                             if (null != apkInfo) {
 
                                 if (UtilMethod.compare(apkInfo, SettingActivity.this)) {
-                                    UtilMethod.startInstall(SettingActivity.this, Uri.fromFile(externalFilesDir));
+                                    UtilMethod.startInstall(SettingActivity.this, externalFilesDir);
 
                                 }
                             }

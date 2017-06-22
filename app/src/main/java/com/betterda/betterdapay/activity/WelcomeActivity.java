@@ -170,7 +170,7 @@ public class WelcomeActivity extends FragmentActivity {
             if (null != apkInfo) {
                 //检测是否是有一个apk的版本高于当前app,那么就直接安装
                 if (UtilMethod.compare(apkInfo, WelcomeActivity.this)) {
-                    UtilMethod.startInstall(WelcomeActivity.this, Uri.fromFile(externalFilesDir));
+                    UtilMethod.startInstall(WelcomeActivity.this, externalFilesDir);
                     finish();
                     return;
                 }
@@ -197,12 +197,17 @@ public class WelcomeActivity extends FragmentActivity {
                         //检测是否是有一个apk的版本高于当前app,那么就直接安装
                         PackageInfo apkInfo = UtilMethod.getApkInfo(WelcomeActivity.this, externalFilesDir.getAbsolutePath());
                         if (null != apkInfo) {
-
                             if (UtilMethod.compare(apkInfo, WelcomeActivity.this)) {
-                                UtilMethod.startInstall(WelcomeActivity.this, Uri.fromFile(externalFilesDir));
+                                UtilMethod.startInstall(WelcomeActivity.this, externalFilesDir);
                                 finish();
-                             }
+                            } else {
+                                finish();
+                            }
+                        } else {
+                            finish();
                         }
+                    } else {
+                        finish();
                     }
 
                 }
@@ -233,8 +238,11 @@ public class WelcomeActivity extends FragmentActivity {
                     public void onNext(ResponseBody responseBody) {
 
                         try {
+                            System.out.println("下载1");
                             FileUtils.writeFile(responseBody.byteStream(), externalFilesDir);
+                            System.out.println("下载2");
                         } catch (IOException e) {
+                            System.out.println("下载3");
                             e.printStackTrace();
                             throw new RuntimeException(e.getMessage(), e);
                         }
@@ -288,7 +296,7 @@ public class WelcomeActivity extends FragmentActivity {
 
         //wifi状态下才提示更新
         boolean netAvailable = NetworkUtils.isWifi(WelcomeActivity.this);
-        if (netAvailable) {
+        if (!netAvailable) {
             mRxManager.add(
                     NetWork.getNetService().getUpdate(appVersionCode + "")
                             .compose(NetWork.handleResult(new BaseCallModel<String>()))

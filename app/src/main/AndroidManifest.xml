@@ -180,6 +180,22 @@
             android:name=".livingpay.LivingRecordActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!--注册向外部提供文件访问的provider-->
+        <provider
+            android:authorities="com.betterda.betterdapay"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path"
+                />
+
+        </provider>
+
+
+        <!--注册极光的广播接收者-->
         <receiver
             android:name=".receiver.JpushReceiver"
             android:enabled="true">
