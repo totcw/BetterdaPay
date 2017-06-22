@@ -9,10 +9,13 @@ import java.net.URL;
 public class Constants {
 
     public static final String CACHE_FILE_NAME = "betterdapay"; //缓存目录
-    public static final String PHOTOPATH = Environment.getExternalStorageDirectory().getPath() + "/betterdapay/photo/";//存图片的路径
-    public static final Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "image.png")); //保存拍照照片的uri
+   // public static final String PHOTOPATH = Environment.getExternalStorageDirectory().getPath() + "/betterdapay/photo/";//存图片的路径
+   // public static  Uri imageUri =Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"image.png"));
+    public static final String PHOTOPATHFORCROP =Environment.getExternalStorageDirectory() + "/image.png";//存图片的路径
+
+
     public static final int PHOTOZOOM = 1;// 相机选取
-    public static final int PHOTOHRAPH = 2;// 相机拍照
+    public static final int PHOTOHRAPH = 2;// 拍照
     public static final String IMAGE_UNSPECIFIED = "image/*";
 
     public static final int PAGE_SIZE = 10;//一页加载的个数
@@ -63,12 +66,12 @@ public class Constants {
         public static final String URL_BANK_DELETE = URL + "appAPI.do?api/account/bank/delete";//银行卡删除接口
         public static final String URL_CDOE_GET = URL + "api/shareController.do?share";//获取分享链接
         public static final String URL_AUTH_ADD = URL + "appAPI.do?api/account/auth/add";//实名认证接口
-        public static final String URL_SUBNUM_GET = URL + "appAPI.do?api/account/subnum/get";//我的商户接口
+        public static final String URL_GET_INCOME = URL + "api/incomeController.do?getIncome";//分润明细
         public static final String URL_SUB_GET = URL + "api/mySpreadController.do?mySpread";//我的推广接口
         public static final String URL_WALLET_GET = URL + "api/balanceController.do?getBalance";//钱包获取接口
         public static final String URL_FEEDBACK_ADD = URL + "api/feedbackController.do?feedback";//意见反馈
         public static final String URL_SEARCH_POST = URL + "appAPI.do?api/account/search/post";//搜索接口
-        public static final String URL_IMG_UPLOAD = URL + "appAPI.do?api/android/img/upload";//图片上传
+        public static final String URL_IMG_UPLOAD = URL + "fileUpload";//图片上传
         public static final String URL_UPDATE_VERSION = URL + "api/versionController.do?version";//版本更新
         public static final String URL_GET_INFORMATION = "appAPI.do?api/account/auth/get";//我的资料获取
         public static final String URL_GET_MEMBERS = "api/memberNumController.do?memberNum";//获取会员个数

@@ -181,6 +181,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.btn_login://登录
                 //setAlias();
+                System.out.println( UtilMethod.transforPhoneNumber("15160700380"));
                 CacheUtils.putBoolean(getmActivity(), "15160700380" + Constants.Cache.AUTH, true);
                 CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.RANK, "经理");
                 CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "15160700380");

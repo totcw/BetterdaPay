@@ -72,39 +72,42 @@ public class FeedbackActivity extends BaseActivity {
     }
 
     private void commit() {
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                if (dialog == null) {
-                    dialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
+        if (btnFeedbackCommit.isSelected()) {
+            NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
+                @Override
+                public void getDataApi() {
+                    if (dialog == null) {
+                        dialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
+                    }
+                    UtilMethod.showDialog(getmActivity(),dialog);
+                    mRxManager.add(
+                            NetWork.getNetService()
+                                    .getFeedBack(UtilMethod.getAccout(getmActivity()),content)
+                                    .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                                    .subscribe(new MyObserver<String>() {
+                                        @Override
+                                        protected void onSuccess(String data, String resultMsg) {
+                                            UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                            showToast(resultMsg);
+                                            finish();
+                                        }
+
+                                        @Override
+                                        public void onFail(String resultMsg) {
+                                            UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                            showToast(resultMsg);
+                                        }
+
+                                        @Override
+                                        public void onExit() {
+                                            UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                        }
+                                    })
+                    );
                 }
-                UtilMethod.showDialog(getmActivity(),dialog);
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getFeedBack(UtilMethod.getAccout(getmActivity()),content)
-                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                .subscribe(new MyObserver<String>() {
-                                    @Override
-                                    protected void onSuccess(String data, String resultMsg) {
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        showToast(resultMsg);
-                                        finish();
-                                    }
+            });
+        }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        showToast(resultMsg);
-                                    }
-
-                                    @Override
-                                    public void onExit() {
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                    }
-                                })
-                );
-            }
-        });
     }
 
 

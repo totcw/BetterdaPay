@@ -142,8 +142,8 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 chooseBank();
                 break;
             case R.id.btn_realnameauth_next:
-                authService();
-                //next();
+                //authService();
+                next();
                 break;
             case R.id.bar_back:
                 back();
@@ -213,7 +213,7 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
      * 下一步
      */
     private void next() {
-     if (btnRealnameauthNext.isSelected()) {
+   //  if (btnRealnameauthNext.isSelected()) {
             Intent intent = new Intent(getmActivity(), AddBankCardActivity2.class);
             intent.putExtra("realName", realName);
             intent.putExtra("identityCard", identityCard);
@@ -222,7 +222,7 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
             intent.putExtra("number", number);
             intent.putExtra("cardType", cardType);
             startActivity(intent);
-       }
+     //  }
     }
 
     /**

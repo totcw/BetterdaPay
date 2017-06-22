@@ -2,13 +2,10 @@ package com.betterda.betterdapay.http;
 
 import com.betterda.betterdapay.javabean.BankCard;
 import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.javabean.EWeiMa;
-import com.betterda.betterdapay.javabean.FenRun;
+import com.betterda.betterdapay.javabean.Income;
 import com.betterda.betterdapay.javabean.Information;
 import com.betterda.betterdapay.javabean.MemberCounts;
 import com.betterda.betterdapay.javabean.Messages;
-import com.betterda.betterdapay.javabean.MyShangHu;
-import com.betterda.betterdapay.javabean.Order;
 import com.betterda.betterdapay.javabean.OrderALL;
 import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
@@ -18,7 +15,6 @@ import com.betterda.betterdapay.javabean.UserInfo;
 import com.betterda.betterdapay.javabean.Wallet;
 import com.betterda.betterdapay.util.Constants;
 
-import java.io.File;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -377,14 +373,14 @@ public interface NetService {
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_SEARCH_POST)
-    Observable<BaseCallModel<List<FenRun>>> getSearch2(@Field("account") String account,
-                                                @Field("token") String token,
-                                                @Field("startDate") String startDate,
-                                                @Field("endDate") String endDate,
-                                                @Field("orderType") String orderType,
-                                                @Field("profitType") String profitType,
-                                                @Field("pageNo") String pageNo,
-                                                @Field("pageSize") String pageSize
+    Observable<BaseCallModel<List<Income>>> getSearch2(@Field("account") String account,
+                                                       @Field("token") String token,
+                                                       @Field("startDate") String startDate,
+                                                       @Field("endDate") String endDate,
+                                                       @Field("orderType") String orderType,
+                                                       @Field("profitType") String profitType,
+                                                       @Field("pageNo") String pageNo,
+                                                       @Field("pageSize") String pageSize
     );
    /**
     *@author : lyf
@@ -398,14 +394,12 @@ public interface NetService {
     /**
      * 图片上传
      * @param account
-     * @param token
      * @param file
      * @return
      */
     @Multipart
     @POST(Constants.Url.URL_IMG_UPLOAD)
     Observable<BaseCallModel<String>> getImgUpload(@Part("account") RequestBody account,
-                                                @Part("token") RequestBody token,
                                                 @Part MultipartBody.Part file
     );
 
@@ -430,6 +424,17 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_MESSAGE_LIST)
     Observable<BaseCallModel<List<Messages>>> getMessageList(@Field("account") String account,
+                                                       @Field("pageNo") String pageNo,
+                                                       @Field("pageSize") String pageSize
+                                                     );
+    /**
+     *获取分润明细
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_INCOME)
+    Observable<BaseCallModel<List<Income>>> getIncomeList(@Field("account") String account,
                                                        @Field("pageNo") String pageNo,
                                                        @Field("pageSize") String pageSize
                                                      );

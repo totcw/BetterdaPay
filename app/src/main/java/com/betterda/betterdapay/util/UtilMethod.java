@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.activity.HomeActivity;
 import com.betterda.betterdapay.activity.RealNameAuthActivity;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.ShapeLoadingDialog;
@@ -328,76 +326,6 @@ public class UtilMethod {
     }
 
 
-    /**
-     * 裁剪
-     *
-     * @param uri 图片的uri
-     */
-    public static void cropImg(Uri uri, Activity activity, int width, int height, int width2, int height2) {
-
-
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", width); //X方向上的比例
-        intent.putExtra("aspectY", height);
-        intent.putExtra("outputX", width2); //裁剪区的宽
-        intent.putExtra("outputY", height2);
-        intent.putExtra("scale", true); //是否保留比例
-        intent.putExtra("return-data", false);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Constants.imageUri);
-        activity.startActivityForResult(intent, 5);
-    }
-
-    /**
-     * 拍照
-     */
-    public static void paizhao(Activity activity, int requestcode) {
-        try {
-            if (!ImageTools.checkSDCardAvailable()) {
-                UtilMethod.Toast(activity, "内存卡错误,请检查您的内存卡");
-                return;
-            }
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            // 这样就将文件的存储方式和uri指定到了Camera应用中 指定了这个 data一般为空了
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Constants.imageUri);
-
-            activity.startActivityForResult(intent, requestcode);
-
-
-        } catch (Exception e) {
-            UtilMethod.Toast(activity, "拍照失败");
-        }
-
-    }
-
-
-    /**
-     * 选取图片
-     */
-    public static void choosePicture(Activity activity, int requestcode) {
-        try {
-            if (!ImageTools.checkSDCardAvailable()) {
-                UtilMethod.Toast(activity, "内存卡错误,请检查您的内存卡");
-                return;
-            }
-            Intent intentphoto = new Intent(Intent.ACTION_PICK);
-            intentphoto.setDataAndType(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    Constants.IMAGE_UNSPECIFIED);
-            activity.startActivityForResult(intentphoto, requestcode);
-
-        } catch (Exception e) {
-            UtilMethod.Toast(activity, "选取照片失败");
-        }
-
-    }
-
-
-
-
-
-
 
 
 
@@ -600,6 +528,20 @@ public class UtilMethod {
         }
     }
 
+    /**
+     * 将手机号转换为带**的号码
+     * @param number
+     * @return
+     */
+    public static String transforPhoneNumber(String number) {
+        String phoneNumber = number;
+        if (phoneNumber != null && phoneNumber.length() >= 4) {
+            String firstNumber = phoneNumber.substring(0, 3);
+            String lastNumber = phoneNumber.substring(phoneNumber.length() - 4);
+            phoneNumber = firstNumber + "****" + lastNumber;
+        }
 
+        return phoneNumber;
+    }
 
 }

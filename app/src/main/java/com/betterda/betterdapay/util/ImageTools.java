@@ -557,7 +557,7 @@ public final class ImageTools {
 		intent.putExtra("outputY", height2);
 		intent.putExtra("scale", true); //是否保留比例
 		intent.putExtra("return-data", false);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, Constants.imageUri);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Constants.PHOTOPATHFORCROP)));
 		activity.startActivityForResult(intent, 5);
 	}
 
@@ -572,7 +572,7 @@ public final class ImageTools {
 			}
 			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			// 这样就将文件的存储方式和uri指定到了Camera应用中 指定了这个 data一般为空了
-			intent.putExtra(MediaStore.EXTRA_OUTPUT, Constants.imageUri);
+			intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Constants.PHOTOPATHFORCROP)));
 
 			activity.startActivityForResult(intent, requestcode);
 

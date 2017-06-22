@@ -77,7 +77,7 @@ public class FWalletActivity extends BaseActivity {
             public void getDataApi() {
                 mRxManager.add(
                         NetWork.getNetService()
-                                .getWallet("18206051563")
+                                .getWallet(UtilMethod.getAccout(getmActivity()))
                                 .compose(NetWork.handleResult(new BaseCallModel<Wallet>()))
                                 .subscribe(new MyObserver<Wallet>() {
                                     @Override

@@ -2,11 +2,8 @@ package com.betterda.betterdapay.modules;
 
 import com.betterda.betterdapay.Score.LoginActivityScore;
 import com.betterda.betterdapay.activity.LoginActivity;
-import com.betterda.betterdapay.javabean.FenRun;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.mylibrary.ShapeLoadingDialog;
-
-import javax.inject.Scope;
 
 import dagger.Module;
 import dagger.Provides;

@@ -146,8 +146,8 @@ public class ShouKuanFragment extends BaseFragment {
 
         try {
             float sum = Float.valueOf(sb.toString());
-            if (sum == 0) {
-                showToast("收款不能为0");
+            if (sum < 1) {
+                showToast("收款金额必须大于1元");
             } else if (sum < 50000) {
                 UtilMethod.startIntent(getmActivity(), ChoosePayTypeActivity.class, "money", sb.toString());
             } else {
@@ -186,6 +186,10 @@ public class ShouKuanFragment extends BaseFragment {
     }
 
     private void write(String number) {
+
+        if (sb.length() >= 9) {
+            return;
+        }
 
         //为0时,替换,其他情况就直接添加
         if ("0".equals(sb.toString())||"00".equals(sb.toString())) {

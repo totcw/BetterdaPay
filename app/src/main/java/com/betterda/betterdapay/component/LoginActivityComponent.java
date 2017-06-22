@@ -2,10 +2,7 @@ package com.betterda.betterdapay.component;
 
 import com.betterda.betterdapay.Score.LoginActivityScore;
 import com.betterda.betterdapay.activity.LoginActivity;
-import com.betterda.betterdapay.application.MyApplication;
-import com.betterda.betterdapay.javabean.FenRun;
 import com.betterda.betterdapay.modules.LoginActivityModules;
-import com.betterda.mylibrary.ShapeLoadingDialog;
 
 import dagger.Component;
 

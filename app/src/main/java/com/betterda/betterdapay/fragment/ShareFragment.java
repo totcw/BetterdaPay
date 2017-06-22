@@ -76,7 +76,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                             @Override
                             protected void onSuccess(String data, String resultMsg) {
                                 if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("分享fail:"+data);
+                                    System.out.println("分享:"+data);
                                 }
                                 url = data;
                                 if (mLoadingPager != null) {

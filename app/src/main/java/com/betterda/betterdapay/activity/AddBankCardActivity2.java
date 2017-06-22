@@ -1,12 +1,11 @@
 package com.betterda.betterdapay.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
@@ -26,6 +26,7 @@ import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.ShapeLoadingDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import butterknife.BindView;
@@ -80,6 +81,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
 
     private ShapeLoadingDialog dialog;
     private int isLogo;//用来区分6种图片
+
 
     @Override
     public void initView() {
@@ -170,7 +172,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
      */
     private void requestPermiss() {
 
-        UtilMethod.paizhao(getmActivity(), Constants.PHOTOHRAPH);
+        ImageTools.paizhao(getmActivity(), Constants.PHOTOHRAPH);
     }
 
     private void commit() {
@@ -207,39 +209,41 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
      */
     private void getData() {
 
-        NetworkUtils.isNetWork(getmActivity(), ivAddbankcard2Bankcard, new NetworkUtils.SetDataInterface() {
+        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(),dialog);
-                NetWork.getNetService()
-                       .getAuth(UtilMethod.getAccout(getmActivity()),realName,
-                       identityCard,cardNum,bank,number,cardType,url_identity,url_identity2,url_handidntity,url_bank,url_bank2,UtilMethod.getToken(getmActivity()),url_handbank)
-                       .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                       .subscribe(new MyObserver<String>() {
-                           @Override
-                           protected void onSuccess(String data, String resultMsg) {
+                UtilMethod.showDialog(getmActivity(), dialog);
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getAuth(UtilMethod.getAccout(getmActivity()), realName,
+                                        identityCard, cardNum, bank, number, cardType, url_identity, url_identity2, url_handidntity, url_bank, url_bank2, UtilMethod.getToken(getmActivity()), url_handbank)
+                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                                .subscribe(new MyObserver<String>() {
+                                    @Override
+                                    protected void onSuccess(String data, String resultMsg) {
 
-                               UtilMethod.dissmissDialog(getmActivity(), dialog);
-                               showToast(resultMsg);
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                        showToast(resultMsg);
 
-                               //修改认证状态
-                               CacheUtils.putBoolean(getmActivity(),UtilMethod.getAccout(getmActivity())+ Constants.Cache.AUTH, true);
-                               UtilMethod.startIntent(getmActivity(), HomeActivity.class);
-                               finish();
-                           }
+                                        //修改认证状态
+                                        CacheUtils.putBoolean(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.AUTH, true);
+                                        UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+                                        finish();
+                                    }
 
-                           @Override
-                           public void onFail(String resultMsg) {
-                               showToast(resultMsg);
-                            UtilMethod.dissmissDialog(getmActivity(),dialog);
-                           }
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        showToast(resultMsg);
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    }
 
-                           @Override
-                           public void onExit() {
-                               UtilMethod.dissmissDialog(getmActivity(),dialog);
-                                ExitToLogin();
-                           }
-                       });
+                                    @Override
+                                    public void onExit() {
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+
+                                    }
+                                })
+                );
             }
         });
     }
@@ -280,28 +284,32 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
      */
     private void result(int requestCode, int resultCode, Intent data) {
         resultSuccess(requestCode, resultCode, data);
+        if (requestCode == 5) {
+            if (requestCode == 5 && resultCode == -1) { //resultcode表示裁剪成功
 
-        if (requestCode == 5 && resultCode == -1) { //resulrcode表示裁剪成功
-            if (!ImageTools.checkSDCardAvailable()) {
-                UtilMethod.Toast(this, "内存卡错误,请检查您的内存卡");
-                return;
-            }
-            // 防止内存溢出
-            String path = Environment.getExternalStorageDirectory()
-                    + "/image.png";
-            Bitmap pic = ImageTools.scacleToBitmap(path, this);
-            if (pic != null) {// 这个ImageView是拍照完成后显示图片
-
-                setPhoto(pic);
+                if (!ImageTools.checkSDCardAvailable()) {
+                    UtilMethod.Toast(this, "内存卡错误,请检查您的内存卡");
+                    return;
+                }
+                // 防止内存溢出,压缩图片
+                Bitmap pic = ImageTools.scacleToBitmap(Constants.PHOTOPATHFORCROP, this);
+                if (pic != null) {// 这个ImageView是拍照完成后显示图片
+                    setPhoto(pic);
+                }
+            } else {
+                UtilMethod.Toast(this, "图片选取失败");
             }
         }
+
     }
+
 
     private void resultSuccess(int requestCode, int resultCode, Intent data) {
         // 拍照
         if (requestCode == Constants.PHOTOHRAPH) {
             if (resultCode == RESULT_OK) {// 返回成功的时候
-                UtilMethod.cropImg(Constants.imageUri, this, 2, 1, 256, 128);
+                //uri 不能放在常量类里面,要实时创建
+                ImageTools.cropImg(Uri.fromFile(new File(Constants.PHOTOPATHFORCROP)), this, 2, 1, 256, 128);
             } else if (resultCode == RESULT_CANCELED) {// 取消的时候
                 UtilMethod.Toast(this, "取消拍照");
             } else {
@@ -316,11 +324,13 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                 Uri uri = data.getData();
                 if (uri != null) {
 
-                    UtilMethod.cropImg(uri, this, 2, 1, 256, 128);
+                    ImageTools.cropImg(uri, this, 2, 1, 256, 128);
 
                 } else {
                     UtilMethod.Toast(this, "图片选取失败");
                 }
+            } else {
+                UtilMethod.Toast(this, "图片选取失败");
             }
 
         }
@@ -366,74 +376,123 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
 
     public void savePhoto(Bitmap pic, final String name, ImageView imageView) {
         // 将bitmap保存到本地
-        ImageTools.savePhotoToSDCard(pic, Constants.PHOTOPATH,
-                name);
-        // 上传图片
-        upload(name,pic,imageView);
+        /*ImageTools.savePhotoToSDCard(pic, Constants.PHOTOPATH,
+                name);*/
+        // 上传图片 TODO 将图片转换为base64
+        // encode(Constants.PHOTOPATH+name + ".png");
+        upload(name, pic, imageView);
 
 
     }
 
     private void upload(final String name, final Bitmap bitmap, final ImageView imageView) {
-        NetworkUtils.isNetWork(getmActivity(), linearAddbankcard2Bankcard, new NetworkUtils.SetDataInterface() {
+        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
                 UtilMethod.showDialog(getmActivity(), dialog);
                 //封装普通的string字段
                 RequestBody account = RequestBody.create(MediaType.parse("text/plain"), UtilMethod.getAccout(getmActivity()));
-                RequestBody token = RequestBody.create(MediaType.parse("text/plain"), UtilMethod.getToken(getmActivity()));
                 //封装文件
-                RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATH, name + ".png"));
+                // RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATH, name + ".png"));
+                RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATHFORCROP));
                 //第一个参数是key,第二是文件名,如果没有文件名不会被当成文件
-                MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", name + ".png", file);
-                NetWork.getNetService()
-                        .getImgUpload(account, token, filePart)
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
-                                showToast(resultMsg);
-                                switch (isLogo) {
-                                    case 0:
-                                        url_identity = data;
-                                        break;
-                                    case 1:
-                                        url_identity2 = data;
-                                        break;
-                                    case 2://手持身份证
-                                        url_handidntity = data;
-                                        break;
-                                    case 3:
-                                        url_bank2 = data;
-                                        break;
-                                    case 4://手持银行卡
-                                        url_handbank = data;
-                                        break;
-                                    case 5:
-                                        url_bank = data;
-                                        break;
-                                }
-                                imageView.setImageBitmap(bitmap);
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                            }
+                MultipartBody.Part filePart = MultipartBody.Part.createFormData("images", name + ".png", file);
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getImgUpload(account, filePart)
+                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                                .subscribe(new MyObserver<String>() {
+                                    @Override
+                                    protected void onSuccess(String data, String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("图片上传:" + data);
+                                        }
+                                        switch (isLogo) {
+                                            case 0:
+                                                url_identity = data;
+                                                break;
+                                            case 1:
+                                                url_identity2 = data;
+                                                break;
+                                            case 2://手持身份证
+                                                url_handidntity = data;
+                                                break;
+                                            case 3:
+                                                url_bank2 = data;
+                                                break;
+                                            case 4://手持银行卡
+                                                url_handbank = data;
+                                                break;
+                                            case 5:
+                                                url_bank = data;
+                                                break;
+                                        }
+                                        imageView.setImageBitmap(bitmap);
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                        //将裁剪后的图片删除
+                                        try {
+                                            File fileImage = new File(Constants.PHOTOPATHFORCROP);
+                                            if (fileImage != null) {
+                                                fileImage.delete();
+                                            }
+                                        } catch (Exception e) {
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                            }
+                                        }
 
-                            @Override
-                            public void onExit() {
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                ExitToLogin();
-                            }
-                        });
+                                    }
+
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        showToast(resultMsg);
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                        //将裁剪后的图片删除
+                                        try {
+                                            File fileImage = new File(Constants.PHOTOPATHFORCROP);
+                                            if (fileImage != null) {
+                                                fileImage.delete();
+                                            }
+                                        } catch (Exception e) {
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onExit() {
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                        //将裁剪后的图片删除
+                                        try {
+                                            File fileImage = new File(Constants.PHOTOPATHFORCROP);
+                                            if (fileImage != null) {
+                                                fileImage.delete();
+                                            }
+                                        } catch (Exception e) {
+
+                                        }
+
+                                    }
+                                })
+                );
             }
         });
     }
 
+    /**
+     * 将图片转换为base64
+     * @param path
+     */
+    private void encode(String path) {
+        //decode to bitmap
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        //convert to byte array
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] bytes = baos.toByteArray();
 
+        //base64 encode
+        byte[] encode = Base64.encode(bytes, Base64.DEFAULT);
+        String encodeString = new String(encode);
+        System.out.println("base64图片:" + encodeString);
+    }
 
 
 }

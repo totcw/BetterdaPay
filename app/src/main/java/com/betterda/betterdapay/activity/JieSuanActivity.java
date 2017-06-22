@@ -137,61 +137,66 @@ public class JieSuanActivity extends BaseActivity {
             showToast("余额不足");
         } else {
             sum = money;
-            comfirm();
+            submit();
         }
     }
 
     private void comfirm() {
         if (btnJiesuanComfirm.isSelected()) {
-            //判断余额是否足够
-            if (sum == 0) {
-                showToast("请输入提现余额");
-                return;
-            }
-            //手续费要1元
-            if (sum <= 1) {
-                showToast("提现金额必须大于1元");
-                return;
-            }
+            submit();
 
-            if (sum <= money) {
-                NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-                    @Override
-                    public void getDataApi() {
-                        if (mDialog == null) {
-                            mDialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
-                        }
-                        UtilMethod.showDialog(getmActivity(),mDialog);
-                        mRxManager.add(
-                                NetWork.getNetService()
-                                        .getJiesuan(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()), sum + "")
-                                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                        .subscribe(new MyObserver<String>() {
-                                            @Override
-                                            protected void onSuccess(String data, String resultMsg) {
-                                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                                createWithDrawDialog("24小时之内到账");
-                                            }
-
-                                            @Override
-                                            public void onFail(String resultMsg) {
-                                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                                showToast(resultMsg);
-                                            }
-
-                                            @Override
-                                            public void onExit() {
-                                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                            }
-                                        })
-                        );
-                    }
-                });
-            } else {
-                showToast("余额不足");
-            }
         }
 
+    }
+
+    private void submit() {
+        //判断余额是否足够
+        if (sum == 0) {
+            showToast("请输入提现余额");
+            return;
+        }
+        //手续费要1元
+        if (sum <= 1) {
+            showToast("结算金额必须大于1元");
+            return;
+        }
+
+        if (sum <= money) {
+            NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
+                @Override
+                public void getDataApi() {
+                    if (mDialog == null) {
+                        mDialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
+                    }
+                    UtilMethod.showDialog(getmActivity(),mDialog);
+                    mRxManager.add(
+                            NetWork.getNetService()
+                                    .getJiesuan(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()), sum + "")
+                                    .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                                    .subscribe(new MyObserver<String>() {
+                                        @Override
+                                        protected void onSuccess(String data, String resultMsg) {
+                                            UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                            createWithDrawDialog("24小时之内到账");
+                                        }
+
+                                        @Override
+                                        public void onFail(String resultMsg) {
+                                            UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                            showToast(resultMsg);
+                                        }
+
+                                        @Override
+                                        public void onExit() {
+                                            UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                        }
+                                    })
+                    );
+                }
+            });
+        } else {
+            showToast("余额不足");
+        }
     }
 
     /**

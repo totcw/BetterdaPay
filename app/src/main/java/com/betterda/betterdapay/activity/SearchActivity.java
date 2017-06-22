@@ -1,9 +1,6 @@
 package com.betterda.betterdapay.activity;
 
-import android.app.backup.BackupHelper;
 import android.content.Intent;
-import android.net.Network;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,7 +13,7 @@ import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.RateData;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.javabean.FenRun;
+import com.betterda.betterdapay.javabean.Income;
 import com.betterda.betterdapay.javabean.Order;
 import com.betterda.betterdapay.javabean.OrderALL;
 import com.betterda.betterdapay.util.Constants;
@@ -35,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -62,7 +58,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private String item;//区分收款,返还和推广分润
     private HeaderAndFooterRecyclerViewAdapter adapter;
     private List<Order> orderList, orderListDetail;
-    private List<FenRun> fenRunList, fenRunListDetail;
+    private List<Income> fenRunList, fenRunListDetail;
 
     private final String SHOU_KUAN = "1"; //1表示收款
     private final String FANHUI_FENRUN = "2"; //2表示返还分润
@@ -121,16 +117,16 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         } else {//否则初始化为分润的
             fenRunList = new ArrayList<>();
             fenRunListDetail = new ArrayList<>();
-            adapter = new HeaderAndFooterRecyclerViewAdapter(new CommonAdapter<FenRun>(getmActivity(), R.layout.item_recycleview_fenrun2, fenRunList) {
+            adapter = new HeaderAndFooterRecyclerViewAdapter(new CommonAdapter<Income>(getmActivity(), R.layout.item_recycleview_fenrun2, fenRunList) {
 
                 @Override
-                public void convert(ViewHolder viewHolder, FenRun fenRun) {
+                public void convert(ViewHolder viewHolder, Income fenRun) {
                     if (fenRun != null) {
-                        viewHolder.setText(R.id.tv_item_fenru2_account, fenRun.getAccount());
+                        viewHolder.setText(R.id.tv_item_fenru2_account, fenRun.getSourceAccount());
                         viewHolder.setText(R.id.tv_item_fenru2_rate, fenRun.getRate());
                         viewHolder.setText(R.id.tv_item_fenru2_name, fenRun.getName());
-                        viewHolder.setText(R.id.tv_item_fenru2_money, fenRun.getMoney());
-                        viewHolder.setText(R.id.tv_item_fenru2_time, fenRun.getTime());
+                        viewHolder.setText(R.id.tv_item_fenru2_money, fenRun.getAmount());
+                        viewHolder.setText(R.id.tv_item_fenru2_time, fenRun.getIncomeTime());
                         viewHolder.setImageResource(R.id.iv_item_fenrun2, RateData.getRate(fenRun.getRate()));
 
                         switch (fenRun.getType()) {
@@ -237,10 +233,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             public void getDataApi() {
                  NetWork.getNetService()
                         .getSearch2(account, token, startTime, endTime, orderType, profitType, page + "", Constants.PAGE_SIZE + "")
-                        .compose(NetWork.handleResult(new BaseCallModel<List<FenRun>>()))
-                        .subscribe(new MyObserver<List<FenRun>>() {
+                        .compose(NetWork.handleResult(new BaseCallModel<List<Income>>()))
+                        .subscribe(new MyObserver<List<Income>>() {
                             @Override
-                            protected void onSuccess(List<FenRun> data, String resultMsg) {
+                            protected void onSuccess(List<Income> data, String resultMsg) {
                                 if (data != null) {
                                     parserFenrun(data);
                                 }
@@ -262,13 +258,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    private void parserFenrun(List<FenRun> data) {
+    private void parserFenrun(List<Income> data) {
         fenRunListDetail = data;
 
         if (page == 1) {
             fenRunList.clear();
         }
-        for (FenRun order : fenRunListDetail) {
+        for (Income order : fenRunListDetail) {
             fenRunList.add(order);
         }
 
