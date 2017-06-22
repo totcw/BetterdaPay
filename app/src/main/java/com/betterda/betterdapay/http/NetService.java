@@ -13,6 +13,7 @@ import com.betterda.betterdapay.javabean.TuiGuang;
 import com.betterda.betterdapay.javabean.UpdateCondition;
 import com.betterda.betterdapay.javabean.UserInfo;
 import com.betterda.betterdapay.javabean.Wallet;
+import com.betterda.betterdapay.javabean.WithDraw;
 import com.betterda.betterdapay.javabean.WithDrawStatus;
 import com.betterda.betterdapay.util.Constants;
 
@@ -438,6 +439,17 @@ public interface NetService {
     Observable<BaseCallModel<List<Income>>> getIncomeList(@Field("account") String account,
                                                        @Field("pageNo") String pageNo,
                                                        @Field("pageSize") String pageSize
+                                                     );
+    /**
+     *获取结算明细
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_JIESUAN)
+    Observable<BaseCallModel<List<WithDraw>>> getAmountList(@Field("account") String account,
+                                                            @Field("pageNo") String pageNo,
+                                                            @Field("pageSize") String pageSize
                                                      );
     /**
      *查询结算状态

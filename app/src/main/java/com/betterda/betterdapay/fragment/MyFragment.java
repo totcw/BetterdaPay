@@ -15,18 +15,11 @@ import com.betterda.betterdapay.activity.MyRatingActivity;
 import com.betterda.betterdapay.activity.RealNameAuthActivity;
 import com.betterda.betterdapay.activity.SettingActivity;
 import com.betterda.betterdapay.activity.TransactionRecordActivity;
-import com.betterda.betterdapay.activity.WalletActivity;
-import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.RateData;
-import com.betterda.betterdapay.http.NetWork;
-import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.javabean.Information;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
-import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
-import com.betterda.mylibrary.Utils.StatusBarCompat;
 
 import butterknife.BindView;
 import butterknife.OnClick;

@@ -296,7 +296,7 @@ public class WelcomeActivity extends FragmentActivity {
 
         //wifi状态下才提示更新
         boolean netAvailable = NetworkUtils.isWifi(WelcomeActivity.this);
-        if (!netAvailable) {
+        if (netAvailable) {
             mRxManager.add(
                     NetWork.getNetService().getUpdate(appVersionCode + "")
                             .compose(NetWork.handleResult(new BaseCallModel<String>()))

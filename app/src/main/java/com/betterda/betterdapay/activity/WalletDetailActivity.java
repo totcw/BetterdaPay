@@ -72,6 +72,12 @@ public class WalletDetailActivity extends BaseActivity {
         });
         mRvLayout.setAdapter(mAdapter);
         getData();
+        mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData();
+            }
+        });
     }
 
     @OnClick({R.id.bar_back})

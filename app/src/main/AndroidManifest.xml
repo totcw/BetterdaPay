@@ -135,18 +135,11 @@
             android:name=".activity.TransactionRecordActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.WalletActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
             android:name=".activity.TiXianDetailActivity"
             android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".activity.FWalletActivity"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name=".activity.YWalletActivity"
             android:screenOrientation="portrait"></activity>
 
         <activity

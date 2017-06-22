@@ -66,7 +66,8 @@ public class Constants {
         public static final String URL_BANK_DELETE = URL + "appAPI.do?api/account/bank/delete";//银行卡删除接口
         public static final String URL_CDOE_GET = URL + "api/shareController.do?share";//获取分享链接
         public static final String URL_AUTH_ADD = URL + "appAPI.do?api/account/auth/add";//实名认证接口
-        public static final String URL_GET_INCOME = URL + "api/incomeController.do?getIncome";//分润明细
+        public static final String URL_GET_INCOME = URL + "api/incomeController.do?getIncomes";//分润明细
+        public static final String URL_GET_JIESUAN = URL + "api/disburseController.do?getDisburse";//结算明细
         public static final String URL_SUB_GET = URL + "api/mySpreadController.do?mySpread";//我的推广接口
         public static final String URL_WALLET_GET = URL + "api/balanceController.do?getBalance";//钱包获取接口
         public static final String URL_FEEDBACK_ADD = URL + "api/feedbackController.do?feedback";//意见反馈

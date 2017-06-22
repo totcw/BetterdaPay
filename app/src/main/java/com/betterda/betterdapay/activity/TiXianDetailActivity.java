@@ -4,7 +4,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.callback.MyObserver;
+import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.javabean.Income;
+import com.betterda.betterdapay.javabean.WithDraw;
+import com.betterda.betterdapay.util.Constants;
+import com.betterda.betterdapay.util.NetworkUtils;
+import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.view.HeaderAndFooterRecyclerViewAdapter;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
 import com.zhy.base.adapter.ViewHolder;
@@ -30,7 +40,9 @@ public class TiXianDetailActivity extends BaseActivity {
     @BindView(R.id.loadpager_layout)
     LoadingPager mLoadpagerLayout;
 
-    private List<String> list;
+    private List<WithDraw> list;
+    private HeaderAndFooterRecyclerViewAdapter mAdapter;
+    private int page =1;
 
     @Override
     public void initView() {
@@ -43,19 +55,30 @@ public class TiXianDetailActivity extends BaseActivity {
     @Override
     public void init() {
         super.init();
-        mTopbarWalletdetail.setTitle("提现明细");
+        mTopbarWalletdetail.setTitle("结算明细");
         list = new ArrayList<>();
-        list.add(null);
-        list.add(null);
-        list.add(null);
-        mRvLayout.setLayoutManager(new LinearLayoutManager(getmActivity()));
-        mRvLayout.setAdapter(new CommonAdapter<String>(getmActivity(),R.layout.item_rv_walletdetail,list) {
-            @Override
-            public void convert(ViewHolder holder, String o) {
 
+        mRvLayout.setLayoutManager(new LinearLayoutManager(getmActivity()));
+        mAdapter = new HeaderAndFooterRecyclerViewAdapter(new CommonAdapter<WithDraw>(getmActivity(),R.layout.item_rv_withdrawdetail,list) {
+            @Override
+            public void convert(ViewHolder holder, WithDraw o) {
+                if (holder != null && o != null) {
+                    holder.setText(R.id.tv_item_withdrawdetail, o.getAmount()+"元");
+                    holder.setText(R.id.tv_item_withdrawdetail_type, o.getStatusName());
+                    holder.setText(R.id.tv_item_withdrawdetail_time, o.getDisburseTime());
+
+                }
             }
 
 
+        });
+        mRvLayout.setAdapter(mAdapter);
+        getData();
+        mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData();
+            }
         });
     }
 
@@ -66,6 +89,63 @@ public class TiXianDetailActivity extends BaseActivity {
                 back();
                 break;
 
+        }
+    }
+
+    private void getData() {
+        mLoadpagerLayout.setLoadVisable();
+        NetworkUtils.isNetWork(this, mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getAmountList(UtilMethod.getAccout(getmActivity()),page+"", Constants.PAGE_SIZE+"")
+                                .compose(NetWork.handleResult(new BaseCallModel<List<WithDraw>>()))
+                                .subscribe(new MyObserver<List<WithDraw>>() {
+                                    @Override
+                                    protected void onSuccess(List<WithDraw> data, String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("结算明细:"+data);
+                                        }
+                                        if (data != null) {
+                                            parserData(data);
+                                        }
+
+                                        UtilMethod.judgeData(data,mLoadpagerLayout);
+                                    }
+
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("结算明细fail:"+resultMsg);
+                                        }
+                                        if (mLoadpagerLayout != null) {
+                                            mLoadpagerLayout.setErrorVisable();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onExit() {
+                                        if (mLoadpagerLayout != null) {
+                                            mLoadpagerLayout.hide();
+                                        }
+                                    }
+                                })
+                );
+            }
+        });
+    }
+
+    private void parserData(List<WithDraw> data) {
+        if (list != null) {
+            if (page == 1) {
+                list.clear();
+            }
+            list.addAll(data);
+        }
+
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
         }
     }
 }
