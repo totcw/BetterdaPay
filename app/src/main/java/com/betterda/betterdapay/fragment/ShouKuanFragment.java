@@ -30,34 +30,6 @@ public class ShouKuanFragment extends BaseFragment {
     ImageView ivShouyeSearch;
     @BindView(R.id.tv_shoukuan_money)
     TextView tvShoukuanMoney;
-    @BindView(R.id.iv_shoukuan_one)
-    TextView ivShoukuanOne;
-    @BindView(R.id.iv_shoukuan_four)
-    TextView ivShoukuanFour;
-    @BindView(R.id.iv_shoukuan_seven)
-    TextView ivShoukuanSeven;
-    @BindView(R.id.iv_shoukuan_zero)
-    TextView ivShoukuanZero;
-    @BindView(R.id.iv_shoukuan_two)
-    TextView ivShoukuanTwo;
-    @BindView(R.id.iv_shoukuan_five)
-    TextView ivShoukuanFive;
-    @BindView(R.id.iv_shoukuan_eight)
-    TextView ivShoukuanEight;
-    @BindView(R.id.iv_shoukuan_zero2)
-    TextView ivShoukuanZero2;
-    @BindView(R.id.iv_shoukuan_three)
-    TextView ivShoukuanThree;
-    @BindView(R.id.iv_shoukuan_six)
-    TextView ivShoukuanSix;
-    @BindView(R.id.iv_shoukuan_nine)
-    TextView ivShoukuanNine;
-    @BindView(R.id.iv_shoukuan_point)
-    TextView ivShoukuanPoint;
-    @BindView(R.id.iv_shoukuan_del)
-    TextView ivShoukuanDel;
-    @BindView(R.id.relative_shoukuan_qr)
-    RelativeLayout relative_shoukuan_qr;
 
     private StringBuilder sb;
 

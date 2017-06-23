@@ -154,7 +154,7 @@ public class WalletFragment extends BaseFragment {
                 UtilMethod.showDialog(getmActivity(), mDialog);
                 mRxManager.add(
                         NetWork.getNetService()
-                                .getCheckWithdraw("18206051563")
+                                .getCheckWithdraw(UtilMethod.getAccout(getmActivity()))
                                 .compose(NetWork.handleResult(new BaseCallModel<WithDrawStatus>()))
                                 .subscribe(new MyObserver<WithDrawStatus>() {
                                     @Override

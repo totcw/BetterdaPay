@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.callback.MyTextWatcher;
@@ -60,13 +61,13 @@ public class JieSuanActivity extends BaseActivity {
         topbarJiesuan.setTitle("结算");
         getIntentData();
         setTextChange();
-        tvJiesuanMoney.setText("余额￥"+money);
+        tvJiesuanMoney.setText("余额￥" + money);
     }
 
     private void getIntentData() {
         Intent intent = getIntent();
         if (intent != null) {
-            money = intent.getFloatExtra("money", 0);
+            money = intent.getFloatExtra("money", 10);
         }
     }
 
@@ -168,27 +169,34 @@ public class JieSuanActivity extends BaseActivity {
                     if (mDialog == null) {
                         mDialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
                     }
-                    UtilMethod.showDialog(getmActivity(),mDialog);
+                    UtilMethod.showDialog(getmActivity(), mDialog);
                     mRxManager.add(
                             NetWork.getNetService()
-                                    .getJiesuan(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()), sum + "")
+                                    .getJiesuan(UtilMethod.getAccout(getmActivity()), sum + "")
                                     .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                     .subscribe(new MyObserver<String>() {
                                         @Override
                                         protected void onSuccess(String data, String resultMsg) {
-                                            UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                            createWithDrawDialog("24小时之内到账");
+                                            if (BuildConfig.LOG_DEBUG) {
+
+                                                System.out.println("结算:" + data);
+                                            }
+                                            UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                            createWithDrawDialog(resultMsg);
                                         }
 
                                         @Override
                                         public void onFail(String resultMsg) {
-                                            UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                            if (BuildConfig.LOG_DEBUG) {
+                                                System.out.println("结算fail:" + resultMsg);
+                                            }
+                                            UtilMethod.dissmissDialog(getmActivity(), mDialog);
                                             showToast(resultMsg);
                                         }
 
                                         @Override
                                         public void onExit() {
-                                            UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                            UtilMethod.dissmissDialog(getmActivity(), mDialog);
                                         }
                                     })
                     );
@@ -211,14 +219,15 @@ public class JieSuanActivity extends BaseActivity {
             mBtnComfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UtilMethod.dissmissDialog(getmActivity(),mAlertDialog);
+                    UtilMethod.dissmissDialog(getmActivity(), mAlertDialog);
+                    getmActivity().finish();
                 }
             });
             AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
             mAlertDialog = builder.setView(view).create();
 
         }
-        UtilMethod.showDialog(getmActivity(),mAlertDialog);
+        UtilMethod.showDialog(getmActivity(), mAlertDialog);
 
     }
 }

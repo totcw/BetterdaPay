@@ -182,14 +182,12 @@ public interface NetService {
      * 结算
      *
      * @param account
-     * @param token
      * @param money
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_JIESUAN)
     Observable<BaseCallModel<String>> getJiesuan(@Field("account") String account,
-                                                 @Field("token") String token,
                                                  @Field("money") String money
     );
 

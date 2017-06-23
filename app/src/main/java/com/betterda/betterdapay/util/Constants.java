@@ -46,8 +46,8 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://192.168.0.121:8080/wallet/";
-        //public static final String URL = "http://192.168.0.113:8080/wallet/";
+        //public static final String URL = "http://192.168.0.121:8080/wallet/";
+        public static final String URL = "http://192.168.0.113:8080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
@@ -60,7 +60,7 @@ public class Constants {
         public static final String URL_MY_RATINGS = URL + "api/memberRankController.do?getRates";//获取当前等级费率用与计算
         public static final String URL_UPDATE_CONDITION = URL + "api/memberRankController.do?queryUpgrade";//获取升级条件
         public static final String URL_UPDATE_TO_RATE = URL + "api/upgradeOrderController.do?upgrade";//升级到指定接口
-        public static final String URL_JIESUAN = URL + "appAPI.do?api/account/tSettlement/add";//结算接口
+        public static final String URL_JIESUAN = URL + "api/disburseController.do?withdraw";//结算接口
         public static final String URL_BANK_ADD = URL + "appAPI.do?api/account/bank/add";//银行卡添加接口
         public static final String URL_BANK_GET = URL + "appAPI.do?api/account/bank/get";//银行卡查询接口
         public static final String URL_BANK_DELETE = URL + "appAPI.do?api/account/bank/delete";//银行卡删除接口
