@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="提现金额"
+            android:text="结算金额"
             android:textColor="@color/shouye_renmen_tv"
             android:textSize="14sp" />
 

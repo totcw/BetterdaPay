@@ -15,6 +15,7 @@ import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -40,6 +41,8 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     LoadingPager mLoadingPager;
     private View mView;
     private String url;
+    private ShapeLoadingDialog mDialog;
+
     @Override
     public View initView(LayoutInflater inflater) {
          mView =  inflater.inflate(R.layout.fragment_share, null);
@@ -54,20 +57,18 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         super.initData();
         mNormalTopBar.setTitle("分享");
         mNormalTopBar.setBackVisibility(false);
-        getData();
-        mLoadingPager.setonErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getData();
-            }
-        });
+
     }
 
     private void getData() {
-        mLoadingPager.setLoadVisable();
-        NetworkUtils.isNetWork(getmActivity(), mLoadingPager, new NetworkUtils.SetDataInterface() {
+        if (mDialog == null) {
+            mDialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
+        }
+
+        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
+                UtilMethod.showDialog(getmActivity(),mDialog);
                 mRxManager.add(
                         NetWork.getNetService()
                         .getCode(UtilMethod.getAccout(getmActivity()))
@@ -79,9 +80,8 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                                     System.out.println("分享:"+data);
                                 }
                                 url = data;
-                                if (mLoadingPager != null) {
-                                    mLoadingPager.hide();
-                                }
+                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                share();
                             }
 
                             @Override
@@ -89,14 +89,12 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("分享fail:"+resultMsg);
                                 }
-                                if (mLoadingPager != null) {
-                                    mLoadingPager.setErrorVisable();
-                                }
+                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
                             }
 
                             @Override
                             public void onExit() {
-
+                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
                             }
                         })
                 );
@@ -128,7 +126,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_fragment_share:
-                share();
+                getData();
                 break;
             case R.id.relative_share_wxfriend:
                 shareToWx(SHARE_MEDIA.WEIXIN);

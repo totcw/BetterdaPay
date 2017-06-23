@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
@@ -12,6 +13,7 @@ import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -34,6 +36,7 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
     @BindView(R.id.loadpager_tuiguang)
     LoadingPager mLoadingPager;
     private String url = "http://www.baidu.com";
+    private ShapeLoadingDialog mDialog;
     @Override
     public void initView() {
         super.initView();
@@ -46,7 +49,7 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_tuiguang2_share:
-                share();
+                getData();
                 break;
             case R.id.relative_share_wxfriend:
                 shareToWx(SHARE_MEDIA.WEIXIN);
@@ -56,15 +59,21 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
                 shareToWx(SHARE_MEDIA.WEIXIN_CIRCLE);
                 closePopupWindow();
                 break;
+            case R.id.tv_share_cancel:
+                closePopupWindow();
+                break;
         }
     }
 
-
     private void getData() {
-        mLoadingPager.setLoadVisable();
-        NetworkUtils.isNetWork(getmActivity(), mLoadingPager, new NetworkUtils.SetDataInterface() {
+        if (mDialog == null) {
+            mDialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
+        }
+
+        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
+                UtilMethod.showDialog(getmActivity(),mDialog);
                 mRxManager.add(
                         NetWork.getNetService()
                                 .getCode(UtilMethod.getAccout(getmActivity()))
@@ -72,30 +81,30 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
                                 .subscribe(new MyObserver<String>() {
                                     @Override
                                     protected void onSuccess(String data, String resultMsg) {
-
-                                        if (mLoadingPager != null) {
-                                            mLoadingPager.hide();
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("分享:"+data);
                                         }
+                                        url = data;
+                                        UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                        share();
                                     }
 
                                     @Override
                                     public void onFail(String resultMsg) {
-                                        if (mLoadingPager != null) {
-                                            mLoadingPager.setErrorVisable();
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("分享fail:"+resultMsg);
                                         }
+                                        UtilMethod.dissmissDialog(getmActivity(),mDialog);
                                     }
 
                                     @Override
                                     public void onExit() {
-                                        if (mLoadingPager != null) {
-                                            mLoadingPager.hide();
-                                        }
+                                        UtilMethod.dissmissDialog(getmActivity(),mDialog);
                                     }
                                 })
                 );
             }
         });
-
     }
 
     /**

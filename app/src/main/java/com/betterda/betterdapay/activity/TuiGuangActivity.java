@@ -1,7 +1,6 @@
 package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,7 +16,6 @@ import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.ShapeLoadingDialog;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -32,6 +30,8 @@ public class TuiGuangActivity extends BaseActivity {
     RelativeLayout relativeTuiguangMy;
     @BindView(R.id.tv_tuiguang_rate)
     TextView mTvTuiguangRate;
+    @BindView(R.id.tv_tuiguang_money)
+    TextView mTvTuiguangMoney;
 
     private ShapeLoadingDialog dialog;
 
@@ -53,6 +53,7 @@ public class TuiGuangActivity extends BaseActivity {
             mTvTuiguangRate.setText("升级到" + rate);
             payUp = intent.getStringExtra("payUp");
             rateId = intent.getStringExtra("rateId");
+            mTvTuiguangMoney.setText(payUp+"元");
         }
         dialog = UtilMethod.createDialog(this, "正在提交...");
     }
@@ -61,8 +62,8 @@ public class TuiGuangActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_tuiguang_rate:
-                // TODO 生成付款号
-                getData();
+                // TODO 选择付款通道
+                chosePayChannel();
                 break;
             case R.id.relative_tuiguang_my:
                 UtilMethod.startIntent(getmActivity(), TuiguangActivity2.class);
@@ -73,6 +74,13 @@ public class TuiGuangActivity extends BaseActivity {
         }
     }
 
+    private void chosePayChannel() {
+        UtilMethod.startIntent(getmActivity(),ChoosePayTypePayActivity.class,"money",payUp);
+    }
+
+    /**
+     * 升级到指定接口
+     */
     private void getData() {
         NetworkUtils.isNetWork(this, null, new NetworkUtils.SetDataInterface() {
             @Override

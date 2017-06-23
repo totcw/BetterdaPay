@@ -66,7 +66,7 @@ public class JieSuanActivity extends BaseActivity {
     private void getIntentData() {
         Intent intent = getIntent();
         if (intent != null) {
-            money = intent.getFloatExtra("money", 1);
+            money = intent.getFloatExtra("money", 0);
         }
     }
 

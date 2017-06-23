@@ -18,6 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/iv_my_information"
         android:orientation="vertical">
@@ -30,14 +31,7 @@
             android:textColor="@color/shouye_renmen_tv"
             android:textSize="13sp"/>
 
-        <TextView
-            android:id="@+id/tv_item_choosepaytype"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:layout_marginTop="5dp"
-            android:textColor="@color/shouye_lv_tv"
-            android:textSize="12sp"/>
 
     </LinearLayout>
 

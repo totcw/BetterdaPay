@@ -11,18 +11,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.Api;
-import com.betterda.betterdapay.http.NetWork;
-import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.GsonTools;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.paycloud.sdk.util.Base64Util;
 import com.betterda.paycloud.sdk.util.KeyGenerator;
-import com.betterda.utils.GsonTools;
+
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 

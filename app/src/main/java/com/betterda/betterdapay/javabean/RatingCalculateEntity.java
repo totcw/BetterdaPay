@@ -29,6 +29,12 @@ public class RatingCalculateEntity {
     private String t1DayQuota;//t1当天额度
     private String payWay;//通道类型
 
+    public RatingCalculateEntity() {
+    }
+
+    public RatingCalculateEntity(String payWay) {
+        this.payWay = payWay;
+    }
 
     public String getT1TradeRate() {
         return t1TradeRate;

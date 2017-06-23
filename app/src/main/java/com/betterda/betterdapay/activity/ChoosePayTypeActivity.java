@@ -41,7 +41,7 @@ import rx.Observer;
 import rx.Subscription;
 
 /**
- * 选择支付通道
+ * 选择支付通道(收款)
  * Created by Administrator on 2016/8/4.
  */
 public class ChoosePayTypeActivity extends BaseActivity {

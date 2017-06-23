@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_gray"
+              android:orientation="vertical">
+
+    <com.betterda.betterdapay.view.NormalTopBar
+        android:id="@+id/topbar_chose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请选择支付通道"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lv_divider">
+
+            </View>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_choosepaytype"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+
+        </LinearLayout>
+
+        <com.betterda.mylibrary.LoadingPager
+            android:id="@+id/loadpager_choosepaytype"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.betterda.mylibrary.LoadingPager>
+
+
+
+    </FrameLayout>
+
+
+</LinearLayout>
