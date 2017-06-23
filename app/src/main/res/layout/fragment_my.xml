@@ -5,12 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.betterda.betterdapay.view.NormalTopBar
-        android:id="@+id/topbar_my"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </com.betterda.betterdapay.view.NormalTopBar>
 
 
     <ScrollView
@@ -24,7 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <com.betterda.betterdapay.view.NormalTopBar
+                android:id="@+id/topbar_my"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+            </com.betterda.betterdapay.view.NormalTopBar>
 
             <RelativeLayout
                 android:id="@+id/relative_my_setting"

@@ -1,451 +1,491 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_gray"
-    android:orientation="vertical">
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_green"
+        android:layout_height="match_parent"
+
+        android:background="@color/bg_gray"
         android:orientation="vertical">
 
-        <RelativeLayout
 
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp">
+            android:layout_height="wrap_content"
+            android:background="@color/bg_green"
+            android:orientation="vertical">
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="收款"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"/>
+
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="收款"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="收款金额"
                 android:textColor="@color/text_color"
-                android:textSize="16sp" />
+                android:textSize="15sp"/>
 
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="收款金额"
-            android:textColor="@color/text_color"
-            android:textSize="15sp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <com.betterda.betterdapay.view.GradientTextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="￥"
-                android:textSize="45sp" />
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-            <com.betterda.betterdapay.view.GradientTextView
+                <com.betterda.betterdapay.view.GradientTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="￥"
+                    android:textSize="45sp"/>
 
-                android:id="@+id/tv_shoukuan_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                <com.betterda.betterdapay.view.GradientTextView
 
-                android:layout_centerVertical="true"
-                android:maxLines="1"
-                android:text="0"
-                android:textSize="45sp" />
+                    android:id="@+id/tv_shoukuan_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:maxLines="1"
+                    android:text="0"
+                    android:textSize="45sp"/>
 
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_shoukuan"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/shape_corner_origne"
+                android:text="我要收款"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_shoukuan"
-            android:layout_width="160dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="25dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/shape_corner_origne"
-            android:text="我要收款"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
 
-    </LinearLayout>
-
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:background="@color/bg_green"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"></FrameLayout>
-
-        <LinearLayout
+        <com.betterda.mylibrary.view.RatioLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/shape_bottom_top_line"
-            android:orientation="horizontal">
+            app:ratio="1.2">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <FrameLayout
-                    android:id="@+id/iv_shoukuan_one"
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
+                    android:layout_height="50dp"
+                    android:background="@color/bg_green"></FrameLayout>
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/shape_bottom_top_line"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="1"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
+                        android:orientation="vertical">
 
-                </FrameLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_four"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_one"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="1"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
+
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_four"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="4"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
+
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_seven"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="7"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
+
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_zero"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="0"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/divierLine"></View>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="4"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
+                        android:orientation="vertical">
 
-                </FrameLayout>
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_two"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="2"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
 
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_seven"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_five"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="5"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
+
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_eight"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="8"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
+
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_zero2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="00"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/divierLine"></View>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+
                         android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="7"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
+                        android:orientation="vertical">
 
-                </FrameLayout>
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_three"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_zero"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
+                            <TextView
+                                android:layout_width="wrap_content"
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="3"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
+
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_six"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="6"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
+
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_nine"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="9"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
+
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_point"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="."
+                                android:textColor="@color/black"
+
+                                android:textSize="@dimen/textsize_largest_38sp"/>
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/divierLine"></View>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+
                         android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="0"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
+                        android:orientation="vertical">
 
-                </FrameLayout>
+                        <FrameLayout
+                            android:id="@+id/iv_shoukuan_del"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
 
-            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/divierLine"></View>
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:text="C"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/textsize_largest_38sp"/>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_two"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="2"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
-
-                </FrameLayout>
+                        </FrameLayout>
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_five"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divierLine"></View>
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="5"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
+                        <RelativeLayout
+                            android:id="@+id/relative_shoukuan_qr"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
 
-                </FrameLayout>
+                            <ImageView
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_eight"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
+                                android:id="@+id/iv_shoukuan_qr"
+                                android:layout_width="41dp"
+                                android:layout_height="26dp"
+                                android:layout_centerInParent="true"
+                                android:background="@mipmap/del"
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="8"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
-
-                </FrameLayout>
+                                />
+                        </RelativeLayout>
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_zero2"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
+                    </LinearLayout>
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="00"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
+                </LinearLayout>
+            </FrameLayout>
 
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/divierLine"></View>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_three"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="3"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
-
-                </FrameLayout>
+        </com.betterda.mylibrary.view.RatioLayout>
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_six"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="6"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
-
-                </FrameLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_nine"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="9"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
-
-                </FrameLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_point"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="."
-                        android:textColor="@color/black"
-
-                        android:textSize="@dimen/textsize_largest_38sp" />
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/divierLine"></View>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <FrameLayout
-                    android:id="@+id/iv_shoukuan_del"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dp">
-                    <TextView
-                        android:layout_gravity="center"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:text="C"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textsize_largest_38sp" />
-
-                </FrameLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/divierLine"></View>
-
-                <RelativeLayout
-                    android:id="@+id/relative_shoukuan_qr"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
-
-                    <ImageView
-
-                        android:id="@+id/iv_shoukuan_qr"
-                        android:layout_width="41dp"
-                        android:layout_height="26dp"
-                        android:layout_centerInParent="true"
-                        android:background="@mipmap/del"
-
-                        />
-                </RelativeLayout>
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </FrameLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
