@@ -13,7 +13,9 @@ import com.betterda.betterdapay.javabean.Income;
 import com.betterda.betterdapay.javabean.WithDraw;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
+import com.betterda.betterdapay.util.RecyclerViewStateUtils;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.view.EndlessRecyclerOnScrollListener;
 import com.betterda.betterdapay.view.HeaderAndFooterRecyclerViewAdapter;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
@@ -40,7 +42,7 @@ public class TiXianDetailActivity extends BaseActivity {
     @BindView(R.id.loadpager_layout)
     LoadingPager mLoadpagerLayout;
 
-    private List<WithDraw> list;
+    private List<WithDraw> list,mWithDrawList;
     private HeaderAndFooterRecyclerViewAdapter mAdapter;
     private int page =1;
 
@@ -72,6 +74,26 @@ public class TiXianDetailActivity extends BaseActivity {
 
 
         });
+        mRvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
+            @Override
+            public void onLoadNextPage(View view) {
+                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, new RecyclerViewStateUtils.nextListener() {
+                    @Override
+                    public void load() {
+                        page++;
+                        getData();
+                    }
+                });
+
+            }
+
+            @Override
+            public void show(boolean isShow) {
+                //这里是要传当前服务器返回的list
+                RecyclerViewStateUtils.show(isShow, mWithDrawList, mRvLayout, getmActivity());
+            }
+        });
+
         mRvLayout.setAdapter(mAdapter);
         getData();
         mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
@@ -137,6 +159,7 @@ public class TiXianDetailActivity extends BaseActivity {
     }
 
     private void parserData(List<WithDraw> data) {
+        mWithDrawList = data;
         if (list != null) {
             if (page == 1) {
                 list.clear();

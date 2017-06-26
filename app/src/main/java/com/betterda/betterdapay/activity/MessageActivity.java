@@ -15,7 +15,9 @@ import com.betterda.betterdapay.receiver.JpushReceiver;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
+import com.betterda.betterdapay.util.RecyclerViewStateUtils;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.view.EndlessRecyclerOnScrollListener;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.recycleviehelper.HeaderAndFooterRecyclerViewAdapter;
@@ -44,7 +46,7 @@ public class MessageActivity extends BaseActivity {
     LoadingPager mLoadpagerLayout;
 
     private HeaderAndFooterRecyclerViewAdapter mAdapter;
-    private List<Messages> list;
+    private List<Messages> list,mMessagesList;
     private int page = 1;
 
     @Override
@@ -69,6 +71,26 @@ public class MessageActivity extends BaseActivity {
                 }
             }
 
+        });
+
+        mRvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
+            @Override
+            public void onLoadNextPage(View view) {
+                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, new RecyclerViewStateUtils.nextListener() {
+                    @Override
+                    public void load() {
+                        page++;
+                        getData();
+                    }
+                });
+
+            }
+
+            @Override
+            public void show(boolean isShow) {
+                //这里是要传当前服务器返回的list
+                RecyclerViewStateUtils.show(isShow, mMessagesList, mRvLayout, getmActivity());
+            }
         });
 
         mRvLayout.setAdapter(mAdapter);
@@ -139,6 +161,7 @@ public class MessageActivity extends BaseActivity {
     }
 
     private void parserData(List<Messages> data) {
+        mMessagesList = data;
         if (list != null) {
             if (page == 1) {
                 list.clear();

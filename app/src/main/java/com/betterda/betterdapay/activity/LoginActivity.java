@@ -178,12 +178,11 @@ public class LoginActivity extends BaseActivity {
                 UtilMethod.startIntent(getmActivity(), ForgetPwdActivity.class);
                 break;
             case R.id.btn_login://登录
-/*
                 CacheUtils.putBoolean(getmActivity(), "15160700380" + Constants.Cache.AUTH, true);
                 CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.RANK, "经理");
                 CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "15160700380");
-                UtilMethod.startIntent(getmActivity(), HomeActivity.class);*/
-                 Login();
+                UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+                // Login();
                 break;
             case R.id.relative_login_register://注册
                 UtilMethod.startIntent(getmActivity(), RegisterActivity.class);

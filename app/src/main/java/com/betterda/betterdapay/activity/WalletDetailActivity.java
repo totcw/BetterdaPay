@@ -12,7 +12,9 @@ import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Income;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
+import com.betterda.betterdapay.util.RecyclerViewStateUtils;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.view.EndlessRecyclerOnScrollListener;
 import com.betterda.betterdapay.view.HeaderAndFooterRecyclerViewAdapter;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
@@ -41,7 +43,7 @@ public class WalletDetailActivity extends BaseActivity {
 
     private HeaderAndFooterRecyclerViewAdapter mAdapter;
 
-    private List<Income> list;
+    private List<Income> list,mIncomeList;
     private int page = 1;
     @Override
     public void initView() {
@@ -69,6 +71,26 @@ public class WalletDetailActivity extends BaseActivity {
                 }
             }
 
+        });
+
+        mRvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
+            @Override
+            public void onLoadNextPage(View view) {
+                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, new RecyclerViewStateUtils.nextListener() {
+                    @Override
+                    public void load() {
+                        page++;
+                        getData();
+                    }
+                });
+
+            }
+
+            @Override
+            public void show(boolean isShow) {
+                //这里是要传当前服务器返回的list
+                RecyclerViewStateUtils.show(isShow, mIncomeList, mRvLayout, getmActivity());
+            }
         });
         mRvLayout.setAdapter(mAdapter);
         getData();
@@ -137,6 +159,7 @@ public class WalletDetailActivity extends BaseActivity {
     }
 
     private void parserData(List<Income> data) {
+        mIncomeList = data;
         if (list != null) {
             if (page == 1) {
                 list.clear();
