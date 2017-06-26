@@ -37,7 +37,6 @@ public class JpushReceiver extends BroadcastReceiver {
                 String account = CacheUtils.getString(context, Constants.Cache.ACCOUNT, "");
                 CacheUtils.putBoolean(context, account + Constants.Cache.MESSAGE, true);
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-                Log.d(TAG, "用户点击打开了通知");
                 // 在这里可以自己写代码去定义用户点击后的行为
                 if (context != null) {
                     Intent i = new Intent(context, MessageActivity.class);  //自定义打开的界面

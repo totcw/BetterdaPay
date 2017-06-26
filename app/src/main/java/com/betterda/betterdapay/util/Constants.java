@@ -48,7 +48,7 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://192.168.0.121:8080/wallet/";
+        public static final String URL = "http://192.168.0.108:8080/wallet/";
        // public static final String URL = "http://192.168.0.113:8080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
@@ -79,6 +79,7 @@ public class Constants {
         public static final String URL_GET_MEMBERS = "api/memberNumController.do?memberNum";//获取会员个数
         public static final String URL_GET_MESSAGE_LIST = "api/infoListController.do?infoList";//获取消息列表
         public static final String URL_CHECK_WITHDRAW = "api/disburseController.do?isWithdraw";//查询结算状态
+        public static final String URL_UNIONGATEWAYT0ORDER = "api/payController.do?unionPay";//生成银联网关t0订单
 
 
 

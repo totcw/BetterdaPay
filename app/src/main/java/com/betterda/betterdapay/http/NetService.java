@@ -442,5 +442,17 @@ public interface NetService {
     Observable<BaseCallModel<WithDrawStatus>> getCheckWithdraw(@Field("account") String account
                                                      );
 
+    /**
+     *生成网关T0的订单
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_UNIONGATEWAYT0ORDER)
+    Observable<BaseCallModel<String>> getUnionGatewayT0Order(@Field("account") String account,
+                                                                     @Field("amount") String amount,
+                                                                     @Field("body") String body
+    );
+
 
 }

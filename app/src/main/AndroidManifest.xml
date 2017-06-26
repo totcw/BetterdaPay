@@ -175,6 +175,9 @@
         <activity
             android:name=".activity.ChoosePayTypePayActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.JsActivity"
+            android:screenOrientation="portrait"></activity>
 
         <!--注册向外部提供文件访问的provider-->
         <provider

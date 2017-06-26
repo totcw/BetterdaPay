@@ -59,14 +59,13 @@ public class UpFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     protected TextView tvUpUp;
     @BindView(R.id.vp_up)
     protected HorizontalScrollViewPager vpUp;
-    @BindView(R.id.relative_back)
-    protected RelativeLayout relative_back;
+
 
     protected List<Fragment> list;
     protected Fragment yuanyongFragment, dianzhangFragment, jingliFragment, zongjingliFragment,
             bossFragment;
     private FragmentManager fm;
-    private Observable<Object> observable;
+
     private final static String Tag = UpFragment.class.getSimpleName();
 
     @Override

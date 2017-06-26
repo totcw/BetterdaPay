@@ -91,13 +91,13 @@ public class NetworkUtils {
     }
 
     public static void toSetingWork(Activity activity) {
-        Intent intent=null;
+        Intent intent = null;
         //判断手机系统的版本  即API大于10 就是3.0或以上版本
-        if(android.os.Build.VERSION.SDK_INT>10){
+        if (android.os.Build.VERSION.SDK_INT > 10) {
             intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
-        }else{
+        } else {
             intent = new Intent();
-            ComponentName component = new ComponentName("com.android.settings","com.android.settings.WirelessSettings");
+            ComponentName component = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
             intent.setComponent(component);
             intent.setAction("android.intent.action.VIEW");
         }
@@ -108,12 +108,12 @@ public class NetworkUtils {
     /**
      * 是否有网络并弹出设置
      */
-    public static void isNetWork(Activity context,View view,SetDataInterface setDataInterface) {
+    public static void isNetWork(Activity context, View view, SetDataInterface setDataInterface) {
         //判断是否有网络
         boolean netAvailable = NetworkUtils.isNetAvailable(context);
         if (!netAvailable) {
-            showSnackBar(view, "网络异常", "立即设置", context);
             if (view != null) {
+                showSnackBar(view, "网络异常", "立即设置", context);
                 if (view instanceof LoadingPager) {//显示加载错误
                     ((LoadingPager) view).setErrorVisable();
 
@@ -134,7 +134,7 @@ public class NetworkUtils {
      * @param view    任何一个view 即可
      * @param message
      */
-    public static   void showSnackBar(View view, String message) {
+    public static void showSnackBar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG)
                 .setAction("UNDO", new View.OnClickListener() {
                     @Override
@@ -155,7 +155,9 @@ public class NetworkUtils {
                     @Override
                     public void onClick(View v) {
                         //开启网络设置界面
-                        NetworkUtils.toSetingWork(context);
+                        if (context != null) {
+                            NetworkUtils.toSetingWork(context);
+                        }
                     }
                 });
         snackbar.show();

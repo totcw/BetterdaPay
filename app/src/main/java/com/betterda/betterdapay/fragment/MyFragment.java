@@ -10,6 +10,7 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.AlreadAuthAcitity;
 import com.betterda.betterdapay.activity.FWalletActivity;
 import com.betterda.betterdapay.activity.InformationActivity;
+import com.betterda.betterdapay.activity.JsActivity;
 import com.betterda.betterdapay.activity.MemberActivity;
 import com.betterda.betterdapay.activity.MyRatingActivity;
 import com.betterda.betterdapay.activity.RealNameAuthActivity;
@@ -95,7 +96,8 @@ public class MyFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_my_rating://我的钱包
-                UtilMethod.startIntent(getmActivity(), FWalletActivity.class);
+                //UtilMethod.startIntent(getmActivity(), FWalletActivity.class);
+                UtilMethod.startIntent(getmActivity(), JsActivity.class);
                 break;
             case R.id.relative_my_yinhangka://个人信息
                 UtilMethod.startIntent(getmActivity(), InformationActivity.class);

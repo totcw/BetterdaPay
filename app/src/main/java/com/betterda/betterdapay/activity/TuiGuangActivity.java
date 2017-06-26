@@ -58,10 +58,10 @@ public class TuiGuangActivity extends BaseActivity {
         dialog = UtilMethod.createDialog(this, "正在提交...");
     }
 
-    @OnClick({R.id.relative_tuiguang_my, R.id.tv_tuiguang_rate, R.id.bar_back})
+    @OnClick({R.id.relative_tuiguang_my, R.id.linear_tuiguang_up, R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_tuiguang_rate:
+            case R.id.linear_tuiguang_up:
                 // TODO 选择付款通道
                 chosePayChannel();
                 break;
