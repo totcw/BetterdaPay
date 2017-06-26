@@ -104,7 +104,8 @@
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="okio-1.8.0" level="project" />
-    <orderEntry type="library" exported="" name="jpush-2.2.0" level="project" />
+    <orderEntry type="library" exported="" name="jpush-3.0.5" level="project" />
+    <orderEntry type="library" exported="" name="jcore-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="javax.annotation-10.0-b28" level="project" />
     <orderEntry type="library" exported="" name="core-3.1.0" level="project" />

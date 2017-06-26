@@ -41,6 +41,8 @@ public class Constants {
         public static final String RANK = "rank";//等级
         public static final String REMEMBER = "remember";//是否记住密码
         public static final String GUIDE = "guide";//是否进入过引导界面
+        public static final String ALIAS = "alias";//极光设置别名
+        public final static String MESSAGE = "message";//是否是新消息
 
     }
 

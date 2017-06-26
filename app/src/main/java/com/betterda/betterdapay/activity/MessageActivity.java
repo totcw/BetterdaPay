@@ -11,6 +11,8 @@ import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Messages;
+import com.betterda.betterdapay.receiver.JpushReceiver;
+import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -77,6 +79,11 @@ public class MessageActivity extends BaseActivity {
                 getData();
             }
         });
+
+        //将新消息的标志设置为false
+        mRxManager.post(JpushReceiver.class.getSimpleName(),false);
+        String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
+        CacheUtils.putBoolean(getmActivity(), account+Constants.Cache.MESSAGE, false);
     }
 
 

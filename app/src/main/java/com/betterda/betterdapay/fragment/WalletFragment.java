@@ -21,6 +21,9 @@ import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Wallet;
 import com.betterda.betterdapay.javabean.WithDrawStatus;
 import com.betterda.betterdapay.livingpay.BaseLivingActiivty;
+import com.betterda.betterdapay.receiver.JpushReceiver;
+import com.betterda.betterdapay.util.CacheUtils;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.GradientTextView;
@@ -28,6 +31,7 @@ import com.betterda.mylibrary.ShapeLoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 /**
  * 钱包
@@ -40,6 +44,9 @@ public class WalletFragment extends BaseFragment {
     GradientTextView mGttvWalletMoney; //提现金额
     @BindView(R.id.iv_wallet_bg)
     ImageView mWalletBg; //图片
+    @BindView(R.id.iv_shouye_message)
+    ImageView mIvMessage; //图片
+
 
     private AlertDialog mAlertDialog;
     private ShapeLoadingDialog mDialog;
@@ -53,6 +60,7 @@ public class WalletFragment extends BaseFragment {
     public void initData() {
         super.initData();
 
+        initRxBus();
     }
 
     @Override
@@ -61,7 +69,41 @@ public class WalletFragment extends BaseFragment {
         if (mGttvWalletMoney != null) {
             mGttvWalletMoney.setText("0");
         }
+        judgeMessage();
         getData();
+    }
+
+
+
+    /**
+     * 判断是否是有新消息
+     */
+    private void judgeMessage() {
+        String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
+        boolean messsage = CacheUtils.getBoolean(getmActivity(), account+ Constants.Cache.MESSAGE, false);
+        if (mIvMessage != null) {
+            mIvMessage.setSelected(messsage);
+        }
+    }
+
+    /**
+     * 设置rxbus
+     */
+    private void initRxBus() {
+        mRxManager.on(JpushReceiver.class.getSimpleName(), new Action1<Boolean>() {
+            @Override
+            public void call(Boolean s) {
+                //改变消息是样式
+                if (mIvMessage != null) {
+                    if (s) {
+                        mIvMessage.setSelected(true);
+                    } else {
+                        mIvMessage.setSelected(false);
+                    }
+
+                }
+            }
+        });
     }
 
 
@@ -104,10 +146,10 @@ public class WalletFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.iv_wallet_meassage, R.id.btn_wallet_tixian, R.id.relative_shouye_bianjie, R.id.relative_wallet_banli, R.id.relative_shouye_check, R.id.relative_shouye_haidai, R.id.relative_shouye_life})
+    @OnClick({R.id.relative_shouye_message, R.id.btn_wallet_tixian, R.id.relative_shouye_bianjie, R.id.relative_wallet_banli, R.id.relative_shouye_check, R.id.relative_shouye_haidai, R.id.relative_shouye_life})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_wallet_meassage://消息
+            case R.id.relative_shouye_message://消息
                 UtilMethod.startIntent(getmActivity(), MessageActivity.class);
                 break;
             case R.id.btn_wallet_tixian://我要提现

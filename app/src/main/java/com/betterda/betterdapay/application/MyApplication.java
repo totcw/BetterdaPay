@@ -3,6 +3,7 @@ package com.betterda.betterdapay.application;
 import android.app.Activity;
 import android.app.Application;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.component.AppComponent;
 import com.betterda.betterdapay.component.DaggerAppComponent;
 import com.betterda.betterdapay.modules.AppModules;
@@ -19,12 +20,10 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class MyApplication extends Application {
 
-    private List<Activity> list ;
+    private List<Activity> list;
 
 
-
-    private static  MyApplication instance ;
-
+    private static MyApplication instance;
 
 
     private AppComponent appComponent;
@@ -34,7 +33,7 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
 
-        if (null == list){
+        if (null == list) {
             list = new ArrayList<>();
         }
         //初始化友盟
@@ -42,11 +41,13 @@ public class MyApplication extends Application {
         //配置微信的分享
         PlatformConfig.setWeixin("wx55b0b0b52e12a8de", "7a40ddb1853720bb643a06ed407c9ef6");
         //捕获异常
-       // CrashHandler.getInstance().init(getApplicationContext());
+        // CrashHandler.getInstance().init(getApplicationContext());
 
         //极光推送
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
-        JPushInterface.init(this);     		// 初始化 JPush
+        if (BuildConfig.LOG_DEBUG) {
+            JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        }
+        JPushInterface.init(this);            // 初始化 JPush
 
         inject();
     }
@@ -62,10 +63,11 @@ public class MyApplication extends Application {
 
     /**
      * 将activity添加到容器中
+     *
      * @param activity
      */
-    public  void addActivity(Activity activity){
-        if (null != list){
+    public void addActivity(Activity activity) {
+        if (null != list) {
             list.add(activity);
         }
 
@@ -74,9 +76,9 @@ public class MyApplication extends Application {
     /**
      * 退出程序
      */
-    public  void exitProgress(){
+    public void exitProgress() {
 
-        if(null != list) {
+        if (null != list) {
 
             for (Activity activity : list) {
                 activity.finish();
@@ -92,6 +94,7 @@ public class MyApplication extends Application {
 
     /**
      * 当activity销毁时调用该方法,防止内存泄漏
+     *
      * @param activity
      */
     public void removeAcitivty(Activity activity) {

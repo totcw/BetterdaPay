@@ -119,7 +119,7 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile files('libs/bcprov-jdk15-143.jar')
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.3'
-    compile 'cn.jiguang:jpush:2.2.0'
+
     compile 'com.android.support:design:24.2.1'
     compile project(':mylibrary')
     compile 'com.contrarywind:Android-PickerView:3.2.2'
@@ -132,4 +132,7 @@ dependencies {
     compile files('libs/umeng_social_tool.jar')
     /*btpay*/
     compile 'com.betterda.btpay:btsdk:0.0.4'
+    /*极光*/
+    compile 'cn.jiguang.sdk:jpush:3.0.5'
+    compile 'cn.jiguang.sdk:jcore:1.1.2'
 }

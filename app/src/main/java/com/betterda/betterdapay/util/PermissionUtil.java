@@ -106,7 +106,7 @@ public class PermissionUtil {
         List<String> denyPermissions = new ArrayList<>();
         for (String value : permission)
         {
-            System.out.println("value:"+value);
+
             if (ContextCompat.checkSelfPermission(activity,value) != PackageManager.PERMISSION_GRANTED)
             {
 

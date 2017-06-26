@@ -38,15 +38,25 @@
                         android:textColor="@color/text_color"
                         android:textSize="16sp" />
 
-
-                    <ImageView
-                        android:id="@+id/iv_wallet_meassage"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                    <RelativeLayout
                         android:layout_marginRight="10dp"
-                        android:background="@mipmap/message_title" />
+                        android:layout_centerVertical="true"
+                        android:id="@+id/relative_shouye_message"
+                        android:padding="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/iv_shouye_message"
+                            android:layout_centerInParent="true"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="@drawable/message_selector" />
+
+
+
+                    </RelativeLayout>
+
 
                 </RelativeLayout>
 

@@ -71,13 +71,11 @@ public class LoginActivity extends BaseActivity {
     private Observable<Object> observable;//rxus
 
 
-
     @Override
     public void initView() {
         super.initView();
         setContentView(R.layout.activity_login);
     }
-
 
 
     @Override
@@ -116,7 +114,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     /**
-     *  判断用户是否有记住密码
+     * 判断用户是否有记住密码
      */
     private void judgePwd() {
 
@@ -127,7 +125,7 @@ public class LoginActivity extends BaseActivity {
             Log.i(Tag, CacheUtils.getString(getmActivity(), accout + Constants.Cache.PWD, "") + "密码");
             etLoginPwd.setText(CacheUtils.getString(getmActivity(), accout + Constants.Cache.PWD, ""));
             iv_login_jizhu.setSelected(remember);
-          //  isLogin();
+            //  isLogin();
         }
     }
 
@@ -180,13 +178,12 @@ public class LoginActivity extends BaseActivity {
                 UtilMethod.startIntent(getmActivity(), ForgetPwdActivity.class);
                 break;
             case R.id.btn_login://登录
-                //setAlias();
-                System.out.println( UtilMethod.transforPhoneNumber("15160700380"));
+/*
                 CacheUtils.putBoolean(getmActivity(), "15160700380" + Constants.Cache.AUTH, true);
                 CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.RANK, "经理");
                 CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "15160700380");
-                 UtilMethod.startIntent(getmActivity(), HomeActivity.class);
-               // Login();
+                UtilMethod.startIntent(getmActivity(), HomeActivity.class);*/
+                 Login();
                 break;
             case R.id.relative_login_register://注册
                 UtilMethod.startIntent(getmActivity(), RegisterActivity.class);
@@ -205,16 +202,12 @@ public class LoginActivity extends BaseActivity {
             showToast("请输入密码");
             return;
         }
-           NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-               @Override
-               public void getDataApi() {
-                   getData();
-               }
-           });
-
-
-
-
+        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                getData();
+            }
+        });
 
 
     }
@@ -222,33 +215,33 @@ public class LoginActivity extends BaseActivity {
     private void getData() {
         //显示进度对话框
         UtilMethod.showDialog(getmActivity(), dialog);
-         mRxManager.add(
-                 NetWork.getNetService()
-                         .getLogin(account, pwd)
-                         .subscribeOn(Schedulers.io())
-                         .observeOn(AndroidSchedulers.mainThread())
-                         .subscribe(new MyObserver<UserInfo>() {
-                             @Override
-                             protected void onSuccess(UserInfo userInfo, String resultMsg) {
-                                 parseAndSave(userInfo);
+        mRxManager.add(
+                NetWork.getNetService()
+                        .getLogin(account, pwd)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new MyObserver<UserInfo>() {
+                            @Override
+                            protected void onSuccess(UserInfo userInfo, String resultMsg) {
+                                parseAndSave(userInfo);
 
-                             }
+                            }
 
-                             @Override
-                             public void onFail(String resultMsg) {
+                            @Override
+                            public void onFail(String resultMsg) {
 
-                                 UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                 showToast(resultMsg);
-                             }
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                showToast(resultMsg);
+                            }
 
-                             @Override
-                             public void onExit() {
-                                 UtilMethod.dissmissDialog(getmActivity(), dialog);
-                             }
+                            @Override
+                            public void onExit() {
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                            }
 
 
-                         })
-         );
+                        })
+        );
     }
 
     /**
@@ -265,13 +258,10 @@ public class LoginActivity extends BaseActivity {
             CacheUtils.putString(getmActivity(), account + Constants.Cache.PWD, pwd);
             CacheUtils.putBoolean(getmActivity(), account + Constants.Cache.AUTH, auth);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.RANK, rate);
-            UtilMethod.startIntent(getmActivity(), HomeActivity.class);
             UtilMethod.dissmissDialog(getmActivity(), dialog);
-
+            setAlias();
         }
     }
-
-
 
 
     @Override
@@ -291,19 +281,22 @@ public class LoginActivity extends BaseActivity {
 
     // 这是来自 JPush Example 的设置别名的 Activity 里的代码。一般 App 的设置的调用入口，在任何方便的地方调用都可以。
     private void setAlias() {
-
+        boolean alias = CacheUtils.getBoolean(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.ALIAS, false);
         // 调用 Handler 来异步设置别名
-        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, "alias2"));
+        if (!alias) {
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, UtilMethod.getAccout(getmActivity())));
+        }
     }
 
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
         @Override
         public void gotResult(int code, String alias, Set<String> tags) {
-            String logs ;
+            String logs;
             switch (code) {
                 case 0:
                     logs = "Set tag and alias success";
                     // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
+                    CacheUtils.putBoolean(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.ALIAS, true);
                     break;
                 case 6002:
                     logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
@@ -312,7 +305,8 @@ public class LoginActivity extends BaseActivity {
                     mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
                     break;
                 default:
-                   break;
+                    UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+                    break;
             }
 
         }
@@ -324,7 +318,6 @@ public class LoginActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case MSG_SET_ALIAS:
-
                     // 调用 JPush 接口来设置别名。
                     JPushInterface.setAliasAndTags(getApplicationContext(),
                             (String) msg.obj,
