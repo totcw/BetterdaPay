@@ -102,21 +102,6 @@ public interface NetService {
                                                @Field("orderType") String orderType,
                                                @Field("channel") String channel);
 
-    /**
-     * 账单接口
-     *
-     * @param account
-     * @param token
-     * @param orderType
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Constants.Url.URL_ORDER_GET)
-    Observable<BaseCallModel<OrderALL>> getOrderGet(@Field("account") String account,
-                                                    @Field("token") String token,
-                                                    @Field("orderType") String orderType,
-                                                    @Field("pageNo") String pageNo,
-                                                    @Field("pageSize") String pageSize);
 
     /**
      * 获取各等级费率

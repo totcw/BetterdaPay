@@ -56,7 +56,6 @@ public class Constants {
         public static final String URL_PWD_UPDATE = URL + "api/resetPwdController.do?reset";//忘记密码
         public static final String URL_ORDER_CREATE = URL + "appAPI.do?api/account/order/add";//订单生成
         public static final String URL_ORDER_GET = URL + "appAPI.do?api/account/order/get";//账单获取
-        public static final String URL_ORDER_FENRUN = URL + "appAPI.do?api/account/tProfit/get";//分润获取
         public static final String URL_RATING = URL + "api/memberRankController.do?getRanks";//获取各等级费率
         public static final String URL_MY_RATING = URL + "api/memberRankController.do?getRank";//获取我的等级费率
         public static final String URL_MY_RATINGS = URL + "api/memberRankController.do?getRates";//获取当前等级费率用与计算

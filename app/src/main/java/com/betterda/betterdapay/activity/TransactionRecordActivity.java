@@ -6,6 +6,9 @@ import android.view.View;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.javabean.TransactionRecord;
+import com.betterda.betterdapay.util.RecyclerViewStateUtils;
+import com.betterda.betterdapay.view.EndlessRecyclerOnScrollListener;
+import com.betterda.betterdapay.view.HeaderAndFooterRecyclerViewAdapter;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
 import com.zhy.base.adapter.ViewHolder;
@@ -30,8 +33,10 @@ public class TransactionRecordActivity extends BaseActivity {
     RecyclerView mRvLayout;
     @BindView(R.id.loadpager_layout)
     LoadingPager mLoadpagerLayout;
+    private HeaderAndFooterRecyclerViewAdapter mAdapter;
 
-    private List<TransactionRecord> list;
+    private List<TransactionRecord> list,mTransactionRecordList;
+    private int page = 1;
 
     @Override
     public void initView() {
@@ -48,12 +53,8 @@ public class TransactionRecordActivity extends BaseActivity {
 
     private void initRecycleview() {
         list = new ArrayList<>();
-        list.add(null);
-        list.add(null);
-        list.add(null);
-        list.add(null);
         mRvLayout.setLayoutManager(new LinearLayoutManager(getmActivity()));
-        mRvLayout.setAdapter(new CommonAdapter<TransactionRecord>(getmActivity(),R.layout.item_recycleview_tranastionreord,list) {
+        mAdapter = new HeaderAndFooterRecyclerViewAdapter(new CommonAdapter<TransactionRecord>(getmActivity(),R.layout.item_recycleview_tranastionreord,list) {
             @Override
             public void convert(ViewHolder holder, TransactionRecord transactionRecord) {
                 if (transactionRecord != null) {
@@ -66,6 +67,28 @@ public class TransactionRecordActivity extends BaseActivity {
 
 
         });
+
+        mRvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
+            @Override
+            public void onLoadNextPage(View view) {
+                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, new RecyclerViewStateUtils.nextListener() {
+                    @Override
+                    public void load() {
+                        page++;
+                       // getData();
+                    }
+                });
+
+            }
+
+            @Override
+            public void show(boolean isShow) {
+                //这里是要传当前服务器返回的list
+                RecyclerViewStateUtils.show(isShow, mTransactionRecordList, mRvLayout, getmActivity());
+            }
+        });
+
+        mRvLayout.setAdapter(mAdapter);
     }
 
     @OnClick({R.id.bar_back})
