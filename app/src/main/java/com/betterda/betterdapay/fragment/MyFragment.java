@@ -95,7 +95,8 @@ public class MyFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_my_rating://我的钱包
-                UtilMethod.startIntent(getmActivity(), FWalletActivity.class);
+              //  UtilMethod.startIntent(getmActivity(), FWalletActivity.class);
+                UtilMethod.startIntent(getmActivity(), AlreadAuthAcitity.class);
                 break;
             case R.id.relative_my_yinhangka://个人信息
                 UtilMethod.startIntent(getmActivity(), InformationActivity.class);

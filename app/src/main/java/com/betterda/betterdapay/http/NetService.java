@@ -322,13 +322,11 @@ public interface NetService {
     /**
      * 我的资料获取
      * @param account
-     * @param token
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_INFORMATION)
-    Observable<BaseCallModel<Information>> getInformation(@Field("account") String account,
-                                                @Field("token") String token
+    Observable<BaseCallModel<Information>> getInformation(@Field("account") String account
 
     );
 
@@ -443,5 +441,6 @@ public interface NetService {
     @POST(Constants.Url.URL_CHECK_WITHDRAW)
     Observable<BaseCallModel<WithDrawStatus>> getCheckWithdraw(@Field("account") String account
                                                      );
+
 
 }

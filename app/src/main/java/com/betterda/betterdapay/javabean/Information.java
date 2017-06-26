@@ -8,8 +8,34 @@ public class Information {
     private String account;
     private String rate;//等级
     private String auth; //是否认证 true false
-    private String realName; //真是姓名
+    private String realname; //真是姓名
     private String identityCard;//身份证号
+    private String bankcard;//银行卡号
+    private String bankname;//银行名
+
+    public String getIdentityCard() {
+        return identityCard;
+    }
+
+    public void setIdentityCard(String identityCard) {
+        this.identityCard = identityCard;
+    }
+
+    public String getBankcard() {
+        return bankcard;
+    }
+
+    public void setBankcard(String bankcard) {
+        this.bankcard = bankcard;
+    }
+
+    public String getBankname() {
+        return bankname;
+    }
+
+    public void setBankname(String bankname) {
+        this.bankname = bankname;
+    }
 
     public String getAccount() {
         return account;
@@ -35,12 +61,12 @@ public class Information {
         this.auth = auth;
     }
 
-    public String getRealName() {
-        return realName;
+    public String getRealname() {
+        return realname;
     }
 
-    public void setRealName(String realName) {
-        this.realName = realName;
+    public void setRealname(String realname) {
+        this.realname = realname;
     }
 
     public String getIdentityCar() {
@@ -49,5 +75,18 @@ public class Information {
 
     public void setIdentityCar(String identityCar) {
         this.identityCard = identityCar;
+    }
+
+    @Override
+    public String toString() {
+        return "Information{" +
+                "account='" + account + '\'' +
+                ", rate='" + rate + '\'' +
+                ", auth='" + auth + '\'' +
+                ", realname='" + realname + '\'' +
+                ", identityCard='" + identityCard + '\'' +
+                ", bankcard='" + bankcard + '\'' +
+                ", bankname='" + bankname + '\'' +
+                '}';
     }
 }

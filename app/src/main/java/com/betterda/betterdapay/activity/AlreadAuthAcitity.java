@@ -3,6 +3,7 @@ package com.betterda.betterdapay.activity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.RateData;
@@ -17,7 +18,7 @@ import com.betterda.mylibrary.LoadingPager;
 import butterknife.BindView;
 
 /**
- * 已经认证界面
+ * 已经认证界面,资料获取
  * Created by Administrator on 2016/9/2.
  */
 public class AlreadAuthAcitity extends BaseActivity {
@@ -49,38 +50,50 @@ public class AlreadAuthAcitity extends BaseActivity {
         NetworkUtils.isNetWork(getmActivity(), loadpagerAlreaauth, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                  NetWork.getNetService()
-                        .getInformation(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()))
-                        .compose(NetWork.handleResult(new BaseCallModel<Information>()))
-                        .subscribe(new MyObserver<Information>() {
-                            @Override
-                            protected void onSuccess(Information data, String resultMsg) {
-                                if (data != null) {
-                                    if (tvAlreadauthIdentity != null) {
-                                        tvAlreadauthIdentity.setText("身份证:"+data.getIdentityCar());
-                                    }
-                                    if (tvAlreadauthName != null) {
-                                        tvAlreadauthName.setText(data.getRealName());
-                                    }
+               mRxManager.add(
+                       NetWork.getNetService()
+                               .getInformation(UtilMethod.getAccout(getmActivity()))
+                               .compose(NetWork.handleResult(new BaseCallModel<Information>()))
+                               .subscribe(new MyObserver<Information>() {
+                                   @Override
+                                   protected void onSuccess(Information data, String resultMsg) {
+                                       if (BuildConfig.LOG_DEBUG) {
+                                           System.out.println("个人信息:" + data);
+                                       }
 
-                                    if (ivAlreadauth != null) {
+                                       if (data != null) {
+                                           if (tvAlreadauthIdentity != null) {
+                                               tvAlreadauthIdentity.setText("身份证:" + data.getIdentityCar());
+                                           }
+                                           if (tvAlreadauthName != null) {
+                                               tvAlreadauthName.setText(data.getRealname());
+                                           }
+
+                                   /* if (ivAlreadauth != null) {
                                         ivAlreadauth.setImageResource(RateData.getRate(data.getRate()));
-                                    }
+                                    }*/
 
-                                }
-                                loadpagerAlreaauth.hide();
-                            }
+                                       }
+                                       loadpagerAlreaauth.hide();
+                                   }
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                loadpagerAlreaauth.setErrorVisable();
-                            }
+                                   @Override
+                                   public void onFail(String resultMsg) {
+                                       if (BuildConfig.LOG_DEBUG) {
+                                           System.out.println("个人信息fail:" + resultMsg);
+                                       }
+                                       if (loadpagerAlreaauth != null) {
 
-                            @Override
-                            public void onExit() {
-                                ExitToLogin();
-                            }
-                        });
+                                           loadpagerAlreaauth.setErrorVisable();
+                                       }
+                                   }
+
+                                   @Override
+                                   public void onExit() {
+
+                                   }
+                               })
+               );
             }
         });
     }
