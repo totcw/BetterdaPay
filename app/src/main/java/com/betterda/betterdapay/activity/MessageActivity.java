@@ -18,9 +18,10 @@ import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.RecyclerViewStateUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.EndlessRecyclerOnScrollListener;
+import com.betterda.betterdapay.view.HeaderAndFooterRecyclerViewAdapter;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
-import com.betterda.mylibrary.recycleviehelper.HeaderAndFooterRecyclerViewAdapter;
+
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 

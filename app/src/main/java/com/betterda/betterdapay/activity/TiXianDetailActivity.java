@@ -9,7 +9,6 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.javabean.Income;
 import com.betterda.betterdapay.javabean.WithDraw;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
