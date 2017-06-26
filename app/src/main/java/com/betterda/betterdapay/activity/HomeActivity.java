@@ -179,7 +179,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        RxBus.get().post("LoginActivity", "");
+      //  RxBus.get().post("LoginActivity", "");
         super.onBackPressed();
     }
 }

@@ -84,7 +84,7 @@ public class LoginActivity extends BaseActivity {
         inject();
         setTopBar();
         judgePwd();
-        register();
+       // register();
 
     }
 
@@ -182,6 +182,7 @@ public class LoginActivity extends BaseActivity {
                 CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.RANK, "经理");
                 CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "15160700380");
                 UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+                finish();
                 // Login();
                 break;
             case R.id.relative_login_register://注册
@@ -274,7 +275,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.get().unregister(LoginActivity.class.getSimpleName(), observable);
+       // RxBus.get().unregister(LoginActivity.class.getSimpleName(), observable);
     }
 
 
@@ -305,6 +306,7 @@ public class LoginActivity extends BaseActivity {
                     break;
                 default:
                     UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+                    finish();
                     break;
             }
 

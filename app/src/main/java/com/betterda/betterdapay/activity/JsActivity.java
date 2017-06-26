@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.util.UtilMethod;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,9 +35,8 @@ public class JsActivity extends BaseActivity {
     @BindView(R.id.slidedetails_behind)
     WebView webView;
 
-    private String orderId;
-    private String url;
-    private float money;
+
+    private String money;
 
 
     @Override
@@ -52,9 +52,8 @@ public class JsActivity extends BaseActivity {
         super.init();
         Intent intent = getIntent();
         if (intent != null) {
-            orderId = intent.getStringExtra("orderId");
-            url = intent.getStringExtra("url");
-            money = intent.getFloatExtra("money", 0);
+            money = intent.getStringExtra("money");
+
         }
         final WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true); //允许加载javascript
@@ -129,10 +128,18 @@ public class JsActivity extends BaseActivity {
         getWindow().getDecorView().post(new Runnable() {
             @Override
             public void run() {
-                if (TextUtils.isEmpty(url)||!url.startsWith("http")) {
-                    url = "http://www.baidu.com";
+                try {
+
+                    float payMoney = Float.valueOf(money);
+                    int payUp = (int) (payMoney * 100);
+                    System.out.println("payup:"+payUp);
+                    String url ="http://192.168.0.108:8080/wallet/mobile/unionPay.jsp?account=15506927108&body=测试&amount="+payUp;
+                   // webView.loadUrl(url);
+                } catch (Exception e) {
+
                 }
-                    webView.loadUrl(url);
+
+
             }
         });
     }
@@ -167,11 +174,11 @@ public class JsActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (webView.canGoBack()) {
+      /*  if (webView.canGoBack()) {
             webView.goBack();
-        } else {
+        } else {*/
             super.onBackPressed();
-        }
+        //}
 
     }
 }

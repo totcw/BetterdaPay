@@ -104,7 +104,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     holder.setOnClickListener(R.id.relative_choose_zhifubao, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getData();
+                            toActivity();
                         }
                     });
                 }
@@ -194,53 +194,12 @@ public class ChoosePayTypeActivity extends BaseActivity {
     }
 
 
-    public void getData() {
-        UtilMethod.showDialog(getmActivity(), dialog);
-        NetworkUtils.isNetWork(getmActivity(), topbarChose, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                 NetWork.getNetService()
-                        .getUnionGatewayT0Order(UtilMethod.getAccout(getmActivity()),"1000","测试")
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
-
-                                if (BuildConfig.LOG_DEBUG) {
-                                    Log.i(TAG, data + "," + resultMsg);
-                                }
-
-
-                                toActivity(data);
-
-                            }
-
-                            @Override
-                            public void onFail(String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("网关fail:"+resultMsg);
-                                }
-                                showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                            }
-
-                            @Override
-                            public void onExit() {
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-
-                            }
-                        });
-            }
-        });
-
-
-    }
 
 
 
-    private void toActivity(String url) {
+    private void toActivity() {
         UtilMethod.dissmissDialog(getmActivity(), dialog);
-        UtilMethod.startIntent(getmActivity(), JsActivity.class, "url", url);
+        UtilMethod.startIntent(getmActivity(), JsActivity.class, "money", money);
         finish();
     }
 

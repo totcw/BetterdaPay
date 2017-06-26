@@ -111,6 +111,11 @@ public class ShouKuanFragment extends BaseFragment {
 
 
     private void pay() {
+
+        float payMoney = Float.valueOf(sb.toString());
+        int payUp = (int) (payMoney * 100);
+        System.out.println("payup:"+payUp);
+
         if (!sb.toString().matches(Constants.str)) {//输入的没问题
             showToast("输入格式有误");
             return;

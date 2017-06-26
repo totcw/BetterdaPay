@@ -55,7 +55,6 @@
 
         <activity
             android:name=".activity.LoginActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
 
 
