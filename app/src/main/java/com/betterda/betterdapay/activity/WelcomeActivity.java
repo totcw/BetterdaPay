@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.application.MyApplication;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.dialog.DeleteDialog;
 import com.betterda.betterdapay.dialog.PermissionDialog;
@@ -111,6 +112,7 @@ public class WelcomeActivity extends FragmentActivity {
             starToHome();
 
         } else {
+            MyApplication.getInstance().addActivity(this);
             //6.0以上请求权限
             checkPermiss();
         }
@@ -121,6 +123,16 @@ public class WelcomeActivity extends FragmentActivity {
         //TODO 访问网络获取更新信息
         getData();
 
+    }
+
+    /**
+     * 这个界面设置成这个模式,主要是为了权限请求在回来时把所有的界面都关闭
+     * @param intent
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        startTopermission();
     }
 
     /**
@@ -284,7 +296,7 @@ public class WelcomeActivity extends FragmentActivity {
 
     public void startToLogin() {
         isToGuide();
-        finish();
+
     }
 
     /**

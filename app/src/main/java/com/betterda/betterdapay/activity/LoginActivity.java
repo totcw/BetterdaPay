@@ -1,6 +1,7 @@
 package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.text.Editable;
@@ -286,6 +287,7 @@ public class LoginActivity extends BaseActivity {
             mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, UtilMethod.getAccout(getmActivity())));
         } else {
             UtilMethod.dissmissDialog(getmActivity(), dialog);
+            finish();
         }
     }
 
@@ -332,5 +334,17 @@ public class LoginActivity extends BaseActivity {
             }
         }
     };
+
+
+    @Override
+    public void onBackPressed() {
+        if (Build.VERSION.SDK_INT > 22) {
+            MyApplication.getInstance().exitProgress();
+        }
+        mRxManager.post(HomeActivity.class.getSimpleName(),"exit");
+        super.onBackPressed();
+    }
+
+
 
 }

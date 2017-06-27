@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
@@ -14,18 +13,18 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
-import android.widget.Toast;
+
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.util.PermissionUtil;
 import com.betterda.betterdapay.util.RxManager;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.mylibrary.Utils.Toast;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
-import rx.Subscription;
 
 /**
  * 基类
@@ -96,7 +95,7 @@ public class BaseActivity extends FragmentActivity {
      * @param message
      */
     public void showToast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     /**

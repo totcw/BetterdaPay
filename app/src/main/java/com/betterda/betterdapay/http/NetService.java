@@ -9,6 +9,7 @@ import com.betterda.betterdapay.javabean.MemberCounts;
 import com.betterda.betterdapay.javabean.Messages;
 import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
+import com.betterda.betterdapay.javabean.TransactionRecord;
 import com.betterda.betterdapay.javabean.TuiGuang;
 import com.betterda.betterdapay.javabean.UpdateCondition;
 import com.betterda.betterdapay.javabean.UserInfo;
@@ -80,14 +81,15 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_PWD_UPDATE)
     Observable<BaseCallModel<String>> getPwdUpdate(@Field("account") String account,
-                                                     @Field("password") String password);
+                                                   @Field("password") String password);
 
 
     /**
      * 生成手机控件付款订单
+     *
      * @param account 帐号
-     * @param amount 金额 单位为分
-     * @param body  商品描述
+     * @param amount  金额 单位为分
+     * @param body    商品描述
      * @return
      */
 
@@ -136,20 +138,18 @@ public interface NetService {
      * 获取升级条件接口
      *
      * @param account
-
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_UPDATE_CONDITION)
     Observable<BaseCallModel<List<UpdateCondition>>> getUpdateCondition(@Field("account") String account
-                                                    );
+    );
 
 
     /**
      * 升级到指定接口(现在就用订单生成)
      *
      * @param account
-
      * @return
      */
     @FormUrlEncoded
@@ -207,7 +207,7 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_BANK_GET)
     Observable<BaseCallModel<List<BankCard>>> getBandGet(@Field("account") String account,
-                                                 @Field("token") String token
+                                                         @Field("token") String token
     );
 
     /**
@@ -274,9 +274,9 @@ public interface NetService {
     );
 
 
-
     /**
      * 我的推广
+     *
      * @param account
      * @param pageNo
      * @param pageSize
@@ -285,13 +285,14 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_SUB_GET)
     Observable<BaseCallModel<List<TuiGuang>>> getSub(@Field("account") String account,
-                                                @Field("pageNo") String pageNo,
-                                                @Field("pageSize") String pageSize
+                                                     @Field("pageNo") String pageNo,
+                                                     @Field("pageSize") String pageSize
 
     );
 
     /**
      * 我的钱包
+     *
      * @param account
      * @return
      */
@@ -303,6 +304,7 @@ public interface NetService {
 
     /**
      * 意见反馈
+     *
      * @param account
      * @param content 反馈的内容
      * @return
@@ -310,11 +312,12 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_FEEDBACK_ADD)
     Observable<BaseCallModel<String>> getFeedBack(@Field("account") String account,
-                                                @Field("content") String content
+                                                  @Field("content") String content
     );
 
     /**
      * 我的资料获取
+     *
      * @param account
      * @return
      */
@@ -323,7 +326,6 @@ public interface NetService {
     Observable<BaseCallModel<Information>> getInformation(@Field("account") String account
 
     );
-
 
 
     @FormUrlEncoded
@@ -337,17 +339,19 @@ public interface NetService {
                                                        @Field("pageNo") String pageNo,
                                                        @Field("pageSize") String pageSize
     );
-   /**
-    *@author : lyf
-    *@创建日期： 2017/6/16
-    *@功能说明：获取会员个数
-    */
+
+    /**
+     * @author : lyf
+     * @创建日期： 2017/6/16
+     * @功能说明：获取会员个数
+     */
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_MEMBERS)
     Observable<BaseCallModel<MemberCounts>> getMemberCounts(@Field("account") String account);
 
     /**
      * 图片上传
+     *
      * @param account
      * @param file
      * @return
@@ -355,13 +359,13 @@ public interface NetService {
     @Multipart
     @POST(Constants.Url.URL_IMG_UPLOAD)
     Observable<BaseCallModel<String>> getImgUpload(@Part("account") RequestBody account,
-                                                @Part MultipartBody.Part file
+                                                   @Part MultipartBody.Part file
     );
 
 
     /**
      * 版本更新
-
+     *
      * @return
      */
 
@@ -371,30 +375,34 @@ public interface NetService {
 
 
     /**
-     *获取消息列表
-
+     * 获取消息列表
+     *
      * @return
      */
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_MESSAGE_LIST)
     Observable<BaseCallModel<List<Messages>>> getMessageList(@Field("account") String account,
-                                                       @Field("pageNo") String pageNo,
-                                                       @Field("pageSize") String pageSize
-                                                     );
+                                                             @Field("pageNo") String pageNo,
+                                                             @Field("pageSize") String pageSize
+    );
+
     /**
-     *获取分润明细
+     * 获取分润明细
+     *
      * @return
      */
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_INCOME)
     Observable<BaseCallModel<List<Income>>> getIncomeList(@Field("account") String account,
-                                                       @Field("pageNo") String pageNo,
-                                                       @Field("pageSize") String pageSize
-                                                     );
+                                                          @Field("pageNo") String pageNo,
+                                                          @Field("pageSize") String pageSize
+    );
+
     /**
-     *获取结算明细
+     * 获取结算明细
+     *
      * @return
      */
 
@@ -403,27 +411,45 @@ public interface NetService {
     Observable<BaseCallModel<List<WithDraw>>> getAmountList(@Field("account") String account,
                                                             @Field("pageNo") String pageNo,
                                                             @Field("pageSize") String pageSize
-                                                     );
+    );
+
     /**
-     *查询结算状态
+     * 查询结算状态
+     *
      * @return
      */
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_CHECK_WITHDRAW)
     Observable<BaseCallModel<WithDrawStatus>> getCheckWithdraw(@Field("account") String account
-                                                     );
+    );
 
     /**
-     *生成网关T0的订单
+     * 生成网关T0的订单
+     *
      * @return
      */
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_UNIONGATEWAYT0ORDER)
     Observable<BaseCallModel<String>> getUnionGatewayT0Order(@Field("account") String account,
-                                                                     @Field("amount") String amount,
-                                                                     @Field("body") String body
+                                                             @Field("amount") String amount,
+                                                             @Field("body") String body
+    );
+
+    /**
+     * 获取账单记录
+     *
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_ORDER_GET)
+    Observable<BaseCallModel<List<TransactionRecord>>> getOrders(@Field("account") String account,
+                                                                 @Field("startTime") String startTime,
+                                                                 @Field("endTime") String endTime,
+                                                                 @Field("pageSize") String pageSize,
+                                                                 @Field("pageNo") String pageNo
     );
 
 

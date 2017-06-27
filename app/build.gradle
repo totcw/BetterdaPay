@@ -104,7 +104,7 @@ dependencies {
     /*butterknife*/
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
-    //  compile 'com.betterda:mylibrary:2.4.6'
+      compile 'com.betterda:mylibrary:2.5.6'
 
     /*togglebutton*/
     compile 'com.zcw:togglebutton-library:1.0.0'
@@ -121,7 +121,7 @@ dependencies {
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.3'
 
     compile 'com.android.support:design:24.2.1'
-    compile project(':mylibrary')
+
     compile 'com.contrarywind:Android-PickerView:3.2.2'
     /*友盟*/
     compile files('libs/SocialSDK_WeChat_Simplify.jar')

@@ -1,5 +1,6 @@
 package com.betterda.betterdapay.activity;
 
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.application.MyApplication;
 import com.betterda.betterdapay.fragment.MyFragment;
 import com.betterda.betterdapay.fragment.ShareFragment;
 import com.betterda.betterdapay.fragment.ShouKuanFragment;
@@ -24,6 +26,7 @@ import com.betterda.mylibrary.view.IndicatorView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 /**
  * Created by Administrator on 2016/7/28.
@@ -90,7 +93,12 @@ public class HomeActivity extends BaseActivity {
 
         UtilMethod.showNotice(this);
 
-
+        mRxManager.on(HomeActivity.class.getSimpleName(), new Action1<String>() {
+            @Override
+            public void call(String s) {
+                finish();
+            }
+        });
     }
 
 
@@ -179,7 +187,9 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-      //  RxBus.get().post("LoginActivity", "");
+        if (Build.VERSION.SDK_INT > 22) {
+            MyApplication.getInstance().exitProgress();
+        }
         super.onBackPressed();
     }
 }

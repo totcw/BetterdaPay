@@ -1,12 +1,20 @@
 package com.betterda.betterdapay.activity;
 
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.callback.MyObserver;
+import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.TransactionRecord;
+import com.betterda.betterdapay.util.Constants;
+import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.RecyclerViewStateUtils;
+import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.EndlessRecyclerOnScrollListener;
 import com.betterda.betterdapay.view.HeaderAndFooterRecyclerViewAdapter;
 import com.betterda.betterdapay.view.NormalTopBar;
@@ -49,6 +57,13 @@ public class TransactionRecordActivity extends BaseActivity {
         super.init();
         mTopbarTranastionrecord.setTitle("交易记录");
         initRecycleview();
+        mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData();
+            }
+        });
+        getData();
     }
 
     private void initRecycleview() {
@@ -57,10 +72,18 @@ public class TransactionRecordActivity extends BaseActivity {
         mAdapter = new HeaderAndFooterRecyclerViewAdapter(new CommonAdapter<TransactionRecord>(getmActivity(),R.layout.item_recycleview_tranastionreord,list) {
             @Override
             public void convert(ViewHolder holder, TransactionRecord transactionRecord) {
-                if (transactionRecord != null) {
-                    holder.setText(R.id.tv_mingxi_type, transactionRecord.getOderNum());
-                    holder.setText(R.id.tv_mingxi_time, transactionRecord.getMoney());
-                    holder.setText(R.id.tv_mingxi_money, transactionRecord.getTime());
+                if (transactionRecord != null && holder != null) {
+                    if ("1" .equals(transactionRecord.getType())) {
+                        holder.setText(R.id.tv_mingxi_type, "收款");
+                        holder.setText(R.id.tv_mingxi_time,"+"+ transactionRecord.getAmount() + "元");
+                        holder.setTextColor(R.id.tv_mingxi_time, Color.GREEN);
+                    } else if ("2".equals(transactionRecord.getType())) {
+                        holder.setText(R.id.tv_mingxi_type, "付款");
+                        holder.setText(R.id.tv_mingxi_time,"-"+ transactionRecord.getAmount() + "元");
+                        holder.setTextColor(R.id.tv_mingxi_time, Color.BLACK);
+                    }
+
+                    holder.setText(R.id.tv_mingxi_money, transactionRecord.getTxnTime());
                     holder.setText(R.id.tv_mingxi_money2, transactionRecord.getStatus());
                 }
             }
@@ -75,7 +98,7 @@ public class TransactionRecordActivity extends BaseActivity {
                     @Override
                     public void load() {
                         page++;
-                       // getData();
+                        getData();
                     }
                 });
 
@@ -91,6 +114,8 @@ public class TransactionRecordActivity extends BaseActivity {
         mRvLayout.setAdapter(mAdapter);
     }
 
+
+
     @OnClick({R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -98,6 +123,58 @@ public class TransactionRecordActivity extends BaseActivity {
                 back();
                 break;
 
+        }
+    }
+
+    private void getData() {
+        mLoadpagerLayout.setLoadVisable();
+        NetworkUtils.isNetWork(getmActivity(), mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+               mRxManager.add(
+                       NetWork.getNetService()
+                               .getOrders("15506927108", null, null, page + "", Constants.PAGE_SIZE + "")
+                               .compose(NetWork.handleResult(new BaseCallModel<List<TransactionRecord>>()))
+                               .subscribe(new MyObserver<List<TransactionRecord>>() {
+                                   @Override
+                                   protected void onSuccess(List<TransactionRecord> data, String resultMsg) {
+                                       if (BuildConfig.LOG_DEBUG) {
+                                           System.out.println("账单:"+data);
+                                       }
+                                       if (data != null) {
+                                           parserData(data);
+                                       }
+                                       UtilMethod.judgeData(data,mLoadpagerLayout);
+                                   }
+
+                                   @Override
+                                   public void onFail(String resultMsg) {
+                                       if (mLoadpagerLayout != null) {
+                                           mLoadpagerLayout.setErrorVisable();
+                                       }
+                                   }
+
+                                   @Override
+                                   public void onExit() {
+
+                                   }
+                               })
+               );
+            }
+        });
+    }
+
+    private void parserData(List<TransactionRecord> data) {
+        mTransactionRecordList = data;
+        if (list != null) {
+            if (page == 1) {
+                list.clear();
+            }
+            list.addAll(data);
+        }
+
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
         }
     }
 }

@@ -1,3 +1,4 @@
+/*
 package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
@@ -13,7 +14,6 @@ import com.betterda.betterdapay.data.RateData;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Income;
-import com.betterda.betterdapay.javabean.Order;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.RecyclerViewStateUtils;
@@ -32,10 +32,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+*/
 /**
  * 搜索接口
  * Created by Administrator on 2016/8/16.
- */
+ *//*
+
 public class SearchActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.topbar_search)
     NormalTopBar topbarSearch;
@@ -103,10 +105,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 @Override
                 public void convert(ViewHolder viewHolder, Order order) {
                     if (order != null) {
-                        viewHolder.setText(R.id.tv_item_balance_orderNum, order.getOrderNum());
-                        viewHolder.setText(R.id.tv_item_balance_time, order.getOrderTime());
+                        viewHolder.setText(R.id.tv_item_balance_orderNum, order.getOrderNo());
+                        viewHolder.setText(R.id.tv_item_balance_time, order.getTxnTime());
                         viewHolder.setText(R.id.tv_item_balance_type, order.getChannel());
-                        viewHolder.setText(R.id.tv_item_balance_money, order.getMoney() + "元");
+                        viewHolder.setText(R.id.tv_item_balance_money, order.getAmount() + "元");
                         viewHolder.setText(R.id.tv_item_balance_money2, order.getBalance() + "元");
                         setOrderType(viewHolder, order);
                     }
@@ -194,9 +196,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    /**
+    */
+/**
      * 确定搜索
-     */
+     *//*
+
     private void comfirm() {
         switch (item) {
             case SHOU_KUAN:
@@ -221,9 +225,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     }
 
 
-    /**
+    */
+/**
      * 分润的请求
-     */
+     *//*
+
     private void getData2() {
         loadingPager.setLoadVisable();
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
@@ -271,10 +277,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    /**
+    */
+/**
      * 收款的请求
-     */
-  /*  private void getData() {
+     *//*
+
+  */
+/*  private void getData() {
         loadingPager.setLoadVisable();
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
@@ -309,11 +318,15 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    *//**
+    *//*
+*/
+/**
      * 解析收款
      *
      * @param data
      *//*
+*/
+/*
     private void parserShouKuan(OrderALL data) {
         data.getHeapCollection();
         orderListDetail = data.getListOrder();
@@ -332,13 +345,16 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             adapter.notifyDataSetChanged();
         }
 
-    }*/
+    }*//*
 
-    /**
+
+    */
+/**
      * 获取时间
      *
      * @param isStart
-     */
+     *//*
+
     private void getStartTime(final boolean isStart) {
         ChangeBirthDialog changeBirthDialog = new ChangeBirthDialog(getmActivity());
         changeBirthDialog.setDate(UtilMethod.getYear(), UtilMethod.getMonth(), UtilMethod.getDay());
@@ -358,12 +374,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     }
 
 
-    /**
+    */
+/**
      * 设置订单类型
      *
      * @param viewHolder
      * @param order
-     */
+     *//*
+
     private void setOrderType(ViewHolder viewHolder, Order order) {
         switch (order.getOrderType()) {
             case Constants.SHOU_KUAN:
@@ -400,3 +418,4 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     }
 }
+*/

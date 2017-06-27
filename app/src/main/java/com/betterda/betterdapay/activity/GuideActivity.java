@@ -1,5 +1,6 @@
 package com.betterda.betterdapay.activity;
 
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.application.MyApplication;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -125,5 +127,13 @@ public class GuideActivity extends BaseActivity {
             return null;
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (Build.VERSION.SDK_INT > 22) {
+            MyApplication.getInstance().exitProgress();
+        }
+        super.onBackPressed();
     }
 }

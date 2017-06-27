@@ -110,15 +110,11 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
 
     private void parser(List<TuiGuang> data) {
         tuiGuangList = data;
-        if (page == 1) {
-            if (list != null) {
+        if (list != null) {
+            if (page == 1) {
                 list.clear();
             }
-        }
-        for (TuiGuang tuiGuang : tuiGuangList) {
-            if (list != null) {
-                list.add(tuiGuang);
-            }
+            list.addAll(data);
         }
         if (adapter != null) {
             adapter.notifyDataSetChanged();

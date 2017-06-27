@@ -166,8 +166,8 @@ public class MessageActivity extends BaseActivity {
         if (list != null) {
             if (page == 1) {
                 list.clear();
-                list.addAll(data);
             }
+            list.addAll(data);
         }
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();

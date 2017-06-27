@@ -18,12 +18,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.RealNameAuthActivity;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.ShapeLoadingDialog;
+import com.betterda.mylibrary.Utils.Toast;
 
 import java.io.File;
 import java.text.DecimalFormat;

@@ -48,14 +48,14 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://192.168.0.125:8080/wallet/";
+        public static final String URL = "http://192.168.0.111:8080/wallet/";
        // public static final String URL = "http://192.168.0.113:8080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
         public static final String URL_PWD_UPDATE = URL + "api/resetPwdController.do?reset";//忘记密码
         public static final String URL_ORDER_CREATE = URL + "api/payController.do?createOrder";//订单生成
-        public static final String URL_ORDER_GET = URL + "appAPI.do?api/account/order/get";//账单获取
+        public static final String URL_ORDER_GET = URL + "api/orderController.do?getOrders";//账单获取
         public static final String URL_RATING = URL + "api/memberRankController.do?getRanks";//获取各等级费率
         public static final String URL_MY_RATING = URL + "api/memberRankController.do?getRank";//获取我的等级费率
         public static final String URL_MY_RATINGS = URL + "api/memberRankController.do?getRates";//获取当前等级费率用与计算

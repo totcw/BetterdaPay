@@ -26,8 +26,8 @@
             android:id="@+id/tv_mingxi_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/shouye_lv_tv"
-            android:textSize="10sp" />
+            android:textColor="@color/shouye_renmen_tv"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -41,8 +41,8 @@
             android:id="@+id/tv_mingxi_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/shouye_lv_tv"
-            android:textSize="10sp" />
+            android:textColor="@color/shouye_renmen_tv"
+            android:textSize="12sp" />
 
         <TextView
             android:text="来源"

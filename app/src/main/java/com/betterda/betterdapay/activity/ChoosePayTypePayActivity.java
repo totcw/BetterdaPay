@@ -50,7 +50,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     LoadingPager mLoadingPager;
 
     private CommonAdapter<RatingCalculateEntity> mAdapter;
-    private  List<RatingCalculateEntity> mList;
+    private List<RatingCalculateEntity> mList;
     private String payUp;//支付金额
     private String rankId;//升级到指定等级
     private int mMoney;//单位为分
@@ -77,12 +77,12 @@ public class ChoosePayTypePayActivity extends BaseActivity {
 
     private void initRecycleView() {
         mList = new ArrayList<>();
-        mList.add(new RatingCalculateEntity("银联手机控件"));
-        mList.add(new RatingCalculateEntity("银联无跳转"));
+        mList.add(new RatingCalculateEntity("银联手机控件支付"));
+        mList.add(new RatingCalculateEntity("银联无跳转支付"));
 
-        mAdapter = new CommonAdapter<RatingCalculateEntity>(this,R.layout.rv_item_choosepaytypepay,mList) {
+        mAdapter = new CommonAdapter<RatingCalculateEntity>(this, R.layout.rv_item_choosepaytypepay, mList) {
             @Override
-            public void convert(ViewHolder holder, RatingCalculateEntity ratingCalculateEntity) {
+            public void convert(final ViewHolder holder, RatingCalculateEntity ratingCalculateEntity) {
                 if (holder != null && ratingCalculateEntity != null) {
 
 
@@ -92,14 +92,19 @@ public class ChoosePayTypePayActivity extends BaseActivity {
                     holder.setOnClickListener(R.id.relative_choose_zhifubao, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            getDataForUnionMobilePay();
+                            if (holder.getAdapterPosition() == 0) {
+
+                                getDataForUnionMobilePay();
+                            } else {
+                                //TODO 无跳转
+                            }
                         }
                     });
                 }
             }
         };
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -124,16 +129,14 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     }
 
 
-
     @OnClick({R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bar_back:
-                 back();
+                back();
                 break;
         }
     }
-
 
 
     /**
@@ -143,36 +146,36 @@ public class ChoosePayTypePayActivity extends BaseActivity {
         NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(),dialog);
+                UtilMethod.showDialog(getmActivity(), dialog);
                 mRxManager.add(
                         NetWork.getNetService()
-                        .getOrder("15506927108",mMoney+"",rankId,"升级付款")
-                        .compose(NetWork.handleResult(new BaseCallModel<CreateOrderEntity>()))
-                        .subscribe(new MyObserver<CreateOrderEntity>() {
-                            @Override
-                            protected void onSuccess(CreateOrderEntity data, String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("手机支付控件:"+data);
-                                }
-                                if (data != null) {
-                                    unionMobilePay(data);
-                                } else {
-                                    UtilMethod.dissmissDialog(getmActivity(),dialog);
-                                    showToast("获取支付订单失败");
-                                }
-                            }
+                                .getOrder(UtilMethod.getAccout(getmActivity()), mMoney + "", rankId, "升级付款")
+                                .compose(NetWork.handleResult(new BaseCallModel<CreateOrderEntity>()))
+                                .subscribe(new MyObserver<CreateOrderEntity>() {
+                                    @Override
+                                    protected void onSuccess(CreateOrderEntity data, String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("手机支付控件:" + data);
+                                        }
+                                        if (data != null) {
+                                            unionMobilePay(data);
+                                        } else {
+                                            UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                            showToast("获取支付订单失败");
+                                        }
+                                    }
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                    showToast("获取支付订单失败");
-                                    UtilMethod.dissmissDialog(getmActivity(),dialog);
-                            }
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        showToast("获取支付订单失败");
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    }
 
-                            @Override
-                            public void onExit() {
-                                UtilMethod.dissmissDialog(getmActivity(),dialog);
-                            }
-                        })
+                                    @Override
+                                    public void onExit() {
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    }
+                                })
                 );
             }
         });
@@ -189,13 +192,22 @@ public class ChoosePayTypePayActivity extends BaseActivity {
         payCloudReqModel.setBackUrl(data.getNotifyUrl());
         payCloudReqModel.setOrderId(data.getOrderId());
         payCloudReqModel.setTxnTime(data.getTxnTime());
-        payCloudReqModel.setTxnAmt(mMoney+"");
+        payCloudReqModel.setTxnAmt(mMoney + "");
 
         BtPay.getInstance(getmActivity()).requestPay(payCloudReqModel, new BtPayCallBack() {
             @Override
             public void done(BtResult result) {
-                UtilMethod.dissmissDialog(getmActivity(),dialog);
-                showToast(((BtPayResult)result).getResult());
+                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                BtPayResult payResult = (BtPayResult) result;
+                if (payResult != null) {
+                    if (BtPayResult.RESULT_SUCCESS.equals(payResult.getResult())) {
+                        finish();
+                    } else if (BtPayResult.RESULT_CANCEL.equals(payResult.getResult())) {
+                        showToast("取消支付");
+                    } else  {
+                        showToast("支付失败");
+                    }
+                }
                 BtPay.clear();
             }
         });

@@ -1,6 +1,5 @@
 package com.betterda.betterdapay.activity;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -16,18 +15,11 @@ import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BankCard;
 import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.javabean.Order;
 import com.betterda.betterdapay.util.NetworkUtils;
-import com.betterda.betterdapay.util.RecyclerViewStateUtils;
 import com.betterda.betterdapay.util.UtilMethod;
-import com.betterda.betterdapay.view.EndlessRecyclerOnScrollListener;
-import com.betterda.betterdapay.view.HeaderAndFooterRecyclerViewAdapter;
-import com.betterda.betterdapay.view.LoadingFooter;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.ShapeLoadingDialog;
-import com.zhy.base.adapter.ViewHolder;
-import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

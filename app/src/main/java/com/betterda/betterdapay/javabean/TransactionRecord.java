@@ -22,48 +22,54 @@ public class TransactionRecord {
      *@创建日期： 2017/4/25
      *@功能说明：订单号
      */
-    private String oderNum;
+    private String orderNo;
     /**
      *@author : lyf
      *@创建日期： 2017/4/25
      *@功能说明： 金额
      */
-    private String money;
+    private String amount;
     /**
      *@author : lyf
      *@创建日期： 2017/4/25
      *@功能说明： 时间
      */
-    private String time;
+    private String txnTime;
     /**
      *@author : lyf
      *@创建日期： 2017/4/25
      *@功能说明： 交易状态
      */
     private String status;
+    /**
+     *@author : lyf
+     *@创建日期： 2017/6/27
+     *@功能说明： 类型 :1收款，2付款
+     */
+    private String type;
 
-    public String getOderNum() {
-        return oderNum;
+    public String getOrderNo() {
+        return orderNo;
     }
 
-    public void setOderNum(String oderNum) {
-        this.oderNum = oderNum;
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
-    public String getMoney() {
-        return money;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
-    public String getTime() {
-        return time;
+    public String getTxnTime() {
+        return txnTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTxnTime(String txnTime) {
+        this.txnTime = txnTime;
     }
 
     public String getStatus() {
@@ -74,13 +80,22 @@ public class TransactionRecord {
         this.status = status;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "TransactionRecord{" +
-                "oderNum='" + oderNum + '\'' +
-                ", money='" + money + '\'' +
-                ", time='" + time + '\'' +
+                "orderNo='" + orderNo + '\'' +
+                ", amount='" + amount + '\'' +
+                ", txnTime='" + txnTime + '\'' +
                 ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }
