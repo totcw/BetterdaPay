@@ -139,13 +139,26 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 chooseBank();
                 break;
             case R.id.btn_realnameauth_next:
-                //authService();
-                next();
+                changeToUpload();
                 break;
             case R.id.bar_back:
                 back();
                 break;
         }
+    }
+
+    public void changeToUpload() {
+
+        if (btnRealnameauthNext.isSelected()) {
+            boolean ismobile = number.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
+            if (!ismobile) {
+                showToast("请输入正确的手机号码");
+                return;
+            }
+           // authService();
+            next();
+        }
+
     }
 
     /**
@@ -210,16 +223,15 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
      * 下一步
      */
     private void next() {
-   //  if (btnRealnameauthNext.isSelected()) {
-            Intent intent = new Intent(getmActivity(), AddBankCardActivity2.class);
-            intent.putExtra("realName", realName);
-            intent.putExtra("identityCard", identityCard);
-            intent.putExtra("cardNum", cardNum);
-            intent.putExtra("bank", bank);
-            intent.putExtra("number", number);
-            intent.putExtra("cardType", cardType);
-            startActivity(intent);
-     //  }
+
+        Intent intent = new Intent(getmActivity(), AddBankCardActivity2.class);
+        intent.putExtra("realName", realName);
+        intent.putExtra("identityCard", identityCard);
+        intent.putExtra("cardNum", cardNum);
+        intent.putExtra("bank", bank);
+        intent.putExtra("number", number);
+        intent.putExtra("cardType", cardType);
+        startActivity(intent);
     }
 
     /**

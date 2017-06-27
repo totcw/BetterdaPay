@@ -2,11 +2,11 @@ package com.betterda.betterdapay.http;
 
 import com.betterda.betterdapay.javabean.BankCard;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.javabean.CreateOrderEntity;
 import com.betterda.betterdapay.javabean.Income;
 import com.betterda.betterdapay.javabean.Information;
 import com.betterda.betterdapay.javabean.MemberCounts;
 import com.betterda.betterdapay.javabean.Messages;
-import com.betterda.betterdapay.javabean.OrderALL;
 import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
 import com.betterda.betterdapay.javabean.TuiGuang;
@@ -84,23 +84,19 @@ public interface NetService {
 
 
     /**
-     * 生成订单
-     *
-     * @param account   帐号
-     * @param type      交易类型
-     * @param money
-     * @param orderType 订单类型
-     * @param channel   支付通道
+     * 生成手机控件付款订单
+     * @param account 帐号
+     * @param amount 金额 单位为分
+     * @param body  商品描述
      * @return
      */
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_ORDER_CREATE)
-    Observable<BaseCallModel<String>> getOrder(@Field("account") String account,
-                                               @Field("type") String type,
-                                               @Field("money") String money,
-                                               @Field("orderType") String orderType,
-                                               @Field("channel") String channel);
+    Observable<BaseCallModel<CreateOrderEntity>> getOrder(@Field("account") String account,
+                                                          @Field("amount") String amount,
+                                                          @Field("rankId") String rankId,
+                                                          @Field("body") String body);
 
 
     /**
@@ -150,7 +146,7 @@ public interface NetService {
 
 
     /**
-     * 升级到指定接口
+     * 升级到指定接口(现在就用订单生成)
      *
      * @param account
 
@@ -256,26 +252,24 @@ public interface NetService {
      * @param handIdentity     手持身份证
      * @param cardPositive     银行卡正面照
      * @param cardNegative     银行卡反面照
-     * @param token
      * @param handCard         手持银行卡
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_AUTH_ADD)
     Observable<BaseCallModel<String>> getAuth(@Field("account") String account,
-                                              @Field("realName") String realName,
-                                              @Field("identityCard") String identityCard,
-                                              @Field("cardNum") String cardNum,
-                                              @Field("bank") String bank,
-                                              @Field("number") String number,
+                                              @Field("realname") String realName,
+                                              @Field("idcard") String identityCard,
+                                              @Field("bankcard") String cardNum,
+                                              @Field("bankname") String bank,
+                                              @Field("mobile") String number,
                                               @Field("cardType") String cardType,
-                                              @Field("identityPositive") String identityPositive,
-                                              @Field("identityNegative") String identityNegative,
-                                              @Field("handIdentity") String handIdentity,
-                                              @Field("cardPositive") String cardPositive,
-                                              @Field("cardNegative") String cardNegative,
-                                              @Field("token") String token,
-                                              @Field("handCard") String handCard
+                                              @Field("idcardfront") String identityPositive,
+                                              @Field("idcardback") String identityNegative,
+                                              @Field("handidcard") String handIdentity,
+                                              @Field("bankcardfront") String cardPositive,
+                                              @Field("bankcardback") String cardNegative,
+                                              @Field("handbankcard") String handCard
 
     );
 
@@ -330,29 +324,7 @@ public interface NetService {
 
     );
 
-    /**
-     * 搜索接口
-     * @param account
-     * @param token
-     * @param startDate
-     * @param endDate
-     * @param orderType 收款 1 分润2
-     * @param profitType 0 返还分润 1 推广分润
-     * @param pageNo
-     * @param pageSize
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Constants.Url.URL_SEARCH_POST)
-    Observable<BaseCallModel<OrderALL>> getSearch(@Field("account") String account,
-                                                @Field("token") String token,
-                                                @Field("startDate") String startDate,
-                                                @Field("endDate") String endDate,
-                                                @Field("orderType") String orderType,
-                                                @Field("profitType") String profitType,
-                                                @Field("pageNo") String pageNo,
-                                                @Field("pageSize") String pageSize
-    );
+
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_SEARCH_POST)

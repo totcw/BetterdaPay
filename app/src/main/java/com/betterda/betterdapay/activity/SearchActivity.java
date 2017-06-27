@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.RateData;
@@ -15,7 +14,6 @@ import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Income;
 import com.betterda.betterdapay.javabean.Order;
-import com.betterda.betterdapay.javabean.OrderALL;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.RecyclerViewStateUtils;
@@ -150,7 +148,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     @Override
                     public void load() {
                         if (SHOU_KUAN.equals(item)) {
-                            getData();
+                            //getData();
                         } else {
                             getData2();
                         }
@@ -205,7 +203,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 orderType = "0";
                 profitType = null;
                 page = 1;
-                getData();
+                //getData();
                 break;
             case FANHUI_FENRUN:
                 orderType = "1";
@@ -276,7 +274,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     /**
      * 收款的请求
      */
-    private void getData() {
+  /*  private void getData() {
         loadingPager.setLoadVisable();
         NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
             @Override
@@ -311,11 +309,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    /**
+    *//**
      * 解析收款
      *
      * @param data
-     */
+     *//*
     private void parserShouKuan(OrderALL data) {
         data.getHeapCollection();
         orderListDetail = data.getListOrder();
@@ -334,7 +332,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             adapter.notifyDataSetChanged();
         }
 
-    }
+    }*/
 
     /**
      * 获取时间

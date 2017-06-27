@@ -37,6 +37,12 @@ public class InformationActivity extends BaseActivity {
     public void init() {
         super.init();
         topbarInformation.setTitle("个人信息");
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         mIsAuth = CacheUtils.getBoolean(this, UtilMethod.getAccout(this) + Constants.Cache.AUTH, false);
         mTvAuth.setText(mIsAuth ? "已实名" : "未实名");
     }
@@ -45,8 +51,10 @@ public class InformationActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_realname:
-                if (mIsAuth) {
+                if (!mIsAuth) {
                     UtilMethod.startIntent(getmActivity(), RealNameAuthActivity.class);
+                } else {
+                    showToast("已经实名认证");
                 }
                 break;
 

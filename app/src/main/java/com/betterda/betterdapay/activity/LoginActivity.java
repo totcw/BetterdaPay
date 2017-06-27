@@ -178,11 +178,12 @@ public class LoginActivity extends BaseActivity {
                 UtilMethod.startIntent(getmActivity(), ForgetPwdActivity.class);
                 break;
             case R.id.btn_login://登录
-                CacheUtils.putBoolean(getmActivity(), "15160700380" + Constants.Cache.AUTH, true);
+                CacheUtils.putBoolean(getmActivity(), "15160700380" + Constants.Cache.AUTH, false);
                 CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.RANK, "经理");
                 CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "15160700380");
                 UtilMethod.startIntent(getmActivity(), HomeActivity.class);
-                finish();
+                setAlias();
+                //finish();
                 // Login();
                 break;
             case R.id.relative_login_register://注册
@@ -253,12 +254,10 @@ public class LoginActivity extends BaseActivity {
         if (userInfo != null) {
             String account = userInfo.getAccount();
             String rate = userInfo.getRate();
-            boolean auth = userInfo.isAuth();
             CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, account);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.PWD, pwd);
-            CacheUtils.putBoolean(getmActivity(), account + Constants.Cache.AUTH, auth);
+            CacheUtils.putBoolean(getmActivity(), account + Constants.Cache.AUTH, userInfo.getAuth()=="1"?true:false);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.RANK, rate);
-            UtilMethod.dissmissDialog(getmActivity(), dialog);
             setAlias();
         }
     }
@@ -285,6 +284,8 @@ public class LoginActivity extends BaseActivity {
         // 调用 Handler 来异步设置别名
         if (!alias) {
             mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, UtilMethod.getAccout(getmActivity())));
+        } else {
+            UtilMethod.dissmissDialog(getmActivity(), dialog);
         }
     }
 
@@ -306,6 +307,7 @@ public class LoginActivity extends BaseActivity {
                     break;
                 default:
                     UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+                    UtilMethod.dissmissDialog(getmActivity(), dialog);
                     finish();
                     break;
             }

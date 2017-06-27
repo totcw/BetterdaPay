@@ -176,28 +176,29 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     }
 
     private void commit() {
+
         if (TextUtils.isEmpty(url_identity)) {
-            showToast("身份证正面照不能为空");
+            showToast("请上传身份证正面照");
             return;
         }
         if (TextUtils.isEmpty(url_identity2)) {
-            showToast("身份证反面照不能为空");
+            showToast("请上传身份证反面照");
             return;
         }
         if (TextUtils.isEmpty(url_bank)) {
-            showToast("银行卡正面照不能为空");
+            showToast("请上传银行卡正面照");
             return;
         }
         if (TextUtils.isEmpty(url_bank2)) {
-            showToast("银行卡反面照不能为空");
+            showToast("请上传银行卡反面照");
             return;
         }
         if (TextUtils.isEmpty(url_handidntity)) {
-            showToast("手持身份证照不能为空");
+            showToast("请上传手持身份证照");
             return;
         }
         if (TextUtils.isEmpty(url_handbank)) {
-            showToast("手持银行卡照不能为空");
+            showToast("请上传手持银行卡照");
             return;
         }
 
@@ -216,15 +217,15 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                 mRxManager.add(
                         NetWork.getNetService()
                                 .getAuth(UtilMethod.getAccout(getmActivity()), realName,
-                                        identityCard, cardNum, bank, number, cardType, url_identity, url_identity2, url_handidntity, url_bank, url_bank2, UtilMethod.getToken(getmActivity()), url_handbank)
+                                        identityCard, cardNum, bank, number, cardType, url_identity, url_identity2, url_handidntity, url_bank, url_bank2, url_handbank)
                                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                 .subscribe(new MyObserver<String>() {
                                     @Override
                                     protected void onSuccess(String data, String resultMsg) {
-
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("实名认证:"+data);
+                                        }
                                         UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        showToast(resultMsg);
-
                                         //修改认证状态
                                         CacheUtils.putBoolean(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.AUTH, true);
                                         UtilMethod.startIntent(getmActivity(), HomeActivity.class);
@@ -233,6 +234,9 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
 
                                     @Override
                                     public void onFail(String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("实名认证fail:"+resultMsg);
+                                        }
                                         showToast(resultMsg);
                                         UtilMethod.dissmissDialog(getmActivity(), dialog);
                                     }

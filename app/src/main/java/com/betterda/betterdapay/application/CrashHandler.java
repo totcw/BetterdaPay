@@ -85,14 +85,14 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         //收集设备参数信息
         collectDeviceInfo(mContext);
         //使用Toast来显示异常信息
-        new Thread() {
+     /*   new Thread() {
             @Override
             public void run() {
-            /*    Looper.prepare();
+                Looper.prepare();
                 Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();
-                Looper.loop();*/
+                Looper.loop();
             }
-        }.start();
+        }.start();*/
         //保存日志文件
         saveCatchInfo2File(ex);
         return true;
@@ -179,7 +179,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(sb.toString().getBytes());
             //发送给开发人员
-            sendCrashLog2PM(file_dir + fileName);
+            sendCrashLog2PM(sb.toString());
             fos.close();
             //          }
             return fileName;
@@ -190,37 +190,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     }
     /**
      * 将捕获的导致崩溃的错误信息发送给开发人员
-     * 目前只将log日志保存在sdcard 和输出到LogCat中，并未发送给后台。
+     * 将发送给后台。
      */
-    private void sendCrashLog2PM(String fileName) {
-        //      if (!new File(fileName).exists()) {
-        //          Toast.makeText(mContext, "日志文件不存在！", Toast.LENGTH_SHORT).show();
-        //          return;
-        //      }
-        //      FileInputStream fis = null;
-        //      BufferedReader reader = null;
-        //      String s = null;
-        //      try {
-        //          fis = new FileInputStream(fileName);
-        //          reader = new BufferedReader(new InputStreamReader(fis, "GBK"));
-        //          while (true) {
-        //              s = reader.readLine();
-        //              if (s == null)
-        //                  break;
-        //              //由于目前尚未确定以何种方式发送，所以先打出log日志。
-        //              Log.i("info", s.toString());
-        //          }
-        //      } catch (FileNotFoundException e) {
-        //          e.printStackTrace();
-        //      } catch (IOException e) {
-        //          e.printStackTrace();
-        //      } finally { // 关闭流
-        //          try {
-        //              reader.close();
-        //              fis.close();
-        //          } catch (IOException e) {
-        //              e.printStackTrace();
-        //          }
-        //      }
+    private void sendCrashLog2PM(String content) {
+        //TODO 将异常信息发送到后台
     }
 }

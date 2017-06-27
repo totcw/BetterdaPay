@@ -33,7 +33,6 @@ public class TuiGuangActivity extends BaseActivity {
     @BindView(R.id.tv_tuiguang_money)
     TextView mTvTuiguangMoney;
 
-    private ShapeLoadingDialog dialog;
 
     private String payUp, rateId;
 
@@ -55,7 +54,7 @@ public class TuiGuangActivity extends BaseActivity {
             rateId = intent.getStringExtra("rateId");
             mTvTuiguangMoney.setText(payUp+"元");
         }
-        dialog = UtilMethod.createDialog(this, "正在提交...");
+
     }
 
     @OnClick({R.id.relative_tuiguang_my, R.id.linear_tuiguang_up, R.id.bar_back})
@@ -75,48 +74,13 @@ public class TuiGuangActivity extends BaseActivity {
     }
 
     private void chosePayChannel() {
-        UtilMethod.startIntent(getmActivity(),ChoosePayTypePayActivity.class,"money",payUp);
+        Intent intent = new Intent(getmActivity(), ChoosePayTypePayActivity.class);
+        intent.putExtra("money", payUp);
+        intent.putExtra("rateId", rateId);
+        startActivity(intent);
     }
 
-    /**
-     * 升级到指定接口
-     */
-    private void getData() {
-        NetworkUtils.isNetWork(this, null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(), dialog);
-                mRxManager.add(
-                        NetWork.getNetService().getUpdateToRate(UtilMethod.getAccout(getmActivity()), rateId)
-                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                .subscribe(new MyObserver<String>() {
-                                    @Override
-                                    protected void onSuccess(String data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
 
-                                            System.out.println("升级到指定接口:" + data);
-                                        }
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                    }
-
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-
-                                            System.out.println("升级到指定接口fail:" + resultMsg);
-                                        }
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                    }
-
-                                    @Override
-                                    public void onExit() {
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                    }
-                                })
-                );
-            }
-        });
-    }
 
 
 }

@@ -1,13 +1,10 @@
 package com.betterda.betterdapay.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
 import com.betterda.BtPay;
 import com.betterda.betterdapay.BuildConfig;
@@ -15,6 +12,7 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.javabean.CreateOrderEntity;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -29,9 +27,7 @@ import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 import com.zhy.base.adapter.recyclerview.DividerItemDecoration;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,13 +51,12 @@ public class ChoosePayTypePayActivity extends BaseActivity {
 
     private CommonAdapter<RatingCalculateEntity> mAdapter;
     private  List<RatingCalculateEntity> mList;
-    private String money;//支付金额
-    private String orderType = "0";
-    private String channel;//通道类型
-    private String TAG = ChoosePayTypePayActivity.class.getSimpleName();
-
+    private String payUp;//支付金额
+    private String rankId;//升级到指定等级
+    private int mMoney;//单位为分
 
     private ShapeLoadingDialog dialog;
+
 
     @Override
     public void initView() {
@@ -75,7 +70,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
         super.init();
         getInitData();
         topbarChose.setTitle("选择支付通道");
-        dialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
+        dialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
         initRecycleView();
 
     }
@@ -115,9 +110,17 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     private void getInitData() {
         Intent intent = getIntent();
         if (intent != null) {
-            money = intent.getStringExtra("money");
+            payUp = intent.getStringExtra("money");
+            rankId = intent.getStringExtra("rateId");
         }
+        if (TextUtils.isEmpty(payUp)) {
+            payUp = "0";
+        }
+        try {
+            mMoney = (int) (Float.valueOf(payUp) * 100);
+        } catch (Exception e) {
 
+        }
     }
 
 
@@ -133,77 +136,67 @@ public class ChoosePayTypePayActivity extends BaseActivity {
 
 
 
-    public void getData(final int payType) {
-     /*   UtilMethod.showDialog(getmActivity(), dialog);
-        NetworkUtils.isNetWork(getmActivity(), topbarChose, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                 NetWork.getNetService()
-                        .getOrder(UtilMethod.getAccout(getmActivity()), type, money, orderType, channel)
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
-
-                                if (BuildConfig.LOG_DEBUG) {
-                                    Log.i(TAG, data + "," + resultMsg);
-                                }
-                                if (0 == payType) {
-                                    zhifubaoPay();
-                                } else if (1 == payType) {
-                                    weixinPay();
-                                } else {
-                                    yinlianPay();
-                                }
-
-                            }
-
-                            @Override
-                            public void onFail(String resultMsg) {
-                                showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                            }
-
-                            @Override
-                            public void onExit() {
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                ExitToLogin();
-                            }
-                        });
-            }
-        });*/
-
-
-    }
-
-
     /**
      * 获取银联手机控件支付的订单号
      */
     public void getDataForUnionMobilePay() {
+        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                UtilMethod.showDialog(getmActivity(),dialog);
+                mRxManager.add(
+                        NetWork.getNetService()
+                        .getOrder("15506927108",mMoney+"",rankId,"升级付款")
+                        .compose(NetWork.handleResult(new BaseCallModel<CreateOrderEntity>()))
+                        .subscribe(new MyObserver<CreateOrderEntity>() {
+                            @Override
+                            protected void onSuccess(CreateOrderEntity data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("手机支付控件:"+data);
+                                }
+                                if (data != null) {
+                                    unionMobilePay(data);
+                                } else {
+                                    UtilMethod.dissmissDialog(getmActivity(),dialog);
+                                    showToast("获取支付订单失败");
+                                }
+                            }
 
+                            @Override
+                            public void onFail(String resultMsg) {
+                                    showToast("获取支付订单失败");
+                                    UtilMethod.dissmissDialog(getmActivity(),dialog);
+                            }
+
+                            @Override
+                            public void onExit() {
+                                UtilMethod.dissmissDialog(getmActivity(),dialog);
+                            }
+                        })
+                );
+            }
+        });
     }
 
     /**
      * 银联手机控件支付
      */
-    public void unionMobilePay() {
+    public void unionMobilePay(CreateOrderEntity data) {
+
         PayCloudReqModel payCloudReqModel = new PayCloudReqModel();
-        //时间格式:yyyyMMddHHmmss
-        String orderId = new SimpleDateFormat("yyyyMMddHHmmssS").format(new Date());
-        String txnTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String txtAmt = "10";
         payCloudReqModel.setAppid(APP_ID);
         payCloudReqModel.setPublicKey(PUB_KEY);
-        payCloudReqModel.setBackUrl("http://www.baidu.com");
-        payCloudReqModel.setOrderId(orderId);
-        payCloudReqModel.setTxnTime(txnTime);
-        payCloudReqModel.setTxnAmt(txtAmt);
+        payCloudReqModel.setBackUrl(data.getNotifyUrl());
+        payCloudReqModel.setOrderId(data.getOrderId());
+        payCloudReqModel.setTxnTime(data.getTxnTime());
+        payCloudReqModel.setTxnAmt(mMoney+"");
 
         BtPay.getInstance(getmActivity()).requestPay(payCloudReqModel, new BtPayCallBack() {
             @Override
             public void done(BtResult result) {
+                UtilMethod.dissmissDialog(getmActivity(),dialog);
                 showToast(((BtPayResult)result).getResult());
+                BtPay.clear();
             }
         });
     }

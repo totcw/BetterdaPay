@@ -46,15 +46,10 @@ public class ChoosePayTypeActivity extends BaseActivity {
     LoadingPager mLoadingPager;
     private CommonAdapter<RatingCalculateEntity> mAdapter;
 
-    private  List<RatingCalculateEntity> mList;
+    private List<RatingCalculateEntity> mList;
     private String money;//支付金额
-    private String type = "0";
-    private String orderType = "0";
     private String channel;//通道类型
-    private String TAG = ChoosePayTypeActivity.class.getSimpleName();
 
-
-    private ShapeLoadingDialog dialog;
 
     @Override
     public void initView() {
@@ -69,7 +64,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
         getInitData();
         topbarChose.setTitle("选择支付通道");
         tvItemBalanceMoney.setText(money + "元");
-        dialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
+
         initRecycleView();
         getDataForRate();
         mLoadingPager.setonErrorClickListener(new View.OnClickListener() {
@@ -82,9 +77,9 @@ public class ChoosePayTypeActivity extends BaseActivity {
 
     private void initRecycleView() {
         mList = new ArrayList<>();
-        mAdapter = new CommonAdapter<RatingCalculateEntity>(this,R.layout.rv_item_choosepaytype,mList) {
+        mAdapter = new CommonAdapter<RatingCalculateEntity>(this, R.layout.rv_item_choosepaytype, mList) {
             @Override
-            public void convert(ViewHolder holder, RatingCalculateEntity ratingCalculateEntity) {
+            public void convert(ViewHolder holder, final RatingCalculateEntity ratingCalculateEntity) {
                 if (holder != null && ratingCalculateEntity != null) {
                     holder.setText(R.id.tv_item_choosepaytype, "单笔额度:" + ratingCalculateEntity.getT0TradeQuota() + "元" +
                             "当天额度:" + ratingCalculateEntity.getT0DayQuota() + "最低手续费:" + ratingCalculateEntity.getT0LeastTradeRate() + "元");
@@ -104,14 +99,15 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     holder.setOnClickListener(R.id.relative_choose_zhifubao, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            toActivity();
+
+                            toActivity(ratingCalculateEntity.getPayWay(), ratingCalculateEntity.getT0TradeQuota());
                         }
                     });
                 }
             }
         };
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -128,12 +124,11 @@ public class ChoosePayTypeActivity extends BaseActivity {
     }
 
 
-
     @OnClick({R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bar_back:
-                 back();
+                back();
                 break;
         }
     }
@@ -148,37 +143,37 @@ public class ChoosePayTypeActivity extends BaseActivity {
             public void getDataApi() {
                 mRxManager.add(
                         NetWork.getNetService()
-                        .getRatingForCalculate(UtilMethod.getAccout(getmActivity()))
-                        .compose(NetWork.handleResult(new BaseCallModel<List<RatingCalculateEntity>>()))
-                        .subscribe(new MyObserver<List<RatingCalculateEntity>>() {
-                            @Override
-                            protected void onSuccess(List<RatingCalculateEntity> data, String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("收款:"+data);
-                                }
-                                if (data != null) {
-                                    parserData(data);
-                                }
-                                if (mLoadingPager != null) {
-                                    mLoadingPager.hide();
-                                }
-                            }
+                                .getRatingForCalculate(UtilMethod.getAccout(getmActivity()))
+                                .compose(NetWork.handleResult(new BaseCallModel<List<RatingCalculateEntity>>()))
+                                .subscribe(new MyObserver<List<RatingCalculateEntity>>() {
+                                    @Override
+                                    protected void onSuccess(List<RatingCalculateEntity> data, String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("收款:" + data);
+                                        }
+                                        if (data != null) {
+                                            parserData(data);
+                                        }
+                                        if (mLoadingPager != null) {
+                                            mLoadingPager.hide();
+                                        }
+                                    }
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("收款fail:"+resultMsg);
-                                }
-                                if (mLoadingPager != null) {
-                                    mLoadingPager.setErrorVisable();
-                                }
-                            }
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("收款fail:" + resultMsg);
+                                        }
+                                        if (mLoadingPager != null) {
+                                            mLoadingPager.setErrorVisable();
+                                        }
+                                    }
 
-                            @Override
-                            public void onExit() {
+                                    @Override
+                                    public void onExit() {
 
-                            }
-                        })
+                                    }
+                                })
                 );
             }
         });
@@ -194,16 +189,28 @@ public class ChoosePayTypeActivity extends BaseActivity {
     }
 
 
+    private void toActivity(String payway, String tradeQuota) {
 
+        try {
+            Float money = Float.valueOf(this.money);
+            Float trade = Float.valueOf(tradeQuota);
+            if (money <= trade) {
+                if ("UnionPay".equals(payway)) {
+                    Intent intent = new Intent(getmActivity(), JsActivity.class);
+                    intent.putExtra("money", money);
+                    startActivity(intent);
+                    finish();
+                }
 
+            } else {
+                showToast("超过单笔额度");
+            }
 
-    private void toActivity() {
-        UtilMethod.dissmissDialog(getmActivity(), dialog);
-        UtilMethod.startIntent(getmActivity(), JsActivity.class, "money", money);
-        finish();
+        } catch (Exception e) {
+
+        }
+
     }
-
-
 
 
 }

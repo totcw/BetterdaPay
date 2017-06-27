@@ -36,7 +36,7 @@ public class JsActivity extends BaseActivity {
     WebView webView;
 
 
-    private String money;
+    private float money;
 
 
     @Override
@@ -52,7 +52,7 @@ public class JsActivity extends BaseActivity {
         super.init();
         Intent intent = getIntent();
         if (intent != null) {
-            money = intent.getStringExtra("money");
+            money = intent.getFloatExtra("money",0);
 
         }
         final WebSettings settings = webView.getSettings();
@@ -128,16 +128,9 @@ public class JsActivity extends BaseActivity {
         getWindow().getDecorView().post(new Runnable() {
             @Override
             public void run() {
-                try {
-
-                    float payMoney = Float.valueOf(money);
-                    int payUp = (int) (payMoney * 100);
-                    System.out.println("payup:"+payUp);
-                    String url ="http://192.168.0.108:8080/wallet/mobile/unionPay.jsp?account=15506927108&body=测试&amount="+payUp;
-                   // webView.loadUrl(url);
-                } catch (Exception e) {
-
-                }
+                int payUp = (int) (money * 100);
+                String url ="http://192.168.0.108:8080/wallet/mobile/unionPay.jsp?account=15506927108&body=测试&amount="+payUp;
+                 webView.loadUrl(url);
 
 
             }

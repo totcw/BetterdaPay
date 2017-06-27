@@ -10,7 +10,7 @@ public class UserInfo {
     private String rate;//当前等级
     private String role;//当前等级对应的数
     private String token;//token
-    private boolean auth;//是否实名认证
+    private String auth;//是否实名认证
     private String cardNo;//认证人的身份证号码
     private String trueName;//认证姓名
 
@@ -46,11 +46,11 @@ public class UserInfo {
         this.token = token;
     }
 
-    public boolean isAuth() {
+    public String getAuth() {
         return auth;
     }
 
-    public void setAuth(boolean auth) {
+    public void setAuth(String auth) {
         this.auth = auth;
     }
 

@@ -112,11 +112,8 @@ public class ShouKuanFragment extends BaseFragment {
 
     private void pay() {
 
-        float payMoney = Float.valueOf(sb.toString());
-        int payUp = (int) (payMoney * 100);
-        System.out.println("payup:"+payUp);
 
-        if (!sb.toString().matches(Constants.str)) {//输入的没问题
+        if (!sb.toString().matches(Constants.str)) {
             showToast("输入格式有误");
             return;
         }
@@ -125,10 +122,8 @@ public class ShouKuanFragment extends BaseFragment {
             float sum = Float.valueOf(sb.toString());
             if (sum < 1) {
                 showToast("收款金额必须大于1元");
-            } else if (sum <= 50000) {
+            } else  {
                 UtilMethod.startIntent(getmActivity(), ChoosePayTypeActivity.class, "money", sb.toString());
-            } else {
-                showToast("每次最多收款50000");
             }
         } catch (Exception e) {
             showToast("输入格式有误");

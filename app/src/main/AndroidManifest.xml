@@ -199,6 +199,7 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/>
 
                 <category android:name="com.betterda.betterdapay"/>
             </intent-filter>
