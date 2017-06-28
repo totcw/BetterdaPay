@@ -62,6 +62,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void init() {
         super.init();
+
         /**
          * 设置底部布局的属性
          */
@@ -185,11 +186,5 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (Build.VERSION.SDK_INT > 22) {
-            MyApplication.getInstance().exitProgress();
-        }
-        super.onBackPressed();
-    }
+
 }

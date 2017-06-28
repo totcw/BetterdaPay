@@ -108,7 +108,7 @@
     <orderEntry type="library" exported="" name="jcore-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="mylibrary-2.5.6" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-25.3.1" level="project" />
-    <orderEntry type="library" exported="" name="btsdk-0.0.5" level="project" />
+    <orderEntry type="library" exported="" name="btsdk-0.0.6" level="project" />
     <orderEntry type="library" exported="" name="javax.annotation-10.0-b28" level="project" />
     <orderEntry type="library" exported="" name="core-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="Android-PickerView-3.2.2" level="project" />
@@ -121,6 +121,7 @@
     <orderEntry type="library" exported="" name="vlayout-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.1.6" level="project" />
+    <orderEntry type="library" exported="" name="yflibrary-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="umeng_social_net" level="project" />
     <orderEntry type="library" exported="" name="retrofit-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.7" level="project" />

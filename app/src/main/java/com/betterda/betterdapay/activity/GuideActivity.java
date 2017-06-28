@@ -129,11 +129,5 @@ public class GuideActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (Build.VERSION.SDK_INT > 22) {
-            MyApplication.getInstance().exitProgress();
-        }
-        super.onBackPressed();
-    }
+
 }

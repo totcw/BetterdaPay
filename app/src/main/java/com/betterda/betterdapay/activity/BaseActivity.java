@@ -20,6 +20,8 @@ import com.betterda.betterdapay.util.PermissionUtil;
 import com.betterda.betterdapay.util.RxManager;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.mylibrary.Utils.Toast;
+import com.example.lyf.yflibrary.Permission;
+import com.example.lyf.yflibrary.PermissionResult;
 
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class BaseActivity extends FragmentActivity {
         super.onResume();
         JPushInterface.onResume(this);
         //统一检查权限
-        PermissionUtil.checkPermission(getmActivity(), REQUEST_PERMISSIONS, new PermissionUtil.permissionInterface() {
+     /*   PermissionUtil.checkPermission(getmActivity(), REQUEST_PERMISSIONS, new PermissionUtil.permissionInterface() {
             @Override
             public void success() {
 
@@ -63,9 +65,22 @@ public class BaseActivity extends FragmentActivity {
             public void fail(List<String> permissions) {
                 //没有权限就回到欢迎页面
                 UtilMethod.startIntent(getmActivity(), WelcomeActivity.class);
+                finish();
+            }
+        });*/
+
+        Permission.checkPermisson(this, REQUEST_PERMISSIONS, new PermissionResult() {
+            @Override
+            public void success() {
 
             }
+
+            @Override
+            public void fail() {
+                finish();
+            }
         });
+
     }
 
     /**

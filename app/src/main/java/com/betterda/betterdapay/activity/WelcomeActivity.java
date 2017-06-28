@@ -39,6 +39,8 @@ import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.PermissionUtil;
 import com.betterda.betterdapay.util.RxManager;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.example.lyf.yflibrary.Permission;
+import com.example.lyf.yflibrary.PermissionResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -98,6 +100,7 @@ public class WelcomeActivity extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mRxManager = new RxManager();
         startTopermission();
 
@@ -112,9 +115,19 @@ public class WelcomeActivity extends FragmentActivity {
             starToHome();
 
         } else {
-            MyApplication.getInstance().addActivity(this);
             //6.0以上请求权限
-            checkPermiss();
+            //checkPermiss();
+            Permission.checkPermisson(this, REQUEST_PERMISSIONS, new PermissionResult() {
+                @Override
+                public void success() {
+                    starToHome();
+                }
+
+                @Override
+                public void fail() {
+                    finish();
+                }
+            });
         }
     }
 
@@ -125,15 +138,6 @@ public class WelcomeActivity extends FragmentActivity {
 
     }
 
-    /**
-     * 这个界面设置成这个模式,主要是为了权限请求在回来时把所有的界面都关闭
-     * @param intent
-     */
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        startTopermission();
-    }
 
     /**
      * 显示更新对话框
@@ -296,7 +300,7 @@ public class WelcomeActivity extends FragmentActivity {
 
     public void startToLogin() {
         isToGuide();
-
+        finish();
     }
 
     /**

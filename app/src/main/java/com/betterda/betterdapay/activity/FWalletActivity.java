@@ -47,6 +47,7 @@ public class FWalletActivity extends BaseActivity {
     public void init() {
         super.init();
         mTopbarFwallet.setTitle("钱包");
+
     }
 
     @Override
