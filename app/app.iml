@@ -121,12 +121,12 @@
     <orderEntry type="library" exported="" name="vlayout-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.1.6" level="project" />
-    <orderEntry type="library" exported="" name="yflibrary-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="umeng_social_net" level="project" />
     <orderEntry type="library" exported="" name="retrofit-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.7" level="project" />
     <orderEntry type="library" exported="" name="adapter-rxjava-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
+    <orderEntry type="library" exported="" name="yflibrary-1.0.5" level="project" />
     <orderEntry type="library" exported="" name="converter-gson-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="umeng_social_api" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-1.2.1" level="project" />

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
@@ -55,31 +56,19 @@ public class BaseActivity extends FragmentActivity {
         super.onResume();
         JPushInterface.onResume(this);
         //统一检查权限
-     /*   PermissionUtil.checkPermission(getmActivity(), REQUEST_PERMISSIONS, new PermissionUtil.permissionInterface() {
-            @Override
-            public void success() {
+        if (Build.VERSION.SDK_INT > 22) {
+            Permission.checkPermisson(this, REQUEST_PERMISSIONS, new PermissionResult() {
+                @Override
+                public void success() {
 
-            }
+                }
 
-            @Override
-            public void fail(List<String> permissions) {
-                //没有权限就回到欢迎页面
-                UtilMethod.startIntent(getmActivity(), WelcomeActivity.class);
-                finish();
-            }
-        });*/
-
-        Permission.checkPermisson(this, REQUEST_PERMISSIONS, new PermissionResult() {
-            @Override
-            public void success() {
-
-            }
-
-            @Override
-            public void fail() {
-                finish();
-            }
-        });
+                @Override
+                public void fail() {
+                    finish();
+                }
+            });
+        }
 
     }
 
