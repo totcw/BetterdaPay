@@ -12,11 +12,14 @@ import java.util.Map;
  */
 public class RateData {
     public  static Map<String,Integer> rateMap;
+    public  static Map<String,Integer> rateMap2;
     public final static String UP_YUANGONG = "员工";
     public final static String UP_DIANZHANG = "店长";
     public final static String UP_JINGLI= "经理";
     public final static String UP_ZONGJINGLI = "总经理";
     public final static String UP_BOSS = "老板";
+
+
 
     public  static int getRate(String key) {
         if (rateMap == null) {
@@ -31,4 +34,16 @@ public class RateData {
         return rateMap.get(key);
     }
 
+    public  static int getRate2(String key) {
+        if (rateMap2 == null) {
+            rateMap2 = new HashMap<>();
+            rateMap2.put(UP_YUANGONG, 0);
+            rateMap2.put(UP_DIANZHANG, 1);
+            rateMap2.put(UP_JINGLI, 2);
+            rateMap2.put(UP_ZONGJINGLI, 3);
+            rateMap2.put(UP_BOSS, 4);
+        }
+
+        return rateMap2.get(key);
+    }
 }

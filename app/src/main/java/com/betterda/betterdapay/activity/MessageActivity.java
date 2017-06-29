@@ -80,6 +80,7 @@ public class MessageActivity extends BaseActivity {
                 RecyclerViewStateUtils.next(getmActivity(), mRvLayout, new RecyclerViewStateUtils.nextListener() {
                     @Override
                     public void load() {
+
                         page++;
                         getData();
                     }
@@ -95,10 +96,13 @@ public class MessageActivity extends BaseActivity {
         });
 
         mRvLayout.setAdapter(mAdapter);
+        mLoadpagerLayout.setLoadVisable();
         getData();
         mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mLoadpagerLayout.setLoadVisable();
+                page = 1;
                 getData();
             }
         });
@@ -121,7 +125,7 @@ public class MessageActivity extends BaseActivity {
     }
 
     private void getData() {
-        mLoadpagerLayout.setLoadVisable();
+
         NetworkUtils.isNetWork(this, mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.RateData;
@@ -110,7 +111,7 @@ public class UpActivity extends BaseActivity {
                 startToTuiguang(RateData.UP_DIANZHANG, payUpForShopower,payUpForShopowerId);
                 break;
             case R.id.tv_up_jingli:
-                startToTuiguang(RateData.UP_JINGLI, payUpForMnager,payUpForShopowerId);
+                startToTuiguang(RateData.UP_JINGLI, payUpForMnager,payUpForMnagerId);
                 break;
             case R.id.tv_up_zongjingli:
                 startToTuiguang(RateData.UP_ZONGJINGLI, payUpForTopManager,payUpForTopManagerId);
@@ -125,6 +126,7 @@ public class UpActivity extends BaseActivity {
     }
 
     private void startToTuiguang(String upDianzhang, String payUp,String rateId) {
+        System.out.println("rankid:"+rateId);
         Intent intent = new Intent(getmActivity(), TuiGuangActivity.class);
         intent.putExtra("rateId",rateId);
         intent.putExtra("rate", upDianzhang);
@@ -145,6 +147,9 @@ public class UpActivity extends BaseActivity {
                                 .subscribe(new MyObserver<List<UpdateCondition>>() {
                                     @Override
                                     protected void onSuccess(List<UpdateCondition> data, String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("data"+data);
+                                        }
                                         if (data != null) {
                                             parserData(data);
                                         }
@@ -172,6 +177,7 @@ public class UpActivity extends BaseActivity {
 
     private void parserData(List<UpdateCondition> data) {
         int size = data.size();
+        hide();
         for (int i = 0; i < size; i++) {
             UpdateCondition updateCondition = data.get(i);
             if (updateCondition != null) {
@@ -186,36 +192,38 @@ public class UpActivity extends BaseActivity {
                         if (mTvActivityUpRate != null) {
                             mTvActivityUpRate.setText("当前等级: "+updateCondition.getRankName());
                         }
-                      /*  if (mTvActivityUpCondition != null) {
-                            mTvActivityUpCondition.setText(updateCondition.getRating());
-                        }*/
+
                     } else {
-                        switch (rate) {
-                            case RateData.UP_DIANZHANG:
-                                payUpForShopower = updateCondition.getPayUp();
-                                payUpForShopowerId = updateCondition.getRankId();
-                                setConditionInformation(updateCondition, mLinearActivityUpStaff, mTvActivityUpStaffRating
-                                        , mTvActivityUpStaffAward, mTvActivityUpStaffCondition);
-                                break;
-                            case RateData.UP_JINGLI:
-                                payUpForMnager = updateCondition.getPayUp();
-                                payUpForMnagerId = updateCondition.getRankId();
-                                setConditionInformation(updateCondition, mLinearActivityUpManager, mTvActivityUpManagerRating
-                                        , mTvActivityUpManagerAward, mTvActivityUpManagerCondition);
-                                break;
-                            case RateData.UP_ZONGJINGLI:
-                                payUpForTopManager = updateCondition.getPayUp();
-                                payUpForTopManagerId = updateCondition.getRankId();
-                                setConditionInformation(updateCondition, mLinearActivityUpTopmanager, mTvActivityUpTopmangerRating
-                                        , mTvActivityUpTopmanagerAward, mTvActivityUpTopmanagerCondition);
-                                break;
-                            case RateData.UP_BOSS:
-                                payUpForBoss = updateCondition.getPayUp();
-                                payUpForBossId = updateCondition.getRankId();
-                                setConditionInformation(updateCondition, mLinearActivityUpBoss, mTvActivityUpBossRating
-                                        , mTvActivityUpBossAward, mTvActivityUpBossCondition);
-                                break;
-                        }
+                        //因为是按等级顺序返回的,所以只显示当前等级后面的数据
+                            switch (rate) {
+                                case RateData.UP_DIANZHANG:
+                                    payUpForShopower = updateCondition.getPayUp();
+                                    payUpForShopowerId = updateCondition.getRankId();
+                                    setConditionInformation(updateCondition, mLinearActivityUpStaff, mTvActivityUpStaffRating
+                                            , mTvActivityUpStaffAward, mTvActivityUpStaffCondition,RateData.UP_DIANZHANG);
+                                    break;
+                                case RateData.UP_JINGLI:
+
+                                    payUpForMnager = updateCondition.getPayUp();
+                                    payUpForMnagerId = updateCondition.getRankId();
+                                    setConditionInformation(updateCondition, mLinearActivityUpManager, mTvActivityUpManagerRating
+                                            , mTvActivityUpManagerAward, mTvActivityUpManagerCondition,RateData.UP_JINGLI);
+                                    break;
+                                case RateData.UP_ZONGJINGLI:
+                                    payUpForTopManager = updateCondition.getPayUp();
+                                    payUpForTopManagerId = updateCondition.getRankId();
+                                    setConditionInformation(updateCondition, mLinearActivityUpTopmanager, mTvActivityUpTopmangerRating
+                                            , mTvActivityUpTopmanagerAward, mTvActivityUpTopmanagerCondition,RateData.UP_ZONGJINGLI);
+                                    break;
+                                case RateData.UP_BOSS:
+                                    payUpForBoss = updateCondition.getPayUp();
+                                    payUpForBossId = updateCondition.getRankId();
+                                    setConditionInformation(updateCondition, mLinearActivityUpBoss, mTvActivityUpBossRating
+                                            , mTvActivityUpBossAward, mTvActivityUpBossCondition,RateData.UP_BOSS);
+                                    break;
+                            }
+
+
                     }
                 }
 
@@ -224,25 +232,42 @@ public class UpActivity extends BaseActivity {
         }
     }
 
+    private void hide() {
+        mLinearActivityUpStaff.setVisibility(View.GONE);
+        mLinearActivityUpManager.setVisibility(View.GONE);
+        mLinearActivityUpTopmanager.setVisibility(View.GONE);
+        mLinearActivityUpBoss.setVisibility(View.GONE);
+    }
+
     /**
      * 设置各个等级的信息
      *
      * @param updateCondition
      */
     private void setConditionInformation(UpdateCondition updateCondition, LinearLayout linearLayout,
-                                         TextView rating, TextView award, TextView condition) {
-        if (linearLayout != null) {
-            linearLayout.setVisibility(View.VISIBLE);
+                                         TextView rating, TextView award, TextView condition,String rank) {
+        String rank2 = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "员工");
+        int rate1 = RateData.getRate2(rank2);
+        int rate2 = RateData.getRate2(rank);
+
+        if (rate2 > rate1) {
+            if (linearLayout != null) {
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+
+            if (award != null) {
+                award.setText(updateCondition.getAward());
+            }
+            if (condition != null) {
+                condition.setText(updateCondition.getRemarks());
+            }
+        } else {
+            if (linearLayout != null) {
+                linearLayout.setVisibility(View.GONE);
+            }
         }
-      /*  if (rating != null) {
-            rating.setText(updateCondition.getRating());
-        }*/
-        if (award != null) {
-            award.setText(updateCondition.getAward());
-        }
-        if (condition != null) {
-            condition.setText(updateCondition.getRemarks());
-        }
+
+
 
     }
 

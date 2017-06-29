@@ -168,7 +168,7 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_JIESUAN)
-    Observable<BaseCallModel<String>> getJiesuan(@Field("account") String account,
+    Observable<BaseCallModel<WithDraw>> getJiesuan(@Field("account") String account,
                                                  @Field("money") String money
     );
 
@@ -448,8 +448,22 @@ public interface NetService {
     Observable<BaseCallModel<List<TransactionRecord>>> getOrders(@Field("account") String account,
                                                                  @Field("startTime") String startTime,
                                                                  @Field("endTime") String endTime,
-                                                                 @Field("pageSize") String pageSize,
-                                                                 @Field("pageNo") String pageNo
+                                                                 @Field("pageNo") String pageNo,
+                                                                 @Field("pageSize") String pageSize
+
+    );
+
+    /**
+     * 错误日志
+     *
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_ERRORLOG)
+    Observable<BaseCallModel<String>> getErrorlog(@Field("type ") String type ,
+                                                                 @Field("content") String content
+
     );
 
 

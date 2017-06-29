@@ -123,11 +123,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 public void convert(ViewHolder viewHolder, Income fenRun) {
                     if (fenRun != null) {
                         viewHolder.setText(R.id.tv_item_fenru2_account, fenRun.getSourceAccount());
-                        viewHolder.setText(R.id.tv_item_fenru2_rate, fenRun.getRate());
+                        viewHolder.setText(R.id.tv_item_fenru2_rate, fenRun.getRank());
                         viewHolder.setText(R.id.tv_item_fenru2_name, fenRun.getName());
                         viewHolder.setText(R.id.tv_item_fenru2_money, fenRun.getAmount());
                         viewHolder.setText(R.id.tv_item_fenru2_time, fenRun.getIncomeTime());
-                        viewHolder.setImageResource(R.id.iv_item_fenrun2, RateData.getRate(fenRun.getRate()));
+                        viewHolder.setImageResource(R.id.iv_item_fenrun2, RateData.getRank(fenRun.getRank()));
 
                         switch (fenRun.getType()) {
                             case Constants.FEN_RUN_HUI:

@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -307,7 +308,12 @@ public class WelcomeActivity extends FragmentActivity {
                                     if (BuildConfig.LOG_DEBUG) {
                                         System.out.println("版本更新:"+data);
                                     }
-                                    showUpdateDialog(data);
+                                    if (!TextUtils.isEmpty(data) && data.startsWith("http://")) {
+                                        showUpdateDialog(data);
+                                    } else {
+                                        startToLogin();
+                                    }
+
                                 }
 
                                 @Override
@@ -316,7 +322,7 @@ public class WelcomeActivity extends FragmentActivity {
                                     if (BuildConfig.LOG_DEBUG) {
                                         System.out.println("版本更新fail:"+resultMsg);
                                     }
-                                    // showUpdateDialog(resultMsg);
+
                                 }
 
                                 @Override

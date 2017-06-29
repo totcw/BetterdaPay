@@ -60,9 +60,12 @@ public class TransactionRecordActivity extends BaseActivity {
         mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mLoadpagerLayout.setLoadVisable();
+                page = 1;
                 getData();
             }
         });
+        mLoadpagerLayout.setLoadVisable();
         getData();
     }
 
@@ -127,13 +130,13 @@ public class TransactionRecordActivity extends BaseActivity {
     }
 
     private void getData() {
-        mLoadpagerLayout.setLoadVisable();
+
         NetworkUtils.isNetWork(getmActivity(), mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
                mRxManager.add(
                        NetWork.getNetService()
-                               .getOrders("15506927108", null, null, page + "", Constants.PAGE_SIZE + "")
+                               .getOrders(UtilMethod.getAccout(getmActivity()), null, null, page + "", Constants.PAGE_SIZE + "")
                                .compose(NetWork.handleResult(new BaseCallModel<List<TransactionRecord>>()))
                                .subscribe(new MyObserver<List<TransactionRecord>>() {
                                    @Override
@@ -144,7 +147,7 @@ public class TransactionRecordActivity extends BaseActivity {
                                        if (data != null) {
                                            parserData(data);
                                        }
-                                       UtilMethod.judgeData(data,mLoadpagerLayout);
+                                       UtilMethod.judgeData(list,mLoadpagerLayout);
                                    }
 
                                    @Override

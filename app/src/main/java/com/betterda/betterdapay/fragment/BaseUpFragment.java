@@ -8,8 +8,10 @@ import android.view.View;
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
+import com.betterda.betterdapay.data.RateData;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.Rating;
+import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.RecyclerViewStateUtils;
@@ -35,14 +37,14 @@ import rx.schedulers.Schedulers;
  * 员工等的基类
  * Created by Administrator on 2016/8/24.
  */
-public abstract class BaseUpFragment  extends BaseFragment{
+public abstract class BaseUpFragment extends BaseFragment {
     private static final String TAG = BaseUpFragment.class.getSimpleName();
     protected List<Rating.RateDetail> list;
     protected Observable<Object> observable;
     protected HeaderAndFooterRecyclerViewAdapter adapter;
     protected Subscription subscribe;
     protected List<Rating.RateDetail> rateDetail; //每次返回的数据
-    protected boolean isCurrent ; //当前fragment是否显示
+    protected boolean isCurrent; //当前fragment是否显示
     protected boolean isVisible; //是否用户可见该fragment,只有通过setcurrentitem才会为true,所以配合isCurrent一起使用
     protected int item; //表示viewpager 当前的item
     protected String rate; //当前等级
@@ -57,7 +59,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
     /**
      * 注册一个rxbus
      */
-    public void regiseterRxBus(String name,  final LoadingPager loadingPager) {
+    public void regiseterRxBus(String name, final LoadingPager loadingPager) {
         observable = RxBus.get().register(name);
         subscribe = observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Object>() {
@@ -69,7 +71,6 @@ public abstract class BaseUpFragment  extends BaseFragment{
                     }
                 });
     }
-
 
 
     /**
@@ -88,11 +89,20 @@ public abstract class BaseUpFragment  extends BaseFragment{
                         ((UpFragment) getParentFragment()).tvUpUp.setVisibility(View.GONE);
                     }
                 } else {
+
                     if (((UpFragment) getParentFragment()).ivUpBack != null) {
                         ((UpFragment) getParentFragment()).ivUpBack.setVisibility(View.VISIBLE);
                     }
                     if (((UpFragment) getParentFragment()).tvUpUp != null) {
-                        ((UpFragment) getParentFragment()).tvUpUp.setVisibility(View.VISIBLE);
+                        String rank = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "员工");
+                        int rate2 = RateData.getRate2(rank);
+                        System.out.println("rate:"+rate2);
+                        System.out.println("item:"+item);
+                        if (rate2 < item) {
+                            ((UpFragment) getParentFragment()).tvUpUp.setVisibility(View.VISIBLE);
+                        } else {
+                            ((UpFragment) getParentFragment()).tvUpUp.setVisibility(View.GONE);
+                        }
                     }
                 }
 
@@ -110,7 +120,6 @@ public abstract class BaseUpFragment  extends BaseFragment{
                 }
 
 
-
             }
         }
     }
@@ -118,9 +127,9 @@ public abstract class BaseUpFragment  extends BaseFragment{
     /**
      * 修改等级
      */
-    public void edit(String condition, String rate, String nextRate,int item) {
+    public void edit(String condition, String rate, String nextRate, int item) {
 
-        if (((UpFragment) getParentFragment()) != null&&((UpFragment) getParentFragment()).vpUp!=null) {
+        if (((UpFragment) getParentFragment()) != null && ((UpFragment) getParentFragment()).vpUp != null) {
             if (((UpFragment) getParentFragment()).vpUp.getCurrentItem() == item) {
 
                 if (((UpFragment) getParentFragment()).tvUpRate != null) {
@@ -155,8 +164,8 @@ public abstract class BaseUpFragment  extends BaseFragment{
                     viewHolder.setText(R.id.tv_item_up_rating2, rating.getT0TradeRate());
                     viewHolder.setText(R.id.tv_item_up_jiesuan, rating.getT1DrawFee());
                     viewHolder.setText(R.id.tv_item_up_jiesuan2, rating.getT0DrawFee());
-                    viewHolder.setText(R.id.tv_item_up_edu, rating.getT1TradeQuota()+","+rating.getT1DayQuota());
-                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getT0TradeQuota()+","+rating.getT0DayQuota());
+                    viewHolder.setText(R.id.tv_item_up_edu, rating.getT1TradeQuota() + "," + rating.getT1DayQuota());
+                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getT0TradeQuota() + "," + rating.getT0DayQuota());
                     if (Constants.ZHIFUBAO.equals(rating.getType())) {
                         viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.zhifubao);
                     } else if (Constants.WEIXIN.equals(rating.getType())) {
@@ -202,7 +211,7 @@ public abstract class BaseUpFragment  extends BaseFragment{
     /**
      * 从网络获取数据
      */
-    public void getData( final LoadingPager loadingPager) {
+    public void getData(final LoadingPager loadingPager) {
         if (BuildConfig.LOG_DEBUG) {
             Log.i(TAG, "getdata");
         }
@@ -250,7 +259,6 @@ public abstract class BaseUpFragment  extends BaseFragment{
                 );
             }
         });
-
 
 
     }

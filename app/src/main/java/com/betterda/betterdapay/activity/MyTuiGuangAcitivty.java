@@ -61,6 +61,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 loadpagerLayout.setLoadVisable();
+                page = 1;
                 getData();
             }
         });

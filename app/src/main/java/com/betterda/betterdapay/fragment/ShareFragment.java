@@ -89,6 +89,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("分享fail:"+resultMsg);
                                 }
+                                showToast(resultMsg);
                                 UtilMethod.dissmissDialog(getmActivity(),mDialog);
                             }
 
@@ -155,7 +156,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         if (install) {
             UMImage image = new UMImage(getmActivity(), R.mipmap.ic_launcher);//资源文件
             UMWeb  web = new UMWeb(url);
-            web.setTitle("诚享钱包");//标题
+            web.setTitle("安安支付");//标题
             web.setThumb(image);  //缩略图
             web.setDescription("注册有礼");//描述
 

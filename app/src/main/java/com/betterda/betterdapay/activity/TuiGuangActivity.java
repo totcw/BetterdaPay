@@ -35,6 +35,7 @@ public class TuiGuangActivity extends BaseActivity {
 
 
     private String payUp, rateId;
+    private String mRate; //升级到的等级
 
     @Override
     public void initView() {
@@ -48,13 +49,14 @@ public class TuiGuangActivity extends BaseActivity {
         topbarTuiguang.setTitle("升级");
         Intent intent = getIntent();
         if (intent != null) {
-            String rate = intent.getStringExtra("rate");
-            mTvTuiguangRate.setText("升级到" + rate);
+            mRate = intent.getStringExtra("rate");
+            mTvTuiguangRate.setText("升级到" + mRate);
             payUp = intent.getStringExtra("payUp");
             rateId = intent.getStringExtra("rateId");
             mTvTuiguangMoney.setText(payUp+"元");
         }
 
+        System.out.println("rankId:"+rateId);
     }
 
     @OnClick({R.id.relative_tuiguang_my, R.id.linear_tuiguang_up, R.id.bar_back})
@@ -77,7 +79,9 @@ public class TuiGuangActivity extends BaseActivity {
         Intent intent = new Intent(getmActivity(), ChoosePayTypePayActivity.class);
         intent.putExtra("money", payUp);
         intent.putExtra("rateId", rateId);
+        intent.putExtra("rank", mRate);
         startActivity(intent);
+        finish();
     }
 
 

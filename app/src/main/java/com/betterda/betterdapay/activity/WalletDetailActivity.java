@@ -93,10 +93,13 @@ public class WalletDetailActivity extends BaseActivity {
             }
         });
         mRvLayout.setAdapter(mAdapter);
+        mLoadpagerLayout.setLoadVisable();
         getData();
         mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mLoadpagerLayout.setLoadVisable();
+                page = 1;
                 getData();
             }
         });
@@ -115,7 +118,7 @@ public class WalletDetailActivity extends BaseActivity {
 
 
     private void getData() {
-        mLoadpagerLayout.setLoadVisable();
+
         NetworkUtils.isNetWork(this, mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
@@ -133,7 +136,7 @@ public class WalletDetailActivity extends BaseActivity {
                                             parserData(data);
                                         }
 
-                                        UtilMethod.judgeData(data,mLoadpagerLayout);
+                                        UtilMethod.judgeData(list,mLoadpagerLayout);
                                     }
 
                                     @Override

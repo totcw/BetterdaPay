@@ -17,6 +17,7 @@ import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.javabean.WithDraw;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -43,7 +44,7 @@ public class JieSuanActivity extends BaseActivity {
     @BindView(R.id.btn_jiesuan_comfirm)
     Button btnJiesuanComfirm;
 
-    private float money = 10.01f;//可结算的余额
+    private float money ;//可结算的余额
     private float sum;//输入的结算金额
     private ShapeLoadingDialog mDialog;
     private AlertDialog mAlertDialog;
@@ -67,7 +68,15 @@ public class JieSuanActivity extends BaseActivity {
     private void getIntentData() {
         Intent intent = getIntent();
         if (intent != null) {
-            money = intent.getFloatExtra("money", 10);
+            String payUp = intent.getStringExtra("money");
+            if (TextUtils.isEmpty(payUp)) {
+                payUp = "0";
+            }
+            try {
+                money = Float.valueOf(payUp);
+            } catch (Exception e) {
+
+            }
         }
     }
 
@@ -173,10 +182,10 @@ public class JieSuanActivity extends BaseActivity {
                     mRxManager.add(
                             NetWork.getNetService()
                                     .getJiesuan(UtilMethod.getAccout(getmActivity()), sum + "")
-                                    .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                    .subscribe(new MyObserver<String>() {
+                                    .compose(NetWork.handleResult(new BaseCallModel<WithDraw>()))
+                                    .subscribe(new MyObserver<WithDraw>() {
                                         @Override
-                                        protected void onSuccess(String data, String resultMsg) {
+                                        protected void onSuccess(WithDraw data, String resultMsg) {
                                             if (BuildConfig.LOG_DEBUG) {
 
                                                 System.out.println("结算:" + data);

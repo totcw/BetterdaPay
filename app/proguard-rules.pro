@@ -21,7 +21,7 @@
     #包明不混合大小写
     -dontusemixedcaseclassnames
 
-    #不去忽略非公共的库类
+    #是否混淆第三方jar
     -dontskipnonpubliclibraryclasses
 
      #优化  不优化输入的类文件
@@ -81,8 +81,7 @@
 
     #如果不想混淆 keep 掉
     -keep class com.lippi.recorder.iirfilterdesigner.** {*; }
-    #友盟
-    -keep class com.umeng.**{*;}
+
     #项目特殊处理代码
 
     #忽略警告
@@ -168,49 +167,19 @@
       -keepattributes      EnclosingMethod
 
 
-    #如果用用到Gson解析包的，直接添加下面这几行就能成功混淆，不然会报错。
     #gson
-    #-libraryjars libs/gson-2.2.2.jar
 
-    # Gson specific classes
-    -keep class sun.misc.Unsafe { *; }
     # Application classes that will be serialized/deserialized over Gson
     -keep class com.google.gson.examples.android.model.** { *; }
 
+    -keep class sun.misc.Unsafe { *; }
+    -keep class com.google.gson.stream.** { *; }
     #混淆自己的javabean
-    -keep class com.betterda.xsnano.javabean.** { *; }
-    -keep class com.betterda.xsnano.bus.model.** { *; }
+    # 使用Gson时需要配置Gson的解析对象及变量都不混淆。不然Gson会找不到变量。
+    # 将下面替换成自己的实体类
+    -keep class com.betterda.betterdapay.javabean.** { *; }
 
 
-
-
-    #百度地图避免混淆
-    -keep class com.baidu.mapapi.** {*;}
-
-    ################### region for xUtils
-    -keepattributes Signature,*Annotation*
-    -keep public class org.xutils.** {
-        public protected *;
-    }
-    -keep public interface org.xutils.** {
-        public protected *;
-    }
-    -keepclassmembers class * extends org.xutils.** {
-        public protected *;
-    }
-    -keepclassmembers @org.xutils.db.annotation.* class * {*;}
-    -keepclassmembers @org.xutils.http.annotation.* class * {*;}
-    -keepclassmembers class * {
-        @org.xutils.view.annotation.Event <methods>;
-    }
-    #################### end region
-
-    ##mob
-    -keep class android.net.http.SslError
-    -keep class android.webkit.**{*;}
-    -keep class cn.sharesdk.**{*;}
-    -keep class cn.smssdk.**{*;}
-    -keep class com.mob.**{*;}
 
     # Keep our interfaces so they can be used by other ProGuard rules.
     # See http://sourceforge.net/p/proguard/bugs/466/ fresco的混淆
@@ -227,23 +196,9 @@
         native <methods>;
     }
 
-    -dontwarn okio.**
-    -dontwarn com.squareup.okhttp.**
-    -dontwarn okhttp3.**
-    -dontwarn javax.annotation.**
-    -dontwarn com.android.volley.toolbox.**
 
-    # Works around a bug in the animated GIF module which will be fixed in 0.12.0
-    -keep class com.facebook.imagepipeline.animated.factory.AnimatedFactoryImpl {
-        public AnimatedFactoryImpl(com.facebook.imagepipeline.bitmaps.PlatformBitmapFactory,com.facebook.imagepipeline.core.ExecutorSupplier);
-    }
-    ### end
 
-       # 百度地图 begin
-    -keep class com.baidu.** { *; }
-    -keep class vi.com.gdi.bgl.android.**{*;}
 
-    # end
 
     #民生银行 混淆
     -keep  public class com.unionpay.uppay.net.HttpConnection {
@@ -281,6 +236,12 @@
     	native <methods>;
     }
     #end
+
+# 银联 start
+-dontwarn com.unionpay.**
+-keep class com.unionpay.** { *; }
+# 银联 end
+
 
 
 
@@ -388,3 +349,41 @@
         -keep class com.linkedin.** { *; }
         -keepattributes Signature
         #友盟end
+
+
+
+# OkHttp3
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *;}
+-dontwarn okio.**
+
+# Okio
+-dontwarn com.squareup.**
+-dontwarn okio.**
+-keep public class org.codehaus.* { *; }
+-keep public class java.nio.* { *; }
+
+# Retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+        #rxjava start
+    -dontwarn sun.misc.**
+    -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+     long producerIndex;
+     long consumerIndex;
+    }
+    -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+     rx.internal.util.atomic.LinkedQueueNode producerNode;
+    }
+    -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+     rx.internal.util.atomic.LinkedQueueNode consumerNode;
+    }
+
+    -keepattributes *Annotation*
+    -keepclassmembers class ** {
+        @com.hwangjr.rxbus.annotation.Subscribe public *;
+        @com.hwangjr.rxbus.annotation.Produce public *;
+    }
+#rxjava end

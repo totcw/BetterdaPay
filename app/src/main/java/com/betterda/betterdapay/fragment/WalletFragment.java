@@ -156,19 +156,23 @@ public class WalletFragment extends BaseFragment {
                 withdraw();
                 break;
             case R.id.relative_wallet_banli://办理信用卡
-                UtilMethod.startIntent(getmActivity(), BanLiActivity.class);
+                showToast("正在开发中");
+               // UtilMethod.startIntent(getmActivity(), BanLiActivity.class);
                 break;
             case R.id.relative_shouye_check://账单查询
                 UtilMethod.startIntent(getmActivity(), TransactionRecordActivity.class);
                 break;
             case R.id.relative_shouye_haidai://信用卡还贷
-                UtilMethod.startIntent(getmActivity(), CreditpayActivity.class);
+                showToast("正在开发中");
+               // UtilMethod.startIntent(getmActivity(), CreditpayActivity.class);
                 break;
             case R.id.relative_shouye_life://生活缴费
-                UtilMethod.startIntent(getmActivity(), BaseLivingActiivty.class);
+                showToast("正在开发中");
+               // UtilMethod.startIntent(getmActivity(), BaseLivingActiivty.class);
                 break;
             case R.id.relative_shouye_bianjie://便捷贷款
-                UtilMethod.startIntent(getmActivity(), BianJieDaiKuanActivity.class);
+                showToast("正在开发中");
+               // UtilMethod.startIntent(getmActivity(), BianJieDaiKuanActivity.class);
                 break;
         }
     }
@@ -206,13 +210,8 @@ public class WalletFragment extends BaseFragment {
                                         }
                                         UtilMethod.dissmissDialog(getmActivity(), mDialog);
                                         if (data != null) {
-                                            if ("10".equals(data.getStatus())) {
-                                                createWithDrawDialog();
-                                            } else {
-                                                if (mGttvWalletMoney != null) {
-                                                    UtilMethod.startIntent(getmActivity(), JieSuanActivity.class, "money", mGttvWalletMoney.getText().toString().trim());
-                                                }
-                                            }
+                                        createWithDrawDialog();
+
                                         }
 
                                     }
@@ -221,6 +220,9 @@ public class WalletFragment extends BaseFragment {
                                     public void onFail(String resultMsg) {
                                         if (BuildConfig.LOG_DEBUG) {
                                             System.out.println("查询结算状态fail:" + resultMsg);
+                                        }
+                                        if (mGttvWalletMoney != null) {
+                                            UtilMethod.startIntent(getmActivity(), JieSuanActivity.class, "money", mGttvWalletMoney.getText().toString().trim());
                                         }
                                         UtilMethod.dissmissDialog(getmActivity(), mDialog);
                                     }

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.callback.MyTextWatcher;
@@ -264,11 +265,16 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
                                   @Override
                                   protected void onSuccess(String data, String resultMsg) {
                                       verfication = data;
+                                      if (BuildConfig.LOG_DEBUG) {
+                                          System.out.println("验证码:"+data);
+                                      }
                                   }
 
                                   @Override
                                   public void onFail(String resultMsg) {
-
+                                      if (BuildConfig.LOG_DEBUG) {
+                                          System.out.println("验证码fail:"+resultMsg);
+                                      }
                                   }
 
                                   @Override

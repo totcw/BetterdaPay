@@ -14,6 +14,8 @@ import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.CreateOrderEntity;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
+import com.betterda.betterdapay.util.CacheUtils;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
@@ -41,6 +43,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
 
     public static final String PUB_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKqQ8mG2VN2rRi5pF4drOi9pB2kdIAiO6YR7LQGDWQkP2DkAI19apajGxDt3q1m2kmWdytX5dmI8AhxEgK+Ak+qoaf7qNv/6NRQUesnJ8kB7sACzEG79CNwxeZy0jLP2E0RC69r/vyyqcD5PwkIuaMNc5KIJhapl0pPmsMZ+F85QIDAQAB";
     public static final String APP_ID = "47cb95e8badd4521b3bd17da1516d5db";
+    public static final String SERVICE_URL = "http://www.yuanxiangrui.cn/paycloud-openapi/api/unionpay/app/ctrl/getform/%s/%s";
 
     @BindView(R.id.topbar_chose)
     NormalTopBar topbarChose;
@@ -53,6 +56,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     private List<RatingCalculateEntity> mList;
     private String payUp;//支付金额
     private String rankId;//升级到指定等级
+    private String rank;//升级到的等级
     private int mMoney;//单位为分
 
     private ShapeLoadingDialog dialog;
@@ -78,7 +82,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     private void initRecycleView() {
         mList = new ArrayList<>();
         mList.add(new RatingCalculateEntity("银联手机控件支付"));
-        mList.add(new RatingCalculateEntity("银联无跳转支付"));
+      //  mList.add(new RatingCalculateEntity("银联无跳转支付"));
 
         mAdapter = new CommonAdapter<RatingCalculateEntity>(this, R.layout.rv_item_choosepaytypepay, mList) {
             @Override
@@ -117,6 +121,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
         if (intent != null) {
             payUp = intent.getStringExtra("money");
             rankId = intent.getStringExtra("rateId");
+            rank = intent.getStringExtra("rank");
         }
         if (TextUtils.isEmpty(payUp)) {
             payUp = "0";
@@ -149,7 +154,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
                 UtilMethod.showDialog(getmActivity(), dialog);
                 mRxManager.add(
                         NetWork.getNetService()
-                                .getOrder(UtilMethod.getAccout(getmActivity()), mMoney + "", rankId, "升级付款")
+                                .getOrder(UtilMethod.getAccout(getmActivity()),  "10", rankId, "升级付款")
                                 .compose(NetWork.handleResult(new BaseCallModel<CreateOrderEntity>()))
                                 .subscribe(new MyObserver<CreateOrderEntity>() {
                                     @Override
@@ -192,8 +197,8 @@ public class ChoosePayTypePayActivity extends BaseActivity {
         payCloudReqModel.setBackUrl(data.getNotifyUrl());
         payCloudReqModel.setOrderId(data.getOrderId());
         payCloudReqModel.setTxnTime(data.getTxnTime());
-        payCloudReqModel.setTxnAmt(mMoney + "");
-
+        payCloudReqModel.setTxnAmt("10");
+        payCloudReqModel.setServiceUrl(SERVICE_URL);
         BtPay.getInstance(getmActivity()).requestPay(payCloudReqModel, new BtPayCallBack() {
             @Override
             public void done(BtResult result) {
@@ -201,6 +206,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
                 BtPayResult payResult = (BtPayResult) result;
                 if (payResult != null) {
                     if (BtPayResult.RESULT_SUCCESS.equals(payResult.getResult())) {
+                        CacheUtils.putString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, rank);
                         finish();
                     } else if (BtPayResult.RESULT_CANCEL.equals(payResult.getResult())) {
                         showToast("取消支付");

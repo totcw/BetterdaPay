@@ -1,10 +1,7 @@
 package com.betterda.betterdapay.activity;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,10 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.application.MyApplication;
 import com.betterda.betterdapay.callback.MyObserver;
-import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.component.DaggerLoginActivityComponent;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.UserInfo;
@@ -25,7 +22,6 @@ import com.betterda.betterdapay.modules.LoginActivityModules;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
-import com.betterda.betterdapay.util.RxBus;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.ShapeLoadingDialog;
@@ -38,10 +34,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
-import rx.Observable;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -69,7 +62,6 @@ public class LoginActivity extends BaseActivity {
     private String account, pwd;
     @Inject
     ShapeLoadingDialog dialog;
-    private Observable<Object> observable;//rxus
 
 
     @Override
@@ -85,7 +77,7 @@ public class LoginActivity extends BaseActivity {
         inject();
         setTopBar();
         judgePwd();
-       // register();
+
 
     }
 
@@ -100,19 +92,6 @@ public class LoginActivity extends BaseActivity {
                 .inject(this);
     }
 
-    /**
-     * 注册rxbus 用来关闭页面
-     */
-    private void register() {
-        observable = RxBus.get().register(LoginActivity.class.getSimpleName());
-        observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Object>() {
-                    @Override
-                    public void call(Object o) {
-                        finish();
-                    }
-                });
-    }
 
     /**
      * 判断用户是否有记住密码
@@ -131,24 +110,6 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    @Override
-    public void initListener() {
-        super.initListener();
-    /*    etLoginNumber.addTextChangedListener(new MyTextWatcher(etLoginNumber) {
-            @Override
-            public void afterTextChanged(Editable s) {
-                account = s.toString();
-                isLogin();
-            }
-        });
-        etLoginPwd.addTextChangedListener(new MyTextWatcher(etLoginPwd) {
-            @Override
-            public void afterTextChanged(Editable s) {
-                pwd = s.toString();
-                isLogin();
-            }
-        });*/
-    }
 
     private void setTopBar() {
         topbarLogin.setBackVisibility(false);
@@ -179,13 +140,12 @@ public class LoginActivity extends BaseActivity {
                 UtilMethod.startIntent(getmActivity(), ForgetPwdActivity.class);
                 break;
             case R.id.btn_login://登录
-                CacheUtils.putBoolean(getmActivity(), "15160700380" + Constants.Cache.AUTH, false);
+             /*   CacheUtils.putBoolean(getmActivity(), "15160700380" + Constants.Cache.AUTH, true);
                 CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.RANK, "经理");
                 CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "15160700380");
-                UtilMethod.startIntent(getmActivity(), HomeActivity.class);
                 setAlias();
-                //finish();
-                // Login();
+                finish();*/
+                Login();
                 break;
             case R.id.relative_login_register://注册
                 UtilMethod.startIntent(getmActivity(), RegisterActivity.class);
@@ -252,30 +212,19 @@ public class LoginActivity extends BaseActivity {
      * @param userInfo
      */
     private void parseAndSave(UserInfo userInfo) {
+        if (BuildConfig.LOG_DEBUG) {
+            System.out.println("登录:"+userInfo);
+        }
         if (userInfo != null) {
             String account = userInfo.getAccount();
-            String rate = userInfo.getRate();
+            String rate = userInfo.getRank();
             CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, account);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.PWD, pwd);
             CacheUtils.putBoolean(getmActivity(), account + Constants.Cache.AUTH, userInfo.getAuth()=="1"?true:false);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.RANK, rate);
             setAlias();
+
         }
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-       // RxBus.get().unregister(LoginActivity.class.getSimpleName(), observable);
     }
 
 
@@ -285,10 +234,8 @@ public class LoginActivity extends BaseActivity {
         // 调用 Handler 来异步设置别名
         if (!alias) {
             mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, UtilMethod.getAccout(getmActivity())));
-        } else {
-            UtilMethod.dissmissDialog(getmActivity(), dialog);
-            finish();
         }
+        startToHome();
     }
 
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
@@ -300,22 +247,25 @@ public class LoginActivity extends BaseActivity {
                     logs = "Set tag and alias success";
                     // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
                     CacheUtils.putBoolean(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.ALIAS, true);
+
                     break;
                 case 6002:
                     logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
 
                     // 延迟 60 秒来调用 Handler 设置别名
                     mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+
                     break;
                 default:
-                    UtilMethod.startIntent(getmActivity(), HomeActivity.class);
-                    UtilMethod.dissmissDialog(getmActivity(), dialog);
-                    finish();
+
                     break;
             }
 
         }
     };
+
+
+
     private static final int MSG_SET_ALIAS = 1001;
     private final Handler mHandler = new Handler() {
         @Override
@@ -336,13 +286,10 @@ public class LoginActivity extends BaseActivity {
     };
 
 
-    @Override
-    public void onBackPressed() {
-
-        mRxManager.post(HomeActivity.class.getSimpleName(),"exit");
-        super.onBackPressed();
+    public void startToHome() {
+        UtilMethod.dissmissDialog(getmActivity(), dialog);
+        UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+        finish();
     }
-
-
 
 }

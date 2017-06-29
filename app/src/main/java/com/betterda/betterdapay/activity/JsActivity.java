@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.UtilMethod;
 
 import butterknife.BindView;
@@ -27,6 +28,7 @@ import butterknife.ButterKnife;
  * html支付界面
  * Created by Administrator on 2016/5/30.
  */
+/*一定要加,否则高版本调用不到*/
 @SuppressLint("SetJavaScriptEnabled")
 public class JsActivity extends BaseActivity {
 
@@ -63,7 +65,9 @@ public class JsActivity extends BaseActivity {
         settings.setUseWideViewPort(true);  //任意比例缩放
 
         settings.setDomStorageEnabled(true);
-        webView.addJavascriptInterface(new JsInterce(), "android");
+
+        //AndroidWebView，这个是JS网页调用Android方法的一个类似ID的东西,和下面 js中调用的方法一样
+        webView.addJavascriptInterface(new JsInterce(), "AndroidWebView");
         //显示进度
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -129,7 +133,7 @@ public class JsActivity extends BaseActivity {
             @Override
             public void run() {
                 int payUp = (int) (money * 100);
-                String url ="http://192.168.0.108:8080/wallet/mobile/unionPay.jsp?account=15506927108&body=测试&amount="+payUp;
+                String url = Constants.Url.URL+"mobile/unionPay.jsp?account="+UtilMethod.getAccout(getmActivity())+"&body=测试&amount="+payUp;
                  webView.loadUrl(url);
 
 
@@ -143,9 +147,10 @@ public class JsActivity extends BaseActivity {
         //在js中调用window.AndroidWebView.showInfoFromJs(name)，便会触发此方法。
         @JavascriptInterface
         public String showInfoFromJs(String name) {
-            System.out.println("js中调用了showInforFormJs方法" + name);
-            return "调用";
+            finish();
+            return name;
         }
+
 
         @JavascriptInterface
         public void isMember(boolean isMember) {

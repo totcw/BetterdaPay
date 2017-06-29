@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.0.1"
 
         //极光推送添加
         ndk {
@@ -48,9 +48,9 @@ android {
             // 移除无用的resource文件
             shrinkResources true
             //加载默认混淆配置文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-android-optmize.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名
-            signingConfig signingConfigs.debug
+            //signingConfig signingConfigs.debug
         }
 
         release {
@@ -58,7 +58,7 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "false"
            // signingConfigs signingConfigs.debug
             //混淆
-            minifyEnabled true
+            minifyEnabled false
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件
@@ -131,7 +131,7 @@ dependencies {
 
     compile files('libs/umeng_social_tool.jar')
     /*btpay*/
-    compile 'com.betterda.btpay:btsdk:0.0.6'
+    compile 'com.betterda.btpay:btsdk:0.0.7'
     /*极光*/
     compile 'cn.jiguang.sdk:jpush:3.0.5'
     compile 'cn.jiguang.sdk:jcore:1.1.2'

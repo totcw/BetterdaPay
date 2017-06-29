@@ -101,6 +101,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.btn_setting_exit:
                 UtilMethod.startIntent(getmActivity(), LoginActivity.class);
+                mRxManager.post(HomeActivity.class.getSimpleName(),"exit");
                 finish();
                 break;
             case R.id.bar_back:
