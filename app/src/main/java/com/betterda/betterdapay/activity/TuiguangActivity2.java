@@ -143,26 +143,20 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
                     .setCallback(new UMShareListener() {
                         @Override
                         public void onStart(SHARE_MEDIA share_media) {
-                            System.out.println(share_media);
-                            showToast(share_media.toString());
                         }
 
                         @Override
                         public void onResult(SHARE_MEDIA share_media) {
-                            System.out.println(share_media);
                             showToast(share_media.toString());
                         }
 
                         @Override
                         public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                            System.out.println(share_media);
                             showToast(share_media.toString());
-                            throwable.printStackTrace();
                         }
 
                         @Override
                         public void onCancel(SHARE_MEDIA share_media) {
-                            System.out.println(share_media);
                             showToast(share_media.toString());
                         }
                     })
@@ -183,7 +177,7 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        showToast("分享回调");
+        //showToast("分享回调");
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
 
     }

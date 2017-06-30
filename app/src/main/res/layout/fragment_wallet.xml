@@ -67,14 +67,14 @@
                     android:layout_marginTop="10dp"
                     android:text="分润金额(元)"
                     android:textColor="@color/text_color"
-                    android:textSize="15sp" />
+                    android:textSize="18sp" />
 
                 <com.betterda.betterdapay.view.GradientTextView
                     android:id="@+id/gttv_wallet_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="0"
                     android:textSize="50sp" />
 
@@ -86,7 +86,7 @@
                     android:layout_marginBottom="24dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/shape_corner_origne"
-                    android:text="我要结算"
+                    android:text="分润提现"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 

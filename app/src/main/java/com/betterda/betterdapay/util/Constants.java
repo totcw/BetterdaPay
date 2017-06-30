@@ -31,6 +31,7 @@ public class Constants {
     public final static String FEN_RUN_TUI = "1";//推广分润
      public final static String FEN_RUN_HUI2 = "返回分润"; //返还分润
     public final static String FEN_RUN_TUI2 = "推广分润";//推广分润
+    public final static String WITHDRAW = "提现";
 
 
     public static class Cache {

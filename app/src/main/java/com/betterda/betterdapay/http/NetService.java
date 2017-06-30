@@ -461,7 +461,7 @@ public interface NetService {
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_ERRORLOG)
-    Observable<BaseCallModel<String>> getErrorlog(@Field("type ") String type ,
+    Observable<BaseCallModel<String>> getErrorlog(@Field("type") String type ,
                                                                  @Field("content") String content
 
     );

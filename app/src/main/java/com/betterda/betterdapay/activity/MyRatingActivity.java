@@ -134,7 +134,7 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
             public void convert(ViewHolder viewHolder, Rating.RateDetail rating) {
                 log(rating.getIntroduce());
                 if (rating != null) {
-                    viewHolder.setText(R.id.tv_item_up_name, rating.getIntroduce());
+                    viewHolder.setText(R.id.tv_item_up_name, rating.getType());
                     viewHolder.setText(R.id.tv_item_up_rating, rating.getT1TradeRate());
                     viewHolder.setText(R.id.tv_item_up_rating2, rating.getT0TradeRate());
                     viewHolder.setText(R.id.tv_item_up_jiesuan, rating.getT1DrawFee());

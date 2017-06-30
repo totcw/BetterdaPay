@@ -165,23 +165,21 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                     .setCallback(new UMShareListener() {
                         @Override
                         public void onStart(SHARE_MEDIA share_media) {
-                            System.out.println(share_media);
                         }
 
                         @Override
                         public void onResult(SHARE_MEDIA share_media) {
-                            System.out.println(share_media);
+                            showToast(share_media.toString());
                         }
 
                         @Override
                         public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                            System.out.println(share_media);
-                            throwable.printStackTrace();
+                            showToast(share_media.toString());
                         }
 
                         @Override
                         public void onCancel(SHARE_MEDIA share_media) {
-                            System.out.println(share_media);
+                            showToast(share_media.toString());
                         }
                     })
                     .share();

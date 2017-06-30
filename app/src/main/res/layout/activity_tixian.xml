@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="结算金额"
+            android:text="@string/withdrawmoney"
             android:textColor="@color/shouye_renmen_tv"
             android:textSize="14sp" />
 
@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:hint="输入结算金额"
+                    android:hint="@string/input_withdraw_money"
                     android:inputType="phone"
                     android:textSize="14sp"
 
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="全部结算"
+                android:text="@string/withdraw_all"
                 android:textColor="@color/bg_blue"
                 android:textSize="13sp" />
 
@@ -99,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:text="特别提醒:结算金额必须大于1元,手续费参考费率表"
+        android:text="@string/withdraw_notice"
         android:textColor="@color/shouye_fenlei_red"
         android:textSize="13sp" />
 
@@ -111,7 +111,7 @@
         android:background="@drawable/btn_login_selector"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="结算"
+        android:text="@string/withdraw"
         android:textColor="#ffffff"
         android:textSize="16sp"
         />

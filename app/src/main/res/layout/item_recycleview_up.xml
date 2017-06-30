@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
-                        android:text="结算"
+                        android:text="@string/withdraw"
                         android:textColor="@color/shouye_renmen_tv"
                         android:textSize="12sp" />
 

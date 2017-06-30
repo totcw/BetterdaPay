@@ -56,7 +56,7 @@ public class TiXianDetailActivity extends BaseActivity {
     @Override
     public void init() {
         super.init();
-        mTopbarWalletdetail.setTitle("结算明细");
+        mTopbarWalletdetail.setTitle(Constants.WITHDRAW+"明细");
         list = new ArrayList<>();
 
         mRvLayout.setLayoutManager(new LinearLayoutManager(getmActivity()));

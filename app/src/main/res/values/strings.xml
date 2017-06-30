@@ -3,4 +3,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="withdrawdetail">提现明细</string>
+    <string name="withdraw">提现</string>
+    <string name="withdrawmoney">提现金额</string>
+    <string name="input_withdraw_money">输入提现金额</string>
+    <string name="withdraw_all">全部提现</string>
+    <string name="withdraw_notice">特别提醒:结算金额必须大于1元,手续费参考费率表</string>
 </resources>
