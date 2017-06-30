@@ -560,6 +560,7 @@ public final class ImageTools {
 			intent.putExtra("scale", true); //是否保留比例
 			intent.putExtra("return-data", false);
 			intent.putExtra(MediaStore.EXTRA_OUTPUT,getUri(activity));
+
 			activity.startActivityForResult(intent, 5);
 		} catch (Exception e
 				) {

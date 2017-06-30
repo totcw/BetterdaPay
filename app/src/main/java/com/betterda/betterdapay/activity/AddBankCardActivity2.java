@@ -287,8 +287,9 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
      * @param data
      */
     private void result(int requestCode, int resultCode, Intent data) {
+
         resultSuccess(requestCode, resultCode, data);
-        if (requestCode == 5) {
+     /*   if (requestCode == 5) {
             if (requestCode == 5 && resultCode == -1) { //resultcode表示裁剪成功
 
                 if (!ImageTools.checkSDCardAvailable()) {
@@ -303,7 +304,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             } else {
                 UtilMethod.Toast(this, "图片选取失败");
             }
-        }
+        }*/
 
     }
 
@@ -313,7 +314,9 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
         if (requestCode == Constants.PHOTOHRAPH) {
             if (resultCode == RESULT_OK) {// 返回成功的时候
                 //uri 不能放在常量类里面,要实时创建
-                ImageTools.cropImg(ImageTools.getUri(this), this, 2, 1, 256, 128);
+                zoomPhoto();
+                //在小米6上裁剪图片有问题
+                //ImageTools.cropImg(ImageTools.getUri(this), this, 2, 1, 256, 128);
             } else if (resultCode == RESULT_CANCELED) {// 取消的时候
                 UtilMethod.Toast(this, "取消拍照");
             } else {
@@ -327,8 +330,8 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             if (data != null) {
                 Uri uri = data.getData();
                 if (uri != null) {
-
-                    ImageTools.cropImg(uri, this, 2, 1, 256, 128);
+                    zoomPhoto();
+                    //ImageTools.cropImg(uri, this, 2, 1, 256, 128);
 
                 } else {
                     UtilMethod.Toast(this, "图片选取失败");
@@ -339,6 +342,22 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
 
         }
     }
+
+    /**
+     * 压缩图片
+     */
+    public void zoomPhoto() {
+        if (!ImageTools.checkSDCardAvailable()) {
+            UtilMethod.Toast(this, "内存卡错误,请检查您的内存卡");
+            return;
+        }
+        // 防止内存溢出,压缩图片
+        Bitmap pic = ImageTools.scacleToBitmap(Constants.PHOTOPATHFORCROP, this);
+        if (pic != null) {// 这个ImageView是拍照完成后显示图片
+            setPhoto(pic);
+        }
+    }
+
 
     /**
      * 设置照片
@@ -434,14 +453,14 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                                         imageView.setImageBitmap(bitmap);
                                         UtilMethod.dissmissDialog(getmActivity(), dialog);
                                         //将裁剪后的图片删除
-                                        try {
+                                 /*       try {
                                             File fileImage = new File(Constants.PHOTOPATHFORCROP);
                                             if (fileImage != null) {
                                                 fileImage.delete();
                                             }
                                         } catch (Exception e) {
 
-                                        }
+                                        }*/
 
                                     }
 

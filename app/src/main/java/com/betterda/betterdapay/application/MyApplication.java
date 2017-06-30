@@ -7,6 +7,7 @@ import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.component.AppComponent;
 import com.betterda.betterdapay.component.DaggerAppComponent;
 import com.betterda.betterdapay.modules.AppModules;
+import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
@@ -37,10 +38,12 @@ public class MyApplication extends Application {
         if (null == list) {
             list = new ArrayList<>();
         }
+
         //初始化友盟
         UMShareAPI.get(this);
         //配置微信的分享
         PlatformConfig.setWeixin("wx55b0b0b52e12a8de", "7a40ddb1853720bb643a06ed407c9ef6");
+
         //捕获异常
          CrashHandler.getInstance().init(getApplicationContext());
 

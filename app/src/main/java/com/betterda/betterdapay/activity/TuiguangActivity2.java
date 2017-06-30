@@ -1,5 +1,6 @@
 package com.betterda.betterdapay.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -143,22 +144,26 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
                         @Override
                         public void onStart(SHARE_MEDIA share_media) {
                             System.out.println(share_media);
+                            showToast(share_media.toString());
                         }
 
                         @Override
                         public void onResult(SHARE_MEDIA share_media) {
                             System.out.println(share_media);
+                            showToast(share_media.toString());
                         }
 
                         @Override
                         public void onError(SHARE_MEDIA share_media, Throwable throwable) {
                             System.out.println(share_media);
+                            showToast(share_media.toString());
                             throwable.printStackTrace();
                         }
 
                         @Override
                         public void onCancel(SHARE_MEDIA share_media) {
                             System.out.println(share_media);
+                            showToast(share_media.toString());
                         }
                     })
                     .share();
@@ -174,4 +179,18 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
         UtilMethod.backgroundAlpha(1.0f,getmActivity());
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        showToast("分享回调");
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
+    }
 }

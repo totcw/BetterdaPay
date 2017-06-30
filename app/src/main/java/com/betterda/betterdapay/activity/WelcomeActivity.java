@@ -130,7 +130,7 @@ public class WelcomeActivity extends FragmentActivity {
      *
      * @param url
      */
-    public void showUpdateDialog(String url) {
+    public void showUpdateDialog(final String url) {
         View view = LayoutInflater.from(WelcomeActivity.this).inflate(R.layout.dialog_update, null);
         TextView mTvCancel = (TextView) view.findViewById(R.id.tv_update_cancel);
         TextView mTvComfirm = (TextView) view.findViewById(R.id.tv_update_comfirm);
@@ -150,7 +150,7 @@ public class WelcomeActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 UtilMethod.dissmissDialog(WelcomeActivity.this, alertDialog);
-                checkApk();
+                checkApk(url);
 
             }
         });
@@ -159,13 +159,13 @@ public class WelcomeActivity extends FragmentActivity {
     /**
      * 检查本地是有apk
      */
-    public void checkApk() {
+    public void checkApk(String url) {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             Toast.makeText(WelcomeActivity.this, "sd卡不可用", 0).show();
             return;
         }
         final File externalFilesDir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/" + "update.apk");
-
+       // File externalFilesDir = new File(Environment.getExternalStorageDirectory()+"/"+Environment.DIRECTORY_DOWNLOADS+"/" + "update.apk");
         if (null != externalFilesDir && externalFilesDir.exists()) {
             PackageInfo apkInfo = UtilMethod.getApkInfo(WelcomeActivity.this, externalFilesDir.getAbsolutePath());
             //如果apk没问题就不会为null
@@ -180,12 +180,17 @@ public class WelcomeActivity extends FragmentActivity {
         }
 
         createDownDialog();
-        download(externalFilesDir);
+        download(externalFilesDir,url);
 
 
     }
 
-    public void download(final File externalFilesDir) {
+    public void download(final File externalFilesDir,String url) {
+
+        int indexOf = url.lastIndexOf("/");
+        if (indexOf > 0 && indexOf+1 < url.length()) {
+            String baseUrl = url.substring(0, indexOf);
+            String name = url.substring(indexOf + 1);
         DownloadAPI.DownloadProgressInterceptor interceptor = new DownloadAPI.DownloadProgressInterceptor(new DownloadProgressListener() {
             @Override
             public void update(long bytesRead, long contentLength, boolean done) {
@@ -216,7 +221,7 @@ public class WelcomeActivity extends FragmentActivity {
             }
         });
         //如果没有就重新下载
-        mRxManager.add(DownloadAPI.downloadService("http://139.199.178.209:8080/", interceptor).download("app-debug.apk")
+        mRxManager.add(DownloadAPI.downloadService(baseUrl, interceptor).download(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(new Observer<ResponseBody>() {
@@ -240,11 +245,11 @@ public class WelcomeActivity extends FragmentActivity {
                     public void onNext(ResponseBody responseBody) {
 
                         try {
-                            System.out.println("下载1");
+
                             FileUtils.writeFile(responseBody.byteStream(), externalFilesDir);
-                            System.out.println("下载2");
+
                         } catch (IOException e) {
-                            System.out.println("下载3");
+
                             e.printStackTrace();
                             throw new RuntimeException(e.getMessage(), e);
                         }
@@ -252,6 +257,7 @@ public class WelcomeActivity extends FragmentActivity {
 
                     }
                 }));
+        }
     }
 
     /**

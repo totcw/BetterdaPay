@@ -387,3 +387,14 @@
         @com.hwangjr.rxbus.annotation.Produce public *;
     }
 #rxjava end
+#微信
+-keep class com.tencent.mm.opensdk.** {
+   *;
+}
+-keep class com.tencent.wxop.** {
+   *;
+}
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
+#微信
