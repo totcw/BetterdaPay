@@ -106,6 +106,7 @@
     <orderEntry type="library" exported="" name="jpush-3.0.5" level="project" />
     <orderEntry type="library" exported="" name="jcore-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="mylibrary-2.5.6" level="project" />
+    <orderEntry type="library" exported="" name="Luban-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-25.3.1" level="project" />
     <orderEntry type="library" exported="" name="javax.annotation-10.0-b28" level="project" />
     <orderEntry type="library" exported="" name="btsdk-0.0.7" level="project" />

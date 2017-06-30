@@ -20,6 +20,7 @@ import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
+import com.betterda.betterdapay.util.FileUtils;
 import com.betterda.betterdapay.util.ImageTools;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -28,12 +29,17 @@ import com.betterda.mylibrary.ShapeLoadingDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FilterInputStream;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * 上传照片
@@ -289,6 +295,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     private void result(int requestCode, int resultCode, Intent data) {
 
         resultSuccess(requestCode, resultCode, data);
+        //取消裁剪,小米6有问题
      /*   if (requestCode == 5) {
             if (requestCode == 5 && resultCode == -1) { //resultcode表示裁剪成功
 
@@ -314,7 +321,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
         if (requestCode == Constants.PHOTOHRAPH) {
             if (resultCode == RESULT_OK) {// 返回成功的时候
                 //uri 不能放在常量类里面,要实时创建
-                zoomPhoto();
+                zoomPhoto(Constants.PHOTOPATHFORCROP);
                 //在小米6上裁剪图片有问题
                 //ImageTools.cropImg(ImageTools.getUri(this), this, 2, 1, 256, 128);
             } else if (resultCode == RESULT_CANCELED) {// 取消的时候
@@ -330,7 +337,8 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             if (data != null) {
                 Uri uri = data.getData();
                 if (uri != null) {
-                    zoomPhoto();
+
+                    zoomPhoto(ImageTools.changeUriToPath(uri,getmActivity()));
                     //ImageTools.cropImg(uri, this, 2, 1, 256, 128);
 
                 } else {
@@ -346,16 +354,59 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     /**
      * 压缩图片
      */
-    public void zoomPhoto() {
+    public void zoomPhoto(String path) {
         if (!ImageTools.checkSDCardAvailable()) {
-            UtilMethod.Toast(this, "内存卡错误,请检查您的内存卡");
+            showToast("内存卡错误,请检查您的内存卡");
+            return;
+        }
+        File file = new File(path);
+        System.out.println("fiel:"+path);
+        System.out.println("file:"+file.length());
+        if (file == null||!file.exists()) {
+            showToast("选取图片失败");
             return;
         }
         // 防止内存溢出,压缩图片
-        Bitmap pic = ImageTools.scacleToBitmap(Constants.PHOTOPATHFORCROP, this);
-        if (pic != null) {// 这个ImageView是拍照完成后显示图片
-            setPhoto(pic);
-        }
+       // Bitmap pic = ImageTools.scacleToBitmap(Constants.PHOTOPATHFORCROP, this);
+        Luban.with(this)
+                .load(file)                     //传人要压缩的图片
+                .setCompressListener(new OnCompressListener() { //设置回调
+                    @Override
+                    public void onStart() {
+                        // TODO 压缩开始前调用，可以在方法内启动 loading UI
+                        UtilMethod.showDialog(getmActivity(), dialog);
+                    }
+                    @Override
+                    public void onSuccess(File file) {
+                        // TODO 压缩成功后调用，返回压缩后的图片文件
+                        try {
+                            FileUtils.writeFile(new FileInputStream(file),new File(Constants.PHOTOPATHFORCROP));
+                            Bitmap pic = BitmapFactory.decodeFile(Constants.PHOTOPATHFORCROP);
+                            if (pic != null) {// 这个ImageView是拍照完成后显示图片
+                                setPhoto(pic);
+                            } else {
+                                showToast("加载图片错误");
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                            }
+                        } catch (IOException e) {
+                            showToast("加载图片错误");
+                            UtilMethod.dissmissDialog(getmActivity(), dialog);
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // TODO 当压缩过程出现问题时调用
+                        showToast("加载图片错误");
+                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                    }
+                }).launch();
+
+
+
+
     }
 
 
@@ -398,9 +449,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
 
 
     public void savePhoto(Bitmap pic, final String name, ImageView imageView) {
-        // 将bitmap保存到本地
-        /*ImageTools.savePhotoToSDCard(pic, Constants.PHOTOPATH,
-                name);*/
+
         // 上传图片 TODO 将图片转换为base64
         // encode(Constants.PHOTOPATH+name + ".png");
         upload(name, pic, imageView);
@@ -409,94 +458,89 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     }
 
     private void upload(final String name, final Bitmap bitmap, final ImageView imageView) {
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(), dialog);
-                //封装普通的string字段
-                RequestBody account = RequestBody.create(MediaType.parse("text/plain"), UtilMethod.getAccout(getmActivity()));
-                //封装文件
-                // RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATH, name + ".png"));
-                RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATHFORCROP));
-                //第一个参数是key,第二是文件名,如果没有文件名不会被当成文件
-                MultipartBody.Part filePart = MultipartBody.Part.createFormData("images", name + ".png", file);
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getImgUpload(account, filePart)
-                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                .subscribe(new MyObserver<String>() {
-                                    @Override
-                                    protected void onSuccess(String data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("图片上传:" + data);
-                                        }
-                                        switch (isLogo) {
-                                            case 0:
-                                                url_identity = data;
-                                                break;
-                                            case 1:
-                                                url_identity2 = data;
-                                                break;
-                                            case 2://手持身份证
-                                                url_handidntity = data;
-                                                break;
-                                            case 3:
-                                                url_bank2 = data;
-                                                break;
-                                            case 4://手持银行卡
-                                                url_handbank = data;
-                                                break;
-                                            case 5:
-                                                url_bank = data;
-                                                break;
-                                        }
-                                        imageView.setImageBitmap(bitmap);
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        //将裁剪后的图片删除
-                                 /*       try {
-                                            File fileImage = new File(Constants.PHOTOPATHFORCROP);
-                                            if (fileImage != null) {
-                                                fileImage.delete();
-                                            }
-                                        } catch (Exception e) {
 
-                                        }*/
-
+        //封装普通的string字段
+        RequestBody account = RequestBody.create(MediaType.parse("text/plain"), UtilMethod.getAccout(getmActivity()));
+        //封装文件
+        // RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATH, name + ".png"));
+        RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATHFORCROP));
+        //第一个参数是key,第二是文件名,如果没有文件名不会被当成文件
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("images", name + ".png", file);
+        mRxManager.add(
+                NetWork.getNetService()
+                        .getImgUpload(account, filePart)
+                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                        .subscribe(new MyObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("图片上传:" + data);
+                                }
+                                switch (isLogo) {
+                                    case 0:
+                                        url_identity = data;
+                                        break;
+                                    case 1:
+                                        url_identity2 = data;
+                                        break;
+                                    case 2://手持身份证
+                                        url_handidntity = data;
+                                        break;
+                                    case 3:
+                                        url_bank2 = data;
+                                        break;
+                                    case 4://手持银行卡
+                                        url_handbank = data;
+                                        break;
+                                    case 5:
+                                        url_bank = data;
+                                        break;
+                                }
+                                imageView.setImageBitmap(bitmap);
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                //将裁剪后的图片删除
+                                try {
+                                    File fileImage = new File(Constants.PHOTOPATHFORCROP);
+                                    if (fileImage != null) {
+                                        fileImage.delete();
                                     }
+                                } catch (Exception e) {
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        showToast(resultMsg);
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        //将裁剪后的图片删除
-                                        try {
-                                            File fileImage = new File(Constants.PHOTOPATHFORCROP);
-                                            if (fileImage != null) {
-                                                fileImage.delete();
-                                            }
-                                        } catch (Exception e) {
+                                }
 
-                                        }
+                            }
+
+                            @Override
+                            public void onFail(String resultMsg) {
+                                showToast(resultMsg);
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                //将裁剪后的图片删除
+                                try {
+                                    File fileImage = new File(Constants.PHOTOPATHFORCROP);
+                                    if (fileImage != null) {
+                                        fileImage.delete();
                                     }
+                                } catch (Exception e) {
 
-                                    @Override
-                                    public void onExit() {
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        //将裁剪后的图片删除
-                                        try {
-                                            File fileImage = new File(Constants.PHOTOPATHFORCROP);
-                                            if (fileImage != null) {
-                                                fileImage.delete();
-                                            }
-                                        } catch (Exception e) {
+                                }
+                            }
 
-                                        }
-
+                            @Override
+                            public void onExit() {
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                //将裁剪后的图片删除
+                                try {
+                                    File fileImage = new File(Constants.PHOTOPATHFORCROP);
+                                    if (fileImage != null) {
+                                        fileImage.delete();
                                     }
-                                })
-                );
-            }
-        });
+                                } catch (Exception e) {
+
+                                }
+
+                            }
+                        })
+        );
     }
 
     /**

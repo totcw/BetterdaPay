@@ -38,7 +38,7 @@
                     android:id="@+id/iv_addbankcard2_identity"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/identity" />
+                   android:src="@mipmap/identity" />
 
             </com.betterda.mylibrary.view.RatioLayout>
 
@@ -71,7 +71,7 @@
                     android:id="@+id/iv_addbankcard2_identity2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/identity2" />
+                    android:src="@mipmap/identity2" />
 
             </com.betterda.mylibrary.view.RatioLayout>
 
@@ -103,7 +103,7 @@
                     android:id="@+id/iv_addbankcard2_handidentity"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/handidentity" />
+                    android:src="@mipmap/handidentity" />
 
             </com.betterda.mylibrary.view.RatioLayout>
 
@@ -145,7 +145,7 @@
                     android:id="@+id/iv_addbankcard2_bankcard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/backcard" />
+                    android:src="@mipmap/backcard" />
 
             </com.betterda.mylibrary.view.RatioLayout>
 
@@ -178,7 +178,7 @@
                     android:id="@+id/iv_addbankcard2_bankcard2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/bankcard2" />
+                    android:src="@mipmap/bankcard2"/>
 
             </com.betterda.mylibrary.view.RatioLayout>
 
@@ -210,7 +210,7 @@
                     android:id="@+id/iv_addbankcard2_handbank"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/hand_bankcard" />
+                    android:src="@mipmap/hand_bankcard" />
 
             </com.betterda.mylibrary.view.RatioLayout>
 
