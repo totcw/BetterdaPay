@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:text="持卡人      "
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
 
                 <EditText
@@ -51,7 +51,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:hint="请输入持卡人姓名"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:text="身份证      "
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
 
                 <EditText
@@ -85,7 +85,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:hint="请输入身份证号"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:text="所属银行   "
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
 
                 <TextView
@@ -119,13 +119,93 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
                 <ImageView
 
                     android:layout_width="8dp"
                     android:layout_height="15dp"
-                    android:background="@mipmap/jiantou" />
+                    android:background="@mipmap/jiantou"/>
+
+            </LinearLayout>
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+
+                android:background="@color/lv_divider"></View>
+
+            <LinearLayout
+                android:id="@+id/linear_realnameauth_bankNo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联行号            "
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="14sp"/>
+
+
+                <TextView
+                    android:id="@+id/tv_realnameauth_bankNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:textSize="14sp"/>
+
+                <ImageView
+
+                    android:layout_width="8dp"
+                    android:layout_height="15dp"
+                    android:background="@mipmap/jiantou"/>
+
+            </LinearLayout>
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+
+                android:background="@color/lv_divider"></View>
+
+            <LinearLayout
+                android:id="@+id/linear_realnameauth_bankaddress"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#ffffff"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开户地址    "
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="14sp"/>
+
+
+                <TextView
+                    android:id="@+id/tv_realnameauth_bankaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:textSize="14sp"/>
+
+                <ImageView
+
+                    android:layout_width="8dp"
+                    android:layout_height="15dp"
+                    android:background="@mipmap/jiantou"/>
 
             </LinearLayout>
 
@@ -149,7 +229,7 @@
                     android:layout_height="wrap_content"
                     android:text="银行卡            "
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
 
                 <EditText
@@ -159,7 +239,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:hint="请输入卡号(仅支持储蓄卡)"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 
@@ -183,7 +263,7 @@
                     android:layout_height="wrap_content"
                     android:text="银行预留手机"
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
 
                 <EditText
@@ -193,7 +273,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:hint="请输入预留手机号"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 
@@ -205,18 +285,16 @@
                 android:background="@color/lv_divider"></View>
 
 
-
-
             <Button
                 android:id="@+id/btn_realnameauth_next"
-                android:background="@drawable/btn_login_selector"
-                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/btn_login_selector"
                 android:text="下一步"
-                android:textColor="#ffffff"
-                android:layout_height="48dp" />
+                android:textColor="#ffffff"/>
 
         </LinearLayout>
 

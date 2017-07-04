@@ -29,6 +29,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import kankan.wheel.widget.WheelDialog;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -56,6 +57,10 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
     EditText etRealnameauthCardNo;
     @BindView(R.id.et_realnameauth_number)
     EditText etRealnameauthNumber;
+    @BindView(R.id.tv_realnameauth_bankNo)
+    TextView mTvRealnameauthBankNo;
+    @BindView(R.id.tv_realnameauth_bankaddress)
+    TextView mTvRealnameauthBankAddress;
     @BindView(R.id.btn_realnameauth_next)
     Button btnRealnameauthNext;
 
@@ -132,11 +137,17 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
         topbarRealnameauth.setOnBackListener(this);
     }
 
-    @OnClick({R.id.linear_realnameauth_bankname, R.id.btn_realnameauth_next})
+    @OnClick({R.id.linear_realnameauth_bankname, R.id.linear_realnameauth_bankNo,R.id.linear_realnameauth_bankaddress,R.id.btn_realnameauth_next})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.linear_realnameauth_bankname:
+            case R.id.linear_realnameauth_bankname://选择所属银行
                 chooseBank();
+                break;
+            case R.id.linear_realnameauth_bankNo://选择联行号
+                chooseBank();
+                break;
+            case R.id.linear_realnameauth_bankaddress://选择开户地址
+                chooseAddress();
                 break;
             case R.id.btn_realnameauth_next:
                 changeToUpload();
@@ -147,6 +158,17 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+    private void chooseAddress() {
+        WheelDialog wheelDialog = new WheelDialog(this);
+        wheelDialog.setOnAddressCListener(new WheelDialog.OnAddressCListener() {
+            @Override
+            public void onClick(String province, String city, String area) {
+                    mTvRealnameauthBankAddress.setText(province+city+area);
+            }
+        });
+        wheelDialog.show();
+    }
+
     public void changeToUpload() {
 
         if (btnRealnameauthNext.isSelected()) {
@@ -155,7 +177,7 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 showToast("请输入正确的手机号码");
                 return;
             }
-           // authService();
+            // authService();
             next();
         }
 
@@ -173,18 +195,18 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
         param.put("realname", realName);
         param.put("idcard", identityCard);
         param.put("bankcard", cardNum);
-        param.put("mobile",number);
+        param.put("mobile", number);
         String jsonString = GsonTools.getJsonString(param);
 
         String data = "";
         try {
-            byte[] encodeData = KeyGenerator.encryptByPublicKey(jsonString.getBytes("utf-8"),PUBLIC_KEY);
+            byte[] encodeData = KeyGenerator.encryptByPublicKey(jsonString.getBytes("utf-8"), PUBLIC_KEY);
             data = Base64Util.encode(encodeData);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        OkHttpClient client =  new OkHttpClient.Builder()
+        OkHttpClient client = new OkHttpClient.Builder()
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -193,7 +215,7 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 .baseUrl("http://www.meichebang.com.cn/EffersonPay/")
                 .build();
         Api api = retrofit.create(Api.class);
-        api.getAuth(data,appId)
+        api.getAuth(data, appId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
@@ -204,13 +226,13 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
 
                     @Override
                     public void onError(Throwable e) {
-                            e.printStackTrace();
+                        e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
-                            System.out.println("res:"+responseBody.string());
+                            System.out.println("res:" + responseBody.string());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
