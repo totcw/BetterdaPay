@@ -2,11 +2,11 @@
 <resources>
 
     <color name="title_red">#fb5255</color>
-    <color name="bg">#00aaff</color>
-    <color name="bg_blue">#ff00aaee</color>
+    <color name="bg">#ff00abee</color>
+    <color name="bg_blue">#ff00abee</color>
     <color name="black">#ff000000</color>
-    <color name="bg_gray">#f8f9fa</color>
-    <color name="bg_green">#00aaee</color>
+    <color name="bg_gray">#ededed</color>
+    <color name="bg_green">#ff00abee</color>
     <color name="divierLine">#dcdcdc</color>
     <color name="gray_line">#ffd6d7dc</color>
     <color name="tv_get_yzm">#000000</color> <!--注册页面点击获取验证码-->
@@ -21,4 +21,8 @@
     <color name="shouye_green">#01d227</color><!--分类选择的颜色-->
     <color name="cardview_light_background">#FFFAFAFA</color>
     <color name="text_color">#ffffffff</color>
+
+    <!--钱包页面-->
+    <color name="fragment_wallet_icon_textcolor">#ff666666</color> <!--图标文字-->
+    <color name="fragment_wallet_textcolor">#97dbfb</color> <!--分润金额-->
 </resources>

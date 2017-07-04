@@ -512,8 +512,8 @@ public class UtilMethod {
      */
     public  static boolean showNotice(final Context context) {
         String accout = UtilMethod.getAccout(context);
-        boolean auth = CacheUtils.getBoolean(context, accout+Constants.Cache.AUTH, false);
-        if (!auth) {
+        String auth = CacheUtils.getString(context, accout+Constants.Cache.AUTH, "0");
+        if ("0".equals(auth)) {
             View view = LayoutInflater.from(context).inflate(R.layout.dialog_notice, null);
             TextView mTvCancel = (TextView) view.findViewById(R.id.tv_update_cancel);
             TextView mTvComfirm = (TextView) view.findViewById(R.id.tv_update_comfirm);
@@ -536,10 +536,15 @@ public class UtilMethod {
                 }
             });
             return false;
+        } else if ("2".equals(auth)) {
+            UtilMethod.Toast(context, "正在实名审核中");
+            return false;
         } else {
             return true;
         }
     }
+
+
 
     /**
      * 将手机号转换为带**的号码

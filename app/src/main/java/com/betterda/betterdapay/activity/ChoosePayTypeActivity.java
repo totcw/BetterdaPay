@@ -200,6 +200,16 @@ public class ChoosePayTypeActivity extends BaseActivity {
                     intent.putExtra("money", money);
                     startActivity(intent);
                     finish();
+                } else if ("WeChat".equals(payway)) {
+                    Intent intent = new Intent(getmActivity(), QrCodeActicity.class);
+                    intent.putExtra("type", "微信");
+                    startActivity(intent);
+                    finish();
+                } else if ("AliPay".equals(payway)) {
+                    Intent intent = new Intent(getmActivity(), QrCodeActicity.class);
+                    intent.putExtra("type", "支付宝");
+                    startActivity(intent);
+                    finish();
                 }
 
             } else {

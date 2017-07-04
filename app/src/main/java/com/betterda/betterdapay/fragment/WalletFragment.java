@@ -41,7 +41,7 @@ public class WalletFragment extends BaseFragment {
 
 
     @BindView(R.id.gttv_wallet_money)
-    GradientTextView mGttvWalletMoney; //提现金额
+    TextView mGttvWalletMoney; //提现金额
     @BindView(R.id.iv_wallet_bg)
     ImageView mWalletBg; //图片
     @BindView(R.id.iv_shouye_message)

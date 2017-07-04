@@ -220,7 +220,7 @@ public class LoginActivity extends BaseActivity {
             String rate = userInfo.getRank();
             CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, account);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.PWD, pwd);
-            CacheUtils.putBoolean(getmActivity(), account + Constants.Cache.AUTH, userInfo.getAuth()=="1"?true:false);
+            CacheUtils.putString(getmActivity(), account + Constants.Cache.AUTH, userInfo.getAuth());
             CacheUtils.putString(getmActivity(), account + Constants.Cache.RANK, rate);
             setAlias();
 

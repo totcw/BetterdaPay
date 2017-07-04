@@ -21,4 +21,14 @@
     <dimen name="fragment_my_iv">30dp</dimen>
     <dimen name="fragment_my_left">40dp</dimen>
 
+    <!--钱包页面-->
+
+    <dimen name="fragment_wallet_icon_size">50dp</dimen> <!--钱包页面的图标大小-->
+    <dimen name="fragment_wallet_icon_margin_top">12dp</dimen><!--钱包页面的图标和文字的间隔距离-->
+    <!--钱包页面的图标文字的大小-->
+    <dimen name="fragment_wallet_icon_textsize">13sp</dimen>
+    <!--fragment 标题的大小-->
+    <dimen name="fragment_title">19sp</dimen>
+
+
 </resources>
