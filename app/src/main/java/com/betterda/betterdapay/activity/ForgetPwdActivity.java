@@ -12,6 +12,7 @@ import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
@@ -122,7 +123,7 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
 
 
         if (number != null) {
-            boolean ismobile = number.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
+            boolean ismobile = number.matches(Constants.NUMBER_REGULAR);
             if (!ismobile) {
                 showToast("请填写正确的手机号码");
                 return;
@@ -157,7 +158,7 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
     }
 
     private void getData() {
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
+        NetworkUtils.isNetWork(getmActivity(), btnForgetpwd, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
                 UtilMethod.showDialog(getmActivity(), dialog);
@@ -198,7 +199,7 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
         if (countdownRegister.isSelected()) {
             //用正则判断是否是手机号码
             if (!TextUtils.isEmpty(number)) {
-                boolean ismobile = number.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
+                boolean ismobile = number.matches(Constants.NUMBER_REGULAR);
                 if (ismobile) {
                     verficationNumber = number;
                     getVerification();

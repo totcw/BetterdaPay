@@ -32,6 +32,7 @@ public class Constants {
      public final static String FEN_RUN_HUI2 = "返回分润"; //返还分润
     public final static String FEN_RUN_TUI2 = "推广分润";//推广分润
     public final static String WITHDRAW = "提现";
+    public final static String NUMBER_REGULAR = "^1(3[0-9]|4[0-9]|5[0-9]|7[0-9]|8[0-9])\\d{8}$";//判断手机的正则
 
 
     public static class Cache {
@@ -49,8 +50,9 @@ public class Constants {
 
 
     public static class Url {
-        //public static final String URL = "http://61c14f00.ngrok.io/wallet/";
-        public static final String URL = "http://119.23.227.230:7080/wallet/";
+        public static final String URL = "http://192.168.0.123:8080/wallet/";
+       // public static final String URL = "http://wallet.ngrok.cc/wallet/";
+       // public static final String URL = "http://119.23.227.230:7080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
@@ -82,6 +84,7 @@ public class Constants {
         public static final String URL_CHECK_WITHDRAW = "api/disburseController.do?isWithdraw";//查询结算状态
         public static final String URL_UNIONGATEWAYT0ORDER = "api/payController.do?unionPay";//生成银联网关t0订单
         public static final String URL_ERRORLOG = "api/errorLogController.do?errorLog";//错误日志
+        public static final String URL_GET_ORDERFORSCAN = "api/scanController.do?scanPay";//扫码收款
 
 
 

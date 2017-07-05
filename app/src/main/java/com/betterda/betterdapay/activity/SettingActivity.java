@@ -1,5 +1,6 @@
 package com.betterda.betterdapay.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -100,8 +101,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 getData();
                 break;
             case R.id.btn_setting_exit:
-                UtilMethod.startIntent(getmActivity(), LoginActivity.class);
-                mRxManager.post(HomeActivity.class.getSimpleName(),"exit");
+
+                Intent intent = new Intent();
+                intent.setClass(this, LoginActivity.class);
+                //添加清除任务栈中所有activity的log,如果要启动的activity不在任务栈中了,还需要添加FLAG_ACTIVITY_NEW_TASK,才会关闭任务栈中的其他activity
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 finish();
                 break;
             case R.id.bar_back:

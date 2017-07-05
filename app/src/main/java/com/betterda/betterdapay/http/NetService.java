@@ -100,6 +100,21 @@ public interface NetService {
                                                           @Field("rankId") String rankId,
                                                           @Field("body") String body);
 
+    /**
+     * 扫描收款
+     * @param account
+     * @param amount
+     * @param body
+     * @param payType  1为支付宝 2为微信
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_ORDERFORSCAN)
+    Observable<BaseCallModel<String>> getOrderForScan(@Field("account") String account,
+                                                          @Field("amount") String amount,
+                                                          @Field("body") String body,
+                                                          @Field("payType") String payType);
 
     /**
      * 获取各等级费率

@@ -102,7 +102,6 @@ public class LoginActivity extends BaseActivity {
         if (remember) {
             String accout = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
             etLoginNumber.setText(accout);
-            Log.i(Tag, CacheUtils.getString(getmActivity(), accout + Constants.Cache.PWD, "") + "密码");
             etLoginPwd.setText(CacheUtils.getString(getmActivity(), accout + Constants.Cache.PWD, ""));
             iv_login_jizhu.setSelected(remember);
             //  isLogin();
@@ -145,6 +144,7 @@ public class LoginActivity extends BaseActivity {
                 CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "15160700380");
                 setAlias();
                 finish();*/
+               // UtilMethod.showDialog(getmActivity(), dialog);
                 Login();
                 break;
             case R.id.relative_login_register://注册
@@ -164,7 +164,7 @@ public class LoginActivity extends BaseActivity {
             showToast("请输入密码");
             return;
         }
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
+        NetworkUtils.isNetWork(getmActivity(), btnLogin, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
                 getData();
@@ -212,9 +212,7 @@ public class LoginActivity extends BaseActivity {
      * @param userInfo
      */
     private void parseAndSave(UserInfo userInfo) {
-        if (BuildConfig.LOG_DEBUG) {
-            System.out.println("登录:"+userInfo);
-        }
+
         if (userInfo != null) {
             String account = userInfo.getAccount();
             String rate = userInfo.getRank();

@@ -15,6 +15,7 @@ import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
@@ -148,7 +149,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
         if (countdownRegister.isSelected()) {
             //用正则判断是否是手机号码
             if (!TextUtils.isEmpty(number)) {
-                boolean ismobile = number.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
+                boolean ismobile = number.matches(Constants.NUMBER_REGULAR);
                 if (ismobile) {
                     verficationNumber = number;
                     getVerification();
@@ -215,7 +216,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
         }
 
         if (number != null) {
-            boolean ismobile = number.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
+            boolean ismobile = number.matches(Constants.NUMBER_REGULAR);
             if (!ismobile) {
                 showToast("请填写正确的手机号码");
                 return;
@@ -236,7 +237,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
         }
 
         if (phone != null) {
-            boolean ismobile = phone.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
+            boolean ismobile = phone.matches(Constants.NUMBER_REGULAR);
             if (!ismobile) {
                 showToast("请填写正确的邀请码");
                 return;
@@ -255,7 +256,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
      * 获取验证码
      */
     private void getVerification() {
-        NetworkUtils.isNetWork(this, null, new NetworkUtils.SetDataInterface() {
+        NetworkUtils.isNetWork(this, btnRegister, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
               mRxManager.add(

@@ -94,12 +94,7 @@ public class HomeActivity extends BaseActivity {
 
         UtilMethod.showNotice(this);
 
-        mRxManager.on(HomeActivity.class.getSimpleName(), new Action1<String>() {
-            @Override
-            public void call(String s) {
-                finish();
-            }
-        });
+
     }
 
 

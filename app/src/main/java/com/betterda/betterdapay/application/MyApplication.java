@@ -34,7 +34,7 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
 
-        System.out.println("application create");
+
         if (null == list) {
             list = new ArrayList<>();
         }
