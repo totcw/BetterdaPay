@@ -20,6 +20,8 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.UtilMethod;
 
+import java.io.UnsupportedEncodingException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -133,8 +135,17 @@ public class JsActivity extends BaseActivity {
             @Override
             public void run() {
                 int payUp = (int) (money * 100);
-                String url = Constants.Url.URL+"mobile/unionPay.jsp?account="+UtilMethod.getAccout(getmActivity())+"&body=测试&amount="+payUp;
-                 webView.loadUrl(url);
+                String url = Constants.Url.URL+"mobile/unionPay.jsp";
+
+                String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&body=银联收款&amount="+payUp;
+
+                try {
+                    webView.postUrl(url,postDate.getBytes("utf-8"));
+                    // webView.loadUrl(url);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
 
 
             }

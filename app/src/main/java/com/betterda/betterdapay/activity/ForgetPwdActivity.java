@@ -168,6 +168,7 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
                                 .subscribe(new MyObserver<String>() {
                                     @Override
                                     protected void onSuccess(String data, String resultMsg) {
+                                        showToast(resultMsg);
                                         UtilMethod.dissmissDialog(getmActivity(), dialog);
                                         finish();
                                     }

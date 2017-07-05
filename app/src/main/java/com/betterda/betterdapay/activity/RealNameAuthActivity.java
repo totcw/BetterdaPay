@@ -15,7 +15,9 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.Api;
+import com.betterda.betterdapay.util.BankCardUtil;
 import com.betterda.betterdapay.util.GsonTools;
+import com.betterda.betterdapay.util.IDCardUtil;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.paycloud.sdk.util.Base64Util;
 import com.betterda.paycloud.sdk.util.KeyGenerator;
@@ -57,8 +59,6 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
     EditText etRealnameauthCardNo;
     @BindView(R.id.et_realnameauth_number)
     EditText etRealnameauthNumber;
-    @BindView(R.id.tv_realnameauth_bankNo)
-    TextView mTvRealnameauthBankNo;
     @BindView(R.id.tv_realnameauth_bankaddress)
     TextView mTvRealnameauthBankAddress;
     @BindView(R.id.btn_realnameauth_next)
@@ -69,6 +69,8 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
     private String cardNum;//银行卡号
     private String bank;//所属银行
     private String number;//预留手机号码
+    private String address;//开户地址
+    private String bankNo;//联行号
     private String cardType = "储蓄卡";//银行卡类型
     String appId = "40289edd58f0d7c40158f0d7c4c50000";
     String appCode = "40289edd58f0d7fe0158f0d7fe000000";
@@ -124,7 +126,7 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
     private void commit() {
         if (!TextUtils.isEmpty(realName) && !TextUtils.isEmpty(identityCard)
                 && !TextUtils.isEmpty(cardNum) && !TextUtils.isEmpty(bank)
-                && !TextUtils.isEmpty(number)) {
+                && !TextUtils.isEmpty(number)&& !TextUtils.isEmpty(address)) {
             btnRealnameauthNext.setSelected(true);
         } else {
             btnRealnameauthNext.setSelected(false);
@@ -137,13 +139,10 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
         topbarRealnameauth.setOnBackListener(this);
     }
 
-    @OnClick({R.id.linear_realnameauth_bankname, R.id.linear_realnameauth_bankNo,R.id.linear_realnameauth_bankaddress,R.id.btn_realnameauth_next})
+    @OnClick({R.id.linear_realnameauth_bankname, R.id.linear_realnameauth_bankaddress, R.id.btn_realnameauth_next})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_realnameauth_bankname://选择所属银行
-                chooseBank();
-                break;
-            case R.id.linear_realnameauth_bankNo://选择联行号
                 chooseBank();
                 break;
             case R.id.linear_realnameauth_bankaddress://选择开户地址
@@ -163,7 +162,8 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
         wheelDialog.setOnAddressCListener(new WheelDialog.OnAddressCListener() {
             @Override
             public void onClick(String province, String city, String area) {
-                    mTvRealnameauthBankAddress.setText(province+city+area);
+                mTvRealnameauthBankAddress.setText(province + city + area);
+                address = province + city + area;
             }
         });
         wheelDialog.show();
@@ -177,8 +177,18 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 showToast("请输入正确的手机号码");
                 return;
             }
-            // authService();
-            next();
+            //验证银行卡号
+            if (!BankCardUtil.checkBankCard(cardNum)) {
+                showToast("请输入正确的银行卡号");
+                return;
+            }
+            //验证身份证
+            String idCardValidate = IDCardUtil.IDCardValidate(identityCard);
+            if ("YES".equals(idCardValidate)) {
+                next();
+            } else {
+                showToast(idCardValidate);
+            }
         }
 
     }
@@ -253,6 +263,8 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
         intent.putExtra("bank", bank);
         intent.putExtra("number", number);
         intent.putExtra("cardType", cardType);
+        intent.putExtra("bankNo", bankNo);
+        intent.putExtra("address", address);
         startActivity(intent);
     }
 
@@ -276,6 +288,7 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onClick(View v) {
                         bank = s;
+                        bankNo = BankData.getBankNo(bank);
                         tvRealnameauthBankname.setText(s);
                         closePopupWindow();
                         commit();
@@ -297,6 +310,14 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
             BankData.bankList.clear();
             BankData.bankList = null;
         }
+        if (null != BankData.bankNoMap) {
+            BankData.bankNoMap.clear();
+            BankData.bankNoMap = null;
+        }
 
     }
+
+
+
+
 }

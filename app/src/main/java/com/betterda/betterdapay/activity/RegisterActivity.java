@@ -295,23 +295,23 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
                         .getRegister(number, password, phone)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<BaseCallModel<String>>() {
+                        .subscribe(new MyObserver<String>() {
                             @Override
-                            public void onCompleted() {
-
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                showToast(e.toString());
-                                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                            }
-
-                            @Override
-                            public void onNext(BaseCallModel<String> stringBaseCallModel) {
-
+                            protected void onSuccess(String data, String resultMsg) {
+                                showToast(resultMsg);
                                 UtilMethod.dissmissDialog(getmActivity(), dialog);
                                 finish();
+                            }
+
+                            @Override
+                            public void onFail(String resultMsg) {
+                                showToast(resultMsg);
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                            }
+
+                            @Override
+                            public void onExit() {
+
                             }
                         })
         );
