@@ -28,7 +28,7 @@ public class MemberActivity extends BaseActivity {
     @BindView(R.id.topbar_member)
     NormalTopBar topbarMember;
     @BindView(R.id.gttv_member_count)
-    GradientTextView gttvMemberCount;
+    TextView gttvMemberCount;
     @BindView(R.id.tv_member_my)
     TextView tvMemberMy;
     @BindView(R.id.textView)

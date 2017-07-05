@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.activity.BanLiActivity;
-import com.betterda.betterdapay.activity.BianJieDaiKuanActivity;
-import com.betterda.betterdapay.activity.CreditpayActivity;
 import com.betterda.betterdapay.activity.JieSuanActivity;
 import com.betterda.betterdapay.activity.MessageActivity;
 import com.betterda.betterdapay.activity.TransactionRecordActivity;
@@ -20,13 +17,11 @@ import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Wallet;
 import com.betterda.betterdapay.javabean.WithDrawStatus;
-import com.betterda.betterdapay.livingpay.BaseLivingActiivty;
 import com.betterda.betterdapay.receiver.JpushReceiver;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
-import com.betterda.betterdapay.view.GradientTextView;
 import com.betterda.mylibrary.ShapeLoadingDialog;
 
 import butterknife.BindView;
@@ -210,7 +205,7 @@ public class WalletFragment extends BaseFragment {
                                         }
                                         UtilMethod.dissmissDialog(getmActivity(), mDialog);
                                         if (data != null) {
-                                        createWithDrawDialog();
+                                        createWithDrawDialog(data.getDisburseTime());
 
                                         }
 
@@ -240,11 +235,11 @@ public class WalletFragment extends BaseFragment {
     /**
      * 创建提现的提示对话框
      */
-    public void createWithDrawDialog() {
+    public void createWithDrawDialog(String time) {
         if (mAlertDialog == null) {
             View view = LayoutInflater.from(getmActivity()).inflate(R.layout.dialog_withdraw, null);
             TextView mTvContent = (TextView) view.findViewById(R.id.tv_dialog_call_content);
-            mTvContent.setText("一笔订单正在处理中");
+            mTvContent.setText("您于"+time+"提交了一笔提现,请等待处理");
             Button mBtnComfirm = (Button) view.findViewById(R.id.btn_dialog_call_comfrim);
             mBtnComfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
