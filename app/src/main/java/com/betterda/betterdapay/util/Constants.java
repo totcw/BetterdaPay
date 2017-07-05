@@ -50,9 +50,9 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://192.168.0.123:8080/wallet/";
+       // public static final String URL = "http://192.168.0.123:8080/wallet/";
        // public static final String URL = "http://wallet.ngrok.cc/wallet/";
-       // public static final String URL = "http://119.23.227.230:7080/wallet/";
+        public static final String URL = "http://119.23.227.230:7080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
