@@ -8,7 +8,10 @@
         android:id="@+id/topbar_qrcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.betterda.betterdapay.view.NormalTopBar>
-
+        <ScrollView
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -72,7 +75,7 @@
 
         </FrameLayout>
 
-
+        </ScrollView>
 
 
 </LinearLayout>

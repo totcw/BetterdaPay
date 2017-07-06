@@ -12,6 +12,16 @@
         android:layout_height="wrap_content">
     </com.betterda.betterdapay.view.NormalTopBar>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
 
     <RelativeLayout
         android:focusable="true"
@@ -282,5 +292,7 @@
         android:textColor="#ffffff"
         android:layout_height="48dp" />
 
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
