@@ -37,10 +37,10 @@ public class GradientTextView extends TextView {
 
         @Override
         protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
+          //  super.onDraw(canvas);
 
 
-      /*      mViewWidth = getMeasuredWidth();
+            mViewWidth = getMeasuredWidth();
             mPaint = getPaint();
             String mTipText = getText().toString();
             mPaint.getTextBounds(mTipText, 0, mTipText.length(), mTextBound);
@@ -49,7 +49,6 @@ public class GradientTextView extends TextView {
                     null, Shader.TileMode.CLAMP);
             mPaint.setShader(mLinearGradient);
             canvas.drawText(mTipText, getMeasuredWidth() / 2 - mTextBound.width() / 2, getMeasuredHeight() / 2 +   mTextBound.height()/2, mPaint);
-      */
         }
 
 }

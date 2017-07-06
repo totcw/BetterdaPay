@@ -76,9 +76,6 @@
             android:name=".activity.ChoosePayTypeActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.CollectionActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
             android:name=".activity.JieSuanActivity"
             android:screenOrientation="portrait"></activity>
         <activity

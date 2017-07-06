@@ -199,18 +199,18 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             showToast("请上传银行卡正面照");
             return;
         }
-        if (TextUtils.isEmpty(url_bank2)) {
+      /*  if (TextUtils.isEmpty(url_bank2)) {
             showToast("请上传银行卡反面照");
             return;
-        }
+        }*/
         if (TextUtils.isEmpty(url_handidntity)) {
             showToast("请上传手持身份证照");
             return;
         }
-        if (TextUtils.isEmpty(url_handbank)) {
+      /*  if (TextUtils.isEmpty(url_handbank)) {
             showToast("请上传手持银行卡照");
             return;
-        }
+        }*/
 
         getData();
     }

@@ -4,7 +4,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/bg_gray"
+
               android:orientation="vertical">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,37 +22,37 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/bg_blue"
+                android:background="@color/bg_green"
                 android:orientation="vertical">
 
                 <RelativeLayout
 
                     android:layout_width="match_parent"
-                    android:layout_height="44dp">
+                    android:layout_height="48dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="@string/fragment_wallet"
+                        android:text="钱包"
                         android:textColor="@color/text_color"
-                        android:textSize="@dimen/fragment_title"/>
+                        android:textSize="16sp" />
 
                     <RelativeLayout
-                        android:id="@+id/relative_shouye_message"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        android:padding="10dp">
-
+                        android:layout_centerVertical="true"
+                        android:id="@+id/relative_shouye_message"
+                        android:padding="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
                         <ImageView
                             android:id="@+id/iv_shouye_message"
+                            android:layout_centerInParent="true"
                             android:layout_width="22dp"
                             android:layout_height="22dp"
-                            android:layout_centerInParent="true"
-                            android:background="@drawable/message_selector"/>
+                            android:background="@drawable/message_selector" />
+
 
 
                     </RelativeLayout>
@@ -58,252 +60,288 @@
 
                 </RelativeLayout>
 
-
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="分润金额(元)"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp" />
+
+                <com.betterda.betterdapay.view.GradientTextView
                     android:id="@+id/gttv_wallet_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="29dp"
+                    android:layout_marginTop="10dp"
                     android:text="0"
-                    android:textColor="@color/white"
-                    android:textSize="46sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="22dp"
-                    android:text="分润金额(元)"
-                    android:textColor="@color/fragment_wallet_textcolor"
-                    android:textSize="15sp"/>
-
+                    android:textSize="50sp" />
 
                 <Button
                     android:id="@+id/btn_wallet_tixian"
-                    android:layout_width="225dp"
-                    android:layout_height="38dp"
+                    android:layout_width="160dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="18dp"
-                    android:layout_marginTop="25dp"
-                    android:background="@drawable/shape_corner_apha_white"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/shape_corner_origne"
                     android:text="分润提现"
                     android:textColor="@color/white"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
 
-            <com.betterda.mylibrary.view.RatioLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/white"
-                app:ratio="1.7">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:background="@color/bg_green"
+                    android:layout_height="50dp" />
+
+
+                <com.betterda.mylibrary.view.RatioLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+
+                    android:background="@drawable/shape_bottom_top_line"
+                    app:ratio="1.2">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
 
 
-                        <RelativeLayout
-                            android:id="@+id/relative_wallet_banli"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            <RelativeLayout
+                                android:id="@+id/relative_wallet_banli"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="@dimen/fragment_wallet_icon_size"
-                                    android:layout_height="@dimen/fragment_wallet_icon_size"
-                                    android:background="@mipmap/bianxinyongka"/>
-
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
-                                    android:text="办理信用卡"
-                                    android:textColor="@color/fragment_wallet_icon_textcolor"
-                                    android:textSize="@dimen/fragment_wallet_icon_textsize"/>
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
-                            </LinearLayout>
+                                    <ImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:background="@mipmap/bianxinyongka" />
 
-                        </RelativeLayout>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:text="办理信用卡"
+                                        android:textColor="@color/shouye_renmen_tv"
+                                        android:textSize="12sp" />
 
+                                </LinearLayout>
 
-                        <RelativeLayout
-                            android:id="@+id/relative_shouye_check"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            </RelativeLayout>
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:gravity="center"
-                                android:orientation="vertical">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:background="@color/divierLine"></View>
 
-                                <ImageView
-                                    android:layout_width="@dimen/fragment_wallet_icon_size"
-                                    android:layout_height="@dimen/fragment_wallet_icon_size"
-                                    android:background="@mipmap/zhangdancheck"/>
+                            <RelativeLayout
+                                android:id="@+id/relative_shouye_check"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
-                                    android:text="账单查询"
-                                    android:textColor="@color/fragment_wallet_icon_textcolor"
-                                    android:textSize="@dimen/fragment_wallet_icon_textsize"/>
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
-                            </LinearLayout>
+                                    <ImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:background="@mipmap/zhangdancheck" />
 
-                        </RelativeLayout>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:text="账单查询"
+                                        android:textColor="@color/shouye_renmen_tv"
+                                        android:textSize="12sp" />
 
+                                </LinearLayout>
 
-                        <RelativeLayout
-                            android:id="@+id/relative_shouye_haidai"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+                            </RelativeLayout>
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:gravity="center"
-                                android:orientation="vertical">
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:background="@color/divierLine"></View>
 
-                                <ImageView
-                                    android:layout_width="@dimen/fragment_wallet_icon_size"
-                                    android:layout_height="@dimen/fragment_wallet_icon_size"
-                                    android:background="@mipmap/xinyongkakaidai"/>
+                            <RelativeLayout
+                                android:id="@+id/relative_shouye_haidai"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
-                                    android:text="信用卡还贷"
-                                    android:textColor="@color/fragment_wallet_icon_textcolor"
-                                    android:textSize="@dimen/fragment_wallet_icon_textsize"/>
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
-                            </LinearLayout>
+                                    <ImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:background="@mipmap/xinyongkakaidai" />
 
-                        </RelativeLayout>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:text="信用卡还贷"
+                                        android:textColor="@color/shouye_renmen_tv"
+                                        android:textSize="12sp" />
 
-                        <RelativeLayout
-                            android:id="@+id/relative_shouye_life"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+                                </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:gravity="center"
-                                android:orientation="vertical">
+                            </RelativeLayout>
 
-                                <ImageView
-                                    android:layout_width="@dimen/fragment_wallet_icon_size"
-                                    android:layout_height="@dimen/fragment_wallet_icon_size"
-                                    android:background="@mipmap/lifejiaofei"/>
+                        </LinearLayout>
 
-                                <TextView
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/divierLine"></View>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+
+                            <RelativeLayout
+                                android:id="@+id/relative_shouye_life"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
-                                    android:text="生活缴费"
-                                    android:textColor="@color/fragment_wallet_icon_textcolor"
-                                    android:textSize="@dimen/fragment_wallet_icon_textsize"/>
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
-                            </LinearLayout>
+                                    <ImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:background="@mipmap/lifejiaofei" />
 
-                        </RelativeLayout>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:text="生活缴费"
+                                        android:textColor="@color/shouye_renmen_tv"
+                                        android:textSize="12sp" />
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:background="@color/divierLine"></View>
+
+                            <RelativeLayout
+                                android:id="@+id/relative_shouye_bianjie"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/imageView"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:background="@mipmap/bianjiedaikuan" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:text="便捷贷款"
+                                        android:textColor="@color/shouye_renmen_tv"
+                                        android:textSize="12sp" />
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="10dp"
+                                android:background="@color/divierLine"></View>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
+                </com.betterda.mylibrary.view.RatioLayout>
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <RelativeLayout
-                            android:id="@+id/relative_shouye_bianjie"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/imageView"
-                                    android:layout_width="@dimen/fragment_wallet_icon_size"
-                                    android:layout_height="@dimen/fragment_wallet_icon_size"
-                                    android:background="@mipmap/bianjiedaikuan"/>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
-                                    android:text="便捷贷款"
-                                    android:textColor="@color/fragment_wallet_icon_textcolor"
-                                    android:textSize="@dimen/fragment_wallet_icon_textsize"/>
-
-                            </LinearLayout>
-
-                        </RelativeLayout>
-
-
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="3">
-
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </com.betterda.mylibrary.view.RatioLayout>
-
+            </FrameLayout>
 
             <com.betterda.mylibrary.view.RatioLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
-                android:padding="10dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 app:ratio="2">
 
                 <ImageView
                     android:id="@+id/iv_wallet_bg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/shouye_bg2"/>
+                    android:background="@mipmap/shouye_bg2" />
 
 
             </com.betterda.mylibrary.view.RatioLayout>
