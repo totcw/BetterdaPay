@@ -7,7 +7,7 @@
     android:layout_height="48dp">
 
     <ImageView
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@mipmap/item_add"

@@ -229,14 +229,12 @@ public interface NetService {
      * 银行卡删除
      *
      * @param account
-     * @param token
      * @param id
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_BANK_DELETE)
-    Observable<BaseCallModel<String>> getBandDelete(@Field("account") String account,
-                                                    @Field("token") String token,
+    Observable<BaseCallModel<List<BankCard>>> getBandDelete(@Field("account") String account,
                                                     @Field("id") String id
     );
 

@@ -50,7 +50,7 @@ public class QrCodeActicity extends BaseActivity {
     LoadingPager mLoadpagerQrcode;
     private String payType;//类型  1为支付宝 2为微信
     private String body;//商品内容
-    private float money;
+    private int money;
 
     @Override
     public void initView() {
@@ -63,13 +63,12 @@ public class QrCodeActicity extends BaseActivity {
         super.init();
         mNormalTopBar.setTitle("扫码收款");
         getIntentData();
-        int payUp = (int) (money * 100);
-        getData(payUp);
+
+        getData(money);
         mLoadpagerQrcode.setonErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int payUp = (int) (money * 100);
-                getData(payUp);
+                getData(money);
             }
         });
     }
@@ -114,7 +113,7 @@ public class QrCodeActicity extends BaseActivity {
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
 
-        money = intent.getFloatExtra("money", 0);
+        money = intent.getIntExtra("money", 0);
 
         mTvQrcodeType.setText(type + "收款");
         if ("微信".equals(type)) {

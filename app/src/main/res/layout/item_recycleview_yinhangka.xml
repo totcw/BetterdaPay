@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linear_yinhangka"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:id="@+id/linear_yinhangka"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginLeft="10dp"
-
         android:layout_marginRight="10dp"
         android:gravity="center_vertical">
 
@@ -17,33 +16,34 @@
             android:id="@+id/iv_yinhangka_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-
             />
 
         <TextView
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
             android:id="@+id/tv_yinhangka_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="中国农业银行"
             android:textColor="@color/shouye_renmen_tv"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <TextView
-            android:layout_marginLeft="10dp"
+
+            android:id="@+id/tv_yinhangka_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:gravity="right"
-            android:id="@+id/tv_yinhangka_number"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="信用卡(**** 6625)"
             android:textColor="@color/shouye_lv_tv"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <ImageView
             android:layout_width="8dp"
             android:layout_height="15dp"
-            android:background="@mipmap/jiantou" />
+            android:background="@mipmap/jiantou"/>
 
     </LinearLayout>
 

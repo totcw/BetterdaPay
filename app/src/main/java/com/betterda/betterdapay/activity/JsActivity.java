@@ -40,7 +40,7 @@ public class JsActivity extends BaseActivity {
     WebView webView;
 
 
-    private float money;
+    private int money;
 
 
     @Override
@@ -56,7 +56,7 @@ public class JsActivity extends BaseActivity {
         super.init();
         Intent intent = getIntent();
         if (intent != null) {
-            money = intent.getFloatExtra("money",0);
+            money = intent.getIntExtra("money",0);
 
         }
         final WebSettings settings = webView.getSettings();
@@ -134,10 +134,10 @@ public class JsActivity extends BaseActivity {
         getWindow().getDecorView().post(new Runnable() {
             @Override
             public void run() {
-                int payUp = (int) (money * 100);
+
                 String url = Constants.Url.URL+"mobile/unionPay.jsp";
 
-                String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&body=银联收款&amount="+payUp;
+                String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&body=银联收款&amount="+money;
 
                 try {
                     webView.postUrl(url,postDate.getBytes("utf-8"));

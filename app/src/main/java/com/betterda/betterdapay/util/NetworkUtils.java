@@ -118,6 +118,8 @@ public class NetworkUtils {
                 } else {
                     showSnackBar(view, "网络异常", "立即设置", context);
                 }
+            } else {
+                UtilMethod.Toast(context,"没有网络!");
             }
         } else {
             //如果有网络就请求服务器获取数据

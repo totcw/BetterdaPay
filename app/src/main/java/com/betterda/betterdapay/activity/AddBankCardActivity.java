@@ -16,6 +16,9 @@ import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.BankCardUtil;
+import com.betterda.betterdapay.util.Constants;
+import com.betterda.betterdapay.util.IDCardUtil;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
@@ -63,7 +66,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void init() {
         setTopBar();
-        dialog = UtilMethod.createDialog(getmActivity(), "正在上传...");
+        dialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
         setTextChange();
 
 
@@ -133,34 +136,54 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
      */
     private void commit() {
 
-        NetworkUtils.isNetWork(getmActivity(), topbarAddbankcard, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(), dialog);
-                 NetWork.getNetService()
-                        .getBandAdd(UtilMethod.getAccout(getmActivity()),UtilMethod.getToken(getmActivity()),truename,identitycard,bank,cardnum,number,cardType)
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
-                                showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(),dialog);
-                                finish();
-                            }
-
-                            @Override
-                            public void onFail(String resultMsg) {
-                                showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(),dialog);
-                            }
-
-                            @Override
-                            public void onExit() {
-                                ExitToLogin();
-                            }
-                        });
+        if (btnAddbankNext.isSelected()) {
+            boolean ismobile = number.matches(Constants.NUMBER_REGULAR);
+            if (!ismobile) {
+                showToast("请输入正确的手机号码");
+                return;
             }
-        });
+            //验证银行卡号
+            if (!BankCardUtil.checkBankCard(cardnum)) {
+                showToast("请输入正确的银行卡号");
+                return;
+            }
+            //验证身份证
+            String idCardValidate = IDCardUtil.IDCardValidate(identitycard);
+            if ("YES".equals(idCardValidate)) {
+                NetworkUtils.isNetWork(getmActivity(), topbarAddbankcard, new NetworkUtils.SetDataInterface() {
+                    @Override
+                    public void getDataApi() {
+                        UtilMethod.showDialog(getmActivity(), dialog);
+                        mRxManager.add(
+                                NetWork.getNetService()
+                                        .getBandAdd(UtilMethod.getAccout(getmActivity()),UtilMethod.getToken(getmActivity()),truename,identitycard,bank,cardnum,number,cardType)
+                                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                                        .subscribe(new MyObserver<String>() {
+                                            @Override
+                                            protected void onSuccess(String data, String resultMsg) {
+                                                showToast(resultMsg);
+                                                UtilMethod.dissmissDialog(getmActivity(),dialog);
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void onFail(String resultMsg) {
+                                                showToast(resultMsg);
+                                                UtilMethod.dissmissDialog(getmActivity(),dialog);
+                                            }
+
+                                            @Override
+                                            public void onExit() {
+
+                                            }
+                                        })
+                        );
+                    }
+                });
+            } else {
+                showToast(idCardValidate);
+            }
+        }
     }
 
     /**

@@ -53,7 +53,8 @@ public class InformationActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.linear_realname, R.id.linear_reset, R.id.bar_back})
+
+    @OnClick({R.id.linear_realname, R.id.linear_reset, R.id.linear_bankcard, R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_realname:
@@ -66,6 +67,9 @@ public class InformationActivity extends BaseActivity {
                 }
                 break;
 
+            case R.id.linear_bankcard:
+                UtilMethod.startIntent(getmActivity(), MyYinHangKa.class);
+                break;
             case R.id.linear_reset:
                 UtilMethod.startIntent(getmActivity(), ForgetPwdActivity.class);
                 break;

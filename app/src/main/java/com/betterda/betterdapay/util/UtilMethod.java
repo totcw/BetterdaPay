@@ -562,4 +562,21 @@ public class UtilMethod {
         return phoneNumber;
     }
 
+
+    /**
+     * 将银行卡转换为带**的号码
+     * @param number
+     * @return
+     */
+    public static String transforBankNumber(String number) {
+        String phoneNumber = number;
+        if (phoneNumber != null && phoneNumber.length() >= 4) {
+
+            String lastNumber = phoneNumber.substring(phoneNumber.length() - 4);
+            phoneNumber =  "**** " + lastNumber;
+        }
+
+        return phoneNumber;
+    }
+
 }

@@ -1,12 +1,12 @@
 package com.betterda.betterdapay.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
-import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.adapter.MyYinHangKaAddAdapter;
 import com.betterda.betterdapay.adapter.MyYinHangKaItemAdapter;
@@ -19,7 +19,6 @@ import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
-import com.betterda.mylibrary.ShapeLoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +40,11 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
 
     private MyYinHangKaItemAdapter<BankCard> mItemAdapter;
     private List<BankCard> list;
-    private ShapeLoadingDialog dialog;
-    private int page = 1;
-    private int position;
+    private int money;
+    private boolean isClick;
+    private boolean isPay;//是否是付款
+    private String rankId,rank;//升级的id
+
     @Override
     public void initView() {
         setContentView(R.layout.activity_myyinhangka);
@@ -52,16 +53,29 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     @Override
     public void init() {
         setTopBar();
+        getIntentData();
         setRecycleview();
-
+        loadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData();
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-       // getData();
+        //getData();
     }
-
+    private void getIntentData() {
+        Intent intent = getIntent();
+        money= intent.getIntExtra("money", 0);
+        rankId = intent.getStringExtra("rankId");
+        rank = intent.getStringExtra("rank");
+        isClick = intent.getBooleanExtra("isClick", false);
+        isPay = intent.getBooleanExtra("isPay", false);
+    }
     /**
      * 获取银行卡信息
      */
@@ -70,7 +84,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
         NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
-                  NetWork.getNetService()
+                NetWork.getNetService()
                         .getBandGet(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()))
                         .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
                         .subscribe(new MyObserver<List<BankCard>>() {
@@ -79,7 +93,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
                                 if (data != null) {
                                     parser(data);
                                 }
-                                UtilMethod.judgeData(list,loadpagerLayout);
+                                loadpagerLayout.hide();
                             }
 
                             @Override
@@ -102,14 +116,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
      */
     private void parser(List<BankCard> data) {
 
-
-            for (BankCard order : data) {
-                if (null != list) {
-                    list.add(order);
-
-                }
-            }
-
+        list.addAll(data);
         if (mItemAdapter != null) {
             mItemAdapter.notifyDataSetChanged();
         }
@@ -117,7 +124,10 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
 
     private void setRecycleview() {
         list = new ArrayList<>();
-
+        BankCard bankCard = new BankCard();
+        bankCard.setBank("中国农业银行");
+        bankCard.setCardNum("62165464644");
+        list.add(bankCard);
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(getmActivity());
 
         //设置回收复用池大小，（如果一屏内相同类型的 View 个数比较多，需要设置一个合适的大小，防止来回滚动时重新创建 View）：
@@ -128,7 +138,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         rvLayout.setAdapter(delegateAdapter);
 
-        mItemAdapter = new MyYinHangKaItemAdapter<>(getmActivity(),new LinearLayoutHelper(),list);
+        mItemAdapter = new MyYinHangKaItemAdapter<BankCard>(getmActivity(),new LinearLayoutHelper(),list,isClick,isPay,money,rankId,rank);
         delegateAdapter.addAdapter(mItemAdapter);
 
         delegateAdapter.addAdapter(new MyYinHangKaAddAdapter(getmActivity(),new LinearLayoutHelper(),1));
@@ -143,7 +153,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     @Override
     public void initListener() {
         super.initListener();
-        topbarMyyinhangka.setOnActionListener(this);
+
         topbarMyyinhangka.setOnBackListener(this);
     }
 
@@ -157,66 +167,6 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    /**
-     * 删除银行卡的确定按钮
-     */
-    @Override
-    public void comfirmDialog() {
-        super.comfirmDialog();
-        NetworkUtils.isNetWork(getmActivity(), rvLayout, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                if (dialog == null) {
-                    dialog = UtilMethod.createDialog(getmActivity(), "正在删除...");
-                }
-                //开启进度显示
-                UtilMethod.showDialog(getmActivity(),dialog);
-                if (list != null&&position<list.size()) {
-                    //获取要删除对象
-                    BankCard bankCard = list.get(position);
-                    if (bankCard != null) {
-                          NetWork.getNetService()
-                                .getBandDelete(UtilMethod.getAccout(getmActivity()),UtilMethod.getToken(getmActivity()),bankCard.getId())
-                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                .subscribe(new MyObserver<String>() {
-                                    @Override
-                                    protected void onSuccess(String data, String resultMsg) {
-                                        //将对象从容器中删除
-                                        if (list != null) {
-                                            list.remove(position);
-                                        }
-                                        // TODO 更新适配器
-
-                                        UtilMethod.judgeData(list,loadpagerLayout);
-                                        //取消进度显示
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        showToast(resultMsg);
-                                    }
-
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        showToast(resultMsg);
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            log(resultMsg);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onExit() {
-                                        UtilMethod.dissmissDialog(getmActivity(),dialog);
-                                        ExitToLogin();
-                                    }
-                                });
-
-
-                    }
-
-                }
-
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {

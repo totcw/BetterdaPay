@@ -16,6 +16,7 @@ import com.betterda.betterdapay.callback.MyTextWatcher;
 import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.Api;
 import com.betterda.betterdapay.util.BankCardUtil;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.GsonTools;
 import com.betterda.betterdapay.util.IDCardUtil;
 import com.betterda.betterdapay.view.NormalTopBar;
@@ -167,12 +168,13 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
             }
         });
         wheelDialog.show();
+        wheelDialog.setViewDistrictShow(false);
     }
 
     public void changeToUpload() {
 
         if (btnRealnameauthNext.isSelected()) {
-            boolean ismobile = number.matches("^1(3[0-9]|4[57]|5[0-9]|8[0-9]|7[0678])\\d{8}$");
+            boolean ismobile = number.matches(Constants.NUMBER_REGULAR);
             if (!ismobile) {
                 showToast("请输入正确的手机号码");
                 return;
