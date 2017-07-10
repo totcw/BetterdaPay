@@ -5,61 +5,61 @@ package com.betterda.betterdapay.javabean;
  * Created by Administrator on 2016/8/16.
  */
 public class BankCard {
-    private String id;//银行卡ID
-    private String cardName; //持卡人姓名
-    private String identityCard; //身份证号
-    private String bank; //所属银行
-    private String cardNum;//卡号
-    private String number;//预留手机号码
+    private String cardId;//银行卡ID
+    private String realname; //持卡人姓名
+    private String idcard; //身份证号
+    private String bankname; //所属银行
+    private String bankcard;//卡号
+    private String mobile;//预留手机号码
     private String cardType;//银行卡类型
 
 
     public String getId() {
-        return id;
+        return cardId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.cardId = id;
     }
 
-    public String getCardName() {
-        return cardName;
+    public String getRealname() {
+        return realname;
     }
 
-    public void setCardName(String cardName) {
-        this.cardName = cardName;
+    public void setRealname(String realname) {
+        this.realname = realname;
     }
 
-    public String getIdentityCard() {
-        return identityCard;
+    public String getIdcard() {
+        return idcard;
     }
 
-    public void setIdentityCard(String identityCard) {
-        this.identityCard = identityCard;
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
     }
 
-    public String getBank() {
-        return bank;
+    public String getBankname() {
+        return bankname;
     }
 
-    public void setBank(String bank) {
-        this.bank = bank;
+    public void setBankname(String bankname) {
+        this.bankname = bankname;
     }
 
-    public String getCardNum() {
-        return cardNum;
+    public String getBankcard() {
+        return bankcard;
     }
 
-    public void setCardNum(String cardNum) {
-        this.cardNum = cardNum;
+    public void setBankcard(String bankcard) {
+        this.bankcard = bankcard;
     }
 
-    public String getNumber() {
-        return number;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getType() {

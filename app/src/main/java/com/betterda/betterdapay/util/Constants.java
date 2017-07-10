@@ -50,9 +50,9 @@ public class Constants {
 
 
     public static class Url {
-       // public static final String URL = "http://192.168.0.123:8080/wallet/";
+        public static final String URL = "http://192.168.0.123:8080/wallet/";
        // public static final String URL = "http://wallet.ngrok.cc/wallet/";
-        public static final String URL = "http://119.23.227.230:7080/wallet/";
+       // public static final String URL = "http://119.23.227.230:7080/wallet/";
         public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
         public static final String URL_REGISTER = URL + "api/registerController.do?register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
@@ -65,9 +65,9 @@ public class Constants {
         public static final String URL_UPDATE_CONDITION = URL + "api/memberRankController.do?queryUpgrade";//获取升级条件
         public static final String URL_UPDATE_TO_RATE = URL + "api/upgradeOrderController.do?upgrade";//升级到指定接口(就是订单生成接口)
         public static final String URL_JIESUAN = URL + "api/disburseController.do?withdraw";//结算接口
-        public static final String URL_BANK_ADD = URL + "appAPI.do?api/account/bank/add";//银行卡添加接口
-        public static final String URL_BANK_GET = URL + "appAPI.do?api/account/bank/get";//银行卡查询接口
-        public static final String URL_BANK_DELETE = URL + "appAPI.do?api/account/bank/delete";//银行卡删除接口
+        public static final String URL_BANK_ADD = URL + "api/cardController.do?add";//银行卡添加接口
+        public static final String URL_BANK_GET = URL + "api/cardController.do?list";//银行卡查询接口
+        public static final String URL_BANK_DELETE = URL + "api/cardController.do?delete";//银行卡删除接口
         public static final String URL_CDOE_GET = URL + "api/shareController.do?share";//获取分享链接
         public static final String URL_AUTH_ADD = URL + "api/certController.do?validate";//实名认证接口
         public static final String URL_GET_INCOME = URL + "api/incomeController.do?getIncomes";//分润明细

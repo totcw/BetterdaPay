@@ -83,8 +83,9 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     private String bank;//所属银行
     private String number;//预留手机号码
     private String cardType;//银行卡类型
-    private String address;//开户地址
-    private String bankNo;//联行号
+    private String province ;//省
+    private String city;//市
+    private String bankCode ;//联行号
     private String url_identity, url_bank, url_identity2, url_bank2, url_handbank, url_handidntity;
 
     private ShapeLoadingDialog dialog;
@@ -115,8 +116,9 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             bank = intent.getStringExtra("bank");
             number = intent.getStringExtra("number");
             cardType = intent.getStringExtra("cardType");
-            address = intent.getStringExtra("address");
-            bankNo = intent.getStringExtra("bankNo");
+            province = intent.getStringExtra("province");
+            city = intent.getStringExtra("city");
+            bankCode = intent.getStringExtra("bankNo");
         }
     }
 
@@ -227,7 +229,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                 mRxManager.add(
                         NetWork.getNetService()
                                 .getAuth(UtilMethod.getAccout(getmActivity()), realName,
-                                        identityCard, cardNum, bank, number, cardType, url_identity, url_identity2, url_handidntity, url_bank, url_bank2, url_handbank)
+                                        identityCard, cardNum, bank, number, url_identity, url_identity2, url_handidntity, url_bank, url_bank2, url_handbank,province,city,bankCode)
                                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                 .subscribe(new MyObserver<String>() {
                                     @Override

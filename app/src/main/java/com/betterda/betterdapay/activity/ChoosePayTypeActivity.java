@@ -195,7 +195,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
             Float payUp = Float.valueOf(this.money);
             Float trade = Float.valueOf(tradeQuota);
             int money = (int) (payUp * 100);
-            if (money <= trade) {
+            if (payUp <= trade) {
                 if ("UnionPay".equals(payway)) {
                     Intent intent = new Intent(getmActivity(), MyYinHangKa.class);
                     intent.putExtra("isClick", true);

@@ -79,19 +79,19 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
     public void onBindViewHolder(MainViewHolder holder, int position) {
         if (holder != null && position < data.size()) {
             final BankCard bankCard = data.get(position);
-            holder.mTvName.setText(bankCard.getBank());
-            holder.mTvNumber.setText("信用卡("+ UtilMethod.transforBankNumber(bankCard.getCardNum())+")");
-            holder.mIvIcon.setImageResource(BankData.getBank(bankCard.getBank()));
+            holder.mTvName.setText(bankCard.getBankname());
+            holder.mTvNumber.setText("信用卡("+ UtilMethod.transforBankNumber(bankCard.getBankcard())+")");
+            holder.mIvIcon.setImageResource(BankData.getBank(bankCard.getBankname()));
             if (isClick) {
                 holder.mLinearAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (isPay) {
-                            getDataForUnionMobilePay(bankCard.getCardNum());
+                            getDataForUnionMobilePay(bankCard.getBankcard());
                         } else {
                             Intent intent = new Intent(mContext, JsActivity.class);
                             intent.putExtra("money", money);
-                            intent.putExtra("bankCard", bankCard.getCardNum());
+                            intent.putExtra("bankCard", bankCard.getBankcard());
                             mContext.startActivity(intent);
                             mContext.finish();
                         }
@@ -236,14 +236,18 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
                 UtilMethod.showDialog( mContext,dialog);
                 if (data != null) {
                     NetWork.getNetService()
-                            .getBandDelete(UtilMethod.getAccout(mContext),id)
+                            .getBandDelete(id)
                             .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
                             .subscribe(new MyObserver<List<BankCard>>() {
                                 @Override
                                 protected void onSuccess(List<BankCard> list, String resultMsg) {
 
-                                    data.clear();
-                                    data.addAll(list);
+                                    for (BankCard bankCard : data) {
+                                        if (bankCard.getId().equals(id)) {
+                                            data.remove(bankCard);
+                                            break;
+                                        }
+                                    }
                                     notifyDataSetChanged();
                                     //取消进度显示
                                     UtilMethod.dissmissDialog( mContext, dialog);

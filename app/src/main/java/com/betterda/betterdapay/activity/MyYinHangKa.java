@@ -66,7 +66,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onStart() {
         super.onStart();
-        //getData();
+        getData();
     }
     private void getIntentData() {
         Intent intent = getIntent();
@@ -85,7 +85,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
             @Override
             public void getDataApi() {
                 NetWork.getNetService()
-                        .getBandGet(UtilMethod.getAccout(getmActivity()), UtilMethod.getToken(getmActivity()))
+                        .getBandGet(UtilMethod.getAccout(getmActivity()))
                         .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
                         .subscribe(new MyObserver<List<BankCard>>() {
                             @Override
@@ -115,7 +115,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
      * @param data
      */
     private void parser(List<BankCard> data) {
-
+        list.clear();
         list.addAll(data);
         if (mItemAdapter != null) {
             mItemAdapter.notifyDataSetChanged();
@@ -124,10 +124,6 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
 
     private void setRecycleview() {
         list = new ArrayList<>();
-        BankCard bankCard = new BankCard();
-        bankCard.setBank("中国农业银行");
-        bankCard.setCardNum("62165464644");
-        list.add(bankCard);
         VirtualLayoutManager virtualLayoutManager = new VirtualLayoutManager(getmActivity());
 
         //设置回收复用池大小，（如果一屏内相同类型的 View 个数比较多，需要设置一个合适的大小，防止来回滚动时重新创建 View）：

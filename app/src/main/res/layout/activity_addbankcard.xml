@@ -45,6 +45,7 @@
 
 
                 <EditText
+
                     android:id="@+id/et_addbank_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -79,6 +80,7 @@
 
 
                 <EditText
+                    android:inputType="phone"
                     android:id="@+id/et_addbank_identity"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -154,6 +156,7 @@
 
 
                 <EditText
+                    android:inputType="phone"
                     android:id="@+id/et_addbank_cardNo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -188,6 +191,7 @@
 
 
                 <EditText
+                    android:inputType="phone"
                     android:id="@+id/et_addbank_number"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

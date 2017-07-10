@@ -88,7 +88,7 @@
             />
 
         <EditText
-            android:inputType="number"
+            android:inputType="phone"
             android:background="@null"
             android:id="@+id/tv_livingpay2_number"
             android:layout_marginLeft="10dp"

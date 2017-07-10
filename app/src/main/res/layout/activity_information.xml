@@ -4,12 +4,12 @@
               android:orientation="vertical"
               android:layout_height="match_parent">
 
-    <com.betterda.ananPay.view.NormalTopBar
+    <com.betterda.betterdapay.view.NormalTopBar
         android:id="@+id/topbar_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.betterda.ananPay.view.NormalTopBar>
+    </com.betterda.betterdapay.view.NormalTopBar>
 
 
     <View
@@ -21,6 +21,7 @@
 
 
     <LinearLayout
+        android:background="#ffffff"
         android:id="@+id/linear_realname"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -63,6 +64,7 @@
         ></View>
 
     <LinearLayout
+        android:background="#ffffff"
         android:id="@+id/linear_bankcard"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -102,6 +104,7 @@
         ></View>
 
     <LinearLayout
+        android:background="#ffffff"
         android:id="@+id/linear_reset"
         android:orientation="horizontal"
         android:layout_width="match_parent"

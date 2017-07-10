@@ -156,7 +156,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
                         UtilMethod.showDialog(getmActivity(), dialog);
                         mRxManager.add(
                                 NetWork.getNetService()
-                                        .getBandAdd(UtilMethod.getAccout(getmActivity()),UtilMethod.getToken(getmActivity()),truename,identitycard,bank,cardnum,number,cardType)
+                                        .getBandAdd(UtilMethod.getAccout(getmActivity()),truename,identitycard,bank,cardnum,number)
                                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                         .subscribe(new MyObserver<String>() {
                                             @Override

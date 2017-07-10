@@ -187,55 +187,41 @@ public interface NetService {
                                                  @Field("money") String money
     );
 
+
     /**
      * 银行卡添加
      *
-     * @param account
-     * @param token
-     * @param truename     持卡人姓名
-     * @param identitycard 身份证
-     * @param bank         所属银行
-     * @param cardnum      卡号
-     * @param number       预留手机号
-     * @param cardType     银行卡类型
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_BANK_ADD)
     Observable<BaseCallModel<String>> getBandAdd(@Field("account") String account,
-                                                 @Field("token") String token,
-                                                 @Field("cardName") String truename,
-                                                 @Field("identityCard") String identitycard,
-                                                 @Field("bank") String bank,
-                                                 @Field("cardNum") String cardnum,
-                                                 @Field("number") String number,
-                                                 @Field("cardType") String cardType
+                                                 @Field("realname") String realname,
+                                                 @Field("idcard") String idcard,
+                                                 @Field("bankname") String bankname,
+                                                 @Field("bankcard") String bankcard,
+                                                 @Field("mobile") String mobile
     );
 
     /**
      * 银行卡查询
      *
      * @param account
-     * @param token
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_BANK_GET)
-    Observable<BaseCallModel<List<BankCard>>> getBandGet(@Field("account") String account,
-                                                         @Field("token") String token
+    Observable<BaseCallModel<List<BankCard>>> getBandGet(@Field("account") String account
     );
 
     /**
      * 银行卡删除
      *
-     * @param account
-     * @param id
      * @return
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_BANK_DELETE)
-    Observable<BaseCallModel<List<BankCard>>> getBandDelete(@Field("account") String account,
-                                                    @Field("id") String id
+    Observable<BaseCallModel<List<BankCard>>> getBandDelete(@Field("cardId") String cardId
     );
 
     /**
@@ -276,13 +262,15 @@ public interface NetService {
                                               @Field("bankcard") String cardNum,
                                               @Field("bankname") String bank,
                                               @Field("mobile") String number,
-                                              @Field("cardType") String cardType,
                                               @Field("idcardfront") String identityPositive,
                                               @Field("idcardback") String identityNegative,
                                               @Field("handidcard") String handIdentity,
                                               @Field("bankcardfront") String cardPositive,
                                               @Field("bankcardback") String cardNegative,
-                                              @Field("handbankcard") String handCard
+                                              @Field("handbankcard") String handCard,
+                                              @Field("province") String province,
+                                              @Field("city") String city,
+                                              @Field("bankCode") String bankCode
 
     );
 

@@ -71,6 +71,8 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
     private String bank;//所属银行
     private String number;//预留手机号码
     private String address;//开户地址
+    private String province;//开户地址
+    private String city;//开户地址
     private String bankNo;//联行号
     private String cardType = "储蓄卡";//银行卡类型
     String appId = "40289edd58f0d7c40158f0d7c4c50000";
@@ -165,6 +167,8 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
             public void onClick(String province, String city, String area) {
                 mTvRealnameauthBankAddress.setText(province + city );
                 address = province + city;
+                RealNameAuthActivity.this.province = province;
+                RealNameAuthActivity.this.city = city;
             }
         });
         wheelDialog.show();
@@ -264,9 +268,9 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
         intent.putExtra("cardNum", cardNum);
         intent.putExtra("bank", bank);
         intent.putExtra("number", number);
-        intent.putExtra("cardType", cardType);
         intent.putExtra("bankNo", bankNo);
-        intent.putExtra("address", address);
+        intent.putExtra("province", province);
+        intent.putExtra("city", city);
         startActivity(intent);
     }
 

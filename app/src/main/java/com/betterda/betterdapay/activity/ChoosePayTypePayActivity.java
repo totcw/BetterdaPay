@@ -6,23 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.betterda.BtPay;
-import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.callback.MyObserver;
-import com.betterda.betterdapay.http.NetWork;
-import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.javabean.CreateOrderEntity;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
-import com.betterda.betterdapay.util.CacheUtils;
-import com.betterda.betterdapay.util.Constants;
-import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
-import com.betterda.callback.BtPayCallBack;
-import com.betterda.callback.BtResult;
-import com.betterda.javabean.BtPayResult;
-import com.betterda.javabean.PayCloudReqModel;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.zhy.base.adapter.ViewHolder;
@@ -41,9 +28,6 @@ import butterknife.OnClick;
  */
 public class ChoosePayTypePayActivity extends BaseActivity {
 
-    public static final String PUB_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKqQ8mG2VN2rRi5pF4drOi9pB2kdIAiO6YR7LQGDWQkP2DkAI19apajGxDt3q1m2kmWdytX5dmI8AhxEgK+Ak+qoaf7qNv/6NRQUesnJ8kB7sACzEG79CNwxeZy0jLP2E0RC69r/vyyqcD5PwkIuaMNc5KIJhapl0pPmsMZ+F85QIDAQAB";
-    public static final String APP_ID = "47cb95e8badd4521b3bd17da1516d5db";
-    public static final String SERVICE_URL = "http://www.yuanxiangrui.cn/paycloud-openapi/api/unionpay/app/ctrl/getform/%s/%s";
 
     @BindView(R.id.topbar_chose)
     NormalTopBar topbarChose;
@@ -82,7 +66,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     private void initRecycleView() {
         mList = new ArrayList<>();
         mList.add(new RatingCalculateEntity("银联手机控件支付"));
-      //  mList.add(new RatingCalculateEntity("银联无跳转支付"));
+        //  mList.add(new RatingCalculateEntity("银联无跳转支付"));
 
         mAdapter = new CommonAdapter<RatingCalculateEntity>(this, R.layout.rv_item_choosepaytypepay, mList) {
             @Override
@@ -97,8 +81,14 @@ public class ChoosePayTypePayActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
                             if (holder.getAdapterPosition() == 0) {
-
-                                getDataForUnionMobilePay();
+                                Intent intent = new Intent(getmActivity(), MyYinHangKa.class);
+                                intent.putExtra("rank", rank);
+                                intent.putExtra("rankId", rankId);
+                                intent.putExtra("isPay", true);
+                                intent.putExtra("money", mMoney);
+                                intent.putExtra("isClick", true);
+                                startActivity(intent);
+                                finish();
                             } else {
                                 //TODO 无跳转
                             }
@@ -144,80 +134,6 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     }
 
 
-    /**
-     * 获取银联手机控件支付的订单号
-     */
-    public void getDataForUnionMobilePay() {
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(), dialog);
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getOrder(UtilMethod.getAccout(getmActivity()),  "10", rankId, "升级付款")
-                                .compose(NetWork.handleResult(new BaseCallModel<CreateOrderEntity>()))
-                                .subscribe(new MyObserver<CreateOrderEntity>() {
-                                    @Override
-                                    protected void onSuccess(CreateOrderEntity data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("手机支付控件:" + data);
-                                        }
-                                        if (data != null) {
-                                            unionMobilePay(data);
-                                        } else {
-                                            UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                            showToast("获取支付订单失败");
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        showToast("获取支付订单失败");
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                    }
-
-                                    @Override
-                                    public void onExit() {
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                    }
-                                })
-                );
-            }
-        });
-    }
-
-    /**
-     * 银联手机控件支付
-     */
-    public void unionMobilePay(CreateOrderEntity data) {
-
-        PayCloudReqModel payCloudReqModel = new PayCloudReqModel();
-        payCloudReqModel.setAppid(APP_ID);
-        payCloudReqModel.setPublicKey(PUB_KEY);
-        payCloudReqModel.setBackUrl(data.getNotifyUrl());
-        payCloudReqModel.setOrderId(data.getOrderId());
-        payCloudReqModel.setTxnTime(data.getTxnTime());
-        payCloudReqModel.setTxnAmt("10");
-        payCloudReqModel.setServiceUrl(SERVICE_URL);
-        BtPay.getInstance(getmActivity()).requestPay(payCloudReqModel, new BtPayCallBack() {
-            @Override
-            public void done(BtResult result) {
-                UtilMethod.dissmissDialog(getmActivity(), dialog);
-                BtPayResult payResult = (BtPayResult) result;
-                if (payResult != null) {
-                    if (BtPayResult.RESULT_SUCCESS.equals(payResult.getResult())) {
-                        CacheUtils.putString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, rank);
-                        finish();
-                    } else if (BtPayResult.RESULT_CANCEL.equals(payResult.getResult())) {
-                        showToast("取消支付");
-                    } else  {
-                        showToast("支付失败");
-                    }
-                }
-                BtPay.clear();
-            }
-        });
-    }
 
 
 }
