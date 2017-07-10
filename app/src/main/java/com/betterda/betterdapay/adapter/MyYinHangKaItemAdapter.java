@@ -91,7 +91,7 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
                         } else {
                             Intent intent = new Intent(mContext, JsActivity.class);
                             intent.putExtra("money", money);
-                            intent.putExtra("bankCard", bankCard.getBankcard());
+                            intent.putExtra("paybankcard", bankCard.getBankcard());
                             mContext.startActivity(intent);
                             mContext.finish();
                         }

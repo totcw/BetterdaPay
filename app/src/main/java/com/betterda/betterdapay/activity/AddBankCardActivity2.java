@@ -365,9 +365,13 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             showToast("内存卡错误,请检查您的内存卡");
             return;
         }
+        if (path == null) {
+            showToast("内存卡错误,请检查您的内存卡");
+            return;
+        }
+
         File file = new File(path);
-        System.out.println("fiel:"+path);
-        System.out.println("file:"+file.length());
+
         if (file == null||!file.exists()) {
             showToast("选取图片失败");
             return;

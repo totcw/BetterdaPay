@@ -41,7 +41,7 @@ public class JsActivity extends BaseActivity {
 
 
     private int money;
-
+    private String paybankcard;
 
     @Override
     public void initView() {
@@ -57,7 +57,7 @@ public class JsActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent != null) {
             money = intent.getIntExtra("money",0);
-
+            paybankcard = intent.getStringExtra("paybankcard");
         }
         final WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true); //允许加载javascript
@@ -135,10 +135,8 @@ public class JsActivity extends BaseActivity {
             @Override
             public void run() {
 
-                String url = Constants.Url.URL+"mobile/unionPay.jsp";
-
-                String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&body=银联收款&amount="+money;
-
+                String url = Constants.Url.URL+"api/payController.do?unionPay";
+                String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&body=银联收款&amount="+money+"&paybankcard="+paybankcard;
                 try {
                     webView.postUrl(url,postDate.getBytes("utf-8"));
                     // webView.loadUrl(url);

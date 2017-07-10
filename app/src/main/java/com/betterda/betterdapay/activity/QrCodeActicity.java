@@ -13,6 +13,7 @@ import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.ImageTools;
 import com.betterda.betterdapay.util.NetworkUtils;
+import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
 
@@ -64,22 +65,22 @@ public class QrCodeActicity extends BaseActivity {
         mNormalTopBar.setTitle("扫码收款");
         getIntentData();
 
-        getData(money);
+        getData();
         mLoadpagerQrcode.setonErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getData(money);
+                getData();
             }
         });
     }
 
-    private void getData(int payUp) {
+    private void getData() {
         mLoadpagerQrcode.setLoadVisable();
         NetworkUtils.isNetWork(getmActivity(), mLoadpagerQrcode, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
                 mRxManager.add(
-                        NetWork.getNetService().getOrderForScan("15805939207", "1", body, payType)
+                        NetWork.getNetService().getOrderForScan(UtilMethod.getAccout(getmActivity()), money+"", body, payType)
                                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                 .subscribe(new MyObserver<String>() {
                                     @Override

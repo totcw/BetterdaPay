@@ -333,7 +333,7 @@ public class WelcomeActivity extends FragmentActivity {
 
                                 @Override
                                 public void onExit() {
-
+                                    startToLogin();
                                 }
                             })
             );
