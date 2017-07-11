@@ -44,7 +44,7 @@ import java.util.List;
 public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.Adapter<MyYinHangKaItemAdapter.MainViewHolder> {
     public static final String PUB_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKqQ8mG2VN2rRi5pF4drOi9pB2kdIAiO6YR7LQGDWQkP2DkAI19apajGxDt3q1m2kmWdytX5dmI8AhxEgK+Ak+qoaf7qNv/6NRQUesnJ8kB7sACzEG79CNwxeZy0jLP2E0RC69r/vyyqcD5PwkIuaMNc5KIJhapl0pPmsMZ+F85QIDAQAB";
     public static final String APP_ID = "47cb95e8badd4521b3bd17da1516d5db";
-    public static final String SERVICE_URL = "http://www.yuanxiangrui.cn/paycloud-openapi/api/unionpay/app/ctrl/getform/%s/%s";
+    public static final String SERVICE_URL = "http://www.laidouzhen.cn/paycloud-openapi/api/unionpay/app/ctrl/getform/%s/%s";
 
 
     private Activity mContext;

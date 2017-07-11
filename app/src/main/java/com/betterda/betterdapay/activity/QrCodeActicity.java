@@ -1,7 +1,9 @@
 package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,6 +65,8 @@ public class QrCodeActicity extends BaseActivity {
     public void init() {
         super.init();
         mNormalTopBar.setTitle("扫码收款");
+        mNormalTopBar.setActionText("保存图片");
+        mNormalTopBar.setActionTextVisibility(true);
         getIntentData();
 
         getData();
@@ -72,6 +76,8 @@ public class QrCodeActicity extends BaseActivity {
                 getData();
             }
         });
+
+
     }
 
     private void getData() {
@@ -129,10 +135,35 @@ public class QrCodeActicity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.bar_back)
-    public void onViewClicked() {
-        back();
+    @OnClick({R.id.bar_back,R.id.bar_action})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bar_back:
+                back();
+                break;
+            case R.id.bar_action:
+                shotCut();
+                break;
+        }
     }
 
 
+    /**
+     * 获取屏幕截图
+     */
+    public void shotCut() {
+        try {
+            View view = getWindow().getDecorView();
+            view.setDrawingCacheEnabled(true);
+            view.buildDrawingCache();
+            Bitmap bitmap = view.getDrawingCache();
+            MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, null, null);
+            //重新设置为false,否则后面的截图都是第一张
+            view.setDrawingCacheEnabled(false);
+            showToast("保存图片成功");
+        } catch (Exception e) {
+
+        }
+
+    }
 }
