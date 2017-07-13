@@ -39,10 +39,10 @@ public class JpushReceiver extends BroadcastReceiver {
                 Bundle bundle = intent.getExtras();
                 String title = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 
-                if ("审核通过".equals(title)) {
+              /*  if ("审核通过".equals(title)) {
                     //修改本地的审核状态
                     CacheUtils.putString(context, account + Constants.Cache.AUTH, "1");
-                }
+                }*/
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 // 在这里可以自己写代码去定义用户点击后的行为

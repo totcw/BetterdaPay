@@ -147,7 +147,7 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
 
                         @Override
                         public void onResult(SHARE_MEDIA share_media) {
-                            showToast(share_media.toString());
+
                         }
 
                         @Override

@@ -131,7 +131,7 @@ dependencies {
 
     compile files('libs/umeng_social_tool.jar')
     /*btpay*/
-    compile 'com.betterda.btpay:btsdk:0.0.8'
+    compile 'com.betterda.btpay:btsdk:0.0.9'
     /*极光*/
     compile 'cn.jiguang.sdk:jpush:3.0.5'
     compile 'cn.jiguang.sdk:jcore:1.1.2'

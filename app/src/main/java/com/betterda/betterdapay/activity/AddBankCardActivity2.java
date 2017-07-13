@@ -239,7 +239,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                                         }
                                         UtilMethod.dissmissDialog(getmActivity(), dialog);
                                         //修改认证状态
-                                        CacheUtils.putString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.AUTH, "2");
+                                        CacheUtils.putString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.AUTH, "1");
                                         UtilMethod.startIntent(getmActivity(), HomeActivity.class);
                                         finish();
                                     }

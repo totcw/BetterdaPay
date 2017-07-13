@@ -81,7 +81,11 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
             final BankCard bankCard = data.get(position);
             holder.mTvName.setText(bankCard.getBankname());
             holder.mTvNumber.setText("信用卡("+ UtilMethod.transforBankNumber(bankCard.getBankcard())+")");
-            holder.mIvIcon.setImageResource(BankData.getBank(bankCard.getBankname()));
+            try {
+                holder.mIvIcon.setImageResource(BankData.getBank(bankCard.getBankname()));
+            } catch (Exception e) {
+
+            }
             if (isClick) {
                 holder.mLinearAdd.setOnClickListener(new View.OnClickListener() {
                     @Override

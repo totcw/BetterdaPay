@@ -86,13 +86,13 @@ public class QrCodeActicity extends BaseActivity {
             @Override
             public void getDataApi() {
                 mRxManager.add(
-                        NetWork.getNetService().getOrderForScan(UtilMethod.getAccout(getmActivity()), money+"", body, payType)
+                        NetWork.getNetService().getOrderForScan(UtilMethod.getAccout(getmActivity()), money + "", body, payType)
                                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                 .subscribe(new MyObserver<String>() {
                                     @Override
                                     protected void onSuccess(String data, String resultMsg) {
                                         if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("扫码:"+data);
+                                            System.out.println("扫码:" + data);
                                         }
                                         mIvQrcode.setImageBitmap(ImageTools.generateQRCode(data, getmActivity()));
                                         mLoadpagerQrcode.hide();
@@ -135,7 +135,7 @@ public class QrCodeActicity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.bar_back,R.id.bar_action})
+    @OnClick({R.id.bar_back, R.id.bar_action})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bar_back:
@@ -152,6 +152,7 @@ public class QrCodeActicity extends BaseActivity {
      * 获取屏幕截图
      */
     public void shotCut() {
+        mNormalTopBar.setActionTextVisibility(false);
         try {
             View view = getWindow().getDecorView();
             view.setDrawingCacheEnabled(true);
@@ -163,7 +164,9 @@ public class QrCodeActicity extends BaseActivity {
             showToast("保存图片成功");
         } catch (Exception e) {
 
-        }
+        } finally {
 
+            mNormalTopBar.setActionTextVisibility(true);
+        }
     }
 }
