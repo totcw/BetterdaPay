@@ -27,7 +27,6 @@ public class ShouKuanFragment extends BaseFragment {
     @BindView(R.id.btn_shoukuan)
     Button btnShoukuan;
 
-    ImageView ivShouyeSearch;
     @BindView(R.id.tv_shoukuan_money)
     TextView tvShoukuanMoney;
 
@@ -55,7 +54,7 @@ public class ShouKuanFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.iv_shoukuan_one, R.id.iv_shoukuan_four, R.id.iv_shoukuan_seven, R.id.iv_shoukuan_zero, R.id.iv_shoukuan_two, R.id.iv_shoukuan_five, R.id.iv_shoukuan_eight, R.id.iv_shoukuan_zero2, R.id.iv_shoukuan_three, R.id.iv_shoukuan_six, R.id.iv_shoukuan_nine, R.id.iv_shoukuan_point, R.id.iv_shoukuan_del, R.id.relative_shoukuan_qr, R.id.btn_shoukuan})
+    @OnClick({R.id.iv_shoukuan_one, R.id.iv_shoukuan_four, R.id.iv_shoukuan_seven, R.id.iv_shoukuan_zero, R.id.iv_shoukuan_two, R.id.iv_shoukuan_five, R.id.iv_shoukuan_eight, R.id.iv_shoukuan_three, R.id.iv_shoukuan_six, R.id.iv_shoukuan_nine, R.id.iv_shoukuan_point,  R.id.relative_shoukuan_qr, R.id.btn_shoukuan})
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -80,9 +79,6 @@ public class ShouKuanFragment extends BaseFragment {
             case R.id.iv_shoukuan_eight:
                 write("8");
                 break;
-            case R.id.iv_shoukuan_zero2:
-                write("00");
-                break;
             case R.id.iv_shoukuan_three:
                 write("3");
                 break;
@@ -94,9 +90,6 @@ public class ShouKuanFragment extends BaseFragment {
                 break;
             case R.id.iv_shoukuan_point:
                 write(".");
-                break;
-            case R.id.iv_shoukuan_del://清零
-                clear();
                 break;
             case R.id.relative_shoukuan_qr: //删除一位
                 deleteOne();
