@@ -1,6 +1,7 @@
 package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -133,7 +134,14 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
         rvLayout.setLayoutManager(virtualLayoutManager);
         DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         rvLayout.setAdapter(delegateAdapter);
-
+        rvLayout.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int padding = UtilMethod.dip2px(getmActivity(), 10);
+                int padding2 = UtilMethod.dip2px(getmActivity(), 5);
+                outRect.set(padding,padding2,padding,padding2);
+            }
+        });
         mItemAdapter = new MyYinHangKaItemAdapter<BankCard>(getmActivity(),new LinearLayoutHelper(),list,isClick,isPay,money,rankId,rank);
         delegateAdapter.addAdapter(mItemAdapter);
 

@@ -573,7 +573,7 @@ public class UtilMethod {
         if (phoneNumber != null && phoneNumber.length() >= 4) {
 
             String lastNumber = phoneNumber.substring(phoneNumber.length() - 4);
-            phoneNumber =  "**** " + lastNumber;
+            phoneNumber =  "**** **** **** " + lastNumber;
         }
 
         return phoneNumber;

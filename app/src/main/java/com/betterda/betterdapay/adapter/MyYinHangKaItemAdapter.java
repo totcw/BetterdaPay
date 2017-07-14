@@ -80,12 +80,21 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
         if (holder != null && position < data.size()) {
             final BankCard bankCard = data.get(position);
             holder.mTvName.setText(bankCard.getBankname());
-            holder.mTvNumber.setText("信用卡("+ UtilMethod.transforBankNumber(bankCard.getBankcard())+")");
+            holder.mTvNumber.setText( UtilMethod.transforBankNumber(bankCard.getBankcard()));
             try {
                 holder.mIvIcon.setImageResource(BankData.getBank(bankCard.getBankname()));
             } catch (Exception e) {
 
             }
+            int size = position % 3;
+            if (size == 0) {
+                holder.mLinearAdd.setBackgroundResource(R.drawable.shape_corner_bankblue);
+            } else if (size == 1) {
+                holder.mLinearAdd.setBackgroundResource(R.drawable.shape_corner_bankgreed);
+            } else if (size == 2) {
+                holder.mLinearAdd.setBackgroundResource(R.drawable.shape_corner_bankred);
+            }
+
             if (isClick) {
                 holder.mLinearAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -104,13 +113,13 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
                 });
             }
 
-            holder.mLinearAdd.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.mTvDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public void onClick(View v) {
                     showDeleteDialog(bankCard.getId());
-                    return true;
                 }
             });
+
         }
     }
 
@@ -291,12 +300,14 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
         LinearLayout mLinearAdd;
         ImageView mIvIcon;
         TextView mTvName;
+        TextView mTvDelete;
         TextView mTvNumber;
         public MainViewHolder(View itemView) {
             super(itemView);
             mLinearAdd = (LinearLayout) itemView.findViewById(R.id.linear_yinhangka);
             mIvIcon = (ImageView) itemView.findViewById(R.id.iv_yinhangka_icon);
             mTvName = (TextView) itemView.findViewById(R.id.tv_yinhangka_name);
+            mTvDelete = (TextView) itemView.findViewById(R.id.tv_yinhangka_delete);
             mTvNumber = (TextView) itemView.findViewById(R.id.tv_yinhangka_number);
 
         }

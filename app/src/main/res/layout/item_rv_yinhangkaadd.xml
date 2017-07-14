@@ -2,33 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
+    android:background="@mipmap/bg_virtul"
     android:id="@+id/linear_item_yinghangkaadd"
-    android:gravity="center_vertical"
-    android:layout_height="48dp">
-
-    <ImageView
-        android:layout_marginLeft="20dp"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@mipmap/item_add"
-        />
-
-    <TextView
-        android:layout_weight="1"
-        android:layout_marginLeft="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="添加信用卡"
-        android:textSize="15sp"
-        android:textColor="@color/shouye_renmen_tv"
-        />
+    android:gravity="center"
+    android:layout_height="64dp">
 
 
-    <ImageView
-        android:layout_width="8dp"
-        android:layout_height="15dp"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
 
-        android:layout_marginRight="10dp"
-        android:background="@mipmap/jiantou" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@mipmap/item_add"
+            />
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加信用卡"
+            android:textSize="15sp"
+            android:textColor="@color/shouye_renmen_tv"
+            />
+    </LinearLayout>
+
+
+
+
 
 </LinearLayout>

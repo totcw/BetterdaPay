@@ -26,4 +26,10 @@
     <!--钱包页面-->
     <color name="fragment_wallet_icon_textcolor">#ff666666</color> <!--图标文字-->
     <color name="fragment_wallet_textcolor">#97dbfb</color> <!--分润金额-->
+
+
+    <!--银行卡界面-->
+    <color name="bank_blue">#0dbaff</color>
+    <color name="bank_green">#3aaf6d</color>
+    <color name="bank_red">#eb4c5f</color>
 </resources>

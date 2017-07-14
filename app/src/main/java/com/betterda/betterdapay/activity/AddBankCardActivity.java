@@ -137,7 +137,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
     private void commit() {
 
         if (btnAddbankNext.isSelected()) {
-            boolean ismobile = number.matches(Constants.NUMBER_REGULAR);
+          /*  boolean ismobile = number.matches(Constants.NUMBER_REGULAR);
             if (!ismobile) {
                 showToast("请输入正确的手机号码");
                 return;
@@ -150,39 +150,40 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
             //验证身份证
             String idCardValidate = IDCardUtil.IDCardValidate(identitycard);
             if ("YES".equals(idCardValidate)) {
-                NetworkUtils.isNetWork(getmActivity(), topbarAddbankcard, new NetworkUtils.SetDataInterface() {
-                    @Override
-                    public void getDataApi() {
-                        UtilMethod.showDialog(getmActivity(), dialog);
-                        mRxManager.add(
-                                NetWork.getNetService()
-                                        .getBandAdd(UtilMethod.getAccout(getmActivity()),truename,identitycard,bank,cardnum,number)
-                                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                        .subscribe(new MyObserver<String>() {
-                                            @Override
-                                            protected void onSuccess(String data, String resultMsg) {
-                                                showToast(resultMsg);
-                                                UtilMethod.dissmissDialog(getmActivity(),dialog);
-                                                finish();
-                                            }
 
-                                            @Override
-                                            public void onFail(String resultMsg) {
-                                                showToast(resultMsg);
-                                                UtilMethod.dissmissDialog(getmActivity(),dialog);
-                                            }
-
-                                            @Override
-                                            public void onExit() {
-
-                                            }
-                                        })
-                        );
-                    }
-                });
             } else {
                 showToast(idCardValidate);
-            }
+            }*/
+            NetworkUtils.isNetWork(getmActivity(), topbarAddbankcard, new NetworkUtils.SetDataInterface() {
+                @Override
+                public void getDataApi() {
+                    UtilMethod.showDialog(getmActivity(), dialog);
+                    mRxManager.add(
+                            NetWork.getNetService()
+                                    .getBandAdd(UtilMethod.getAccout(getmActivity()),truename,identitycard,bank,cardnum,number)
+                                    .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                                    .subscribe(new MyObserver<String>() {
+                                        @Override
+                                        protected void onSuccess(String data, String resultMsg) {
+                                            showToast(resultMsg);
+                                            UtilMethod.dissmissDialog(getmActivity(),dialog);
+                                            finish();
+                                        }
+
+                                        @Override
+                                        public void onFail(String resultMsg) {
+                                            showToast(resultMsg);
+                                            UtilMethod.dissmissDialog(getmActivity(),dialog);
+                                        }
+
+                                        @Override
+                                        public void onExit() {
+
+                                        }
+                                    })
+                    );
+                }
+            });
         }
     }
 
