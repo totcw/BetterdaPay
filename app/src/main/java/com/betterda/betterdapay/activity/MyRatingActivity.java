@@ -1,6 +1,7 @@
 package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -149,6 +150,14 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
                         viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.yinlian);
                     }
                 }
+            }
+        });
+        rvMyrating.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int padding = UtilMethod.dip2px(getmActivity(), 8);
+                int padding2 = UtilMethod.dip2px(getmActivity(), 4);
+                outRect.set(padding,padding2,padding,padding2);
             }
         });
         rvMyrating.setAdapter(adapter);

@@ -124,13 +124,14 @@
             android:padding="10dp">
 
             <TextView
+                android:layout_marginRight="10dp"
                 android:id="@+id/tv_up_condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="12sp"
                 android:textColor="@color/shouye_renmen_tv"
-                android:text="" />
+                android:text="员工可以升级为店长,经理,总经理,老板,升级之后费率更低!" />
 
             <TextView
                 android:id="@+id/tv_up_up"
@@ -151,14 +152,10 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/lv_divider"></View>
-        <View
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/lv_divider"></View>
 
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff"
@@ -185,6 +182,7 @@
 
     <com.betterda.betterdapay.view.HorizontalScrollViewPager
         android:id="@+id/vp_up"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

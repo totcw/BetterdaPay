@@ -1,5 +1,6 @@
 package com.betterda.betterdapay.fragment;
 
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -66,7 +67,7 @@ public class MyFragment extends BaseFragment {
         topbarMy.setTitle("我的");
         topbarMy.setBackVisibility(false);
         topbarMy.setBusVisibility(true);
-
+        topbarMy.setBackgroundColor(ContextCompat.getColor(getmActivity(),R.color.bg_blue));
 
     }
 

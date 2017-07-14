@@ -1,5 +1,6 @@
 package com.betterda.betterdapay.fragment;
 
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -57,7 +58,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         super.initData();
         mNormalTopBar.setTitle("分享");
         mNormalTopBar.setBackVisibility(false);
-
+        mNormalTopBar.setBackgroundColor(ContextCompat.getColor(getmActivity(),R.color.bg_blue));
     }
 
     private void getData() {

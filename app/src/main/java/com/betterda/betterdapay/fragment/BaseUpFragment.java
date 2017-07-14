@@ -1,7 +1,9 @@
 package com.betterda.betterdapay.fragment;
 
+import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -96,8 +98,7 @@ public abstract class BaseUpFragment extends BaseFragment {
                     if (((UpFragment) getParentFragment()).tvUpUp != null) {
                         String rank = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "员工");
                         int rate2 = RateData.getRate2(rank);
-                        System.out.println("rate:"+rate2);
-                        System.out.println("item:"+item);
+
                         if (rate2 < item) {
                             ((UpFragment) getParentFragment()).tvUpUp.setVisibility(View.VISIBLE);
                         } else {
@@ -178,33 +179,14 @@ public abstract class BaseUpFragment extends BaseFragment {
 
             }
         });
-   /*     EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener(getmActivity()) {
-
+        rvYuangong.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
-            public void onLoadNextPage(View view) {
-                //滑到了最后,如果是正常状态才开始加载
-                if (LoadingFooter.State.Normal == RecyclerViewStateUtils.getFooterViewState(rvYuangong)) {
-                    //设置为加载状态
-                    RecyclerViewStateUtils.setFooterViewState(getmActivity(), rvYuangong, LoadingFooter.State.Loading, null);
-
-                    getData(loadingPager);
-                }
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int padding = UtilMethod.dip2px(getmActivity(), 8);
+                int padding2 = UtilMethod.dip2px(getmActivity(), 4);
+                outRect.set(padding,padding2,padding,padding2);
             }
-
-            @Override
-            public void show(boolean isShow) {
-                //true 表示显示,false表示不显示
-                if (BuildConfig.LOG_DEBUG) {
-                    Log.i(TAG, isShow + "");
-                }
-                if (isShow) {
-                    RecyclerViewStateUtils.setLoad(rateDetail, rvYuangong, getmActivity());
-                } else {
-                    RecyclerViewStateUtils.change(getmActivity(),rvYuangong, LoadingFooter.State.TheEnd, null);
-                }
-            }
-        };
-        rvYuangong.addOnScrollListener(endlessRecyclerOnScrollListener);*/
+        });
         rvYuangong.setAdapter(adapter);
     }
 
@@ -288,6 +270,10 @@ public abstract class BaseUpFragment extends BaseFragment {
             String condition = currentRating.getRemarks();
             String nextRate = currentRating.getNextRankName();
             String rate = currentRating.getRankName();
+            if (TextUtils.isEmpty(condition)) {
+                condition = "员工可以升级为店长,经理,总经理,老板,升级之后费率更低!";
+            }
+
             edit(condition, rate, nextRate, item);
         }
 

@@ -1,42 +1,28 @@
 package com.betterda.betterdapay.fragment;
 
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.activity.TuiGuangActivity;
 import com.betterda.betterdapay.activity.UpActivity;
 import com.betterda.betterdapay.adapter.MyAdapter;
 import com.betterda.betterdapay.util.RxBus;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.HorizontalScrollViewPager;
 import com.betterda.betterdapay.view.NormalTopBar;
-import com.betterda.mylibrary.LoadingPager;
-import com.betterda.mylibrary.Utils.StatusBarCompat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * 升级
@@ -79,7 +65,7 @@ public class UpFragment extends BaseFragment implements ViewPager.OnPageChangeLi
         super.initData();
         setTopBar();
         setViewpager();
-
+    
 
     }
 
@@ -88,6 +74,7 @@ public class UpFragment extends BaseFragment implements ViewPager.OnPageChangeLi
     private void setTopBar() {
         topbarUp.setBackVisibility(false);
         topbarUp.setTitle("升级");
+        topbarUp.setBackgroundColor(ContextCompat.getColor(getmActivity(),R.color.bg_blue));
     }
 
     private void setViewpager() {

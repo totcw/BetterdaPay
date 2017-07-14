@@ -4,6 +4,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class WalletFragment extends BaseFragment {
 
 
     @BindView(R.id.gttv_wallet_money)
-    TextView mGttvWalletMoney; //提现金额
+    EditText mGttvWalletMoney; //提现金额
     @BindView(R.id.iv_wallet_bg)
     ImageView mWalletBg; //图片
     @BindView(R.id.iv_shouye_message)

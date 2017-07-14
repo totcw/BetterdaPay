@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.betterda.betterdapay.BuildConfig;
-import com.betterda.betterdapay.component.AppComponent;
-import com.betterda.betterdapay.component.DaggerAppComponent;
-import com.betterda.betterdapay.modules.AppModules;
-import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
@@ -27,7 +23,7 @@ public class MyApplication extends Application {
     private static MyApplication instance;
 
 
-    private AppComponent appComponent;
+
 
     @Override
     public void onCreate() {
@@ -53,17 +49,8 @@ public class MyApplication extends Application {
         }
         JPushInterface.init(this);            // 初始化 JPush
 
-        inject();
     }
 
-    /**
-     * 注入dragger2
-     */
-    private void inject() {
-        appComponent = DaggerAppComponent.builder()
-                .appModules(new AppModules(this))
-                .build();
-    }
 
     /**
      * 将activity添加到容器中
@@ -113,8 +100,5 @@ public class MyApplication extends Application {
         return instance;
     }
 
-    public AppComponent getAppComponent() {
-        return appComponent;
-    }
 
 }

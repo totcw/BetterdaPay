@@ -3,7 +3,6 @@ package com.betterda.betterdapay.activity;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,14 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.application.MyApplication;
 import com.betterda.betterdapay.callback.MyObserver;
-import com.betterda.betterdapay.component.DaggerLoginActivityComponent;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.UserInfo;
-import com.betterda.betterdapay.modules.LoginActivityModules;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
@@ -28,7 +23,7 @@ import com.betterda.mylibrary.ShapeLoadingDialog;
 
 import java.util.Set;
 
-import javax.inject.Inject;
+
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -60,7 +55,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.iv_login_jizhu)
     ImageView iv_login_jizhu;
     private String account, pwd;
-    @Inject
+
     ShapeLoadingDialog dialog;
 
 
@@ -74,23 +69,12 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void init() {
         btnLogin.setSelected(true);
-        inject();
         setTopBar();
         judgePwd();
-
+        dialog = UtilMethod.createDialog(getmActivity(), "正在登录...");
 
     }
 
-    /**
-     * 注入dagger
-     */
-    private void inject() {
-        DaggerLoginActivityComponent.builder()
-                .appComponent(MyApplication.getInstance().getAppComponent())
-                .loginActivityModules(new LoginActivityModules(this))
-                .build()
-                .inject(this);
-    }
 
 
     /**

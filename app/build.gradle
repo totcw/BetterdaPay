@@ -92,7 +92,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile('com.android.support:appcompat-v7:24.2.1') {
+
+    compile('com.android.support:appcompat-v7:26.+') {
         exclude group: "com.android.support", module: "support-v4"
     }
     /*rxjava*/
@@ -114,8 +115,7 @@ dependencies {
     }
     compile 'com.zhy:base-adapter:2.0.0'
     compile files('libs/core-3.1.0.jar')
-    compile 'com.google.dagger:dagger:2.0'
-    apt 'com.google.dagger:dagger-compiler:2.0'
+
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile files('libs/bcprov-jdk15-143.jar')
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.3'
