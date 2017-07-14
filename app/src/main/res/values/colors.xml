@@ -2,11 +2,11 @@
 <resources>
 
     <color name="title_red">#fb5255</color>
-    <color name="bg">#ff00abee</color>
-    <color name="bg_blue">#ff00abee</color>
+    <color name="bg">#5ed3ff</color>
+    <color name="bg_blue">#5ed3ff</color>
     <color name="black">#ff000000</color>
     <color name="bg_gray">#ededed</color>
-    <color name="bg_green">#ff00abee</color>
+    <color name="bg_green">#5ed3ff</color>
     <color name="divierLine">#dcdcdc</color>
     <color name="gray_line">#ffd6d7dc</color>
     <color name="tv_get_yzm">#000000</color> <!--注册页面点击获取验证码-->
@@ -19,6 +19,7 @@
     <color name="lv_divider">#dad9e2</color><!--listview的分割线颜色-->
     <color name="shouye_fenlei_red">#f75555</color><!--分类选择的颜色-->
     <color name="shouye_green">#01d227</color><!--分类选择的颜色-->
+    <color name="share_red">#f24949</color>
     <color name="cardview_light_background">#FFFAFAFA</color>
     <color name="text_color">#ffffffff</color>
 

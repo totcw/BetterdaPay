@@ -31,9 +31,11 @@ import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -42,6 +44,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Hashtable;
 
 /**
  * 图片处理工具类 Tools for handler picture
@@ -553,7 +556,7 @@ public final class ImageTools {
 		BitmapFactory.decodeFile(path, op);//此时加载不会暂用内存，只是获取op
 		scale=computeSampleSize(op, 320, 320*480);
 		op.inJustDecodeBounds = false;
-		op.inSampleSize = scale;// 这个数字越大,图片大小越小. 宽高为原来的4分一，大小16分之1	
+		op.inSampleSize = scale;// 这个数字越大,图片大小越小. 宽高为原来的4分一，大小16分之1
 		return BitmapFactory.decodeFile(path, op);
 	}
 
@@ -655,6 +658,75 @@ public final class ImageTools {
 		bitmap.setPixels(rawData, 0, w, 0, 0, w, h);
 		return bitmap;
 	}
+
+
+
+    /**
+     * 生成带logo的二维码，logo默认为二维码的1/5
+     *
+     * @param text 需要生成二维码的文字、网址等
+     * @param mBitmap logo文件
+     * @return bitmap
+     */
+    public static Bitmap createQRCodeWithLogo(String text, Context context, Bitmap mBitmap) {
+         int IMAGE_HALFWIDTH = UtilMethod.dip2px(context, 40);//宽度值，影响中间图片大小
+		int qrSize = UtilMethod.dip2px(context, 400);
+		try {
+            IMAGE_HALFWIDTH = qrSize/20;
+            Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
+            hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            /*
+             * 设置容错级别，默认为ErrorCorrectionLevel.L
+             * 因为中间加入logo所以建议你把容错级别调至H,否则可能会出现识别不了
+             */
+            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            BitMatrix bitMatrix = new QRCodeWriter().encode(text,
+                    BarcodeFormat.QR_CODE, qrSize, qrSize, hints);
+
+            int width = bitMatrix.getWidth();//矩阵高度
+            int height = bitMatrix.getHeight();//矩阵宽度
+            int halfW = width / 2;
+            int halfH = height / 2;
+
+            Matrix m = new Matrix();
+            float sx = (float) 2 * IMAGE_HALFWIDTH / mBitmap.getWidth();
+            float sy = (float) 2 * IMAGE_HALFWIDTH
+                    / mBitmap.getHeight();
+            m.setScale(sx, sy);
+            //设置缩放信息
+            //将logo图片按martix设置的信息缩放
+            mBitmap = Bitmap.createBitmap(mBitmap, 0, 0,
+                    mBitmap.getWidth(), mBitmap.getHeight(), m, false);
+
+            int[] pixels = new int[qrSize * qrSize];
+            for (int y = 0; y < qrSize; y++) {
+                for (int x = 0; x < qrSize; x++) {
+                    if (x > halfW - IMAGE_HALFWIDTH && x < halfW + IMAGE_HALFWIDTH
+                            && y > halfH - IMAGE_HALFWIDTH
+                            && y < halfH + IMAGE_HALFWIDTH) {
+                        //该位置用于存放图片信息
+                        //记录图片每个像素信息
+                        pixels[y * width + x] = mBitmap.getPixel(x - halfW
+                                + IMAGE_HALFWIDTH, y - halfH + IMAGE_HALFWIDTH);
+                    } else {
+                        if (bitMatrix.get(x, y)) {
+                            pixels[y * qrSize + x] = 0xff000000;
+                        } else {
+                            pixels[y * qrSize + x] = 0xffffffff;
+                        }
+                    }
+                }
+            }
+            Bitmap bitmap = Bitmap.createBitmap(qrSize, qrSize,
+                    Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, qrSize, 0, 0, qrSize, qrSize);
+            return bitmap;
+        } catch (WriterException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
 

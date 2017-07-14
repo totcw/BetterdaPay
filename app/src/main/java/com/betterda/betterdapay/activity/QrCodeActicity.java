@@ -2,6 +2,7 @@ package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
+import com.google.zxing.WriterException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,7 +96,15 @@ public class QrCodeActicity extends BaseActivity {
                                         if (BuildConfig.LOG_DEBUG) {
                                             System.out.println("扫码:" + data);
                                         }
-                                        mIvQrcode.setImageBitmap(ImageTools.generateQRCode(data, getmActivity()));
+                                        Bitmap bitmap ;
+                                        if ("2".equals(payType)) {
+                                            bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.wxshoukuan);
+                                        } else {
+                                            bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.zfbshoukuan);
+                                        }
+
+                                        mIvQrcode.setImageBitmap(ImageTools.createQRCodeWithLogo(data, getmActivity(),bitmap));
+
                                         mLoadpagerQrcode.hide();
                                     }
 
