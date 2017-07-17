@@ -51,28 +51,12 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     NormalTopBar topbarAddbankcard2;
     @BindView(R.id.iv_addbankcard2_identity)
     ImageView ivAddbankcard2Identity;
-    @BindView(R.id.linear_addbankcard2_identity)
-    LinearLayout linearAddbankcard2Identity;
     @BindView(R.id.iv_addbankcard2_identity2)
     ImageView ivAddbankcard2Identity2;
-    @BindView(R.id.linear_addbankcard2_identity2)
-    LinearLayout linearAddbankcard2Identity2;
     @BindView(R.id.iv_addbankcard2_handidentity)
     ImageView ivAddbankcard2Handidentity;
-    @BindView(R.id.linear_addbankcard2_handidentity)
-    LinearLayout linearAddbankcard2Handidentity;
     @BindView(R.id.iv_addbankcard2_bankcard)
     ImageView ivAddbankcard2Bankcard;
-    @BindView(R.id.iv_addbankcard2_bankcard2)
-    ImageView ivAddbankcard2Bankcard2;
-    @BindView(R.id.linear_addbankcard2_bankcard2)
-    LinearLayout linearAddbankcard2Bankcard2;
-    @BindView(R.id.iv_addbankcard2_handbank)
-    ImageView ivAddbankcard2Handbank;
-    @BindView(R.id.linear_addbankcard2_handbank)
-    LinearLayout linearAddbankcard2Handbank;
-    @BindView(R.id.linear_addbankcard2_bankcard)
-    LinearLayout linearAddbankcard2Bankcard;
     @BindView(R.id.btn_addbankcard_commit)
     Button btnAddbankcardCommit;
 
@@ -132,7 +116,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
         topbarAddbankcard2.setOnBackListener(this);
     }
 
-    @OnClick({R.id.linear_addbankcard2_identity, R.id.linear_addbankcard2_identity2, R.id.linear_addbankcard2_handidentity, R.id.linear_addbankcard2_bankcard2, R.id.linear_addbankcard2_handbank, R.id.linear_addbankcard2_bankcard, R.id.btn_addbankcard_commit})
+    @OnClick({R.id.linear_addbankcard2_identity, R.id.linear_addbankcard2_identity2, R.id.linear_addbankcard2_handidentity, R.id.linear_addbankcard2_bankcard, R.id.btn_addbankcard_commit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_addbankcard2_identity://身份证正面照
@@ -145,14 +129,6 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.linear_addbankcard2_handidentity://手持身份证照
                 isLogo = 2;
-                showPopupWindowPhoto();
-                break;
-            case R.id.linear_addbankcard2_bankcard2://银行卡反面照
-                isLogo = 3;
-                showPopupWindowPhoto();
-                break;
-            case R.id.linear_addbankcard2_handbank://手持银行卡照
-                isLogo = 4;
                 showPopupWindowPhoto();
                 break;
             case R.id.linear_addbankcard2_bankcard://银行卡正面照
@@ -206,7 +182,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             return;
         }*/
         if (TextUtils.isEmpty(url_handidntity)) {
-            showToast("请上传手持身份证照");
+            showToast("请上传手持身份证和银行卡照");
             return;
         }
       /*  if (TextUtils.isEmpty(url_handbank)) {
@@ -441,11 +417,11 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
 
                 break;
             case 3:
-                savePhoto(pic, accout + "bankcard2", ivAddbankcard2Bankcard2);
+               // savePhoto(pic, accout + "bankcard2", ivAddbankcard2Bankcard2);
 
                 break;
             case 4://手持银行卡
-                savePhoto(pic, accout + "handbank", ivAddbankcard2Handbank);
+              //  savePhoto(pic, accout + "handbank", ivAddbankcard2Handbank);
 
                 break;
             case 5:

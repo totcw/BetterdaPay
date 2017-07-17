@@ -32,4 +32,8 @@
     <color name="bank_blue">#0dbaff</color>
     <color name="bank_green">#3aaf6d</color>
     <color name="bank_red">#eb4c5f</color>
+
+
+    <!--实名认证页面-->
+    <color name="realname_gray">#7b7b7b</color>
 </resources>
