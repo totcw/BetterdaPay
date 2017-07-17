@@ -75,12 +75,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/transparent"
                     android:clickable="false"
                     android:enabled="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="0"
+
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:textSize="50sp"/>

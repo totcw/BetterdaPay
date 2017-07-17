@@ -154,10 +154,12 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
                     verficationNumber = number;
                     getVerification();
                     //显示倒计时
-                    countdownRegister.showCountDown("秒后重新获取","60秒后重新获取");
+                    countdownRegister.showCountDown("秒后重新获取", "60秒后重新获取");
                 } else {
                     UtilMethod.Toast(this, "请输入正确的手机号码");
                 }
+            } else {
+                showToast("请输入手机号码");
             }
 
         }
@@ -199,7 +201,25 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
      */
     private void register() {
 
-        if (!btnRegister.isSelected()) {
+        if (TextUtils.isEmpty(number)) {
+            showToast("手机号不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(yzm)) {
+            showToast("验证码不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(pwd)) {
+            showToast("密码不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(pwd2)) {
+            showToast("确认密码不能为空");
+            return;
+        }
+
+        if (!ivRegisterChoose.isSelected()) {
+            showToast("请勾选用户服务协议");
             return;
         }
 

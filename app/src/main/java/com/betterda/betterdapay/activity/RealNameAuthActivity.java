@@ -177,7 +177,31 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
 
     public void changeToUpload() {
 
-        if (btnRealnameauthNext.isSelected()) {
+
+            if (TextUtils.isEmpty(realName)) {
+                showToast("真实姓名不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(identityCard)) {
+                showToast("身份证号不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(cardNum)) {
+                showToast("银行卡号不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(bank)) {
+                showToast("所属银行不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(number)) {
+                showToast("预留手机号码不能为空");
+                return;
+            }
+            if (TextUtils.isEmpty(province)) {
+                showToast("开户地址不能为空");
+                return;
+            }
             boolean ismobile = number.matches(Constants.NUMBER_REGULAR);
             if (!ismobile) {
                 showToast("请输入正确的手机号码");
@@ -195,7 +219,7 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
             } else {
                 showToast(idCardValidate);
             }
-        }
+
 
     }
 

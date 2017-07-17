@@ -117,10 +117,22 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
 
     private void register() {
 
-        if (!btnForgetpwd.isSelected()) {
+        if (TextUtils.isEmpty(number)) {
+            showToast("手机号不能为空");
             return;
         }
-
+        if (TextUtils.isEmpty(yzm)) {
+            showToast("验证码不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(pwd)) {
+            showToast("密码不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(pwd2)) {
+            showToast("确认密码不能为空");
+            return;
+        }
 
         if (number != null) {
             boolean ismobile = number.matches(Constants.NUMBER_REGULAR);

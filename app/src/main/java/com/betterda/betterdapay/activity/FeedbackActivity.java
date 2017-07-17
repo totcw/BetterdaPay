@@ -72,7 +72,11 @@ public class FeedbackActivity extends BaseActivity {
     }
 
     private void commit() {
-        if (btnFeedbackCommit.isSelected()) {
+
+            if (TextUtils.isEmpty(content)) {
+                showToast("反馈内容不能为空");
+                return;
+            }
             NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
                 @Override
                 public void getDataApi() {
@@ -106,7 +110,7 @@ public class FeedbackActivity extends BaseActivity {
                     );
                 }
             });
-        }
+
 
     }
 

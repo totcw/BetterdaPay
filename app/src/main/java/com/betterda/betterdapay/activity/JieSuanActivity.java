@@ -155,6 +155,8 @@ public class JieSuanActivity extends BaseActivity {
         if (btnJiesuanComfirm.isSelected()) {
             submit();
 
+        } else {
+            showToast("请输入提现金额");
         }
 
     }
