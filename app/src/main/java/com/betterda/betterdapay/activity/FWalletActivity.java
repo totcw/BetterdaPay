@@ -1,6 +1,9 @@
 package com.betterda.betterdapay.activity;
 
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.betterda.betterdapay.BuildConfig;
@@ -9,9 +12,11 @@ import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Wallet;
+import com.betterda.betterdapay.javabean.WithDrawStatus;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
+import com.betterda.mylibrary.ShapeLoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,6 +40,9 @@ public class FWalletActivity extends BaseActivity {
     @BindView(R.id.tv_ywallet_money_acount)
     TextView tvYwalletMoneyAcount;
 
+    private AlertDialog mAlertDialog;
+    private ShapeLoadingDialog mDialog;
+
     @Override
     public void initView() {
         super.initView();
@@ -45,7 +53,8 @@ public class FWalletActivity extends BaseActivity {
     public void init() {
         super.init();
         mTopbarFwallet.setTitle("钱包");
-
+        mTopbarFwallet.setActionTextVisibility(true);
+        mTopbarFwallet.setActionText("提现");
     }
 
     @Override
@@ -55,7 +64,7 @@ public class FWalletActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.linear_fwallet_withdraw, R.id.linear_fwallet_details, R.id.bar_back})
+    @OnClick({R.id.linear_fwallet_withdraw, R.id.linear_fwallet_details, R.id.bar_back,R.id.bar_action})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linear_fwallet_withdraw:
@@ -66,6 +75,9 @@ public class FWalletActivity extends BaseActivity {
                 break;
             case R.id.bar_back:
                 back();
+                break;
+            case R.id.bar_action:
+                withdraw();
                 break;
         }
     }
@@ -124,4 +136,89 @@ public class FWalletActivity extends BaseActivity {
             tvYwalletMoneyAcount.setText(data.getTotalAmount());
         }
     }
+
+
+    /**
+     * 提现
+     */
+    public void withdraw() {
+
+        if (UtilMethod.showNotice(getmActivity())) {
+            getWithDraw();
+        }
+    }
+
+    /**
+     * 查询提现状态
+     */
+    private void getWithDraw() {
+        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                if (mDialog == null) {
+                    mDialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
+                }
+                UtilMethod.showDialog(getmActivity(), mDialog);
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getCheckWithdraw(UtilMethod.getAccout(getmActivity()))
+                                .compose(NetWork.handleResult(new BaseCallModel<WithDrawStatus>()))
+                                .subscribe(new MyObserver<WithDrawStatus>() {
+                                    @Override
+                                    protected void onSuccess(WithDrawStatus data, String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("查询结算状态:" + data);
+                                        }
+                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                        if (data != null) {
+                                            createWithDrawDialog(data.getDisburseTime());
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("查询结算状态fail:" + resultMsg);
+                                        }
+                                        if (mTvFwalletMoney != null) {
+                                            UtilMethod.startIntent(getmActivity(), JieSuanActivity.class, "money", mTvFwalletMoney.getText().toString().trim());
+                                        }
+                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                    }
+
+                                    @Override
+                                    public void onExit() {
+                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                    }
+                                })
+                );
+            }
+        });
+    }
+
+    /**
+     * 创建提现的提示对话框
+     */
+    public void createWithDrawDialog(String time) {
+        if (mAlertDialog == null) {
+            View view = LayoutInflater.from(getmActivity()).inflate(R.layout.dialog_withdraw, null);
+            TextView mTvContent = (TextView) view.findViewById(R.id.tv_dialog_call_content);
+            mTvContent.setText("您于"+time+"提交了一笔提现,请等待处理");
+            Button mBtnComfirm = (Button) view.findViewById(R.id.btn_dialog_call_comfrim);
+            mBtnComfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UtilMethod.dissmissDialog(getmActivity(), mAlertDialog);
+                }
+            });
+            AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
+            mAlertDialog = builder.setView(view).create();
+
+        }
+        UtilMethod.showDialog(getmActivity(), mAlertDialog);
+
+    }
+
 }

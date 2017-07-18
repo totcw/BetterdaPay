@@ -29,7 +29,7 @@
                 <RelativeLayout
 
                     android:layout_width="match_parent"
-                    android:layout_height="48dp">
+                    android:layout_height="44dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -65,19 +65,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
                     android:text="分润金额(元)"
                     android:textColor="@color/text_color"
                     android:textSize="18sp"/>
 
-                <EditText
+                <android.support.v7.widget.AppCompatEditText
+                    android:layout_marginBottom="20dp"
                     android:id="@+id/gttv_wallet_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:backgroundTint="@color/transparent"
-                    android:clickable="false"
-                    android:enabled="false"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:textCursorDrawable="@color/white"
+                    android:enabled="true"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="0"
@@ -86,17 +89,7 @@
                     android:textColorHint="@color/white"
                     android:textSize="50sp"/>
 
-                <Button
-                    android:id="@+id/btn_wallet_tixian"
-                    android:layout_width="160dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="14dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/shape_corner_white_white"
-                    android:text="分润提现"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"/>
+
 
             </LinearLayout>
 

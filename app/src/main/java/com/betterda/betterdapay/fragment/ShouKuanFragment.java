@@ -1,5 +1,8 @@
 package com.betterda.betterdapay.fragment;
 
+import android.content.res.ColorStateList;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +29,8 @@ public class ShouKuanFragment extends BaseFragment {
     private static final String TAG = "shoukuanFragment";
     @BindView(R.id.btn_shoukuan)
     Button btnShoukuan;
-
-    @BindView(R.id.tv_shoukuan_money)
-    TextView tvShoukuanMoney;
+    @BindView(R.id.et_shoukuan_money)
+    AppCompatEditText mAppCompatEditText;
 
     private StringBuilder sb;
 
@@ -40,7 +42,10 @@ public class ShouKuanFragment extends BaseFragment {
     @Override
     public void initData() {
         super.initData();
+        //设置5.0以下 兼容着色 tint
 
+        ColorStateList list = ContextCompat.getColorStateList(getmActivity(), R.color.white);
+        mAppCompatEditText.setSupportBackgroundTintList(list);
     }
 
     @Override
@@ -48,8 +53,8 @@ public class ShouKuanFragment extends BaseFragment {
         super.onStart();
         sb = new StringBuilder();
         sb.append("0");
-        if (tvShoukuanMoney != null) {
-            tvShoukuanMoney.setText("0");
+        if (mAppCompatEditText != null) {
+            mAppCompatEditText.setText("0");
         }
     }
 
@@ -128,7 +133,7 @@ public class ShouKuanFragment extends BaseFragment {
      * 清理
      */
     private void clear() {
-        tvShoukuanMoney.setText("0");
+        mAppCompatEditText.setText("0");
         sb = new StringBuilder();
         sb.append("0");
 
@@ -147,7 +152,7 @@ public class ShouKuanFragment extends BaseFragment {
             sb.append("0");
         }
 
-        tvShoukuanMoney.setText(sb.toString());
+        mAppCompatEditText.setText(sb.toString());
     }
 
     private void write(String number) {
@@ -166,6 +171,6 @@ public class ShouKuanFragment extends BaseFragment {
         } else {
             sb.append(number);
         }
-        tvShoukuanMoney.setText(sb.toString());
+        mAppCompatEditText.setText(sb.toString());
     }
 }

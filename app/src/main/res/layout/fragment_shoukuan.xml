@@ -20,7 +20,7 @@
             <RelativeLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="48dp">
+                android:layout_height="44dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -37,18 +37,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="收款金额(元)"
                 android:textColor="@color/text_color"
                 android:textSize="18sp"/>
 
-            <EditText
+            <android.support.v7.widget.AppCompatEditText
                 android:layout_marginBottom="20dp"
                 android:enabled="false"
                 android:clickable="false"
                 android:focusableInTouchMode="false"
                 android:focusable="false"
-                android:id="@+id/tv_shoukuan_money"
+                android:id="@+id/et_shoukuan_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

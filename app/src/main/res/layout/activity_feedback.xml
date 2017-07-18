@@ -13,7 +13,7 @@
 
 
     <EditText
-
+        style="@style/editStyle"
         android:maxLength="200"
         android:id="@+id/et_feedback"
         android:padding="3dp"

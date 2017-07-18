@@ -1,6 +1,9 @@
 package com.betterda.betterdapay.fragment;
 
+import android.content.res.ColorStateList;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +40,7 @@ public class WalletFragment extends BaseFragment {
 
 
     @BindView(R.id.gttv_wallet_money)
-    EditText mGttvWalletMoney; //提现金额
+    AppCompatEditText mGttvWalletMoney; //提现金额
     @BindView(R.id.iv_wallet_bg)
     ImageView mWalletBg; //图片
     @BindView(R.id.iv_shouye_message)
@@ -67,6 +70,11 @@ public class WalletFragment extends BaseFragment {
         }
         judgeMessage();
         getData();
+
+        //设置5.0以下 兼容着色 tint
+
+        ColorStateList list = ContextCompat.getColorStateList(getmActivity(), R.color.white);
+        mGttvWalletMoney.setSupportBackgroundTintList(list);
     }
 
 
@@ -142,13 +150,13 @@ public class WalletFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.relative_shouye_message, R.id.btn_wallet_tixian, R.id.relative_shouye_bianjie, R.id.relative_wallet_banli, R.id.relative_shouye_check, R.id.relative_shouye_haidai, R.id.relative_shouye_life})
+    @OnClick({R.id.relative_shouye_message, R.id.gttv_wallet_money, R.id.relative_shouye_bianjie, R.id.relative_wallet_banli, R.id.relative_shouye_check, R.id.relative_shouye_haidai, R.id.relative_shouye_life})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_shouye_message://消息
                 UtilMethod.startIntent(getmActivity(), MessageActivity.class);
                 break;
-            case R.id.btn_wallet_tixian://我要提现
+            case R.id.gttv_wallet_money://我要提现
                 withdraw();
                 break;
             case R.id.relative_wallet_banli://办理信用卡

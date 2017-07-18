@@ -54,7 +54,7 @@
                     android:hint="@string/input_withdraw_money"
                     android:inputType="phone"
                     android:textSize="14sp"
-
+                    style="@style/editStyle"
                     />
 
             </android.support.design.widget.TextInputLayout>
