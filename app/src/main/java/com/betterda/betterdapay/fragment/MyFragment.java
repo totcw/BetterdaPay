@@ -14,6 +14,7 @@ import com.betterda.betterdapay.activity.InformationActivity;
 import com.betterda.betterdapay.activity.JsActivity;
 import com.betterda.betterdapay.activity.MemberActivity;
 import com.betterda.betterdapay.activity.MyRatingActivity;
+import com.betterda.betterdapay.activity.MyYinHangKa;
 import com.betterda.betterdapay.activity.RealNameAuthActivity;
 import com.betterda.betterdapay.activity.SettingActivity;
 import com.betterda.betterdapay.activity.TransactionRecordActivity;
@@ -50,8 +51,10 @@ public class MyFragment extends BaseFragment {
     RelativeLayout relativeMyInformation;
     @BindView(R.id.relative_my_shanghu)
     RelativeLayout relativeMyShanghu;
+    @BindView(R.id.tv_information_auth)
+    TextView mTvAuth;
 
-
+    private String mIsAuth;
     private String rate="员工";
 
     @Override
@@ -89,19 +92,33 @@ public class MyFragment extends BaseFragment {
 
         }
 
+        mIsAuth = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.AUTH, "0");
+        if ("0".equals(mIsAuth)) {
+            mTvAuth.setText("未认证");
+        } else if ("1".equals(mIsAuth)) {
+            mTvAuth.setText("已认证");
+        }else if ("2".equals(mIsAuth)) {
+            mTvAuth.setText("审核中");
+        }
+
     }
 
 
 
-    @OnClick({R.id.relative_my_rating, R.id.relative_my_yinhangka, R.id.relative_my_erweima, R.id.relative_my_information, R.id.relative_my_shanghu , R.id.bar_relative_bus})
+    @OnClick({R.id.relative_my_rating, R.id.relative_my_yinhangka, R.id.relative_my_erweima,R.id.relative_my_xinyongka, R.id.relative_my_information, R.id.relative_my_shanghu , R.id.bar_relative_bus})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_my_rating://我的钱包
                 UtilMethod.startIntent(getmActivity(), FWalletActivity.class);
-                //UtilMethod.startIntent(getmActivity(), JsActivity.class);
                 break;
-            case R.id.relative_my_yinhangka://个人信息
-                UtilMethod.startIntent(getmActivity(), InformationActivity.class);
+            case R.id.relative_my_yinhangka://实名认证
+                if ("0".equals(mIsAuth)) {
+                    UtilMethod.startIntent(getmActivity(), RealNameAuthActivity.class);
+                } else if ("1".equals(mIsAuth)) {
+                    showToast("已经实名认证");
+                }else if ("2".equals(mIsAuth)) {
+                    showToast("正在审核中");
+                }
                 break;
             case R.id.relative_my_erweima://交易记录
                 UtilMethod.startIntent(getmActivity(), TransactionRecordActivity.class);
@@ -112,20 +129,15 @@ public class MyFragment extends BaseFragment {
             case R.id.relative_my_shanghu://我的扣率
                 UtilMethod.startIntent(getmActivity(), MyRatingActivity.class,"rate",rate);
                 break;
+            case R.id.relative_my_xinyongka://我的信用卡
+                UtilMethod.startIntent(getmActivity(), MyYinHangKa.class);
+                break;
             case R.id.bar_relative_bus://设置
                 UtilMethod.startIntent(getmActivity(), SettingActivity.class);
                 break;
         }
     }
 
-    private void auth() {
-        boolean auth = CacheUtils.getBoolean(getmActivity(), UtilMethod.getAccout(getmActivity())+Constants.Cache.AUTH, false);
-        if (auth) {
-             UtilMethod.startIntent(getmActivity(), AlreadAuthAcitity.class);
-        } else {
-            UtilMethod.startIntent(getmActivity(), RealNameAuthActivity.class);
-        }
-    }
 
 
     @Override

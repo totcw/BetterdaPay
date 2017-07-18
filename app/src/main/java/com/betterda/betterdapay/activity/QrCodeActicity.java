@@ -98,9 +98,9 @@ public class QrCodeActicity extends BaseActivity {
                                         }
                                         Bitmap bitmap ;
                                         if ("2".equals(payType)) {
-                                            bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.wxshoukuan);
+                                            bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.wx_qr);
                                         } else {
-                                            bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.zfbshoukuan);
+                                            bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.zfb_qr);
                                         }
 
                                         mIvQrcode.setImageBitmap(ImageTools.createQRCodeWithLogo(data, getmActivity(),bitmap));

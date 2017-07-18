@@ -79,7 +79,7 @@ public class TransactionRecordActivity extends BaseActivity {
                     if ("1" .equals(transactionRecord.getType())) {
                         holder.setText(R.id.tv_mingxi_type, "收款");
                         holder.setText(R.id.tv_mingxi_time,"+"+ transactionRecord.getAmount() + "元");
-                        holder.setTextColor(R.id.tv_mingxi_time, Color.GREEN);
+                        holder.setTextColor(R.id.tv_mingxi_time, Color.RED);
                     } else if ("2".equals(transactionRecord.getType())) {
                         holder.setText(R.id.tv_mingxi_type, "付款");
                         holder.setText(R.id.tv_mingxi_time,"-"+ transactionRecord.getAmount() + "元");
