@@ -66,23 +66,32 @@ public class WelcomeActivity extends FragmentActivity {
     private ProgressBar mMProgressBar;//下载的进度对话框
     private AlertDialog mAlertDialog;//下载对话框
     private TextView mMTvProgress;
-
+    private boolean isDown;
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             if (msg != null) {
-                int progress = msg.arg1;
-                if (mMProgressBar != null) {
-                    //更新进度条
-                    mMTvProgress.setText(progress + "%");
-                    mMProgressBar.setProgress(progress);
+
+                if (msg.what == 1) {
+                    int progress = msg.arg1;
+                    if (mMProgressBar != null) {
+                        //更新进度条
+                        mMTvProgress.setText(progress + "%");
+                        mMProgressBar.setProgress(progress);
+                    }
+                } else if (msg.what == 2) {
+                    mRxManager.cancel();
+                    UtilMethod.Toast(WelcomeActivity.this,"获取apk下载地址失败,请去应用商店更新");
+                    startToLogin();
                 }
+
 
             }
 
             return false;
         }
     });
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -189,13 +198,27 @@ public class WelcomeActivity extends FragmentActivity {
 
         int indexOf = url.lastIndexOf("/");
         if (indexOf > 0 && indexOf+1 < url.length()) {
-            String baseUrl = url.substring(0, indexOf);
+            isDown = true;
+            String baseUrl = url.substring(0, indexOf+1);
             String name = url.substring(indexOf + 1);
         DownloadAPI.DownloadProgressInterceptor interceptor = new DownloadAPI.DownloadProgressInterceptor(new DownloadProgressListener() {
             @Override
             public void update(long bytesRead, long contentLength, boolean done) {
-                int progress = (int) ((bytesRead * 100) / contentLength);
+                if (!isDown) {
+                    return;
+                }
+
+                //拿不到文件的大小就直接关闭界面
                 Message message = Message.obtain();
+
+                if (contentLength == -1 || contentLength == 0) {
+                    isDown = false;
+                    message.what = 2;
+                    mHandler.sendMessage(message);
+                    return;
+                }
+                int progress = (int) ((bytesRead * 100) / contentLength);
+                message.what = 1;
                 message.arg1 = progress;
                 mHandler.sendMessage(message);
                 if (progress == 100) {//进度到100 就启动安装

@@ -334,7 +334,7 @@
                             android:layout_height="@dimen/fragment_my_iv"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
-                            android:background="@mipmap/wodekoulv" />
+                            android:background="@mipmap/wodexinyongka" />
 
                         <TextView
                             android:layout_width="wrap_content"
