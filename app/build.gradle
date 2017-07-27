@@ -3,10 +3,13 @@ apply plugin: 'android-apt'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
-
+    /*加载so文件需要添加的代码*/
+    sourceSets.main{
+        jniLibs.srcDirs = ['libs']
+    }
     defaultConfig {
         applicationId "com.betterda.betterdapay"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
         versionName "1.0.0"
@@ -92,7 +95,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile('com.android.support:appcompat-v7:26.+') {
         exclude group: "com.android.support", module: "support-v4"
     }
@@ -105,8 +107,7 @@ dependencies {
     /*butterknife*/
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
-      compile 'com.betterda:mylibrary:2.5.9'
-
+    compile 'com.betterda:mylibrary:2.5.9'
     /*togglebutton*/
     compile 'com.zcw:togglebutton-library:1.0.0'
     /*vlayout*/
@@ -115,20 +116,15 @@ dependencies {
     }
     compile 'com.zhy:base-adapter:2.0.0'
     compile files('libs/core-3.1.0.jar')
-
     provided 'org.glassfish:javax.annotation:10.0-b28'
-    compile files('libs/bcprov-jdk15-143.jar')
-    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.3'
 
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.3'
     compile 'com.android.support:design:24.2.1'
 
-    compile 'com.contrarywind:Android-PickerView:3.2.2'
     /*友盟*/
     compile files('libs/SocialSDK_WeChat_Simplify.jar')
-  
     compile files('libs/umeng_social_api.jar')
     compile files('libs/umeng_social_net.jar')
-
     compile files('libs/umeng_social_tool.jar')
     /*btpay*/
     compile 'com.betterda.btpay:btsdk:0.0.9'
@@ -137,7 +133,8 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.1.2'
     /*权限请求*/
     compile 'com.lyf:yflibrary:1.0.5'
-
     /*鲁班图片压缩*/
     compile 'top.zibin:Luban:1.1.2'
+    /*百度定位*/
+    compile files('libs/BaiduLBS_Android.jar')
 }

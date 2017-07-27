@@ -100,9 +100,9 @@ public class ShouKuanFragment extends BaseFragment {
                 deleteOne();
                 break;
             case R.id.btn_shoukuan://收款
-                if (UtilMethod.showNotice(getmActivity())) {
+              /*  if (UtilMethod.showNotice(getmActivity())) {
+                }*/
                     pay();
-                }
                 break;
         }
     }

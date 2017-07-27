@@ -6,13 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
+import com.betterda.betterdapay.util.LocationUtil;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
@@ -66,13 +69,24 @@ public class ChoosePayTypeActivity extends BaseActivity {
         tvItemBalanceMoney.setText(money + "元");
 
         initRecycleView();
-        getDataForRate();
+
         mLoadingPager.setonErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mLoadingPager.setLoadVisable();
                 getDataForRate();
             }
         });
+        mLoadingPager.setLoadVisable();
+        LocationUtil locationUtil = new LocationUtil();
+        locationUtil.start(getmActivity(), new LocationUtil.MyBDLocationListener() {
+            @Override
+            public void onReceive(BDLocation location) {
+                UtilMethod.Toast(getmActivity(),location.getCity());
+                getDataForRate();
+            }
+        });
+
     }
 
     private void initRecycleView() {
@@ -137,7 +151,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
      * 获取各个通道的费率
      */
     private void getDataForRate() {
-        mLoadingPager.setLoadVisable();
+
         NetworkUtils.isNetWork(getmActivity(), mLoadingPager, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {

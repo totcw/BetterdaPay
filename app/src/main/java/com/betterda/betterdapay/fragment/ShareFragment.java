@@ -170,7 +170,6 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
 
                         @Override
                         public void onResult(SHARE_MEDIA share_media) {
-                            showToast(share_media.toString());
                         }
 
                         @Override
