@@ -15,6 +15,7 @@ import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
+import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.LocationUtil;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -52,7 +53,12 @@ public class ChoosePayTypeActivity extends BaseActivity {
     private List<RatingCalculateEntity> mList;
     private String money;//支付金额
     private String channel;//通道类型
-
+    private String longitude;//经度
+    private String latitude ;//
+    private String province ;//
+    private String city ;//
+    private String area ;//
+    private String street ;//
 
     @Override
     public void initView() {
@@ -82,8 +88,29 @@ public class ChoosePayTypeActivity extends BaseActivity {
         locationUtil.start(getmActivity(), new LocationUtil.MyBDLocationListener() {
             @Override
             public void onReceive(BDLocation location) {
-                UtilMethod.Toast(getmActivity(),location.getCity());
-                getDataForRate();
+
+                if (location != null) {
+                    longitude = location.getLongitude()+"";
+                    latitude = location.getLatitude()+"";
+                    province = location.getProvince();
+                    city = location.getCity();
+                    area = location.getDistrict();
+                    street = location.getStreet();
+                }
+
+                CacheUtils.putString(getmActivity(),"longitude",longitude);
+                CacheUtils.putString(getmActivity(),"latitude",latitude);
+                CacheUtils.putString(getmActivity(),"province",province);
+                CacheUtils.putString(getmActivity(),"city",city);
+                CacheUtils.putString(getmActivity(),"area",area);
+                CacheUtils.putString(getmActivity(),"street",street);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getDataForRate();
+                    }
+                });
             }
         });
 

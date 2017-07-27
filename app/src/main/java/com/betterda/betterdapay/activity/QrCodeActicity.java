@@ -14,6 +14,7 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.ImageTools;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -56,7 +57,12 @@ public class QrCodeActicity extends BaseActivity {
     private String payType;//类型  1为支付宝 2为微信
     private String body;//商品内容
     private int money;
-
+    private String longitude;//经度
+    private String latitude ;//经度
+    private String province ;//经度
+    private String city ;//经度
+    private String area ;//经度
+    private String street ;//经度
     @Override
     public void initView() {
         super.initView();
@@ -88,7 +94,8 @@ public class QrCodeActicity extends BaseActivity {
             @Override
             public void getDataApi() {
                 mRxManager.add(
-                        NetWork.getNetService().getOrderForScan(UtilMethod.getAccout(getmActivity()), money + "", body, payType)
+                        NetWork.getNetService().getOrderForScan(UtilMethod.getAccout(getmActivity()),money+"", body, payType
+                                ,longitude,latitude,province,city,area,street)
                                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                 .subscribe(new MyObserver<String>() {
                                     @Override
@@ -142,6 +149,13 @@ public class QrCodeActicity extends BaseActivity {
             body = type + "收款";
             mIvQrcodeIcon.setImageResource(R.mipmap.zfbshoukuan);
         }
+
+        longitude= CacheUtils.getString(getmActivity(),"longitude",longitude);
+        latitude = CacheUtils.getString(getmActivity(),"latitude",latitude);
+        province = CacheUtils.getString(getmActivity(),"province",province);
+        city = CacheUtils.getString(getmActivity(),"city",city);
+        area= CacheUtils.getString(getmActivity(),"area",area);
+        street = CacheUtils.getString(getmActivity(),"street",street);
     }
 
 

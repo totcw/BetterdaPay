@@ -112,9 +112,15 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_ORDERFORSCAN)
     Observable<BaseCallModel<String>> getOrderForScan(@Field("account") String account,
-                                                          @Field("amount") String amount,
-                                                          @Field("body") String body,
-                                                          @Field("payType") String payType);
+                                                      @Field("amount") String amount,
+                                                      @Field("body") String body,
+                                                      @Field("payType") String payType,
+                                                      @Field("longitude") String longitude,
+                                                      @Field("latitude") String latitude,
+                                                      @Field("province") String province,
+                                                      @Field("city") String city,
+                                                      @Field("area") String area,
+                                                      @Field("street") String street);
 
     /**
      * 获取各等级费率

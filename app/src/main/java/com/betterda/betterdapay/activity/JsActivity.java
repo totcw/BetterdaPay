@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
+import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.UtilMethod;
 
@@ -43,6 +44,14 @@ public class JsActivity extends BaseActivity {
     private int money;
     private String paybankcard;
 
+    private String longitude;//经度
+    private String latitude ;//经度
+    private String province ;//经度
+    private String city ;//经度
+    private String area ;//经度
+    private String street ;//经度
+
+
     @Override
     public void initView() {
         super.initView();
@@ -54,11 +63,7 @@ public class JsActivity extends BaseActivity {
     @Override
     public void init() {
         super.init();
-        Intent intent = getIntent();
-        if (intent != null) {
-            money = intent.getIntExtra("money",0);
-            paybankcard = intent.getStringExtra("paybankcard");
-        }
+        getIntentData();
         final WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true); //允许加载javascript
         settings.setSupportZoom(true); //允许缩放
@@ -136,7 +141,9 @@ public class JsActivity extends BaseActivity {
             public void run() {
 
                 String url = Constants.Url.URL+"api/payController.do?unionPay";
-                String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&body=银联收款&amount="+money+"&paybankcard="+paybankcard;
+                String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&body=银联收款&amount="+money+"&paybankcard="+paybankcard
+                        +"&longitude="+longitude+"&latitude="+latitude+"&province="+province+"&city="+city+"&area="+area+"&street="+street;
+
                 try {
                     webView.postUrl(url,postDate.getBytes("utf-8"));
                     // webView.loadUrl(url);
@@ -150,6 +157,19 @@ public class JsActivity extends BaseActivity {
         });
     }
 
+    public void getIntentData() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            money = intent.getIntExtra("money",0);
+            paybankcard = intent.getStringExtra("paybankcard");
+        }
+        longitude= CacheUtils.getString(getmActivity(),"longitude",longitude);
+        latitude = CacheUtils.getString(getmActivity(),"latitude",latitude);
+        province = CacheUtils.getString(getmActivity(),"province",province);
+        city = CacheUtils.getString(getmActivity(),"city",city);
+        area= CacheUtils.getString(getmActivity(),"area",area);
+        street = CacheUtils.getString(getmActivity(),"street",street);
+    }
 
 
     public class JsInterce {
