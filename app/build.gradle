@@ -7,6 +7,8 @@ android {
     sourceSets.main{
         jniLibs.srcDirs = ['libs']
     }
+
+
     defaultConfig {
         applicationId "com.betterda.betterdapay"
         minSdkVersion 15
@@ -23,7 +25,6 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "b18dafe5987deb4aa4f0b19c", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
     }
@@ -37,6 +38,34 @@ android {
             keyPassword "android"
         }
     }*/
+
+
+
+    productFlavors{
+            betterda{
+                applicationId "com.betterda.betterdapay" /*使用不同的包名*/
+                resValue "string","app_name","来逗阵"
+                manifestPlaceholders = [
+                        JUPSH_PERMISSION:"com.betterda.betterdapay", /*清单文件中的包名*/
+                        JPUSH_APPKEY : "b18dafe5987deb4aa4f0b19c", //JPush上注册的包名对应的appkey.
+                        UMENG_APPKEY:"5943823b2ae85b260600150d", /*清单文件中的友盟key*/
+                        BAIDU_APIKEY:"GGet03IlqaFQnYbbx6DnjCwl542WSMy8" /*清单文件中的百度地图key*/
+                ]
+            }
+            ananpay{
+                applicationId "com.betterda.ananpay" /*使用不同的包名*/
+                resValue "string","app_name","来逗阵2"
+                manifestPlaceholders = [
+                        JUPSH_PERMISSION:"com.betterda.ananpay",
+                        JPUSH_APPKEY : "b18dafe5987deb4aa4f0b19c", //JPush上注册的包名对应的appkey.
+                        UMENG_APPKEY:"5943823b2ae85b260600150d", /*清单文件中的友盟key*/
+                        BAIDU_APIKEY:"GGet03IlqaFQnYbbx6DnjCwl542WSMy8" /*清单文件中的百度地图key*/
+                ]
+            }
+
+    }
+
+
 
 
     buildTypes {
@@ -77,18 +106,6 @@ android {
         preDexLibraries = false
     }
 
-/*    packagingOptions {
-        *//*编译的时候不会显示那些红色的warnning*//*
-        exclude 'META-INF/DEPENDENCIES.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/dependencies.txt'
-    }*/
 }
 
 

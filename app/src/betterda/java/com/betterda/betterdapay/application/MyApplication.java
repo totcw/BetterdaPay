@@ -30,7 +30,7 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
 
-
+        System.out.println("fdfsafd");
         if (null == list) {
             list = new ArrayList<>();
         }

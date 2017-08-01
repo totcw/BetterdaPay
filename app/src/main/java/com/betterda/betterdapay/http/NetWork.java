@@ -1,19 +1,9 @@
 package com.betterda.betterdapay.http;
 
-import com.betterda.betterdapay.application.MyApplication;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.Constants;
-import com.betterda.betterdapay.util.NetworkUtils;
 
-import java.io.File;
-import java.io.IOException;
-
-import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -45,7 +35,6 @@ public class NetWork {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.Url.URL)
                     .client(okHttpClient.newBuilder()//添加拦截器
-                            .cache(new Cache(new File(MyApplication.getInstance().getCacheDir(), "responses"),10 * 1024 * 1024)) //创建一个10M的缓存目录
                             .build())
                             .addConverterFactory(gsonConverterFactory)
                             .addCallAdapterFactory(rxJavaCallAdapterFactory)
@@ -56,38 +45,7 @@ public class NetWork {
         return netService;
     }
 
-    /**
-     * 定义拦截器
-     */
-   static Interceptor interceptor = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            //设置请求时
-            Request request = chain.request();
-            if (!NetworkUtils.isNetAvailable(MyApplication.getInstance())) {//没网才读缓存
-                request = request.newBuilder()
-                        .cacheControl(CacheControl.FORCE_CACHE)
-                        .build();
-            }
-            //设置数据返回时
-            Response response = chain.proceed(request);
-            if (NetworkUtils.isNetAvailable(MyApplication.getInstance())) {
-                int maxAge = 0 * 60; // 有网络时 设置缓存超时时间0个小时
-                response.newBuilder()
-                        .header("Cache-Control", "public, max-age=" + maxAge)
-                        .removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
-                        .build();
-            } else {
-                int maxStale = 60 * 60 * 24 * 28; // 无网络时，设置超时为4周
-                response.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-                        .removeHeader("Pragma")
-                        .build();
-            }
-            return response;
 
-        }
-    };
 
 
 

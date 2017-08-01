@@ -1,32 +1,24 @@
 package com.betterda.betterdapay.activity;
 
-import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.application.MyApplication;
 import com.betterda.betterdapay.fragment.MyFragment;
 import com.betterda.betterdapay.fragment.ShareFragment;
 import com.betterda.betterdapay.fragment.ShouKuanFragment;
 import com.betterda.betterdapay.fragment.UpFragment;
 import com.betterda.betterdapay.fragment.WalletFragment;
-import com.betterda.betterdapay.util.CacheUtils;
-import com.betterda.betterdapay.util.Constants;
-import com.betterda.betterdapay.util.RxBus;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.mylibrary.view.IndicatorView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.functions.Action1;
 
 /**
  * Created by Administrator on 2016/7/28.
