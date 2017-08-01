@@ -138,7 +138,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
                     if (!TextUtils.isEmpty(tuiGuang.getRank())) {
                         viewHolder.setImageResource(R.id.iv_item_mytuiguang, RateData.getRate(tuiGuang.getRank()));
                     }
-                    if (tuiGuang.getAuth()) {
+                    if ("1".equals(tuiGuang.getAuth())) {
                         viewHolder.setText(R.id.tv_item_mytuiguang_renzheng, "已认证");
                     } else {
                         viewHolder.setText(R.id.tv_item_mytuiguang_renzheng, "未认证");

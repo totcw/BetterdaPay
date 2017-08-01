@@ -7,7 +7,7 @@ package com.betterda.betterdapay.javabean;
 public class TuiGuang {
     private String account;//帐号
     private String time;//注册时间
-    private Boolean auth;//状态
+    private String auth;//状态
     private String rank;//等级
 
     public String getAccount() {
@@ -26,11 +26,11 @@ public class TuiGuang {
         this.time = time;
     }
 
-    public Boolean getAuth() {
+    public String getAuth() {
         return auth;
     }
 
-    public void setAuth(Boolean auth) {
+    public void setAuth(String auth) {
         this.auth = auth;
     }
 
