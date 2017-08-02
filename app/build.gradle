@@ -27,10 +27,6 @@ android {
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
 
-        manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
-        ]
     }
 
     /*友盟需要的签名文件*/
@@ -51,6 +47,8 @@ android {
                 resValue "string","app_name","来逗阵"
                 manifestPlaceholders = [
                         JUPSH_PERMISSION:"com.betterda.betterdapay", /*清单文件中的包名*/
+                        JPUSH_PKGNAME : applicationId,
+                        JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
                         JPUSH_APPKEY : "b18dafe5987deb4aa4f0b19c", //JPush上注册的包名对应的appkey.
                         UMENG_APPKEY:"5943823b2ae85b260600150d", /*清单文件中的友盟key*/
                         BAIDU_APIKEY:"GGet03IlqaFQnYbbx6DnjCwl542WSMy8" /*清单文件中的百度地图key*/
@@ -61,6 +59,8 @@ android {
                 resValue "string","app_name","来逗阵2"
                 manifestPlaceholders = [
                         JUPSH_PERMISSION:"com.betterda.ananPay",
+                        JPUSH_PKGNAME : applicationId,
+                        JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
                         JPUSH_APPKEY : "81cda0797bce287011a37cd4", //JPush上注册的包名对应的appkey.
                         UMENG_APPKEY:"595d997a75ca351b59000642", /*清单文件中的友盟key*/
                         BAIDU_APIKEY:"rp8i5kzNhisYY46VXpOGTRGVaxX7AgkX" /*清单文件中的百度地图key*/
