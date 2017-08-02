@@ -79,8 +79,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
         etAddbankName.addTextChangedListener(new MyTextWatcher(etAddbankName) {
             @Override
             public void afterTextChanged(Editable s) {
-                truename = s.toString();
-                judge();
+
             }
         });
         etAddbankCardNo.addTextChangedListener(new MyTextWatcher(etAddbankCardNo) {

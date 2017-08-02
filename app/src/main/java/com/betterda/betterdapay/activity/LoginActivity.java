@@ -148,12 +148,7 @@ public class LoginActivity extends BaseActivity {
             showToast("请输入密码");
             return;
         }
-        NetworkUtils.isNetWork(getmActivity(), btnLogin, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                getData();
-            }
-        });
+        NetworkUtils.isNetWork(getmActivity(), btnLogin, () -> getData());
 
 
     }

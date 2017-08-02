@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -12,6 +13,8 @@ android {
     lintOptions {
         abortOnError false
     }
+
+
 
     defaultConfig {
         applicationId "com.betterda.betterdapay"
@@ -28,6 +31,13 @@ android {
         }
 
     }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 
     /*友盟需要的签名文件*/
  /*   signingConfigs {

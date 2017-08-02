@@ -153,14 +153,12 @@ public class NetworkUtils {
             }
         }
         snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                .setAction(title, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                .setAction(title, v-> {
                         //开启网络设置界面
                         if (context != null) {
                             NetworkUtils.toSetingWork(context);
                         }
-                    }
+
                 });
         snackbar.show();
     }
