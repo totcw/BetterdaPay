@@ -1,6 +1,7 @@
-package com.betterda.betterdapay.activity;
+package com.betterda.betterdapay.fragment;
 
-import android.content.Intent;
+import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -13,6 +14,7 @@ import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.umeng.socialize.ShareAction;
@@ -26,44 +28,37 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 我要推广
- * Created by Administrator on 2017/3/31.
+ * 分享
+ * Created by Administrator on 2017/3/29.
  */
 
-public class TuiguangActivity2 extends BaseActivity implements View.OnClickListener {
+public class ShareFragment extends BaseFragment implements View.OnClickListener {
 
-    @BindView(R.id.btn_tuiguang2_share)
-    Button mBtnTuiguang2Share;
-    @BindView(R.id.loadpager_tuiguang)
+    @BindView(R.id.btn_fragment_share)
+    Button btnFragmentShare;
+    @BindView(R.id.topbar_share)
+    NormalTopBar mNormalTopBar;
+    @BindView(R.id.loadpager_fragmeng_share)
     LoadingPager mLoadingPager;
-    private String url = "http://www.baidu.com";
+    private View mView;
+    private String url;
     private ShapeLoadingDialog mDialog;
+
     @Override
-    public void initView() {
-        super.initView();
-        setContentView(R.layout.activity_tuiguang2);
+    public View initView(LayoutInflater inflater) {
+         mView =  inflater.inflate(R.layout.fragment_share, null);
+        return mView;
+
     }
 
 
 
-    @OnClick(R.id.btn_tuiguang2_share)
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_tuiguang2_share:
-                getData();
-                break;
-            case R.id.relative_share_wxfriend:
-                shareToWx(SHARE_MEDIA.WEIXIN);
-                closePopupWindow();
-                break;
-            case R.id.relative_share_pyquan:
-                shareToWx(SHARE_MEDIA.WEIXIN_CIRCLE);
-                closePopupWindow();
-                break;
-            case R.id.tv_share_cancel:
-                closePopupWindow();
-                break;
-        }
+    @Override
+    public void initData() {
+        super.initData();
+        mNormalTopBar.setTitle("分享");
+        mNormalTopBar.setBackVisibility(false);
+        mNormalTopBar.setBackgroundColor(ContextCompat.getColor(getmActivity(),R.color.bg_blue));
     }
 
     private void getData() {
@@ -77,32 +72,33 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
                 UtilMethod.showDialog(getmActivity(),mDialog);
                 mRxManager.add(
                         NetWork.getNetService()
-                                .getCode(UtilMethod.getAccout(getmActivity()))
-                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                .subscribe(new MyObserver<String>() {
-                                    @Override
-                                    protected void onSuccess(String data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("分享:"+data);
-                                        }
-                                        url = data;
-                                        UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                        share();
-                                    }
+                        .getCode(UtilMethod.getAccout(getmActivity()))
+                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                        .subscribe(new MyObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("分享:"+data);
+                                }
+                                url = data;
+                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                share();
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("分享fail:"+resultMsg);
-                                        }
-                                        UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("分享fail:"+resultMsg);
+                                }
+                                showToast(resultMsg);
+                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                            }
 
-                                    @Override
-                                    public void onExit() {
-                                        UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                    }
-                                })
+                            @Override
+                            public void onExit() {
+                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                            }
+                        })
                 );
             }
         });
@@ -128,16 +124,43 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
     }
 
 
+    @OnClick(R.id.btn_fragment_share)
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_fragment_share:
+                getData();
+                break;
+            case R.id.relative_share_wxfriend:
+                shareToWx(SHARE_MEDIA.WEIXIN);
+                closePopupWindow();
+                break;
+            case R.id.relative_share_pyquan:
+                shareToWx(SHARE_MEDIA.WEIXIN_CIRCLE);
+                closePopupWindow();
+                break;
+            case R.id.relative_qqfriend:
+                break;
+            case R.id.relative_share_qqzone:
+                break;
+            case R.id.tv_share_cancel:
+                closePopupWindow();
+                break;
+
+        }
+    }
+
+
     public void shareToWx(SHARE_MEDIA platform) {
 
         UMShareAPI mShareAPI = UMShareAPI.get(getmActivity());
         boolean install = mShareAPI.isInstall(getmActivity(), SHARE_MEDIA.WEIXIN);
         if (install) {
             UMImage image = new UMImage(getmActivity(), R.mipmap.ic_launcher);//资源文件
-            UMWeb web = new UMWeb(url);
+            UMWeb  web = new UMWeb(url);
             web.setTitle("来逗阵");//标题
             web.setThumb(image);  //缩略图
             web.setDescription("注册有礼");//描述
+
             new ShareAction(getmActivity()).setPlatform(platform)
                     .withMedia(web)
                     .setCallback(new UMShareListener() {
@@ -147,7 +170,6 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
 
                         @Override
                         public void onResult(SHARE_MEDIA share_media) {
-
                         }
 
                         @Override
@@ -167,24 +189,11 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
 
 
     }
+
+
     @Override
     public void dismiss() {
         super.dismiss();
         UtilMethod.backgroundAlpha(1.0f,getmActivity());
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //showToast("分享回调");
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        UMShareAPI.get(this).release();
     }
 }

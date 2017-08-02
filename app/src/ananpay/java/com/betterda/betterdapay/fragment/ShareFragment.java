@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
+import com.betterda.betterdapay.fragment.BaseFragment;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.NetworkUtils;
@@ -157,7 +158,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         if (install) {
             UMImage image = new UMImage(getmActivity(), R.mipmap.ic_launcher);//资源文件
             UMWeb  web = new UMWeb(url);
-            web.setTitle("安安支付");//标题
+            web.setTitle("来逗阵2");//标题
             web.setThumb(image);  //缩略图
             web.setDescription("注册有礼");//描述
 
