@@ -1,9 +1,14 @@
 package com.betterda.betterdapay.fragment;
 
+import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -12,11 +17,11 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.ImageTools;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
-import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -25,7 +30,9 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * 分享
@@ -40,17 +47,27 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     NormalTopBar mNormalTopBar;
     @BindView(R.id.loadpager_fragmeng_share)
     LoadingPager mLoadingPager;
+    @BindView(R.id.iv_fragmeng_share_qrmember)
+    ImageView mIvFragmengShareQrmember;
+    @BindView(R.id.tv_fragmeng_share_qrmember)
+    TextView mTvFragmengShareQrmember;
+    @BindView(R.id.iv_fragmeng_share_qr)
+    ImageView mIvFragmengShareQr;
+    @BindView(R.id.linear_fragment_share)
+    LinearLayout mLinearShare; //代理商的内容
+    @BindView(R.id.tv_fragmeng_share_qr)
+    TextView mTvFragmengShareQr;
+
     private View mView;
-    private String url;
-    private ShapeLoadingDialog mDialog;
+    private String url="http://www.baidu.com";
+
 
     @Override
     public View initView(LayoutInflater inflater) {
-         mView =  inflater.inflate(R.layout.fragment_share, null);
+        mView = inflater.inflate(R.layout.fragment_share, null);
         return mView;
 
     }
-
 
 
     @Override
@@ -58,49 +75,51 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         super.initData();
         mNormalTopBar.setTitle("分享");
         mNormalTopBar.setBackVisibility(false);
-        mNormalTopBar.setBackgroundColor(ContextCompat.getColor(getmActivity(),R.color.bg_blue));
+        mNormalTopBar.setBackgroundColor(ContextCompat.getColor(getmActivity(), R.color.bg_blue));
+        mLoadingPager.setonErrorClickListener(v -> {
+            getData();
+        });
+        // getData();
+        Bitmap bitmap = ImageTools.generateQRCode("dd", getmActivity(),72);
+        mIvFragmengShareQr.setImageBitmap(bitmap);
+        mIvFragmengShareQrmember.setImageBitmap(bitmap);
+
     }
 
     private void getData() {
-        if (mDialog == null) {
-            mDialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
-        }
+        mLoadingPager.setLoadVisable();
+        NetworkUtils.isNetWork(getmActivity(), null, () -> {
 
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(),mDialog);
-                mRxManager.add(
-                        NetWork.getNetService()
-                        .getCode(UtilMethod.getAccout(getmActivity()))
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("分享:"+data);
+            mRxManager.add(
+                    NetWork.getNetService()
+                            .getCode(UtilMethod.getAccout(getmActivity()))
+                            .compose(NetWork.handleResult(new BaseCallModel<>()))
+                            .subscribe(new MyObserver<String>() {
+                                @Override
+                                protected void onSuccess(String data, String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("分享:" + data);
+                                    }
+                                    url = data;
+                                    mLoadingPager.hide();
+
                                 }
-                                url = data;
-                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                share();
-                            }
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("分享fail:"+resultMsg);
+                                @Override
+                                public void onFail(String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("分享fail:" + resultMsg);
+                                    }
+                                    showToast(resultMsg);
+                                    mLoadingPager.setErrorVisable();
                                 }
-                                showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                            }
 
-                            @Override
-                            public void onExit() {
-                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                            }
-                        })
-                );
-            }
+                                @Override
+                                public void onExit() {
+
+                                }
+                            })
+            );
         });
     }
 
@@ -124,11 +143,14 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     }
 
 
-    @OnClick(R.id.btn_fragment_share)
+    @OnClick({R.id.btn_fragment_share,R.id.btn_fragment_sharemember})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_fragment_share:
-                getData();
+            case R.id.btn_fragment_share://分享代理商
+                share();
+                break;
+            case R.id.btn_fragment_sharemember://分享会员
+                share();
                 break;
             case R.id.relative_share_wxfriend:
                 shareToWx(SHARE_MEDIA.WEIXIN);
@@ -156,7 +178,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         boolean install = mShareAPI.isInstall(getmActivity(), SHARE_MEDIA.WEIXIN);
         if (install) {
             UMImage image = new UMImage(getmActivity(), R.mipmap.ic_launcher);//资源文件
-            UMWeb  web = new UMWeb(url);
+            UMWeb web = new UMWeb(url);
             web.setTitle("来逗阵");//标题
             web.setThumb(image);  //缩略图
             web.setDescription("注册有礼");//描述
@@ -179,7 +201,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
 
                         @Override
                         public void onCancel(SHARE_MEDIA share_media) {
-                            showToast(share_media.toString());
+
                         }
                     })
                     .share();
@@ -194,6 +216,11 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void dismiss() {
         super.dismiss();
-        UtilMethod.backgroundAlpha(1.0f,getmActivity());
+        UtilMethod.backgroundAlpha(1.0f, getmActivity());
     }
+
+
+
+
+
 }

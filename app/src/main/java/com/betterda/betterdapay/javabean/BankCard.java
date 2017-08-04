@@ -6,10 +6,10 @@ package com.betterda.betterdapay.javabean;
  */
 public class BankCard {
     private String cardId;//银行卡ID
-    private String realname; //持卡人姓名
-    private String idcard; //身份证号
-    private String bankname; //所属银行
-    private String bankcard;//卡号
+    private String realName; //持卡人姓名
+    private String idCard; //身份证号
+    private String bankName; //所属银行
+    private String bankCard;//卡号
     private String mobile;//预留手机号码
     private String cardType;//银行卡类型
 
@@ -22,36 +22,36 @@ public class BankCard {
         this.cardId = id;
     }
 
-    public String getRealname() {
-        return realname;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setRealname(String realname) {
-        this.realname = realname;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
-    public String getIdcard() {
-        return idcard;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setIdcard(String idcard) {
-        this.idcard = idcard;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
-    public String getBankname() {
-        return bankname;
+    public String getBankName() {
+        return bankName;
     }
 
-    public void setBankname(String bankname) {
-        this.bankname = bankname;
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
 
-    public String getBankcard() {
-        return bankcard;
+    public String getBankCard() {
+        return bankCard;
     }
 
-    public void setBankcard(String bankcard) {
-        this.bankcard = bankcard;
+    public void setBankCard(String bankCard) {
+        this.bankCard = bankCard;
     }
 
     public String getMobile() {

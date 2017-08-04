@@ -47,10 +47,10 @@ public class Constants {
     public static class Url {
         public static final String URL = "http://192.168.0.127:8080/paycloud-walletapi/";
        // public static final String URL = "http://119.23.227.230:7080/wallet/";
-        public static final String URL_LOGIN = URL + "api/rest/login";
-        public static final String URL_REGISTER = URL + "api/rest/register";
+        public static final String URL_LOGIN = URL + "api/user/login";
+        public static final String URL_REGISTER = URL + "api/user/register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
-        public static final String URL_PWD_UPDATE = URL + "api/rest/password/update";//忘记密码
+        public static final String URL_PWD_UPDATE = URL + "api/user/password/update";//忘记密码
         public static final String URL_ORDER_CREATE = URL + "api/payController.do?createOrder";//订单生成
         public static final String URL_ORDER_GET = URL + "api/orderController.do?getOrders";//账单获取
         public static final String URL_RATING = URL + "api/memberRankController.do?getRanks";//获取各等级费率
@@ -59,9 +59,9 @@ public class Constants {
         public static final String URL_UPDATE_CONDITION = URL + "api/memberRankController.do?queryUpgrade";//获取升级条件
         public static final String URL_UPDATE_TO_RATE = URL + "api/upgradeOrderController.do?upgrade";//升级到指定接口(就是订单生成接口)
         public static final String URL_JIESUAN = URL + "api/disburseController.do?withdraw";//结算接口
-        public static final String URL_BANK_ADD = URL + "api/cardController.do?add";//银行卡添加接口
-        public static final String URL_BANK_GET = URL + "api/cardController.do?list";//银行卡查询接口
-        public static final String URL_BANK_DELETE = URL + "api/cardController.do?delete";//银行卡删除接口
+        public static final String URL_BANK_ADD = URL + "api/bankcard/add";//银行卡添加接口
+        public static final String URL_BANK_GET = URL + "api/bankcard/get";//银行卡查询接口
+        public static final String URL_BANK_DELETE = URL + "api/bankcard/delete";//银行卡删除接口
         public static final String URL_CDOE_GET = URL + "api/shareController.do?share";//获取分享链接
         public static final String URL_AUTH_ADD = URL + "api/certController.do?validate";//实名认证接口
         public static final String URL_GET_INCOME = URL + "api/incomeController.do?getIncomes";//分润明细

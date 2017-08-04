@@ -8,6 +8,7 @@ import android.view.View;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.adapter.MyYinHangKaAddAdapter;
 import com.betterda.betterdapay.adapter.MyYinHangKaItemAdapter;
@@ -16,6 +17,7 @@ import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BankCard;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
@@ -82,33 +84,34 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
      */
     private void getData() {
         loadpagerLayout.setLoadVisable();
-        NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                NetWork.getNetService()
-                        .getBandGet(UtilMethod.getAccout(getmActivity()))
-                        .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
-                        .subscribe(new MyObserver<List<BankCard>>() {
-                            @Override
-                            protected void onSuccess(List<BankCard> data, String resultMsg) {
-                                if (data != null) {
-                                    parser(data);
-                                }
-                                loadpagerLayout.hide();
-                            }
+        NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, () -> NetWork.getNetService()
+                .getBandGet(UtilMethod.getAccout(getmActivity()), Constants.APPCODE)
+                .compose(NetWork.handleResult(new BaseCallModel<>()))
+                .subscribe(new MyObserver<List<BankCard>>() {
+                    @Override
+                    protected void onSuccess(List<BankCard> data, String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("获取银行卡:"+data);
+                        }
+                        if (data != null) {
+                            parser(data);
+                        }
+                        loadpagerLayout.hide();
+                    }
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                loadpagerLayout.setErrorVisable();
-                            }
+                    @Override
+                    public void onFail(String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("获取银行卡:"+resultMsg);
+                        }
+                        loadpagerLayout.setErrorVisable();
+                    }
 
-                            @Override
-                            public void onExit() {
-                                ExitToLogin();
-                            }
-                        });
-            }
-        });
+                    @Override
+                    public void onExit() {
+                        ExitToLogin();
+                    }
+                }));
     }
 
     /**

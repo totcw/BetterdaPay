@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
-import com.betterda.betterdapay.fragment.BaseFragment;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.NetworkUtils;
@@ -43,11 +42,11 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     LoadingPager mLoadingPager;
     private View mView;
     private String url;
-    private ShapeLoadingDialog mDialog;
+
 
     @Override
     public View initView(LayoutInflater inflater) {
-         mView =  inflater.inflate(R.layout.fragment_share, null);
+        mView =  inflater.inflate(R.layout.fragment_share, null);
         return mView;
 
     }
@@ -60,48 +59,46 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         mNormalTopBar.setTitle("分享");
         mNormalTopBar.setBackVisibility(false);
         mNormalTopBar.setBackgroundColor(ContextCompat.getColor(getmActivity(),R.color.bg_blue));
+        mLoadingPager.setonErrorClickListener(v -> {
+            getData();
+        });
+        getData();
     }
 
     private void getData() {
-        if (mDialog == null) {
-            mDialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
-        }
+        mLoadingPager.setLoadVisable();
+        NetworkUtils.isNetWork(getmActivity(), null, () -> {
 
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(),mDialog);
-                mRxManager.add(
-                        NetWork.getNetService()
-                        .getCode(UtilMethod.getAccout(getmActivity()))
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("分享:"+data);
+            mRxManager.add(
+                    NetWork.getNetService()
+                            .getCode(UtilMethod.getAccout(getmActivity()))
+                            .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                            .subscribe(new MyObserver<String>() {
+                                @Override
+                                protected void onSuccess(String data, String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("分享:"+data);
+                                    }
+                                    url = data;
+                                    mLoadingPager.hide();
+
                                 }
-                                url = data;
-                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                share();
-                            }
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("分享fail:"+resultMsg);
+                                @Override
+                                public void onFail(String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("分享fail:"+resultMsg);
+                                    }
+                                    showToast(resultMsg);
+                                    mLoadingPager.setErrorVisable();
                                 }
-                                showToast(resultMsg);
-                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                            }
 
-                            @Override
-                            public void onExit() {
-                                UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                            }
-                        })
-                );
-            }
+                                @Override
+                                public void onExit() {
+
+                                }
+                            })
+            );
         });
     }
 
@@ -129,7 +126,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_fragment_share:
-                getData();
+                share();
                 break;
             case R.id.relative_share_wxfriend:
                 shareToWx(SHARE_MEDIA.WEIXIN);

@@ -205,11 +205,12 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_BANK_ADD)
     Observable<BaseCallModel<String>> getBandAdd(@Field("account") String account,
-                                                 @Field("realname") String realname,
-                                                 @Field("idcard") String idcard,
-                                                 @Field("bankname") String bankname,
-                                                 @Field("bankcard") String bankcard,
-                                                 @Field("mobile") String mobile
+                                                 @Field("realName") String realname,
+                                                 @Field("idCard") String idcard,
+                                                 @Field("bankName") String bankname,
+                                                 @Field("bankCard") String bankcard,
+                                                 @Field("mobile") String mobile,
+                                                 @Field("appCode") String appCode
     );
 
     /**
@@ -220,7 +221,8 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_BANK_GET)
-    Observable<BaseCallModel<List<BankCard>>> getBandGet(@Field("account") String account
+    Observable<BaseCallModel<List<BankCard>>> getBandGet(@Field("account") String account,
+                                                         @Field("appCode") String appCode
     );
 
     /**
@@ -230,7 +232,8 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_BANK_DELETE)
-    Observable<BaseCallModel<List<BankCard>>> getBandDelete(@Field("cardId") String cardId
+    Observable<BaseCallModel<List<BankCard>>> getBandDelete(@Field("cardId") String cardId,
+                                                            @Field("appCode") String appCode
     );
 
     /**
@@ -254,7 +257,6 @@ public interface NetService {
      * @param cardNum          银行卡号
      * @param bank             所属银行
      * @param number           预留手机号
-     * @param cardType         银行卡类型
      * @param identityPositive 身份证正面照
      * @param identityNegative 身份证反面照
      * @param handIdentity     手持身份证

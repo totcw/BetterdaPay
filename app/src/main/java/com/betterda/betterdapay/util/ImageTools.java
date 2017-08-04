@@ -635,6 +635,27 @@ public final class ImageTools {
 	}
 
 	/**
+	 * 根据内容和大小生成二维码bitmap
+	 *
+	 * @param content
+	 * @return
+	 */
+	public  static Bitmap generateQRCode(String content,Context context,int size) {
+		if (TextUtils.isEmpty(content)) {
+			return null;
+		}
+		try {
+			QRCodeWriter writer = new QRCodeWriter();
+			// MultiFormatWriter writer = new MultiFormatWriter();
+			BitMatrix matrix = writer.encode(content, BarcodeFormat.QR_CODE, UtilMethod.dip2px(context, size), UtilMethod.dip2px(context, size));
+			return bitMatrix2Bitmap(matrix);
+		} catch (WriterException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
 	 * 生成bitmap
 	 *
 	 * @param matrix

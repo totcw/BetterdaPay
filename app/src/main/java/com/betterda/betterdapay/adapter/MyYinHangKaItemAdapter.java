@@ -79,10 +79,10 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
     public void onBindViewHolder(MainViewHolder holder, int position) {
         if (holder != null && position < data.size()) {
             final BankCard bankCard = data.get(position);
-            holder.mTvName.setText(bankCard.getBankname());
-            holder.mTvNumber.setText( UtilMethod.transforBankNumber(bankCard.getBankcard()));
+            holder.mTvName.setText(bankCard.getBankName());
+            holder.mTvNumber.setText( UtilMethod.transforBankNumber(bankCard.getBankCard()));
             try {
-                holder.mIvIcon.setImageResource(BankData.getBank(bankCard.getBankname()));
+                holder.mIvIcon.setImageResource(BankData.getBank(bankCard.getBankName()));
             } catch (Exception e) {
 
             }
@@ -100,11 +100,11 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
                     @Override
                     public void onClick(View v) {
                         if (isPay) {
-                            getDataForUnionMobilePay(bankCard.getBankcard());
+                            getDataForUnionMobilePay(bankCard.getBankCard());
                         } else {
                             Intent intent = new Intent(mContext, JsActivity.class);
                             intent.putExtra("money", money);
-                            intent.putExtra("paybankcard", bankCard.getBankcard());
+                            intent.putExtra("paybankcard", bankCard.getBankCard());
                             mContext.startActivity(intent);
                             mContext.finish();
                         }
@@ -219,19 +219,11 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
         final AlertDialog alertDialog = builder.setCancelable(false).setView(view).create();
         UtilMethod.showDialog( mContext, alertDialog);
 
-        mTvCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UtilMethod.dissmissDialog( mContext, alertDialog);
-            }
-        });
+        mTvCancel.setOnClickListener(v -> UtilMethod.dissmissDialog( mContext, alertDialog));
 
-        mTvComfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UtilMethod.dissmissDialog( mContext, alertDialog);
-                deleteBankCard(id);
-            }
+        mTvComfirm.setOnClickListener(v -> {
+            UtilMethod.dissmissDialog( mContext, alertDialog);
+            deleteBankCard(id);
         });
 
 
@@ -239,50 +231,47 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
     }
 
     private void deleteBankCard(final String id) {
-        NetworkUtils.isNetWork(mContext, null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                if (dialog == null) {
-                    dialog = UtilMethod.createDialog(mContext, "正在加载...");
-                }
-                //开启进度显示
-                UtilMethod.showDialog( mContext,dialog);
-                if (data != null) {
-                    NetWork.getNetService()
-                            .getBandDelete(id)
-                            .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
-                            .subscribe(new MyObserver<List<BankCard>>() {
-                                @Override
-                                protected void onSuccess(List<BankCard> list, String resultMsg) {
+        NetworkUtils.isNetWork(mContext, null, () -> {
+            if (dialog == null) {
+                dialog = UtilMethod.createDialog(mContext, "正在加载...");
+            }
+            //开启进度显示
+            UtilMethod.showDialog( mContext,dialog);
+            if (data != null) {
+                NetWork.getNetService()
+                        .getBandDelete(id,Constants.APPCODE)
+                        .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
+                        .subscribe(new MyObserver<List<BankCard>>() {
+                            @Override
+                            protected void onSuccess(List<BankCard> list, String resultMsg) {
 
-                                    for (BankCard bankCard : data) {
-                                        if (bankCard.getId().equals(id)) {
-                                            data.remove(bankCard);
-                                            break;
-                                        }
+                                for (BankCard bankCard : data) {
+                                    if (bankCard.getId().equals(id)) {
+                                        data.remove(bankCard);
+                                        break;
                                     }
-                                    notifyDataSetChanged();
-                                    //取消进度显示
-                                    UtilMethod.dissmissDialog( mContext, dialog);
-                                    UtilMethod.Toast(mContext,resultMsg);
                                 }
+                                notifyDataSetChanged();
+                                //取消进度显示
+                                UtilMethod.dissmissDialog( mContext, dialog);
+                                UtilMethod.Toast(mContext,resultMsg);
+                            }
 
-                                @Override
-                                public void onFail(String resultMsg) {
-                                    UtilMethod.dissmissDialog( mContext, dialog);
-                                    UtilMethod.Toast(mContext,resultMsg);
+                            @Override
+                            public void onFail(String resultMsg) {
+                                UtilMethod.dissmissDialog( mContext, dialog);
+                                UtilMethod.Toast(mContext,resultMsg);
 
-                                }
+                            }
 
-                                @Override
-                                public void onExit() {
+                            @Override
+                            public void onExit() {
 
-                                }
-                            });
-
-                }
+                            }
+                        });
 
             }
+
         });
     }
 
