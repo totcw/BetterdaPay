@@ -1,6 +1,7 @@
 package com.betterda.betterdapay.fragment;
 
 import android.content.res.ColorStateList;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
@@ -44,12 +45,20 @@ public class WalletFragment extends BaseFragment {
 
     @BindView(R.id.gttv_wallet_money)
     AppCompatEditText mGttvWalletMoney; //提现金额
-    // @BindView(R.id.iv_shouye_message)
+    @BindView(R.id.iv_shouye_message)
     ImageView mIvMessage; //图片
+    @BindView(R.id.scrollwidget)
+    ScrollWidget mScrollWidget;
+
 
     private AlertDialog mAlertDialog;
     private ShapeLoadingDialog mDialog;
+
     private List<String> mList;
+    private int currentShow;
+    private int currentHide=1;
+    private Handler mHandler = new Handler();
+    private Runnable updateUiRunnable;//更新ui的 任务
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -61,12 +70,10 @@ public class WalletFragment extends BaseFragment {
         super.initData();
 
         initRxBus();
-        mList = new ArrayList<>();
-        for ( int i=0;i<30;i++) {
-            mList.add("用户" + i + "获取到" + i + "分润");
-        }
+        startScroll();
 
     }
+
 
 
     @Override
@@ -270,6 +277,19 @@ public class WalletFragment extends BaseFragment {
 
     }
 
+    /**
+     * 快报开始滑动
+     */
+    private void startScroll() {
+        mList = new ArrayList<>();
+        for ( int i=0;i<30;i++) {
+            mList.add("用户" + i + "获取到" + i + "分润");
+        }
+        mScrollWidget.setData(mList);
+        mScrollWidget.startRunning();
+
+
+    }
 
 
     @Override

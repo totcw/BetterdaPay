@@ -93,7 +93,11 @@
 
             </LinearLayout>
 
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:background="@mipmap/wave"
+                />
 
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -103,10 +107,13 @@
             android:orientation="horizontal"
             android:background="@drawable/shape_bottom_top_line"
             android:layout_centerInParent="true"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
 
             <TextView
+
                 android:paddingLeft="5dp"
                 android:textStyle="bold"
                 android:text="分润"
@@ -132,44 +139,12 @@
                 android:layout_marginRight="5dp"/>
             <!-- flipInterval可能是一次切换的时间 -->
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ViewFlipper
-                    android:id="@+id/flipper"
+                <com.betterda.betterdapay.view.ScrollWidget
+                    android:id="@+id/scrollwidget"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autoStart="true"
-                    android:flipInterval="1000"
-                    android:inAnimation="@anim/push_up_in"
-                    android:outAnimation="@anim/push_up_out" >
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_marginLeft="10dp"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:textSize="16sp"
-                        android:text="瑞士维氏军刀"
-                        android:textColor="#000000"
-                        android:gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
-                    <TextView
-                        android:layout_marginLeft="10dp"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:textSize="16sp"
-                        android:text="新品满200-50"
-                        android:textColor="#000000"
-                        android:gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
-
-                </ViewFlipper>
-
-            </LinearLayout>
+                </com.betterda.betterdapay.view.ScrollWidget>
             </LinearLayout>
 
 
