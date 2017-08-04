@@ -50,6 +50,7 @@ public class TransactionRecordActivity extends BaseActivity {
     public void initView() {
         super.initView();
         setContentView(R.layout.activity_transactionrecord);
+     
     }
 
     @Override
@@ -85,7 +86,7 @@ public class TransactionRecordActivity extends BaseActivity {
                         holder.setText(R.id.tv_mingxi_time,"-"+ transactionRecord.getAmount() + "元");
                         holder.setTextColor(R.id.tv_mingxi_time, Color.BLACK);
                     }
-
+                    //TODO 显示订单号
                     holder.setText(R.id.tv_mingxi_money, transactionRecord.getTxnTime());
                     holder.setText(R.id.tv_mingxi_money2, transactionRecord.getStatus());
                 }

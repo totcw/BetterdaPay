@@ -7,7 +7,8 @@ package com.betterda.betterdapay.javabean;
 public class UserInfo {
 
     private String account;//账号
-    private String rank;//当前等级
+    private String rank;//当前等级code
+    private String rankName;//当前等级名字
     private String role;//当前等级对应的数
     private String token;//token
     private String auth;//是否实名认证   0未实名 1已认证 2 审核中
@@ -24,6 +25,14 @@ public class UserInfo {
 
     public String getRank() {
         return rank;
+    }
+
+    public String getRankName() {
+        return rankName;
+    }
+
+    public void setRankName(String rankName) {
+        this.rankName = rankName;
     }
 
     public void setRank(String rank) {
@@ -75,6 +84,7 @@ public class UserInfo {
         return "UserInfo{" +
                 "account='" + account + '\'' +
                 ", rank='" + rank + '\'' +
+                ", rankName='" + rankName + '\'' +
                 ", role='" + role + '\'' +
                 ", token='" + token + '\'' +
                 ", auth='" + auth + '\'' +

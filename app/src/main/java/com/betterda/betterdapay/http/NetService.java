@@ -47,7 +47,8 @@ public interface NetService {
     @POST(Constants.Url.URL_REGISTER)
     Observable<BaseCallModel<String>> getRegister(@Field("account") String account,
                                                   @Field("password") String password,
-                                                  @Field("inviteCode") String inviteCode);
+                                                  @Field("inviteCode") String inviteCode,
+                                                  @Field("appCode") String appCode);
 
     /**
      * 短信验证
@@ -69,7 +70,8 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_LOGIN)
     Observable<BaseCallModel<UserInfo>> getLogin(@Field("account") String account,
-                                                 @Field("password") String password);
+                                                 @Field("password") String password,
+                                                 @Field("appCode") String appCode);
 
     /**
      * 忘记密码
@@ -81,7 +83,8 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_PWD_UPDATE)
     Observable<BaseCallModel<String>> getPwdUpdate(@Field("account") String account,
-                                                   @Field("password") String password);
+                                                   @Field("password") String password,
+                                                   @Field("appCode") String appCode);
 
 
     /**

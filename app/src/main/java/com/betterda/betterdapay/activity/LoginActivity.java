@@ -158,7 +158,7 @@ public class LoginActivity extends BaseActivity {
         UtilMethod.showDialog(getmActivity(), dialog);
         mRxManager.add(
                 NetWork.getNetService()
-                        .getLogin(account, pwd)
+                        .getLogin(account, pwd,Constants.APPCODE)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new MyObserver<UserInfo>() {
@@ -195,10 +195,12 @@ public class LoginActivity extends BaseActivity {
         if (userInfo != null) {
             String account = userInfo.getAccount();
             String rate = userInfo.getRank();
+            String rankName = userInfo.getRankName();
             CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, account);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.PWD, pwd);
             CacheUtils.putString(getmActivity(), account + Constants.Cache.AUTH, userInfo.getAuth());
             CacheUtils.putString(getmActivity(), account + Constants.Cache.RANK, rate);
+            CacheUtils.putString(getmActivity(), account + Constants.Cache.RANKNAME, rankName);
             setAlias();
 
         }

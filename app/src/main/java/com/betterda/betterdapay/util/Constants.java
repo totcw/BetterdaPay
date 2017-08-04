@@ -24,13 +24,7 @@ public class Constants {
 
     public final static String ZHIFUBAO = "支付宝";
     public final static String WEIXIN = "微信";
-    public final static String SHOU_KUAN = "0"; //收款
-    public final static String FEN_RUN = "1"; //分润
-    public final static String TI_XIAN = "2";//提现
-    public final static String FEN_RUN_HUI = "0"; //返还分润
-    public final static String FEN_RUN_TUI = "1";//推广分润
-     public final static String FEN_RUN_HUI2 = "返回分润"; //返还分润
-    public final static String FEN_RUN_TUI2 = "推广分润";//推广分润
+    public final static String APPCODE = "A";
     public final static String WITHDRAW = "提现";
     public final static String NUMBER_REGULAR = "^1(3[0-9]|4[0-9]|5[0-9]|7[0-9]|8[0-9])\\d{8}$";//判断手机的正则
 
@@ -40,7 +34,8 @@ public class Constants {
         public static final String PWD = "pwd";
         public static final String ACCOUNT = "account";
         public static final String AUTH = "auth";//是否认证
-        public static final String RANK = "rank";//等级
+        public static final String RANK = "rank";//等级code
+        public static final String RANKNAME = "rankname";//等级名字
         public static final String REMEMBER = "remember";//是否记住密码
         public static final String GUIDE = "guide";//是否进入过引导界面
         public static final String ALIAS = "alias";//极光设置别名
@@ -50,13 +45,12 @@ public class Constants {
 
 
     public static class Url {
-       // public static final String URL = "http://192.168.0.123:8080/wallet/";
-       // public static final String URL = "http://wallet.ngrok.cc/wallet/";
-        public static final String URL = "http://119.23.227.230:7080/wallet/";
-        public static final String URL_LOGIN = URL + "api/loginInController.do?loginIn";
-        public static final String URL_REGISTER = URL + "api/registerController.do?register";
+        public static final String URL = "http://192.168.0.127:8080/paycloud-walletapi/";
+       // public static final String URL = "http://119.23.227.230:7080/wallet/";
+        public static final String URL_LOGIN = URL + "api/rest/login";
+        public static final String URL_REGISTER = URL + "api/rest/register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证
-        public static final String URL_PWD_UPDATE = URL + "api/resetPwdController.do?reset";//忘记密码
+        public static final String URL_PWD_UPDATE = URL + "api/rest/password/update";//忘记密码
         public static final String URL_ORDER_CREATE = URL + "api/payController.do?createOrder";//订单生成
         public static final String URL_ORDER_GET = URL + "api/orderController.do?getOrders";//账单获取
         public static final String URL_RATING = URL + "api/memberRankController.do?getRanks";//获取各等级费率

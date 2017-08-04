@@ -16,12 +16,9 @@ import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
-import com.betterda.betterdapay.util.RecyclerViewStateUtils;
 import com.betterda.betterdapay.util.RxBus;
 import com.betterda.betterdapay.util.UtilMethod;
-import com.betterda.betterdapay.view.EndlessRecyclerOnScrollListener;
 import com.betterda.betterdapay.view.HeaderAndFooterRecyclerViewAdapter;
-import com.betterda.betterdapay.view.LoadingFooter;
 import com.betterda.mylibrary.LoadingPager;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
@@ -96,8 +93,8 @@ public abstract class BaseUpFragment extends BaseFragment {
                         ((UpFragment) getParentFragment()).ivUpBack.setVisibility(View.VISIBLE);
                     }
                     if (((UpFragment) getParentFragment()).tvUpUp != null) {
-                        String rank = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "员工");
-                        int rate2 = RateData.getRate2(rank);
+                        String rank = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "1");
+                        int rate2 = RateData.getRateForRank(rank);
 
                         if (rate2 < item) {
                             ((UpFragment) getParentFragment()).tvUpUp.setVisibility(View.VISIBLE);

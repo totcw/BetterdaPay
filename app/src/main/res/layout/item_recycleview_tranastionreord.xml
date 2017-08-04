@@ -54,6 +54,14 @@
             android:textSize="14sp" />
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_marginBottom="10dp"
+        android:id="@+id/tv_mingxi_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/shouye_lv_tv"
+        android:textSize="12sp" />
     <View
 
         android:layout_width="match_parent"

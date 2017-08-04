@@ -205,16 +205,20 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
             showToast("手机号不能为空");
             return;
         }
-        if (TextUtils.isEmpty(yzm)) {
+     /*   if (TextUtils.isEmpty(yzm)) {
             showToast("验证码不能为空");
             return;
-        }
+        }*/
         if (TextUtils.isEmpty(pwd)) {
             showToast("密码不能为空");
             return;
         }
         if (TextUtils.isEmpty(pwd2)) {
             showToast("确认密码不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(phone)) {
+            showToast("邀请码不能为空");
             return;
         }
 
@@ -241,7 +245,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
                 showToast("请填写正确的手机号码");
                 return;
             } else {
-                if (!number.equals(verficationNumber)) {
+              /*  if (!number.equals(verficationNumber)) {
                     showToast("验证码错误");
                     return;
                 } else {
@@ -249,26 +253,14 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
                         showToast("验证码错误");
                         return;
                     }
-                }
+                }*/
             }
 
 
 
         }
 
-        if (phone != null) {
-            boolean ismobile = phone.matches(Constants.NUMBER_REGULAR);
-            if (!ismobile) {
-                showToast("请填写正确的邀请码");
-                return;
-            }
-        }
-        NetworkUtils.isNetWork(getmActivity(), etRegisterNumber, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                getdata(number, pwd, phone);
-            }
-        });
+        NetworkUtils.isNetWork(getmActivity(), etRegisterNumber, () -> getdata(number, pwd, phone));
 
     }
 
@@ -276,36 +268,31 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
      * 获取验证码
      */
     private void getVerification() {
-        NetworkUtils.isNetWork(this, btnRegister, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-              mRxManager.add(
-                      NetWork.getNetService().getSendMsg(number)
-                              .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                              .subscribe(new MyObserver<String>() {
-                                  @Override
-                                  protected void onSuccess(String data, String resultMsg) {
-                                      verfication = data;
-                                      if (BuildConfig.LOG_DEBUG) {
-                                          System.out.println("验证码:"+data);
-                                      }
-                                  }
+        NetworkUtils.isNetWork(this, btnRegister, () -> mRxManager.add(
+                NetWork.getNetService().getSendMsg(number)
+                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                        .subscribe(new MyObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data, String resultMsg) {
+                                verfication = data;
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("验证码:"+data);
+                                }
+                            }
 
-                                  @Override
-                                  public void onFail(String resultMsg) {
-                                      if (BuildConfig.LOG_DEBUG) {
-                                          System.out.println("验证码fail:"+resultMsg);
-                                      }
-                                  }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("验证码fail:"+resultMsg);
+                                }
+                            }
 
-                                  @Override
-                                  public void onExit() {
+                            @Override
+                            public void onExit() {
 
-                                  }
-                              })
-              );
-            }
-        });
+                            }
+                        })
+        ));
     }
 
 
@@ -313,7 +300,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
         UtilMethod.showDialog(getmActivity(), dialog);
         mRxManager.add(
                 NetWork.getNetService()
-                        .getRegister(number, password, phone)
+                        .getRegister(number, password, phone,Constants.APPCODE)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new MyObserver<String>() {

@@ -55,7 +55,8 @@ public class MyFragment extends BaseFragment {
     TextView mTvAuth;
 
     private String mIsAuth;
-    private String rate="员工";
+    private String rate="1";
+    private String rankName;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -79,16 +80,18 @@ public class MyFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
-        rate = CacheUtils.getString(getmActivity(), account + Constants.Cache.RANK, "员工");
+        rate = CacheUtils.getString(getmActivity(), account + Constants.Cache.RANK, "1");
+        rankName = CacheUtils.getString(getmActivity(), account + Constants.Cache.RANKNAME, "员工");
         if (tvMyNumber != null) {
             tvMyNumber.setText(account);
         }
         if (svTouxiang != null) {
+
             svTouxiang.setImageResource(RateData.getRate(rate));
         }
 
         if (tvMyRate != null) {
-            tvMyRate.setText("当前等级:" + rate);
+            tvMyRate.setText("当前等级:" + rankName);
 
         }
 

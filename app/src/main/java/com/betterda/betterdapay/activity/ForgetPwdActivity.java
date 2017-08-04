@@ -121,10 +121,10 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
             showToast("手机号不能为空");
             return;
         }
-        if (TextUtils.isEmpty(yzm)) {
+      /*  if (TextUtils.isEmpty(yzm)) {
             showToast("验证码不能为空");
             return;
-        }
+        }*/
         if (TextUtils.isEmpty(pwd)) {
             showToast("密码不能为空");
             return;
@@ -140,7 +140,7 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
                 showToast("请填写正确的手机号码");
                 return;
             } else {
-                if (!number.equals(verficationNumber)) {
+             /*   if (!number.equals(verficationNumber)) {
                     showToast("验证码错误");
                     return;
                 } else {
@@ -148,7 +148,7 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
                         showToast("验证码错误");
                         return;
                     }
-                }
+                }*/
             }
         }
 
@@ -170,36 +170,33 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
     }
 
     private void getData() {
-        NetworkUtils.isNetWork(getmActivity(), btnForgetpwd, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(), dialog);
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getPwdUpdate(number, pwd)
-                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                .subscribe(new MyObserver<String>() {
-                                    @Override
-                                    protected void onSuccess(String data, String resultMsg) {
-                                        showToast(resultMsg);
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        finish();
-                                    }
+        NetworkUtils.isNetWork(getmActivity(), btnForgetpwd, () -> {
+            UtilMethod.showDialog(getmActivity(), dialog);
+            mRxManager.add(
+                    NetWork.getNetService()
+                            .getPwdUpdate(number, pwd,Constants.APPCODE)
+                            .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                            .subscribe(new MyObserver<String>() {
+                                @Override
+                                protected void onSuccess(String data, String resultMsg) {
+                                    showToast(resultMsg);
+                                    UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    finish();
+                                }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
+                                @Override
+                                public void onFail(String resultMsg) {
 
-                                        showToast(resultMsg);
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                    }
+                                    showToast(resultMsg);
+                                    UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                }
 
-                                    @Override
-                                    public void onExit() {
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                    }
-                                })
-                );
-            }
+                                @Override
+                                public void onExit() {
+                                    UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                }
+                            })
+            );
         });
     }
 

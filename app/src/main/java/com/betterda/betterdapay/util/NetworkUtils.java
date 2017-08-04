@@ -138,11 +138,8 @@ public class NetworkUtils {
      */
     public static void showSnackBar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                .setAction("UNDO", v ->  {
 
-                    }
                 }).show();
     }
 

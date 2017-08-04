@@ -231,7 +231,6 @@
 
 
         <android.support.design.widget.TextInputEditText
-            android:inputType="phone"
             android:textSize="@dimen/textsize_little"
             android:id="@+id/et_register_phone"
             android:background="@null"

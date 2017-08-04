@@ -7,7 +7,6 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +25,11 @@ import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.view.ScrollWidget;
 import com.betterda.mylibrary.ShapeLoadingDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,14 +44,12 @@ public class WalletFragment extends BaseFragment {
 
     @BindView(R.id.gttv_wallet_money)
     AppCompatEditText mGttvWalletMoney; //提现金额
-    @BindView(R.id.iv_wallet_bg)
-    ImageView mWalletBg; //图片
-    @BindView(R.id.iv_shouye_message)
+    // @BindView(R.id.iv_shouye_message)
     ImageView mIvMessage; //图片
-
 
     private AlertDialog mAlertDialog;
     private ShapeLoadingDialog mDialog;
+    private List<String> mList;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -60,7 +61,13 @@ public class WalletFragment extends BaseFragment {
         super.initData();
 
         initRxBus();
+        mList = new ArrayList<>();
+        for ( int i=0;i<30;i++) {
+            mList.add("用户" + i + "获取到" + i + "分润");
+        }
+
     }
+
 
     @Override
     public void onStart() {
@@ -78,13 +85,12 @@ public class WalletFragment extends BaseFragment {
     }
 
 
-
     /**
      * 判断是否是有新消息
      */
     private void judgeMessage() {
         String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
-        boolean messsage = CacheUtils.getBoolean(getmActivity(), account+ Constants.Cache.MESSAGE, false);
+        boolean messsage = CacheUtils.getBoolean(getmActivity(), account + Constants.Cache.MESSAGE, false);
         if (mIvMessage != null) {
             mIvMessage.setSelected(messsage);
         }
@@ -161,22 +167,22 @@ public class WalletFragment extends BaseFragment {
                 break;
             case R.id.relative_wallet_banli://办理信用卡
                 showToast("正在开发中");
-               // UtilMethod.startIntent(getmActivity(), BanLiActivity.class);
+                // UtilMethod.startIntent(getmActivity(), BanLiActivity.class);
                 break;
             case R.id.relative_shouye_check://账单查询
                 UtilMethod.startIntent(getmActivity(), TransactionRecordActivity.class);
                 break;
             case R.id.relative_shouye_haidai://信用卡还贷
                 showToast("正在开发中");
-               // UtilMethod.startIntent(getmActivity(), CreditpayActivity.class);
+                // UtilMethod.startIntent(getmActivity(), CreditpayActivity.class);
                 break;
             case R.id.relative_shouye_life://生活缴费
                 showToast("正在开发中");
-               // UtilMethod.startIntent(getmActivity(), BaseLivingActiivty.class);
+                // UtilMethod.startIntent(getmActivity(), BaseLivingActiivty.class);
                 break;
             case R.id.relative_shouye_bianjie://便捷贷款
                 showToast("正在开发中");
-               // UtilMethod.startIntent(getmActivity(), BianJieDaiKuanActivity.class);
+                // UtilMethod.startIntent(getmActivity(), BianJieDaiKuanActivity.class);
                 break;
         }
     }
@@ -214,7 +220,7 @@ public class WalletFragment extends BaseFragment {
                                         }
                                         UtilMethod.dissmissDialog(getmActivity(), mDialog);
                                         if (data != null) {
-                                        createWithDrawDialog(data.getDisburseTime());
+                                            createWithDrawDialog(data.getDisburseTime());
 
                                         }
 
@@ -248,7 +254,7 @@ public class WalletFragment extends BaseFragment {
         if (mAlertDialog == null) {
             View view = LayoutInflater.from(getmActivity()).inflate(R.layout.dialog_withdraw, null);
             TextView mTvContent = (TextView) view.findViewById(R.id.tv_dialog_call_content);
-            mTvContent.setText("您于"+time+"提交了一笔提现,请等待处理");
+            mTvContent.setText("您于" + time + "提交了一笔提现,请等待处理");
             Button mBtnComfirm = (Button) view.findViewById(R.id.btn_dialog_call_comfrim);
             mBtnComfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -265,9 +271,11 @@ public class WalletFragment extends BaseFragment {
     }
 
 
+
     @Override
     public void onStop() {
         super.onStop();
         mAlertDialog = null;
+
     }
 }

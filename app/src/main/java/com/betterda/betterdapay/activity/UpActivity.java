@@ -184,7 +184,7 @@ public class UpActivity extends BaseActivity {
                 String rate = updateCondition.getRankName();
                 if (!TextUtils.isEmpty(rate)) {
                     //设置当前等级的信息
-                    String currentRate = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "");
+                    String currentRate = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "1");
                     if (rate.equals(currentRate)) {
                         if (mIvActivityUpLogo != null) {
                             mIvActivityUpLogo.setImageResource(RateData.getRate(updateCondition.getRankName()));
@@ -246,9 +246,9 @@ public class UpActivity extends BaseActivity {
      */
     private void setConditionInformation(UpdateCondition updateCondition, LinearLayout linearLayout,
                                          TextView rating, TextView award, TextView condition,String rank) {
-        String rank2 = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "员工");
-        int rate1 = RateData.getRate2(rank2);
-        int rate2 = RateData.getRate2(rank);
+        String rank2 = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "1");
+        int rate1 = RateData.getRateForRank(rank2);
+        int rate2 = RateData.getRateForRank(rank);
 
         if (rate2 > rate1) {
             if (linearLayout != null) {
