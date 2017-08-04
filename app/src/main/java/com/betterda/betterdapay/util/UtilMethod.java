@@ -579,4 +579,11 @@ public class UtilMethod {
         return phoneNumber;
     }
 
+    /**
+     * 获取分页的开始下标
+     * @param page
+     */
+    public static String getStart(int page) {
+        return String.valueOf((page-1)*10+1);
+    }
 }

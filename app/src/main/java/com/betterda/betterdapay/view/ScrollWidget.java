@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
@@ -60,12 +61,19 @@ public class ScrollWidget extends LinearLayout {
     private void init(Context context) {
         mSwitcherList = new ArrayList<>();
         mIntegerList = new ArrayList<>();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -1);
+
         for (int i = 0; i < visableItem; i++) {
+
             TextSwitcher textSwitcher = new TextSwitcher(context);
             textSwitcher.setOutAnimation(context, R.anim.push_up_out);
             textSwitcher.setInAnimation(context, R.anim.push_up_in);
+            textSwitcher.setLayoutParams(params);
             textSwitcher.setFactory(() -> {
+                FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(-1, -1);
                 final TextView tv = new TextView(context);
+                tv.setLayoutParams(param);
+                tv.setGravity(Gravity.CENTER_VERTICAL);
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                 return tv;
             });

@@ -395,8 +395,9 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_MESSAGE_LIST)
     Observable<BaseCallModel<List<Messages>>> getMessageList(@Field("account") String account,
-                                                             @Field("pageNo") String pageNo,
-                                                             @Field("pageSize") String pageSize
+                                                             @Field("start") String start,
+                                                             @Field("length") String length,
+                                                             @Field("appCode") String appCode
     );
 
     /**

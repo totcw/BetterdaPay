@@ -74,7 +74,7 @@ public class Constants {
         public static final String URL_UPDATE_VERSION = URL + "api/versionController.do?version";//版本更新
         public static final String URL_GET_INFORMATION = "api/memberController.do?getInfo";//我的资料获取
         public static final String URL_GET_MEMBERS = "api/memberNumController.do?memberNum";//获取会员个数
-        public static final String URL_GET_MESSAGE_LIST = "api/infoListController.do?infoList";//获取消息列表
+        public static final String URL_GET_MESSAGE_LIST = "api/message/get";//获取消息列表
         public static final String URL_CHECK_WITHDRAW = "api/disburseController.do?isWithdraw";//查询结算状态
         public static final String URL_UNIONGATEWAYT0ORDER = "api/payController.do?unionPay";//生成银联网关t0订单
         public static final String URL_ERRORLOG = "api/errorLogController.do?errorLog";//错误日志

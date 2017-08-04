@@ -49,6 +49,7 @@ public class MessageActivity extends BaseActivity {
     private HeaderAndFooterRecyclerViewAdapter mAdapter;
     private List<Messages> list,mMessagesList;
     private int page = 1;
+    private String start="1";//分页的开始下标
 
     @Override
     public void initView() {
@@ -82,6 +83,7 @@ public class MessageActivity extends BaseActivity {
                     public void load() {
 
                         page++;
+                        start = UtilMethod.getStart(page);
                         getData();
                     }
                 });
@@ -103,6 +105,7 @@ public class MessageActivity extends BaseActivity {
             public void onClick(View v) {
                 mLoadpagerLayout.setLoadVisable();
                 page = 1;
+                start = "1";
                 getData();
             }
         });
@@ -126,43 +129,38 @@ public class MessageActivity extends BaseActivity {
 
     private void getData() {
 
-        NetworkUtils.isNetWork(this, mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getMessageList(UtilMethod.getAccout(getmActivity()), page + "", Constants.PAGE_SIZE + "")
-                                .compose(NetWork.handleResult(new BaseCallModel<List<Messages>>()))
-                                .subscribe(new MyObserver<List<Messages>>() {
-                                    @Override
-                                    protected void onSuccess(List<Messages> data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("获取消息列表:" + data);
-                                        }
-                                        if (data != null) {
-                                            parserData(data);
-                                        }
-                                        UtilMethod.judgeData(list, mLoadpagerLayout);
-                                    }
+        NetworkUtils.isNetWork(this, mLoadpagerLayout, () -> mRxManager.add(
+                NetWork.getNetService()
+                        .getMessageList(UtilMethod.getAccout(getmActivity()),start, Constants.PAGE_SIZE + "",Constants.APPCODE)
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
+                        .subscribe(new MyObserver<List<Messages>>() {
+                            @Override
+                            protected void onSuccess(List<Messages> data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("获取消息列表:" + data);
+                                }
+                                if (data != null) {
+                                    parserData(data);
+                                }
+                                UtilMethod.judgeData(list, mLoadpagerLayout);
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("获取消息列表fail:" + resultMsg);
-                                        }
-                                        if (mLoadpagerLayout != null) {
-                                            mLoadpagerLayout.setErrorVisable();
-                                        }
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("获取消息列表fail:" + resultMsg);
+                                }
+                                if (mLoadpagerLayout != null) {
+                                    mLoadpagerLayout.setErrorVisable();
+                                }
+                            }
 
-                                    @Override
-                                    public void onExit() {
+                            @Override
+                            public void onExit() {
 
-                                    }
-                                })
-                );
-            }
-        });
+                            }
+                        })
+        ));
     }
 
     private void parserData(List<Messages> data) {
