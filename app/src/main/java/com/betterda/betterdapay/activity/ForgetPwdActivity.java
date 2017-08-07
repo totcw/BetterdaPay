@@ -57,6 +57,7 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
         super.init();
         topbarForgetpwd.setTitle("忘记密码");
         countdownRegister.setListener(this);
+        countdownRegister.setBackground(R.drawable.blue_selector);
         setTextListener();
     }
 

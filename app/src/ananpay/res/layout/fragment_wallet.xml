@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
-
               android:orientation="vertical">
 
 
@@ -92,11 +89,7 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="27dp"
-                android:background="@mipmap/wave"
-                />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -104,17 +97,20 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
+                android:background="@mipmap/bg_rect"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:layout_marginLeft="10dp"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@mipmap/messge_adv"
                     />
 
                 <com.betterda.betterdapay.view.ScrollWidget
-
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
                     android:id="@+id/scrollwidget"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -123,15 +119,12 @@
                 </com.betterda.betterdapay.view.ScrollWidget>
             </LinearLayout>
 
-            <View
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:background="@color/lv_divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"></View>
 
 
             <LinearLayout
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:background="@mipmap/bg_rect_large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -139,7 +132,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="52dp"
+                    android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <RelativeLayout
@@ -239,7 +232,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginBottom="30dp"
                     android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 

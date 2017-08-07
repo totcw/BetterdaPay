@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.callback.MyTextWatcher;
@@ -86,8 +87,8 @@ public class FeedbackActivity extends BaseActivity {
                     UtilMethod.showDialog(getmActivity(),dialog);
                     mRxManager.add(
                             NetWork.getNetService()
-                                    .getFeedBack(UtilMethod.getAccout(getmActivity()),content)
-                                    .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                                    .getFeedBack(UtilMethod.getAccout(getmActivity()),content,Constants.APPCODE)
+                                    .compose(NetWork.handleResult(new BaseCallModel<>()))
                                     .subscribe(new MyObserver<String>() {
                                         @Override
                                         protected void onSuccess(String data, String resultMsg) {
@@ -98,6 +99,9 @@ public class FeedbackActivity extends BaseActivity {
 
                                         @Override
                                         public void onFail(String resultMsg) {
+                                            if (BuildConfig.LOG_DEBUG) {
+                                                System.out.println("意见反馈:"+resultMsg);
+                                            }
                                             UtilMethod.dissmissDialog(getmActivity(), dialog);
                                             showToast(resultMsg);
                                         }

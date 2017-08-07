@@ -68,10 +68,10 @@ public class Constants {
         public static final String URL_GET_JIESUAN = URL + "api/disburseController.do?getDisburse";//结算明细
         public static final String URL_SUB_GET = URL + "api/mySpreadController.do?mySpread";//我的推广接口
         public static final String URL_WALLET_GET = URL + "api/balanceController.do?getBalance";//钱包获取接口
-        public static final String URL_FEEDBACK_ADD = URL + "api/feedbackController.do?feedback";//意见反馈
+        public static final String URL_FEEDBACK_ADD = URL + "api/feedback/submit";//意见反馈
         public static final String URL_SEARCH_POST = URL + "appAPI.do?api/account/search/post";//搜索接口
         public static final String URL_IMG_UPLOAD = URL + "fileUpload";//图片上传
-        public static final String URL_UPDATE_VERSION = URL + "api/versionController.do?version";//版本更新
+        public static final String URL_UPDATE_VERSION = URL + "api/version/newest";//版本更新
         public static final String URL_GET_INFORMATION = "api/memberController.do?getInfo";//我的资料获取
         public static final String URL_GET_MEMBERS = "api/memberNumController.do?memberNum";//获取会员个数
         public static final String URL_GET_MESSAGE_LIST = "api/message/get";//获取消息列表

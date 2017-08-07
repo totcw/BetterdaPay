@@ -6,7 +6,7 @@
     <color name="bg_blue">#5ed3ff</color>
     <color name="black">#ff000000</color>
     <color name="bg_gray">#ededed</color>
-    <color name="bg_green">#5ed3ff</color>
+
     <color name="divierLine">#ebebeb</color>
     <color name="gray_line">#ffd6d7dc</color>
     <color name="tv_get_yzm">#000000</color> <!--注册页面点击获取验证码-->

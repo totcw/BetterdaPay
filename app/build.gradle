@@ -138,7 +138,7 @@ dependencies {
     /*butterknife*/
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
-    compile 'com.betterda:mylibrary:2.5.9'
+    compile 'com.betterda:mylibrary:2.6.2'
     /*togglebutton*/
     compile 'com.zcw:togglebutton-library:1.0.0'
     /*vlayout*/

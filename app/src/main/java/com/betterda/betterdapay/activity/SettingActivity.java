@@ -24,6 +24,7 @@ import com.betterda.betterdapay.http.DownloadAPI;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.interfac.DownloadProgressListener;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.FileUtils;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -142,8 +143,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             }
             UtilMethod.showDialog(this, mDialog);
             mRxManager.add(
-                    NetWork.getNetService().getUpdate(appVersionCode + "")
-                            .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                    NetWork.getNetService().getUpdate(appVersionCode + "", Constants.APPCODE)
+                            .compose(NetWork.handleResult(new BaseCallModel<>()))
                             .subscribe(new MyObserver<String>() {
                                 @Override
                                 protected void onSuccess(String data, String resultMsg) {
@@ -152,7 +153,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                     }
                                     UtilMethod.dissmissDialog(SettingActivity.this, mDialog);
                                     if (!TextUtils.isEmpty(data) && data.startsWith("http://")) {
-                                        showUpdateDialog(data);
+                                        showUpdateDialog(data,resultMsg);
                                     } else {
                                         showToast(resultMsg);
                                     }
@@ -184,29 +185,21 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
      *
      * @param url
      */
-    public void showUpdateDialog(final String url) {
+    public void showUpdateDialog(final String url,String msg) {
         View view = LayoutInflater.from(SettingActivity.this).inflate(R.layout.dialog_update, null);
         TextView mTvCancel = (TextView) view.findViewById(R.id.tv_update_cancel);
         TextView mTvComfirm = (TextView) view.findViewById(R.id.tv_update_comfirm);
+        TextView mTvUpdate = (TextView) view.findViewById(R.id.tv_dialog_update);
+        mTvUpdate.setText(msg);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder.setView(view).setCancelable(false)
                 .show();
-        mTvCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UtilMethod.dissmissDialog(SettingActivity.this, alertDialog);
+        mTvCancel.setOnClickListener(v -> UtilMethod.dissmissDialog(SettingActivity.this, alertDialog));
 
+        mTvComfirm.setOnClickListener(v -> {
+            UtilMethod.dissmissDialog(SettingActivity.this, alertDialog);
+            checkApk(url);
 
-            }
-        });
-
-        mTvComfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UtilMethod.dissmissDialog(SettingActivity.this, alertDialog);
-                checkApk(url);
-
-            }
         });
     }
 

@@ -139,29 +139,25 @@ public class WelcomeActivity extends FragmentActivity {
      *
      * @param url
      */
-    public void showUpdateDialog(final String url) {
+    public void showUpdateDialog(final String url,String msg) {
         View view = LayoutInflater.from(WelcomeActivity.this).inflate(R.layout.dialog_update, null);
         TextView mTvCancel = (TextView) view.findViewById(R.id.tv_update_cancel);
         TextView mTvComfirm = (TextView) view.findViewById(R.id.tv_update_comfirm);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        TextView mTvUpdate = (TextView) view.findViewById(R.id.tv_dialog_update);
+        mTvUpdate.setText(msg);
         final AlertDialog alertDialog = builder.setView(view).setCancelable(false)
                 .show();
-        mTvCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UtilMethod.dissmissDialog(WelcomeActivity.this, alertDialog);
-                startToLogin();
+        mTvCancel.setOnClickListener(v -> {
+            UtilMethod.dissmissDialog(WelcomeActivity.this, alertDialog);
+            startToLogin();
 
-            }
         });
 
-        mTvComfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UtilMethod.dissmissDialog(WelcomeActivity.this, alertDialog);
-                checkApk(url);
+        mTvComfirm.setOnClickListener(v -> {
+            UtilMethod.dissmissDialog(WelcomeActivity.this, alertDialog);
+            checkApk(url);
 
-            }
         });
     }
 
@@ -174,7 +170,7 @@ public class WelcomeActivity extends FragmentActivity {
             return;
         }
         final File externalFilesDir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/" + "update.apk");
-       // File externalFilesDir = new File(Environment.getExternalStorageDirectory()+"/"+Environment.DIRECTORY_DOWNLOADS+"/" + "update.apk");
+      //  File externalFilesDir = new File(Environment.getExternalStorageDirectory()+"/"+Environment.DIRECTORY_DOWNLOADS+"/" + "update.apk");
         if (null != externalFilesDir && externalFilesDir.exists()) {
             PackageInfo apkInfo = UtilMethod.getApkInfo(WelcomeActivity.this, externalFilesDir.getAbsolutePath());
             //如果apk没问题就不会为null
@@ -210,7 +206,9 @@ public class WelcomeActivity extends FragmentActivity {
 
                 //拿不到文件的大小就直接关闭界面
                 Message message = Message.obtain();
-
+                if (BuildConfig.LOG_DEBUG) {
+                    System.out.println("contentlength:"+contentLength);
+                }
                 if (contentLength == -1 || contentLength == 0) {
                     isDown = false;
                     message.what = 2;
@@ -329,8 +327,8 @@ public class WelcomeActivity extends FragmentActivity {
         boolean netAvailable = NetworkUtils.isWifi(WelcomeActivity.this);
         if (netAvailable) {
             mRxManager.add(
-                    NetWork.getNetService().getUpdate(appVersionCode + "")
-                            .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                    NetWork.getNetService().getUpdate(appVersionCode + "",Constants.APPCODE)
+                            .compose(NetWork.handleResult(new BaseCallModel<>()))
                             .subscribe(new MyObserver<String>() {
                                 @Override
                                 protected void onSuccess(String data, String resultMsg) {
@@ -338,7 +336,7 @@ public class WelcomeActivity extends FragmentActivity {
                                         System.out.println("版本更新:"+data);
                                     }
                                     if (!TextUtils.isEmpty(data) && data.startsWith("http://")) {
-                                        showUpdateDialog(data);
+                                        showUpdateDialog(data,resultMsg);
                                     } else {
                                         startToLogin();
                                     }
@@ -355,6 +353,9 @@ public class WelcomeActivity extends FragmentActivity {
                                 }
                                 @Override
                                 public void onExit(String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("版本更新exit:"+resultMsg);
+                                    }
                                     startToLogin();
                                 }
 

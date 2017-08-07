@@ -3,7 +3,7 @@
 
     <item>
         <shape>
-            <solid android:color="#fff75555" />
+            <solid android:color="@color/share_red" />
 
             <corners
                 android:bottomLeftRadius="7.0dip"
@@ -13,7 +13,7 @@
 
             <stroke
                 android:width="1.0dip"
-                android:color="#fff75555" />
+                android:color="@color/share_red" />
         </shape>
     </item>
 

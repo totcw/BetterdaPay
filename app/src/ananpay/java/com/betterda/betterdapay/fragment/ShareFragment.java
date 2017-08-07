@@ -90,12 +90,12 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                                         System.out.println("分享fail:"+resultMsg);
                                     }
                                     showToast(resultMsg);
-                                    mLoadingPager.setErrorVisable();
+                                   // mLoadingPager.setErrorVisable();
                                 }
 
                                 @Override
-                                public void onExit() {
-
+                                public void onExit(String resultMsg) {
+                                    ExitToLogin(resultMsg);
                                 }
                             })
             );

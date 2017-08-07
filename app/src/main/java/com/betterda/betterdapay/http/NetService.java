@@ -324,7 +324,8 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_FEEDBACK_ADD)
     Observable<BaseCallModel<String>> getFeedBack(@Field("account") String account,
-                                                  @Field("content") String content
+                                                  @Field("content") String content,
+                                                  @Field("appCode") String appCode
     );
 
     /**
@@ -340,17 +341,6 @@ public interface NetService {
     );
 
 
-    @FormUrlEncoded
-    @POST(Constants.Url.URL_SEARCH_POST)
-    Observable<BaseCallModel<List<Income>>> getSearch2(@Field("account") String account,
-                                                       @Field("token") String token,
-                                                       @Field("startDate") String startDate,
-                                                       @Field("endDate") String endDate,
-                                                       @Field("orderType") String orderType,
-                                                       @Field("profitType") String profitType,
-                                                       @Field("pageNo") String pageNo,
-                                                       @Field("pageSize") String pageSize
-    );
 
     /**
      * @author : lyf
@@ -383,7 +373,8 @@ public interface NetService {
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_UPDATE_VERSION)
-    Observable<BaseCallModel<String>> getUpdate(@Field("versionNo") String version);
+    Observable<BaseCallModel<String>> getUpdate(@Field("versionNo") String version,
+                                                @Field("appCode") String appCode);
 
 
     /**

@@ -3,7 +3,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:background="@color/white"
             android:overScrollMode="never"
             android:layout_height="match_parent">
 
@@ -63,22 +62,32 @@
 
         </LinearLayout>
 
-        <ImageView
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="27dp"
-            android:background="@mipmap/wave"
-            />
+            android:layout_height="wrap_content">
 
 
-        <com.betterda.mylibrary.view.RatioLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:ratio="1.2">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:background="@color/bg_blue"
+                android:layout_height="48dp">
+
+            </FrameLayout>
+
+            <com.betterda.mylibrary.view.RatioLayout
+
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:ratio="1.2">
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
+                    android:background="@mipmap/bg_rect_large"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -336,12 +345,15 @@
                 </LinearLayout>
 
 
-        </com.betterda.mylibrary.view.RatioLayout>
+            </com.betterda.mylibrary.view.RatioLayout>
+
+        </FrameLayout>
+
 
         <Button
             android:id="@+id/btn_shoukuan"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="center_horizontal"

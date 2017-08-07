@@ -41,7 +41,7 @@ public class MyApplication extends Application {
         PlatformConfig.setWeixin("wx94bdd0ce4aa8f83f", "f415fc91459a8383b503d3e3e88955f5");
 
         //捕获异常
-         CrashHandler.getInstance().init(getApplicationContext());
+        // CrashHandler.getInstance().init(getApplicationContext());
 
         //极光推送
         if (BuildConfig.LOG_DEBUG) {

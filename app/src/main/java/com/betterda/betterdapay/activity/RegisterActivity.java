@@ -69,6 +69,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
         super.init();
         topbarRegister.setTitle("注册");
         countdownRegister.setListener(this);
+        countdownRegister.setBackground(R.drawable.blue_selector);
         dialog = UtilMethod.createDialog(getmActivity(), "正在注册...");
         setEditListener();
 
