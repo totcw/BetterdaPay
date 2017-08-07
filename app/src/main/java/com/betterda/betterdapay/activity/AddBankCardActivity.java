@@ -198,8 +198,9 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
                                 }
 
                                 @Override
-                                public void onExit() {
-
+                                public void onExit(String resultMsg) {
+                                    UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    ExitToLogin(resultMsg);
                                 }
                             })
             );

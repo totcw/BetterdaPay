@@ -149,10 +149,8 @@ public class TiXianDetailActivity extends BaseActivity {
                                     }
 
                                     @Override
-                                    public void onExit() {
-                                        if (mLoadpagerLayout != null) {
-                                            mLoadpagerLayout.hide();
-                                        }
+                                    public void onExit(String resultMsg) {
+                                        ExitToLogin(resultMsg);
                                     }
                                 })
                 );

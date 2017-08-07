@@ -206,8 +206,9 @@ public class JieSuanActivity extends BaseActivity {
                                         }
 
                                         @Override
-                                        public void onExit() {
+                                        public void onExit(String resultMsg) {
                                             UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                            ExitToLogin(resultMsg);
                                         }
                                     })
                     );

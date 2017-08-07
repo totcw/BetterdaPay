@@ -353,11 +353,11 @@ public class WelcomeActivity extends FragmentActivity {
                                     }
 
                                 }
-
                                 @Override
-                                public void onExit() {
+                                public void onExit(String resultMsg) {
                                     startToLogin();
                                 }
+
                             })
             );
         } else {

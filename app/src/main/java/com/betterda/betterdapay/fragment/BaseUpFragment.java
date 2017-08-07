@@ -222,7 +222,7 @@ public abstract class BaseUpFragment extends BaseFragment {
                                     }
 
                                     @Override
-                                    public void onExit() {
+                                    public void onExit(String resultMsg) {
                                         if (BuildConfig.LOG_DEBUG) {
                                             Log.i(TAG, "exit");
                                         }
@@ -230,7 +230,7 @@ public abstract class BaseUpFragment extends BaseFragment {
 
                                         if (isCurrent || isVisible) {
                                             isCurrent = false;
-                                            ExitToLogin();
+                                            ExitToLogin(resultMsg);
                                         }
 
                                     }

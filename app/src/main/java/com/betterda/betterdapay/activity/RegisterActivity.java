@@ -288,7 +288,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
                             }
 
                             @Override
-                            public void onExit() {
+                            public void onExit(String resultMsg) {
 
                             }
                         })
@@ -318,8 +318,9 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
                             }
 
                             @Override
-                            public void onExit() {
-
+                            public void onExit(String resultMsg) {
+                                UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                ExitToLogin(resultMsg);
                             }
                         })
         );

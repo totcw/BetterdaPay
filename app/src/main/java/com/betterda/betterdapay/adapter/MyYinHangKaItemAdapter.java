@@ -18,6 +18,7 @@ import com.betterda.BtPay;
 import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.JsActivity;
+import com.betterda.betterdapay.activity.LoginActivity;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.NetWork;
@@ -96,29 +97,21 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
             }
 
             if (isClick) {
-                holder.mLinearAdd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (isPay) {
-                            getDataForUnionMobilePay(bankCard.getBankCard());
-                        } else {
-                            Intent intent = new Intent(mContext, JsActivity.class);
-                            intent.putExtra("money", money);
-                            intent.putExtra("paybankcard", bankCard.getBankCard());
-                            mContext.startActivity(intent);
-                            mContext.finish();
-                        }
-
+                holder.mLinearAdd.setOnClickListener(v -> {
+                    if (isPay) {
+                        getDataForUnionMobilePay(bankCard.getBankCard());
+                    } else {
+                        Intent intent = new Intent(mContext, JsActivity.class);
+                        intent.putExtra("money", money);
+                        intent.putExtra("paybankcard", bankCard.getBankCard());
+                        mContext.startActivity(intent);
+                        mContext.finish();
                     }
+
                 });
             }
 
-            holder.mTvDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showDeleteDialog(bankCard.getId());
-                }
-            });
+            holder.mTvDelete.setOnClickListener(v -> showDeleteDialog(bankCard.getId()));
 
         }
     }
@@ -128,42 +121,46 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
      * 获取银联手机控件支付的订单号
      */
     public void getDataForUnionMobilePay(final String cardNum) {
-        NetworkUtils.isNetWork(mContext, null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                if (dialog == null) {
-                    dialog = UtilMethod.createDialog(mContext, "正在加载...");
-                }
-                UtilMethod.showDialog(mContext, dialog);
-                NetWork.getNetService()
-                        .getOrder(UtilMethod.getAccout(mContext),  money+"", rankId, "升级付款")
-                        .compose(NetWork.handleResult(new BaseCallModel<CreateOrderEntity>()))
-                        .subscribe(new MyObserver<CreateOrderEntity>() {
-                            @Override
-                            protected void onSuccess(CreateOrderEntity data, String resultMsg) {
-                                if (BuildConfig.LOG_DEBUG) {
-                                    System.out.println("手机支付控件:" + data);
-                                }
-                                if (data != null) {
-                                    unionMobilePay(data,cardNum);
-                                } else {
-                                    UtilMethod.dissmissDialog(mContext, dialog);
-                                    UtilMethod.Toast(mContext,"获取支付订单失败");
-                                }
-                            }
-
-                            @Override
-                            public void onFail(String resultMsg) {
-                                UtilMethod.Toast(mContext,"获取支付订单失败");
-                                UtilMethod.dissmissDialog(mContext, dialog);
-                            }
-
-                            @Override
-                            public void onExit() {
-                                UtilMethod.dissmissDialog(mContext, dialog);
-                            }
-                        });
+        NetworkUtils.isNetWork(mContext, null, () -> {
+            if (dialog == null) {
+                dialog = UtilMethod.createDialog(mContext, "正在加载...");
             }
+            UtilMethod.showDialog(mContext, dialog);
+            NetWork.getNetService()
+                    .getOrder(UtilMethod.getAccout(mContext),  money+"", rankId, "升级付款")
+                    .compose(NetWork.handleResult(new BaseCallModel<CreateOrderEntity>()))
+                    .subscribe(new MyObserver<CreateOrderEntity>() {
+                        @Override
+                        protected void onSuccess(CreateOrderEntity data1, String resultMsg) {
+                            if (BuildConfig.LOG_DEBUG) {
+                                System.out.println("手机支付控件:" + data1);
+                            }
+                            if (data1 != null) {
+                                unionMobilePay(data1,cardNum);
+                            } else {
+                                UtilMethod.dissmissDialog(mContext, dialog);
+                                UtilMethod.Toast(mContext,"获取支付订单失败");
+                            }
+                        }
+
+                        @Override
+                        public void onFail(String resultMsg) {
+                            UtilMethod.Toast(mContext,"获取支付订单失败");
+                            UtilMethod.dissmissDialog(mContext, dialog);
+                        }
+
+                        @Override
+                        public void onExit(String resultMsg) {
+                            UtilMethod.Toast(mContext,resultMsg);
+                            UtilMethod.dissmissDialog(mContext, dialog);
+                            Intent intent = new Intent();
+                            intent.setClass(mContext, LoginActivity.class);
+                            //添加清除任务栈中所有activity的log,如果要启动的activity不在任务栈中了,还需要添加FLAG_ACTIVITY_NEW_TASK,才会关闭任务栈中的其他activity
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            mContext.startActivity(intent);
+                            mContext.finish();
+                        }
+                    });
         });
     }
 
@@ -181,23 +178,20 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
         payCloudReqModel.setAccNo(cardNum);
         payCloudReqModel.setTxnAmt(money+"");
         payCloudReqModel.setServiceUrl(SERVICE_URL);
-        BtPay.getInstance(mContext).requestPay(payCloudReqModel, new BtPayCallBack() {
-            @Override
-            public void done(BtResult result) {
-                UtilMethod.dissmissDialog(mContext, dialog);
-                BtPayResult payResult = (BtPayResult) result;
-                if (payResult != null) {
-                    if (BtPayResult.RESULT_SUCCESS.equals(payResult.getResult())) {
-                        CacheUtils.putString(mContext, UtilMethod.getAccout(mContext) + Constants.Cache.RANK, rank);
-                        mContext.finish();
-                    } else if (BtPayResult.RESULT_CANCEL.equals(payResult.getResult())) {
-                        UtilMethod.Toast(mContext,"取消支付");
-                    } else  {
-                        UtilMethod.Toast(mContext,"支付失败");
-                    }
+        BtPay.getInstance(mContext).requestPay(payCloudReqModel, result -> {
+            UtilMethod.dissmissDialog(mContext, dialog);
+            BtPayResult payResult = (BtPayResult) result;
+            if (payResult != null) {
+                if (BtPayResult.RESULT_SUCCESS.equals(payResult.getResult())) {
+                    CacheUtils.putString(mContext, UtilMethod.getAccout(mContext) + Constants.Cache.RANK, rank);
+                    mContext.finish();
+                } else if (BtPayResult.RESULT_CANCEL.equals(payResult.getResult())) {
+                    UtilMethod.Toast(mContext,"取消支付");
+                } else  {
+                    UtilMethod.Toast(mContext,"支付失败");
                 }
-                BtPay.clear();
             }
+            BtPay.clear();
         });
     }
 
@@ -240,7 +234,7 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
             if (data != null) {
                 NetWork.getNetService()
                         .getBandDelete(id,Constants.APPCODE)
-                        .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
                         .subscribe(new MyObserver<List<BankCard>>() {
                             @Override
                             protected void onSuccess(List<BankCard> list, String resultMsg) {
@@ -265,8 +259,15 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
                             }
 
                             @Override
-                            public void onExit() {
-
+                            public void onExit(String resultMsg) {
+                                UtilMethod.Toast(mContext,resultMsg);
+                                UtilMethod.dissmissDialog(mContext, dialog);
+                                Intent intent = new Intent();
+                                intent.setClass(mContext, LoginActivity.class);
+                                //添加清除任务栈中所有activity的log,如果要启动的activity不在任务栈中了,还需要添加FLAG_ACTIVITY_NEW_TASK,才会关闭任务栈中的其他activity
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                mContext.startActivity(intent);
+                                mContext.finish();
                             }
                         });
 

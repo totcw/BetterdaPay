@@ -46,7 +46,7 @@ public abstract class MyObserver<T> extends Subscriber<BaseCallModel<T>> {
 
         if (baseCallModel != null) {
             if (baseCallModel.getCode() == 0) {//token失效
-                onExit();
+                onExit(baseCallModel.getResultMsg());
             }else if (baseCallModel.getCode() == 1) {//成功
                 onSuccess(baseCallModel.getData(),baseCallModel.getResultMsg());
             } else {//错误
@@ -85,7 +85,7 @@ public abstract class MyObserver<T> extends Subscriber<BaseCallModel<T>> {
     /**
      * token失效强制用户退出
      */
-    public abstract void onExit();
+    public abstract void onExit(String resultMsg);
 
     /**
      * 完成的方法

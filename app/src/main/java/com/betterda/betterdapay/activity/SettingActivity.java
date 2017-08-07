@@ -168,8 +168,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 }
 
                                 @Override
-                                public void onExit() {
-                                    UtilMethod.dissmissDialog(SettingActivity.this, mDialog);
+                                public void onExit(String resultMsg) {
+                                    UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                    ExitToLogin(resultMsg);
                                 }
                             })
             );

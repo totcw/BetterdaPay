@@ -89,7 +89,7 @@ public class FWalletActivity extends BaseActivity {
                 mRxManager.add(
                         NetWork.getNetService()
                                 .getWallet(UtilMethod.getAccout(getmActivity()))
-                                .compose(NetWork.handleResult(new BaseCallModel<Wallet>()))
+                                .compose(NetWork.handleResult(new BaseCallModel<>()))
                                 .subscribe(new MyObserver<Wallet>() {
                                     @Override
                                     protected void onSuccess(Wallet data, String resultMsg) {
@@ -110,8 +110,8 @@ public class FWalletActivity extends BaseActivity {
                                     }
 
                                     @Override
-                                    public void onExit() {
-
+                                    public void onExit(String resultMsg) {
+                                        ExitToLogin(resultMsg);
                                     }
                                 })
                 );
@@ -189,8 +189,9 @@ public class FWalletActivity extends BaseActivity {
                                     }
 
                                     @Override
-                                    public void onExit() {
+                                    public void onExit(String resultMsg) {
                                         UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                        ExitToLogin(resultMsg);
                                     }
                                 })
                 );

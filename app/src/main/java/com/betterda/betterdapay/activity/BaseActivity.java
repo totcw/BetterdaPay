@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -102,38 +103,7 @@ public class BaseActivity extends FragmentActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * 显示提示信息
-     *
-     * @param view    任何一个view 即可
-     * @param message
-     */
-    public void showSnackBar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                    }
-                }).show();
-    }
-
-    public void showSnackBar(View view, String message, String title) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                .setAction(title, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        doSnack();
-                    }
-                }).show();
-    }
-
-    /**
-     * 做snackbar对应的事情
-     */
-    public void doSnack() {
-
-    }
 
 
     /**
@@ -144,18 +114,8 @@ public class BaseActivity extends FragmentActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title)
                 .setMessage(content)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        comfirmDialog();
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        exitDialog();
-                    }
-                }).show();
+                .setPositiveButton("OK", (dialog, which) -> comfirmDialog())
+                .setNegativeButton("Cancel", (dialog, which) -> exitDialog()).show();
 
     }
 
@@ -221,14 +181,10 @@ public class BaseActivity extends FragmentActivity {
 
             }
         }
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        popupWindow.setOnDismissListener(() -> {
 
-            @Override
-            public void onDismiss() {
-
-                dismiss();
-                popupWindow = null;
-            }
+            dismiss();
+            popupWindow = null;
         });
 
 
@@ -280,20 +236,22 @@ public class BaseActivity extends FragmentActivity {
     /**
      * 强制跳转到登录界面
      */
-    public void ExitToLogin() {
-       /* AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
+    public void ExitToLogin(String resultMsg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
 
         builder.setTitle("温馨提示")
-                .setMessage("您的帐号已在别处登录,请重新登录")
-                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        UtilMethod.startIntent(getmActivity(),LoginActivity.class);
-                    }
+                .setMessage(resultMsg)
+                .setNegativeButton("确定", (dialog, which) -> {
+                    dialog.dismiss();
+                    Intent intent = new Intent();
+                    intent.setClass(this, LoginActivity.class);
+                    //添加清除任务栈中所有activity的log,如果要启动的activity不在任务栈中了,还需要添加FLAG_ACTIVITY_NEW_TASK,才会关闭任务栈中的其他activity
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
                 })
                 .setCancelable(false)
-                .show();*/
+                .show();
 
     }
 

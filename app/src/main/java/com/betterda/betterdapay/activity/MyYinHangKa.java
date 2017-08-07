@@ -108,8 +108,8 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
                     }
 
                     @Override
-                    public void onExit() {
-                        ExitToLogin();
+                    public void onExit(String resultMsg) {
+                        ExitToLogin(resultMsg);
                     }
                 }));
     }

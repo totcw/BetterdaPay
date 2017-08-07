@@ -100,8 +100,8 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
                                     }
 
                                     @Override
-                                    public void onExit() {
-                                        ExitToLogin();
+                                    public void onExit(String resultMsg) {
+                                        ExitToLogin(resultMsg);
                                     }
                                 })
                 );

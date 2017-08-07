@@ -96,8 +96,8 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
                                     }
 
                                     @Override
-                                    public void onExit() {
-                                        ExitToLogin();
+                                    public void onExit(String resultMsg) {
+                                        ExitToLogin(resultMsg);
                                     }
                                 })
                 );

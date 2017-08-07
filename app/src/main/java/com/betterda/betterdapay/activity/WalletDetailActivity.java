@@ -150,10 +150,8 @@ public class WalletDetailActivity extends BaseActivity {
                                     }
 
                                     @Override
-                                    public void onExit() {
-                                        if (mLoadpagerLayout != null) {
-                                            mLoadpagerLayout.hide();
-                                        }
+                                    public void onExit(String resultMsg) {
+                                        ExitToLogin(resultMsg);
                                     }
                                 })
                 );

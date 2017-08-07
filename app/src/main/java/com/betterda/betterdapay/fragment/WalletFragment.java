@@ -55,10 +55,7 @@ public class WalletFragment extends BaseFragment {
     private ShapeLoadingDialog mDialog;
 
     private List<String> mList;
-    private int currentShow;
-    private int currentHide=1;
-    private Handler mHandler = new Handler();
-    private Runnable updateUiRunnable;//更新ui的 任务
+
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -126,33 +123,28 @@ public class WalletFragment extends BaseFragment {
 
     private void getData() {
 
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                NetWork.getNetService()
-                        .getWallet(UtilMethod.getAccout(getmActivity()))
-                        .compose(NetWork.handleResult(new BaseCallModel<Wallet>()))
-                        .subscribe(new MyObserver<Wallet>() {
-                            @Override
-                            protected void onSuccess(Wallet data, String resultMsg) {
-                                if (data != null) {
-                                    parser(data);
-                                }
+        NetworkUtils.isNetWork(getmActivity(), null, () -> NetWork.getNetService()
+                .getWallet(UtilMethod.getAccout(getmActivity()))
+                .compose(NetWork.handleResult(new BaseCallModel<Wallet>()))
+                .subscribe(new MyObserver<Wallet>() {
+                    @Override
+                    protected void onSuccess(Wallet data, String resultMsg) {
+                        if (data != null) {
+                            parser(data);
+                        }
 
-                            }
+                    }
 
-                            @Override
-                            public void onFail(String resultMsg) {
+                    @Override
+                    public void onFail(String resultMsg) {
 
-                            }
+                    }
 
-                            @Override
-                            public void onExit() {
-
-                            }
-                        });
-            }
-        });
+                    @Override
+                    public void onExit(String resultMsg) {
+                        ExitToLogin(resultMsg);
+                    }
+                }));
     }
 
     private void parser(Wallet data) {
@@ -245,8 +237,9 @@ public class WalletFragment extends BaseFragment {
                                     }
 
                                     @Override
-                                    public void onExit() {
+                                    public void onExit(String resultMsg) {
                                         UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                        ExitToLogin(resultMsg);
                                     }
                                 })
                 );

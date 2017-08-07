@@ -101,10 +101,10 @@ public class FeedbackActivity extends BaseActivity {
                                             UtilMethod.dissmissDialog(getmActivity(), dialog);
                                             showToast(resultMsg);
                                         }
-
                                         @Override
-                                        public void onExit() {
+                                        public void onExit(String resultMsg) {
                                             UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                            ExitToLogin(resultMsg);
                                         }
                                     })
                     );

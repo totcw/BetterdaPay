@@ -217,7 +217,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                     }
 
                     @Override
-                    public void onExit() {
+                    public void onExit(String resultMsg) {
 
                     }
                 });

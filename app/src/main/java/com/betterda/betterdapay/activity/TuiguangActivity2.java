@@ -99,8 +99,9 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
                                     }
 
                                     @Override
-                                    public void onExit() {
-                                        UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                    public void onExit(String resultMsg) {
+                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                        ExitToLogin(resultMsg);
                                     }
                                 })
                 );

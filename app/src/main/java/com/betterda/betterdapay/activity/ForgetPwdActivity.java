@@ -192,8 +192,9 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
                                 }
 
                                 @Override
-                                public void onExit() {
+                                public void onExit(String resultMsg) {
                                     UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    ExitToLogin(resultMsg);
                                 }
                             })
             );
@@ -255,34 +256,29 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
      * 获取验证码
      */
     private void getVerification() {
-        NetworkUtils.isNetWork(this, null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-              mRxManager.add(
-                      NetWork.getNetService().getSendMsg(number)
-                              .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                              .subscribe(new MyObserver<String>() {
-                                  @Override
-                                  protected void onSuccess(String data, String resultMsg) {
-                                      verfication = data;
-                                      if (BuildConfig.LOG_DEBUG) {
+        NetworkUtils.isNetWork(this, null, () -> mRxManager.add(
+                NetWork.getNetService().getSendMsg(number)
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
+                        .subscribe(new MyObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data, String resultMsg) {
+                                verfication = data;
+                                if (BuildConfig.LOG_DEBUG) {
 
-                                          System.out.println("yzm:" + data);
-                                      }
-                                  }
+                                    System.out.println("yzm:" + data);
+                                }
+                            }
 
-                                  @Override
-                                  public void onFail(String resultMsg) {
+                            @Override
+                            public void onFail(String resultMsg) {
 
-                                  }
+                            }
 
-                                  @Override
-                                  public void onExit() {
-
-                                  }
-                              })
-              );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 }

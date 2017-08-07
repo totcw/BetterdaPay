@@ -89,8 +89,8 @@ public class AlreadAuthAcitity extends BaseActivity {
                                    }
 
                                    @Override
-                                   public void onExit() {
-
+                                   public void onExit(String resultMsg) {
+                                       ExitToLogin(resultMsg);
                                    }
                                })
                );

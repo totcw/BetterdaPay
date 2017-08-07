@@ -2,6 +2,7 @@ package com.betterda.betterdapay.fragment;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -89,21 +90,7 @@ public abstract class BaseFragment extends Fragment {
         Toast.makeText(getmActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * 显示提示信息
-     *
-     * @param view    任何一个view 即可
-     * @param message
-     */
-    public void showSnackBar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                    }
-                }).show();
-    }
 
 
     /**
@@ -263,20 +250,22 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 强制跳转到登录界面
      */
-    public void ExitToLogin() {
-  /*      AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
+    public void ExitToLogin(String resultMsg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
 
         builder.setTitle("温馨提示")
-                .setMessage("您的帐号已在别处登录,请重新登录")
-                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        UtilMethod.startIntent(getmActivity(),LoginActivity.class);
-                    }
+                .setMessage(resultMsg)
+                .setNegativeButton("确定", (dialog, which) -> {
+                    dialog.dismiss();
+                    Intent intent = new Intent();
+                    intent.setClass(getmActivity(), LoginActivity.class);
+                    //添加清除任务栈中所有activity的log,如果要启动的activity不在任务栈中了,还需要添加FLAG_ACTIVITY_NEW_TASK,才会关闭任务栈中的其他activity
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    getmActivity().finish();
                 })
                 .setCancelable(false)
-                .show();*/
+                .show();
 
     }
 

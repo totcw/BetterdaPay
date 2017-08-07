@@ -115,8 +115,8 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                                 }
 
                                 @Override
-                                public void onExit() {
-
+                                public void onExit(String resultMsg) {
+                                    ExitToLogin(resultMsg);
                                 }
                             })
             );

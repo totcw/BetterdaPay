@@ -230,9 +230,9 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                                     }
 
                                     @Override
-                                    public void onExit() {
+                                    public void onExit(String resultMsg) {
                                         UtilMethod.dissmissDialog(getmActivity(), dialog);
-
+                                        ExitToLogin(resultMsg);
                                     }
                                 })
                 );
@@ -511,8 +511,9 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                                 }
                             }
 
+
                             @Override
-                            public void onExit() {
+                            public void onExit(String resultMsg) {
                                 UtilMethod.dissmissDialog(getmActivity(), dialog);
                                 //将裁剪后的图片删除
                                 try {
@@ -523,7 +524,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                                 } catch (Exception e) {
 
                                 }
-
+                                ExitToLogin(resultMsg);
                             }
                         })
         );

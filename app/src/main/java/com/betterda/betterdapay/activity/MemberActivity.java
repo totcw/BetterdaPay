@@ -102,8 +102,8 @@ public class MemberActivity extends BaseActivity {
                                   }
 
                                   @Override
-                                  public void onExit() {
-
+                                  public void onExit(String resultMsg) {
+                                      ExitToLogin(resultMsg);
                                   }
                               })
               );

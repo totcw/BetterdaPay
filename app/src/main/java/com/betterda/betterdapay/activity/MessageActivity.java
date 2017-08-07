@@ -156,8 +156,8 @@ public class MessageActivity extends BaseActivity {
                             }
 
                             @Override
-                            public void onExit() {
-
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
                             }
                         })
         ));
