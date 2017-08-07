@@ -46,6 +46,7 @@ public abstract class MyObserver<T> extends Subscriber<BaseCallModel<T>> {
 
         if (baseCallModel != null) {
             if (baseCallModel.getCode() == 0) {//token失效
+
                 onExit(baseCallModel.getResultMsg());
             }else if (baseCallModel.getCode() == 1) {//成功
                 onSuccess(baseCallModel.getData(),baseCallModel.getResultMsg());

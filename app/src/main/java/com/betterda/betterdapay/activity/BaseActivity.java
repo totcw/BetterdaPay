@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -237,6 +238,10 @@ public class BaseActivity extends FragmentActivity {
      * 强制跳转到登录界面
      */
     public void ExitToLogin(String resultMsg) {
+        if (TextUtils.isEmpty(resultMsg)) {
+            resultMsg = "登录失效,请重新登录!";
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
 
         builder.setTitle("温馨提示")

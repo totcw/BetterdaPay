@@ -46,7 +46,7 @@ public class Constants {
 
     public static class Url {
         public static final String URL = "http://192.168.0.127:8080/paycloud-walletapi/";
-       // public static final String URL = "http://119.23.227.230:7080/wallet/";
+      //  public static final String URL = "http://119.23.227.230:7080/wallet/";
         public static final String URL_LOGIN = URL + "api/user/login";
         public static final String URL_REGISTER = URL + "api/user/register";
         public static final String URL_SENDMSG = URL + "api/msgController.do?sendMsg";//短信验证

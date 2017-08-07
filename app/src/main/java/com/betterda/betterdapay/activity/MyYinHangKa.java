@@ -109,6 +109,9 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
 
                     @Override
                     public void onExit(String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("获取银行卡ex:"+resultMsg);
+                        }
                         ExitToLogin(resultMsg);
                     }
                 }));
