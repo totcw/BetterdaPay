@@ -41,13 +41,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/ananpayDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/ananpayDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/ananpayDebug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/ananpay/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/ananpay/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/ananpay/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/ananpay/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/ananpay/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/ananpay/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/ananpay/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAnanpayDebug/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAnanpayDebug/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAnanpayDebug/assets" type="java-test-resource" />
@@ -55,6 +48,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testAnanpayDebug/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAnanpayDebug/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testAnanpayDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/ananpay/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/ananpay/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/ananpay/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/ananpay/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/androidTest/ananpay/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/ananpay/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/ananpay/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/ananpay/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/ananpay/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/ananpay/assets" type="java-resource" />
@@ -148,14 +148,15 @@
     <orderEntry type="library" exported="" name="mylibrary-2.6.2" level="project" />
     <orderEntry type="library" exported="" name="javax.annotation-10.0-b28" level="project" />
     <orderEntry type="library" exported="" name="core-3.1.0" level="project" />
+    <orderEntry type="library" exported="" name="cardview-v7-26.0.0-alpha1" level="project" />
+    <orderEntry type="library" exported="" name="design-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
     <orderEntry type="library" exported="" name="btsdk-0.0.9" level="project" />
-    <orderEntry type="library" exported="" name="design-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="base-adapter-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="SwipeDelMenuLayout-V1.2.3" level="project" />
     <orderEntry type="library" exported="" name="vlayout-1.0.4" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-26.0.0-alpha1" level="project" />
-    <orderEntry type="library" exported="" name="recyclerview-v7-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="transition-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.1.6" level="project" />
     <orderEntry type="library" exported="" name="umeng_social_net" level="project" />
@@ -172,6 +173,7 @@
     <orderEntry type="library" exported="" name="SocialSDK_WeChat_Simplify" level="project" />
     <orderEntry type="library" exported="" name="togglebutton-library-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.3.0" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="butterknife-annotations-8.2.1" level="project" />
     <orderEntry type="library" exported="" name="support-compat-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-26.0.0-alpha1" level="project" />

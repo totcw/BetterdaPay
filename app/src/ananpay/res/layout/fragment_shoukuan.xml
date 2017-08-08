@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:overScrollMode="never"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:overScrollMode="never">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/bg_blue"
             android:orientation="vertical">
+
             <RelativeLayout
 
                 android:layout_width="match_parent"
@@ -37,57 +39,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
                 android:text="收款金额(元)"
                 android:textColor="@color/text_color"
                 android:textSize="18sp"/>
 
             <android.support.v7.widget.AppCompatEditText
-                android:layout_marginBottom="20dp"
-                android:enabled="false"
-                android:clickable="false"
-                android:focusableInTouchMode="false"
-                android:focusable="false"
                 android:id="@+id/et_shoukuan_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/white"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="0"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/white"
-                android:hint="0"
                 android:textColorHint="@color/white"
                 android:textSize="45sp"/>
 
         </LinearLayout>
 
 
-        <FrameLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:background="@color/bg_blue"
-                android:layout_height="48dp">
-
-            </FrameLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardBackgroundColor="#ffffff"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="3dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:contentPadding="5dp">
 
             <com.betterda.mylibrary.view.RatioLayout
 
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 app:ratio="1.2">
 
                 <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/bg_rect_large"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -233,7 +233,6 @@
                         </FrameLayout>
 
 
-
                         <FrameLayout
                             android:id="@+id/iv_shoukuan_point"
                             android:layout_width="match_parent"
@@ -244,8 +243,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:gravity="center"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="."
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/textsize_largest_38sp"/>
@@ -279,7 +278,6 @@
                                 android:textSize="@dimen/textsize_largest_38sp"/>
 
                         </FrameLayout>
-
 
 
                         <FrameLayout
@@ -320,9 +318,6 @@
                         </FrameLayout>
 
 
-
-
-
                         <RelativeLayout
                             android:id="@+id/relative_shoukuan_qr"
                             android:layout_width="match_parent"
@@ -347,17 +342,17 @@
 
             </com.betterda.mylibrary.view.RatioLayout>
 
-        </FrameLayout>
+        </android.support.v7.widget.CardView>
 
 
         <Button
             android:id="@+id/btn_shoukuan"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner_origne"
             android:text="我要收款"

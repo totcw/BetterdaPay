@@ -324,7 +324,7 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_FEEDBACK_ADD)
     Observable<BaseCallModel<String>> getFeedBack(@Field("account") String account,
-                                                  @Field("content") String content,
+                                                  @Field("feedback") String content,
                                                   @Field("appCode") String appCode
     );
 
