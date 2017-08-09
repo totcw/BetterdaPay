@@ -84,7 +84,7 @@ public class WalletFragment extends BaseFragment {
 
         //设置5.0以下 兼容着色 tint
 
-        ColorStateList list = ContextCompat.getColorStateList(getmActivity(), R.color.white);
+        ColorStateList list = ContextCompat.getColorStateList(getmActivity(), R.color.tint_color);
         mGttvWalletMoney.setSupportBackgroundTintList(list);
     }
 

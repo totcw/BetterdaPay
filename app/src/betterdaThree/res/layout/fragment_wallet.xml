@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_blue"
+                android:orientation="vertical">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="钱包"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/fragment_title"/>
+
+                    <RelativeLayout
+                        android:id="@+id/relative_shouye_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/iv_shouye_message"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/message_selector"/>
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="分润金额(元)"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"/>
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/gttv_wallet_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="0"
+                    android:textColor="@color/white"
+
+                    android:textColorHint="@color/white"
+                    android:textCursorDrawable="@color/white"
+                    android:textSize="50sp"/>
+
+
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                card_view:cardBackgroundColor="#ffffff"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="3dp"
+                card_view:cardUseCompatPadding="true"
+                card_view:contentPadding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/messge_adv"
+                        />
+
+                    <com.betterda.betterdapay.view.ScrollWidget
+                        android:id="@+id/scrollwidget"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="2dp">
+
+                    </com.betterda.betterdapay.view.ScrollWidget>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                card_view:cardBackgroundColor="#ffffff"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="3dp"
+                card_view:cardUseCompatPadding="true"
+                card_view:contentPadding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/relative_wallet_banli"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/fragment_wallet_icon_size"
+                                    android:layout_height="@dimen/fragment_wallet_icon_size"
+                                    android:background="@mipmap/bianxinyongka"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
+                                    android:text="办理信用卡"
+                                    android:textColor="@color/shouye_renmen_tv"
+                                    android:textSize="12sp"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/relative_shouye_check"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/fragment_wallet_icon_size"
+                                    android:layout_height="@dimen/fragment_wallet_icon_size"
+                                    android:background="@mipmap/zhangdancheck"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
+                                    android:text="账单查询"
+                                    android:textColor="@color/shouye_renmen_tv"
+                                    android:textSize="12sp"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/relative_shouye_haidai"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/imageView2"
+                                    android:layout_width="@dimen/fragment_wallet_icon_size"
+                                    android:layout_height="@dimen/fragment_wallet_icon_size"
+                                    android:background="@mipmap/xinyongkakaidai"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
+                                    android:text="信用卡还贷"
+                                    android:textColor="@color/shouye_renmen_tv"
+                                    android:textSize="12sp"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="30dp"
+                        android:orientation="horizontal">
+
+
+                        <RelativeLayout
+                            android:id="@+id/relative_shouye_life"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/fragment_wallet_icon_size"
+                                    android:layout_height="@dimen/fragment_wallet_icon_size"
+                                    android:background="@mipmap/lifejiaofei"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
+                                    android:text="生活缴费"
+                                    android:textColor="@color/shouye_renmen_tv"
+                                    android:textSize="12sp"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/relative_shouye_bianjie"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/imageView"
+                                    android:layout_width="@dimen/fragment_wallet_icon_size"
+                                    android:layout_height="@dimen/fragment_wallet_icon_size"
+                                    android:background="@mipmap/bianjiedaikuan"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/fragment_wallet_icon_margin_top"
+                                    android:text="便捷贷款"
+                                    android:textColor="@color/shouye_renmen_tv"
+                                    android:textSize="12sp"/>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

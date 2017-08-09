@@ -76,6 +76,18 @@ android {
                         BAIDU_APIKEY:"rp8i5kzNhisYY46VXpOGTRGVaxX7AgkX" /*清单文件中的百度地图key*/
                 ]
             }
+        betterdaThree{
+                applicationId "com.betterda.betterdaThree" /*使用不同的包名*/
+                resValue "string","app_name","来逗阵3"
+                manifestPlaceholders = [
+                        JUPSH_PERMISSION:"com.betterda.betterdaThree",
+                        JPUSH_PKGNAME : applicationId,
+                        JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                        JPUSH_APPKEY : "81cda0797bce287011a37cd4", //JPush上注册的包名对应的appkey.
+                        UMENG_APPKEY:"595d997a75ca351b59000642", /*清单文件中的友盟key*/
+                        BAIDU_APIKEY:"rp8i5kzNhisYY46VXpOGTRGVaxX7AgkX" /*清单文件中的百度地图key*/
+                ]
+            }
 
     }
 

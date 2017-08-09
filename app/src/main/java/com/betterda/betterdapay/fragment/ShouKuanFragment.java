@@ -42,9 +42,8 @@ public class ShouKuanFragment extends BaseFragment {
     @Override
     public void initData() {
         super.initData();
-        //设置5.0以下 兼容着色 tint
-
-        ColorStateList list = ContextCompat.getColorStateList(getmActivity(), R.color.white);
+        //设置5.0以下 兼容edittext着色 tint
+        ColorStateList list = ContextCompat.getColorStateList(getmActivity(), R.color.tint_color);
         mAppCompatEditText.setSupportBackgroundTintList(list);
     }
 

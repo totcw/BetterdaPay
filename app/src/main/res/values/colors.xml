@@ -22,6 +22,7 @@
     <color name="share_red">#f24949</color>
     <color name="cardview_light_background">#FFFAFAFA</color>
     <color name="text_color">#ffffffff</color>
+    <color name="tint_color">#ffffffff</color>
 
     <!--钱包页面-->
     <color name="fragment_wallet_icon_textcolor">#ff666666</color> <!--图标文字-->
