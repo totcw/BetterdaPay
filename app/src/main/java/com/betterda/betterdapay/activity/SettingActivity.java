@@ -58,19 +58,21 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private TextView mMTvProgress;
     private ShapeLoadingDialog mDialog;
     private boolean isDown;
+    private final static int MSG_SUCCESS = 1;
+    private final static int MSG_FAIL = 2;
 
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             if (msg != null) {
-                if (msg.what == 1) {
+                if (msg.what == MSG_SUCCESS) {
                     int progress = msg.arg1;
                     if (mMProgressBar != null) {
                         //更新进度条
                         mMTvProgress.setText(progress + "%");
                         mMProgressBar.setProgress(progress);
                     }
-                } else if (msg.what == 2) {
+                } else if (msg.what == MSG_FAIL) {
                     if (mRxManager != null) {
                         mRxManager.cancel();
                         UtilMethod.dissmissDialog(getmActivity(), mAlertDialog);
@@ -143,7 +145,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             }
             UtilMethod.showDialog(this, mDialog);
             mRxManager.add(
-                    NetWork.getNetService().getUpdate(appVersionCode + "", Constants.APPCODE)
+                    NetWork.getNetService().getUpdate(appVersionCode + "", getString(R.string.appCode))
                             .compose(NetWork.handleResult(new BaseCallModel<>()))
                             .subscribe(new MyObserver<String>() {
                                 @Override
@@ -250,12 +252,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                     if (contentLength == -1 || contentLength == 0) {
                         isDown = false;
-                        message.what = 2;
+                        message.what = MSG_FAIL;
                         mHandler.sendMessage(message);
                         return;
                     }
                     int progress = (int) ((bytesRead * 100) / contentLength);
-
+                    message.what = MSG_SUCCESS;
                     message.arg1 = progress;
                     mHandler.sendMessage(message);
                     if (progress == 100) {//进度到100 就启动安装

@@ -112,7 +112,8 @@ public interface NetService {
     Observable<BaseCallModel<CreateOrderEntity>> getOrder(@Field("account") String account,
                                                           @Field("amount") String amount,
                                                           @Field("rankId") String rankId,
-                                                          @Field("body") String body);
+                                                          @Field("body") String body,
+                                                          @Field("appCode") String appCode);
 
     /**
      * 扫描收款
@@ -135,7 +136,8 @@ public interface NetService {
                                                       @Field("province") String province,
                                                       @Field("city") String city,
                                                       @Field("area") String area,
-                                                      @Field("street") String street);
+                                                      @Field("street") String street,
+                                                      @Field("appCode") String appCode);
 
     /**
      * 获取各等级费率
@@ -144,8 +146,9 @@ public interface NetService {
      * @return
      */
     @Headers("Cache-Control: public, max-age=1800")
-    @GET(Constants.Url.URL_RATING)
-    Observable<BaseCallModel<List<Rating>>> getRating();
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_RATING)
+    Observable<BaseCallModel<List<Rating>>> getRating(@Field("appCode") String appCode);
 
 
     /**
@@ -158,7 +161,8 @@ public interface NetService {
     @Headers("Cache-Control: public, max-age=1800")
     @FormUrlEncoded
     @POST(Constants.Url.URL_MY_RATING)
-    Observable<BaseCallModel<Rating>> getRatingForMe(@Field("account") String account);
+    Observable<BaseCallModel<Rating>> getRatingForMe(@Field("account") String account,
+                                                     @Field("appCode") String appCode);
 
     /**
      * 获取我的费率用于计算
@@ -170,7 +174,8 @@ public interface NetService {
     @Headers("Cache-Control: public, max-age=1800")
     @FormUrlEncoded
     @POST(Constants.Url.URL_MY_RATINGS)
-    Observable<BaseCallModel<List<RatingCalculateEntity>>> getRatingForCalculate(@Field("account") String account);
+    Observable<BaseCallModel<List<RatingCalculateEntity>>> getRatingForCalculate(@Field("account") String account,
+                                                                                 @Field("appCode") String appCode);
 
 
     /**
@@ -181,7 +186,8 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_UPDATE_CONDITION)
-    Observable<BaseCallModel<List<UpdateCondition>>> getUpdateCondition(@Field("account") String account
+    Observable<BaseCallModel<List<UpdateCondition>>> getUpdateCondition(@Field("account") String account,
+                                                                        @Field("appCode") String appCode
     );
 
 
@@ -194,8 +200,9 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_JIESUAN)
-    Observable<BaseCallModel<WithDraw>> getJiesuan(@Field("account") String account,
-                                                   @Field("money") String money
+    Observable<BaseCallModel<WithDraw>> getJiesuan(@Field("drawAccount") String account,
+                                                   @Field("drawCash") String money,
+                                                   @Field("appCode") String appCode
     );
 
 
@@ -285,7 +292,8 @@ public interface NetService {
                                               @Field("handbankcard") String handCard,
                                               @Field("province") String province,
                                               @Field("city") String city,
-                                              @Field("bankCode") String bankCode
+                                              @Field("bankCode") String bankCode,
+                                              @Field("appCode") String appCode
 
     );
 
@@ -315,7 +323,8 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_WALLET_GET)
-    Observable<BaseCallModel<Wallet>> getWallet(@Field("account") String account
+    Observable<BaseCallModel<Wallet>> getWallet(@Field("account") String account,
+                                                @Field("appCode") String appCode
 
     );
 
@@ -366,7 +375,8 @@ public interface NetService {
     @Multipart
     @POST(Constants.Url.URL_IMG_UPLOAD)
     Observable<BaseCallModel<String>> getImgUpload(@Part("account") RequestBody account,
-                                                   @Part MultipartBody.Part file
+                                                   @Part MultipartBody.Part file,
+                                                   @Field("appCode") String appCode
     );
 
 
@@ -406,7 +416,8 @@ public interface NetService {
     @POST(Constants.Url.URL_GET_INCOME)
     Observable<BaseCallModel<List<Income>>> getIncomeList(@Field("account") String account,
                                                           @Field("start") String pageNo,
-                                                          @Field("length") String pageSize
+                                                          @Field("length") String pageSize,
+                                                          @Field("appCode") String appCode
     );
 
     /**
@@ -418,8 +429,9 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_JIESUAN)
     Observable<BaseCallModel<List<WithDraw>>> getAmountList(@Field("account") String account,
-                                                            @Field("pageNo") String pageNo,
-                                                            @Field("pageSize") String pageSize
+                                                            @Field("start") String start,
+                                                            @Field("length") String length,
+                                                            @Field("appCode") String appCode
     );
 
     /**
@@ -430,21 +442,10 @@ public interface NetService {
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_CHECK_WITHDRAW)
-    Observable<BaseCallModel<WithDrawStatus>> getCheckWithdraw(@Field("account") String account
+    Observable<BaseCallModel<WithDrawStatus>> getCheckWithdraw(@Field("account") String account,
+                                                               @Field("appCode") String appCode
     );
 
-    /**
-     * 生成网关T0的订单
-     *
-     * @return
-     */
-
-    @FormUrlEncoded
-    @POST(Constants.Url.URL_UNIONGATEWAYT0ORDER)
-    Observable<BaseCallModel<String>> getUnionGatewayT0Order(@Field("account") String account,
-                                                             @Field("amount") String amount,
-                                                             @Field("body") String body
-    );
 
     /**
      * 获取账单记录
@@ -457,8 +458,9 @@ public interface NetService {
     Observable<BaseCallModel<List<TransactionRecord>>> getOrders(@Field("account") String account,
                                                                  @Field("startTime") String startTime,
                                                                  @Field("endTime") String endTime,
-                                                                 @Field("pageNo") String pageNo,
-                                                                 @Field("pageSize") String pageSize
+                                                                 @Field("start") String pageNo,
+                                                                 @Field("length") String pageSize,
+                                                                 @Field("appCode") String appCode
 
     );
 
@@ -471,7 +473,8 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_ERRORLOG)
     Observable<BaseCallModel<String>> getErrorlog(@Field("type") String type,
-                                                  @Field("content") String content
+                                                  @Field("content") String content,
+                                                  @Field("appCode") String appCode
 
     );
 

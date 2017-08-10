@@ -70,7 +70,7 @@ public class MemberActivity extends BaseActivity {
 
     private void getData() {
         NetworkUtils.isNetWork(this, null, () -> mRxManager.add(
-                NetWork.getNetService().getMemberCounts(UtilMethod.getAccout(MemberActivity.this), Constants.APPCODE)
+                NetWork.getNetService().getMemberCounts(UtilMethod.getAccout(MemberActivity.this), getString(R.string.appCode))
                         .compose(NetWork.handleResult(new BaseCallModel<>()))
                         .subscribe(new MyObserver<MemberCounts>() {
                             @Override

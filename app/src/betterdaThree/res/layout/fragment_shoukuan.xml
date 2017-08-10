@@ -70,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="20dp"
-                        android:backgroundTint="@color/lv_divider"
+                        android:backgroundTint="@color/tint_color"
                         android:clickable="false"
                         android:enabled="false"
                         android:focusable="false"

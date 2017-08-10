@@ -66,7 +66,6 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
     private String cardNum;//银行卡号
     private String bank;//所属银行
     private String number;//预留手机号码
-    private String cardType;//银行卡类型
     private String province ;//省
     private String city;//市
     private String bankCode ;//联行号
@@ -99,7 +98,6 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             cardNum = intent.getStringExtra("cardNum");
             bank = intent.getStringExtra("bank");
             number = intent.getStringExtra("number");
-            cardType = intent.getStringExtra("cardType");
             province = intent.getStringExtra("province");
             city = intent.getStringExtra("city");
             bankCode = intent.getStringExtra("bankNo");
@@ -198,45 +196,42 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
      */
     private void getData() {
 
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(), dialog);
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getAuth(UtilMethod.getAccout(getmActivity()), realName,
-                                        identityCard, cardNum, bank, number, url_identity, url_identity2, url_handidntity, url_bank, url_bank2, url_handbank,province,city,bankCode)
-                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                .subscribe(new MyObserver<String>() {
-                                    @Override
-                                    protected void onSuccess(String data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("实名认证:"+data);
-                                        }
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        //修改认证状态
-                                        CacheUtils.putString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.AUTH, "1");
-                                        UtilMethod.startIntent(getmActivity(), HomeActivity.class);
-                                        finish();
+        NetworkUtils.isNetWork(getmActivity(), null, () -> {
+            UtilMethod.showDialog(getmActivity(), dialog);
+            mRxManager.add(
+                    NetWork.getNetService()
+                            .getAuth(UtilMethod.getAccout(getmActivity()), realName,
+                                    identityCard, cardNum, bank, number, url_identity, url_identity2, url_handidntity, url_bank, url_bank2, url_handbank,province,city,bankCode,getString(R.string.appCode))
+                            .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                            .subscribe(new MyObserver<String>() {
+                                @Override
+                                protected void onSuccess(String data, String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("实名认证:"+data);
                                     }
+                                    UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    //修改认证状态
+                                    CacheUtils.putString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.AUTH, "1");
+                                    UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+                                    finish();
+                                }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("实名认证fail:"+resultMsg);
-                                        }
-                                        showToast(resultMsg);
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                @Override
+                                public void onFail(String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("实名认证fail:"+resultMsg);
                                     }
+                                    showToast(resultMsg);
+                                    UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                }
 
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                        ExitToLogin(resultMsg);
-                                    }
-                                })
-                );
-            }
+                                @Override
+                                public void onExit(String resultMsg) {
+                                    UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    ExitToLogin(resultMsg);
+                                }
+                            })
+            );
         });
     }
 
@@ -454,7 +449,7 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("images", name + ".png", file);
         mRxManager.add(
                 NetWork.getNetService()
-                        .getImgUpload(account, filePart)
+                        .getImgUpload(account, filePart,getString(R.string.appCode))
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {
                             @Override

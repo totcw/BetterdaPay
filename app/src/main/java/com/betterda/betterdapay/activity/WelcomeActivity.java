@@ -62,6 +62,8 @@ public class WelcomeActivity extends FragmentActivity {
     private String[] REQUEST_PERMISSIONS = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,Manifest.permission.ACCESS_COARSE_LOCATION};
 
+    private final static int MSG_SUCCESS = 1;
+    private final static int MSG_FAIL = 2;
     protected RxManager mRxManager;
     private ProgressBar mMProgressBar;//下载的进度对话框
     private AlertDialog mAlertDialog;//下载对话框
@@ -72,14 +74,14 @@ public class WelcomeActivity extends FragmentActivity {
         public boolean handleMessage(Message msg) {
             if (msg != null) {
 
-                if (msg.what == 1) {
+                if (msg.what == MSG_SUCCESS) {
                     int progress = msg.arg1;
                     if (mMProgressBar != null) {
                         //更新进度条
                         mMTvProgress.setText(progress + "%");
                         mMProgressBar.setProgress(progress);
                     }
-                } else if (msg.what == 2) {
+                } else if (msg.what == MSG_FAIL) {
                     mRxManager.cancel();
                     UtilMethod.Toast(WelcomeActivity.this,"获取apk下载地址失败,请去应用商店更新");
                     startToLogin();
@@ -211,12 +213,12 @@ public class WelcomeActivity extends FragmentActivity {
                 }
                 if (contentLength == -1 || contentLength == 0) {
                     isDown = false;
-                    message.what = 2;
+                    message.what = MSG_FAIL;
                     mHandler.sendMessage(message);
                     return;
                 }
                 int progress = (int) ((bytesRead * 100) / contentLength);
-                message.what = 1;
+                message.what = MSG_SUCCESS;
                 message.arg1 = progress;
                 mHandler.sendMessage(message);
                 if (progress == 100) {//进度到100 就启动安装
@@ -327,7 +329,7 @@ public class WelcomeActivity extends FragmentActivity {
         boolean netAvailable = NetworkUtils.isWifi(WelcomeActivity.this);
         if (netAvailable) {
             mRxManager.add(
-                    NetWork.getNetService().getUpdate(appVersionCode + "",Constants.APPCODE)
+                    NetWork.getNetService().getUpdate(appVersionCode + "",getString(R.string.appCode))
                             .compose(NetWork.handleResult(new BaseCallModel<>()))
                             .subscribe(new MyObserver<String>() {
                                 @Override

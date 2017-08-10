@@ -100,7 +100,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
 
             mRxManager.add(
                     NetWork.getNetService()
-                            .getCode(UtilMethod.getAccout(getmActivity()), Constants.APPCODE)
+                            .getCode(UtilMethod.getAccout(getmActivity()), getString(R.string.appCode))
                             .compose(NetWork.handleResult(new BaseCallModel<>()))
                             .subscribe(new MyObserver<List<ShareInfo>>() {
                                 @Override

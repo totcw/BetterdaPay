@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.betterda.betterdapay.BuildConfig;
+import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
@@ -199,7 +200,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      */
     private void sendCrashLog2PM(String content) {
         //TODO 将异常信息发送到后台
-        NetWork.getNetService().getErrorlog("android",content)
+        NetWork.getNetService().getErrorlog("android",content,mContext.getString(R.string.appCode))
                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                 .subscribe(new MyObserver<String>() {
                     @Override

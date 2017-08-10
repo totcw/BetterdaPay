@@ -123,12 +123,12 @@ public class LoginActivity extends BaseActivity {
                 UtilMethod.startIntent(getmActivity(), ForgetPwdActivity.class);
                 break;
             case R.id.btn_login://登录
-             /*   CacheUtils.putBoolean(getmActivity(), "15160700380" + Constants.Cache.AUTH, true);
-                CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.RANK, "经理");
+               /* CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.AUTH, "1");
+                CacheUtils.putString(getmActivity(), "15160700380" + Constants.Cache.RANK, "1");
                 CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "15160700380");
                 setAlias();
                 finish();*/
-               // UtilMethod.showDialog(getmActivity(), dialog);
+                //UtilMethod.showDialog(getmActivity(), dialog);
                 Login();
                 break;
             case R.id.relative_login_register://注册
@@ -158,7 +158,7 @@ public class LoginActivity extends BaseActivity {
         UtilMethod.showDialog(getmActivity(), dialog);
         mRxManager.add(
                 NetWork.getNetService()
-                        .getLogin(account, pwd,Constants.APPCODE)
+                        .getLogin(account, pwd,getString(R.string.appCode))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new MyObserver<UserInfo>() {

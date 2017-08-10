@@ -136,43 +136,37 @@ public class UpActivity extends BaseActivity {
 
     private void getData() {
         mLoadpagerUp.setLoadVisable();
-        NetworkUtils.isNetWork(this, mLoadpagerUp, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
+        NetworkUtils.isNetWork(this, mLoadpagerUp, () -> mRxManager.add(
+                NetWork.getNetService()
+                        .getUpdateCondition(UtilMethod.getAccout(getmActivity()),getString(R.string.appCode))
+                        .compose(NetWork.handleResult(new BaseCallModel<List<UpdateCondition>>()))
+                        .subscribe(new MyObserver<List<UpdateCondition>>() {
+                            @Override
+                            protected void onSuccess(List<UpdateCondition> data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("data"+data);
+                                }
+                                if (data != null) {
+                                    parserData(data);
+                                }
+                                if (mLoadpagerUp != null) {
+                                    mLoadpagerUp.hide();
+                                }
+                            }
 
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getUpdateCondition(UtilMethod.getAccout(getmActivity()))
-                                .compose(NetWork.handleResult(new BaseCallModel<List<UpdateCondition>>()))
-                                .subscribe(new MyObserver<List<UpdateCondition>>() {
-                                    @Override
-                                    protected void onSuccess(List<UpdateCondition> data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("data"+data);
-                                        }
-                                        if (data != null) {
-                                            parserData(data);
-                                        }
-                                        if (mLoadpagerUp != null) {
-                                            mLoadpagerUp.hide();
-                                        }
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (mLoadpagerUp != null) {
+                                    mLoadpagerUp.setErrorVisable();
+                                }
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (mLoadpagerUp != null) {
-                                            mLoadpagerUp.setErrorVisable();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        ExitToLogin(resultMsg);
-                                    }
-                                })
-                );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 
     private void parserData(List<UpdateCondition> data) {

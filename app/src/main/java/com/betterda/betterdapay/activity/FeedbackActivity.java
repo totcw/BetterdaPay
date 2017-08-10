@@ -78,41 +78,38 @@ public class FeedbackActivity extends BaseActivity {
                 showToast("反馈内容不能为空");
                 return;
             }
-            NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-                @Override
-                public void getDataApi() {
-                    if (dialog == null) {
-                        dialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
-                    }
-                    UtilMethod.showDialog(getmActivity(),dialog);
-                    mRxManager.add(
-                            NetWork.getNetService()
-                                    .getFeedBack(UtilMethod.getAccout(getmActivity()),content,Constants.APPCODE)
-                                    .compose(NetWork.handleResult(new BaseCallModel<>()))
-                                    .subscribe(new MyObserver<String>() {
-                                        @Override
-                                        protected void onSuccess(String data, String resultMsg) {
-                                            UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                            showToast(resultMsg);
-                                            finish();
-                                        }
-
-                                        @Override
-                                        public void onFail(String resultMsg) {
-                                            if (BuildConfig.LOG_DEBUG) {
-                                                System.out.println("意见反馈:"+resultMsg);
-                                            }
-                                            UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                            showToast(resultMsg);
-                                        }
-                                        @Override
-                                        public void onExit(String resultMsg) {
-                                            UtilMethod.dissmissDialog(getmActivity(), dialog);
-                                            ExitToLogin(resultMsg);
-                                        }
-                                    })
-                    );
+            NetworkUtils.isNetWork(getmActivity(), null, () -> {
+                if (dialog == null) {
+                    dialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
                 }
+                UtilMethod.showDialog(getmActivity(),dialog);
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getFeedBack(UtilMethod.getAccout(getmActivity()),content,getString(R.string.appCode))
+                                .compose(NetWork.handleResult(new BaseCallModel<>()))
+                                .subscribe(new MyObserver<String>() {
+                                    @Override
+                                    protected void onSuccess(String data, String resultMsg) {
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                        showToast(resultMsg);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("意见反馈:"+resultMsg);
+                                        }
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                        showToast(resultMsg);
+                                    }
+                                    @Override
+                                    public void onExit(String resultMsg) {
+                                        UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                        ExitToLogin(resultMsg);
+                                    }
+                                })
+                );
             });
 
 

@@ -54,6 +54,10 @@ public class QrCodeActicity extends BaseActivity {
     TextView mTvQrcodeType;
     @BindView(R.id.loadpager_qrcode)
     LoadingPager mLoadpagerQrcode;
+
+    public final static String WX = "微信";
+    public final static String WX_PAYTYPE = "2";
+
     private String payType;//类型  1为支付宝 2为微信
     private String body;//商品内容
     private int money;
@@ -78,59 +82,49 @@ public class QrCodeActicity extends BaseActivity {
         getIntentData();
 
         getData();
-        mLoadpagerQrcode.setonErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getData();
-            }
-        });
+        mLoadpagerQrcode.setonErrorClickListener(v -> getData());
 
 
     }
 
     private void getData() {
         mLoadpagerQrcode.setLoadVisable();
-        NetworkUtils.isNetWork(getmActivity(), mLoadpagerQrcode, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                mRxManager.add(
-                        NetWork.getNetService().getOrderForScan(UtilMethod.getAccout(getmActivity()),money+"", body, payType
-                                ,longitude,latitude,province,city,area,street)
-                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                .subscribe(new MyObserver<String>() {
-                                    @Override
-                                    protected void onSuccess(String data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("扫码:" + data);
-                                        }
-                                        Bitmap bitmap ;
-                                        if ("2".equals(payType)) {
-                                            bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.wx_qr);
-                                        } else {
-                                            bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.zfb_qr);
-                                        }
+        NetworkUtils.isNetWork(getmActivity(), mLoadpagerQrcode, () -> mRxManager.add(
+                NetWork.getNetService().getOrderForScan(UtilMethod.getAccout(getmActivity()),money+"", body, payType
+                        ,longitude,latitude,province,city,area,street,getString(R.string.appCode))
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
+                        .subscribe(new MyObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("扫码:" + data);
+                                }
+                                Bitmap bitmap ;
+                                if (WX_PAYTYPE.equals(payType)) {
+                                    bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.wx_qr);
+                                } else {
+                                    bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.zfb_qr);
+                                }
 
-                                        mIvQrcode.setImageBitmap(ImageTools.createQRCodeWithLogo(data, getmActivity(),bitmap));
+                                mIvQrcode.setImageBitmap(ImageTools.createQRCodeWithLogo(data, getmActivity(),bitmap));
 
-                                        mLoadpagerQrcode.hide();
-                                    }
+                                mLoadpagerQrcode.hide();
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println(resultMsg);
-                                        }
-                                        mLoadpagerQrcode.setErrorVisable();
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println(resultMsg);
+                                }
+                                mLoadpagerQrcode.setErrorVisable();
+                            }
 
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        ExitToLogin(resultMsg);
-                                    }
-                                })
-                );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 
     private void getIntentData() {
@@ -140,7 +134,7 @@ public class QrCodeActicity extends BaseActivity {
         money = intent.getIntExtra("money", 0);
 
         mTvQrcodeType.setText(type + "收款");
-        if ("微信".equals(type)) {
+        if (WX.equals(type)) {
             payType = "2";
             body = type + "收款";
             mIvQrcodeIcon.setImageResource(R.mipmap.wxshoukuan);

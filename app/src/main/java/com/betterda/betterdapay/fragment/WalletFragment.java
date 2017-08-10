@@ -51,9 +51,6 @@ public class WalletFragment extends BaseFragment {
     ScrollWidget mScrollWidget;
 
 
-    private AlertDialog mAlertDialog;
-    private ShapeLoadingDialog mDialog;
-
     private List<String> mList;
 
 
@@ -104,18 +101,15 @@ public class WalletFragment extends BaseFragment {
      * 设置rxbus
      */
     private void initRxBus() {
-        mRxManager.on(JpushReceiver.class.getSimpleName(), new Action1<Boolean>() {
-            @Override
-            public void call(Boolean s) {
-                //改变消息是样式
-                if (mIvMessage != null) {
-                    if (s) {
-                        mIvMessage.setSelected(true);
-                    } else {
-                        mIvMessage.setSelected(false);
-                    }
-
+        mRxManager.on(JpushReceiver.class.getSimpleName(), (Action1<Boolean>) s -> {
+            //改变消息是样式
+            if (mIvMessage != null) {
+                if (s) {
+                    mIvMessage.setSelected(true);
+                } else {
+                    mIvMessage.setSelected(false);
                 }
+
             }
         });
     }
@@ -124,7 +118,7 @@ public class WalletFragment extends BaseFragment {
     private void getData() {
 
         NetworkUtils.isNetWork(getmActivity(), null, () -> NetWork.getNetService()
-                .getWallet(UtilMethod.getAccout(getmActivity()))
+                .getWallet(UtilMethod.getAccout(getmActivity()),getString(R.string.appCode))
                 .compose(NetWork.handleResult(new BaseCallModel<Wallet>()))
                 .subscribe(new MyObserver<Wallet>() {
                     @Override
@@ -200,74 +194,9 @@ public class WalletFragment extends BaseFragment {
      * 查询提现状态
      */
     private void getWithDraw() {
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                if (mDialog == null) {
-                    mDialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
-                }
-                UtilMethod.showDialog(getmActivity(), mDialog);
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getCheckWithdraw(UtilMethod.getAccout(getmActivity()))
-                                .compose(NetWork.handleResult(new BaseCallModel<WithDrawStatus>()))
-                                .subscribe(new MyObserver<WithDrawStatus>() {
-                                    @Override
-                                    protected void onSuccess(WithDrawStatus data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("查询结算状态:" + data);
-                                        }
-                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
-                                        if (data != null) {
-                                            createWithDrawDialog(data.getDisburseTime());
-
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("查询结算状态fail:" + resultMsg);
-                                        }
-                                        if (mGttvWalletMoney != null) {
-                                            UtilMethod.startIntent(getmActivity(), JieSuanActivity.class, "money", mGttvWalletMoney.getText().toString().trim());
-                                        }
-                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
-                                    }
-
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
-                                        ExitToLogin(resultMsg);
-                                    }
-                                })
-                );
-            }
-        });
-    }
-
-    /**
-     * 创建提现的提示对话框
-     */
-    public void createWithDrawDialog(String time) {
-        if (mAlertDialog == null) {
-            View view = LayoutInflater.from(getmActivity()).inflate(R.layout.dialog_withdraw, null);
-            TextView mTvContent = (TextView) view.findViewById(R.id.tv_dialog_call_content);
-            mTvContent.setText("您于" + time + "提交了一笔提现,请等待处理");
-            Button mBtnComfirm = (Button) view.findViewById(R.id.btn_dialog_call_comfrim);
-            mBtnComfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    UtilMethod.dissmissDialog(getmActivity(), mAlertDialog);
-                }
-            });
-            AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
-            mAlertDialog = builder.setView(view).create();
-
+        if (mGttvWalletMoney != null) {
+            UtilMethod.startIntent(getmActivity(), JieSuanActivity.class, "money", mGttvWalletMoney.getText().toString().trim());
         }
-        UtilMethod.showDialog(getmActivity(), mAlertDialog);
-
     }
 
     /**
@@ -285,10 +214,4 @@ public class WalletFragment extends BaseFragment {
     }
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        mAlertDialog = null;
-
-    }
 }

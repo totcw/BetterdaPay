@@ -17,17 +17,17 @@ package com.betterda.betterdapay.javabean;
  */
 
 public class WithDraw {
-    private String amount;
+    private String drawCash;
     private String status;
-    private String disburseTime;
-    private String statusName;
+    private String drawTime;
+    private String drawResult;
 
-    public String getAmount() {
-        return amount;
+    public String getDrawCash() {
+        return drawCash;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setDrawCash(String drawCash) {
+        this.drawCash = drawCash;
     }
 
     public String getStatus() {
@@ -38,29 +38,29 @@ public class WithDraw {
         this.status = status;
     }
 
-    public String getDisburseTime() {
-        return disburseTime;
+    public String getDrawTime() {
+        return drawTime;
     }
 
-    public void setDisburseTime(String disburseTime) {
-        this.disburseTime = disburseTime;
+    public void setDrawTime(String drawTime) {
+        this.drawTime = drawTime;
     }
 
-    public String getStatusName() {
-        return statusName;
+    public String getDrawResult() {
+        return drawResult;
     }
 
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
+    public void setDrawResult(String drawResult) {
+        this.drawResult = drawResult;
     }
 
     @Override
     public String toString() {
         return "WithDraw{" +
-                "amount='" + amount + '\'' +
+                "drawCash='" + drawCash + '\'' +
                 ", status='" + status + '\'' +
-                ", disburseTime='" + disburseTime + '\'' +
-                ", statusName='" + statusName + '\'' +
+                ", drawTime='" + drawTime + '\'' +
+                ", drawResult='" + drawResult + '\'' +
                 '}';
     }
 }

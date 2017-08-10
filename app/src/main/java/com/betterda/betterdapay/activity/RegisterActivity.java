@@ -301,7 +301,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
         UtilMethod.showDialog(getmActivity(), dialog);
         mRxManager.add(
                 NetWork.getNetService()
-                        .getRegister(number, password, phone,Constants.APPCODE)
+                        .getRegister(number, password, phone,getString(R.string.appCode))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new MyObserver<String>() {

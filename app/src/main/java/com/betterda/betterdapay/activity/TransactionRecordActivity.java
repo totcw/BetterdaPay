@@ -45,7 +45,7 @@ public class TransactionRecordActivity extends BaseActivity {
 
     private List<TransactionRecord> list,mTransactionRecordList;
     private int page = 1;
-
+    private String start = page + "";
     @Override
     public void initView() {
         super.initView();
@@ -63,6 +63,7 @@ public class TransactionRecordActivity extends BaseActivity {
             public void onClick(View v) {
                 mLoadpagerLayout.setLoadVisable();
                 page = 1;
+                start = page + "";
                 getData();
             }
         });
@@ -98,12 +99,10 @@ public class TransactionRecordActivity extends BaseActivity {
         mRvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
             @Override
             public void onLoadNextPage(View view) {
-                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, new RecyclerViewStateUtils.nextListener() {
-                    @Override
-                    public void load() {
-                        page++;
-                        getData();
-                    }
+                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, () -> {
+                    page++;
+                    start = UtilMethod.getStart(page);
+                    getData();
                 });
 
             }
@@ -132,40 +131,35 @@ public class TransactionRecordActivity extends BaseActivity {
 
     private void getData() {
 
-        NetworkUtils.isNetWork(getmActivity(), mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-               mRxManager.add(
-                       NetWork.getNetService()
-                               .getOrders(UtilMethod.getAccout(getmActivity()), null, null, page + "", Constants.PAGE_SIZE + "")
-                               .compose(NetWork.handleResult(new BaseCallModel<List<TransactionRecord>>()))
-                               .subscribe(new MyObserver<List<TransactionRecord>>() {
-                                   @Override
-                                   protected void onSuccess(List<TransactionRecord> data, String resultMsg) {
-                                       if (BuildConfig.LOG_DEBUG) {
-                                           System.out.println("账单:"+data);
-                                       }
-                                       if (data != null) {
-                                           parserData(data);
-                                       }
-                                       UtilMethod.judgeData(list,mLoadpagerLayout);
-                                   }
+        NetworkUtils.isNetWork(getmActivity(), mLoadpagerLayout, () -> mRxManager.add(
+                NetWork.getNetService()
+                        .getOrders(UtilMethod.getAccout(getmActivity()), null, null, start, Constants.PAGE_SIZE + "",getString(R.string.appCode))
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
+                        .subscribe(new MyObserver<List<TransactionRecord>>() {
+                            @Override
+                            protected void onSuccess(List<TransactionRecord> data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("账单:"+data);
+                                }
+                                if (data != null) {
+                                    parserData(data);
+                                }
+                                UtilMethod.judgeData(list,mLoadpagerLayout);
+                            }
 
-                                   @Override
-                                   public void onFail(String resultMsg) {
-                                       if (mLoadpagerLayout != null) {
-                                           mLoadpagerLayout.setErrorVisable();
-                                       }
-                                   }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (mLoadpagerLayout != null) {
+                                    mLoadpagerLayout.setErrorVisable();
+                                }
+                            }
 
-                                   @Override
-                                   public void onExit(String resultMsg) {
-                                       ExitToLogin(resultMsg);
-                                   }
-                               })
-               );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 
     private void parserData(List<TransactionRecord> data) {

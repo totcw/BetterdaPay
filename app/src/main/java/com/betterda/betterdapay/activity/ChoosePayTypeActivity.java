@@ -76,42 +76,36 @@ public class ChoosePayTypeActivity extends BaseActivity {
 
         initRecycleView();
 
-        mLoadingPager.setonErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLoadingPager.setLoadVisable();
-                getDataForRate();
-            }
+        mLoadingPager.setonErrorClickListener(v -> {
+            mLoadingPager.setLoadVisable();
+            getDataForRate();
         });
         mLoadingPager.setLoadVisable();
         LocationUtil locationUtil = new LocationUtil();
-        locationUtil.start(getmActivity(), new LocationUtil.MyBDLocationListener() {
-            @Override
-            public void onReceive(BDLocation location) {
+        locationUtil.start(getmActivity(), location -> {
 
-                if (location != null) {
-                    longitude = location.getLongitude()+"";
-                    latitude = location.getLatitude()+"";
-                    province = location.getProvince();
-                    city = location.getCity();
-                    area = location.getDistrict();
-                    street = location.getStreet();
-                }
-
-                CacheUtils.putString(getmActivity(),"longitude",longitude);
-                CacheUtils.putString(getmActivity(),"latitude",latitude);
-                CacheUtils.putString(getmActivity(),"province",province);
-                CacheUtils.putString(getmActivity(),"city",city);
-                CacheUtils.putString(getmActivity(),"area",area);
-                CacheUtils.putString(getmActivity(),"street",street);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getDataForRate();
-                    }
-                });
+            if (location != null) {
+                longitude = location.getLongitude()+"";
+                latitude = location.getLatitude()+"";
+                province = location.getProvince();
+                city = location.getCity();
+                area = location.getDistrict();
+                street = location.getStreet();
             }
+
+            CacheUtils.putString(getmActivity(),"longitude",longitude);
+            CacheUtils.putString(getmActivity(),"latitude",latitude);
+            CacheUtils.putString(getmActivity(),"province",province);
+            CacheUtils.putString(getmActivity(),"city",city);
+            CacheUtils.putString(getmActivity(),"area",area);
+            CacheUtils.putString(getmActivity(),"street",street);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getDataForRate();
+                }
+            });
         });
 
     }
@@ -179,45 +173,40 @@ public class ChoosePayTypeActivity extends BaseActivity {
      */
     private void getDataForRate() {
 
-        NetworkUtils.isNetWork(getmActivity(), mLoadingPager, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getRatingForCalculate(UtilMethod.getAccout(getmActivity()))
-                                .compose(NetWork.handleResult(new BaseCallModel<List<RatingCalculateEntity>>()))
-                                .subscribe(new MyObserver<List<RatingCalculateEntity>>() {
-                                    @Override
-                                    protected void onSuccess(List<RatingCalculateEntity> data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("收款:" + data);
-                                        }
-                                        if (data != null) {
-                                            parserData(data);
-                                        }
-                                        if (mLoadingPager != null) {
-                                            mLoadingPager.hide();
-                                        }
-                                    }
+        NetworkUtils.isNetWork(getmActivity(), mLoadingPager, () -> mRxManager.add(
+                NetWork.getNetService()
+                        .getRatingForCalculate(UtilMethod.getAccout(getmActivity()),getString(R.string.appCode))
+                        .compose(NetWork.handleResult(new BaseCallModel<List<RatingCalculateEntity>>()))
+                        .subscribe(new MyObserver<List<RatingCalculateEntity>>() {
+                            @Override
+                            protected void onSuccess(List<RatingCalculateEntity> data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("收款:" + data);
+                                }
+                                if (data != null) {
+                                    parserData(data);
+                                }
+                                if (mLoadingPager != null) {
+                                    mLoadingPager.hide();
+                                }
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("收款fail:" + resultMsg);
-                                        }
-                                        if (mLoadingPager != null) {
-                                            mLoadingPager.setErrorVisable();
-                                        }
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("收款fail:" + resultMsg);
+                                }
+                                if (mLoadingPager != null) {
+                                    mLoadingPager.setErrorVisable();
+                                }
+                            }
 
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        ExitToLogin(resultMsg);
-                                    }
-                                })
-                );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 
     private void parserData(List<RatingCalculateEntity> data) {

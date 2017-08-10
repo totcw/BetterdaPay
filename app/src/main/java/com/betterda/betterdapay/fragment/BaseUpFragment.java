@@ -196,48 +196,43 @@ public abstract class BaseUpFragment extends BaseFragment {
         }
 
         loadingPager.setLoadVisable();
-        NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                mRxManager.add(
-                        NetWork.getNetService().getRating()
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new MyObserver<List<Rating>>() {
-                                    @Override
-                                    protected void onSuccess(List<Rating> data, String resultMsg) {
+        NetworkUtils.isNetWork(getmActivity(), loadingPager, () -> mRxManager.add(
+                NetWork.getNetService().getRating(getString(R.string.appCode))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new MyObserver<List<Rating>>() {
+                            @Override
+                            protected void onSuccess(List<Rating> data, String resultMsg) {
 
-                                        if (data != null) {
-                                            parser(data);
+                                if (data != null) {
+                                    parser(data);
 
-                                        }
-                                        UtilMethod.isDataEmpty(loadingPager, list);
-                                    }
+                                }
+                                UtilMethod.isDataEmpty(loadingPager, list);
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG)
-                                            Log.i(TAG, resultMsg);
-                                        loadingPager.setErrorVisable();
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG)
+                                    Log.i(TAG, resultMsg);
+                                loadingPager.setErrorVisable();
+                            }
 
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            Log.i(TAG, "exit");
-                                        }
-                                        loadingPager.hide();
+                            @Override
+                            public void onExit(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    Log.i(TAG, "exit");
+                                }
+                                loadingPager.hide();
 
-                                        if (isCurrent || isVisible) {
-                                            isCurrent = false;
-                                            ExitToLogin(resultMsg);
-                                        }
+                                if (isCurrent || isVisible) {
+                                    isCurrent = false;
+                                    ExitToLogin(resultMsg);
+                                }
 
-                                    }
-                                })
-                );
-            }
-        });
+                            }
+                        })
+        ));
 
 
     }

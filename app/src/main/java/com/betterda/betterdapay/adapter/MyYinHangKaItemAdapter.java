@@ -127,7 +127,7 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
             }
             UtilMethod.showDialog(mContext, dialog);
             NetWork.getNetService()
-                    .getOrder(UtilMethod.getAccout(mContext),  money+"", rankId, "升级付款")
+                    .getOrder(UtilMethod.getAccout(mContext),  money+"", rankId, "升级付款",mContext.getString(R.string.appCode))
                     .compose(NetWork.handleResult(new BaseCallModel<CreateOrderEntity>()))
                     .subscribe(new MyObserver<CreateOrderEntity>() {
                         @Override
@@ -233,7 +233,7 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
             UtilMethod.showDialog( mContext,dialog);
             if (data != null) {
                 NetWork.getNetService()
-                        .getBandDelete(id,Constants.APPCODE)
+                        .getBandDelete(id,mContext.getString(R.string.appCode))
                         .compose(NetWork.handleResult(new BaseCallModel<>()))
                         .subscribe(new MyObserver<List<BankCard>>() {
                             @Override

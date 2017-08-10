@@ -44,7 +44,7 @@ public class TiXianDetailActivity extends BaseActivity {
     private List<WithDraw> list,mWithDrawList;
     private HeaderAndFooterRecyclerViewAdapter mAdapter;
     private int page =1;
-
+    private String start = page+"";
     @Override
     public void initView() {
         super.initView();
@@ -64,9 +64,9 @@ public class TiXianDetailActivity extends BaseActivity {
             @Override
             public void convert(ViewHolder holder, WithDraw o) {
                 if (holder != null && o != null) {
-                    holder.setText(R.id.tv_item_withdrawdetail, o.getAmount()+"元");
-                    holder.setText(R.id.tv_item_withdrawdetail_type, o.getStatusName());
-                    holder.setText(R.id.tv_item_withdrawdetail_time, o.getDisburseTime());
+                    holder.setText(R.id.tv_item_withdrawdetail, o.getDrawCash()+"元");
+                    holder.setText(R.id.tv_item_withdrawdetail_type, o.getDrawResult());
+                    holder.setText(R.id.tv_item_withdrawdetail_time, o.getDrawTime());
 
                 }
             }
@@ -76,12 +76,10 @@ public class TiXianDetailActivity extends BaseActivity {
         mRvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
             @Override
             public void onLoadNextPage(View view) {
-                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, new RecyclerViewStateUtils.nextListener() {
-                    @Override
-                    public void load() {
-                        page++;
-                        getData();
-                    }
+                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, () -> {
+                    page++;
+                    start = UtilMethod.getStart(page);
+                    getData();
                 });
 
             }
@@ -96,13 +94,11 @@ public class TiXianDetailActivity extends BaseActivity {
         mRvLayout.setAdapter(mAdapter);
         mLoadpagerLayout.setLoadVisable();
         getData();
-        mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLoadpagerLayout.setLoadVisable();
-                page = 1;
-                getData();
-            }
+        mLoadpagerLayout.setonErrorClickListener(v -> {
+            mLoadpagerLayout.setLoadVisable();
+            page = 1;
+            start = page+"";
+            getData();
         });
     }
 
@@ -118,44 +114,39 @@ public class TiXianDetailActivity extends BaseActivity {
 
     private void getData() {
 
-        NetworkUtils.isNetWork(this, mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getAmountList(UtilMethod.getAccout(getmActivity()),page+"", Constants.PAGE_SIZE+"")
-                                .compose(NetWork.handleResult(new BaseCallModel<List<WithDraw>>()))
-                                .subscribe(new MyObserver<List<WithDraw>>() {
-                                    @Override
-                                    protected void onSuccess(List<WithDraw> data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("结算明细:"+data);
-                                        }
-                                        if (data != null) {
-                                            parserData(data);
-                                        }
+        NetworkUtils.isNetWork(this, mLoadpagerLayout, () -> mRxManager.add(
+                NetWork.getNetService()
+                        .getAmountList(UtilMethod.getAccout(getmActivity()),start, Constants.PAGE_SIZE+"",getString(R.string.appCode))
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
+                        .subscribe(new MyObserver<List<WithDraw>>() {
+                            @Override
+                            protected void onSuccess(List<WithDraw> data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("结算明细:"+data);
+                                }
+                                if (data != null) {
+                                    parserData(data);
+                                }
 
-                                        UtilMethod.judgeData(list,mLoadpagerLayout);
-                                    }
+                                UtilMethod.judgeData(list,mLoadpagerLayout);
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("结算明细fail:"+resultMsg);
-                                        }
-                                        if (mLoadpagerLayout != null) {
-                                            mLoadpagerLayout.setErrorVisable();
-                                        }
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("结算明细fail:"+resultMsg);
+                                }
+                                if (mLoadpagerLayout != null) {
+                                    mLoadpagerLayout.setErrorVisable();
+                                }
+                            }
 
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        ExitToLogin(resultMsg);
-                                    }
-                                })
-                );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 
     private void parserData(List<WithDraw> data) {

@@ -49,7 +49,7 @@ public class MessageActivity extends BaseActivity {
     private HeaderAndFooterRecyclerViewAdapter mAdapter;
     private List<Messages> list,mMessagesList;
     private int page = 1;
-    private String start="1";//分页的开始下标
+    private String start = page+"";//分页的开始下标
 
     @Override
     public void initView() {
@@ -105,7 +105,7 @@ public class MessageActivity extends BaseActivity {
             public void onClick(View v) {
                 mLoadpagerLayout.setLoadVisable();
                 page = 1;
-                start = "1";
+                start = page+"";
                 getData();
             }
         });
@@ -131,7 +131,7 @@ public class MessageActivity extends BaseActivity {
 
         NetworkUtils.isNetWork(this, mLoadpagerLayout, () -> mRxManager.add(
                 NetWork.getNetService()
-                        .getMessageList(UtilMethod.getAccout(getmActivity()),start, Constants.PAGE_SIZE + "",Constants.APPCODE)
+                        .getMessageList(UtilMethod.getAccout(getmActivity()),start, Constants.PAGE_SIZE + "",getString(R.string.appCode))
                         .compose(NetWork.handleResult(new BaseCallModel<>()))
                         .subscribe(new MyObserver<List<Messages>>() {
                             @Override

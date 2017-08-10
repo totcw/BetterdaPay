@@ -42,10 +42,13 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
     @BindView(R.id.loadpager_layout)
     LoadingPager loadpagerLayout;
 
+    public final static String AUTH_ALREAD_CODE = "1";/*已经认证的状态码*/
+    public final static String AUTH_ALREAD = "已认证";/*已经认证*/
+    public final static String AUTH_NO = "未认证";/*未认证*/
     private List<TuiGuang> list, tuiGuangList;
     private HeaderAndFooterRecyclerViewAdapter adapter;
     private int page = 1;
-    private String start="1";//分页的开始下标
+    private String start=page+"";//分页的开始下标
     @Override
     public void initView() {
         setContentView(R.layout.activity_mytuiguang);
@@ -69,7 +72,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
 
         NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, () -> mRxManager.add(
                 NetWork.getNetService()
-                        .getSub(UtilMethod.getAccout(getmActivity()),start, Constants.PAGE_SIZE+"",Constants.APPCODE)
+                        .getSub(UtilMethod.getAccout(getmActivity()),start, Constants.PAGE_SIZE+"",getString(R.string.appCode))
                         .compose(NetWork.handleResult(new BaseCallModel<>()))
                         .subscribe(new MyObserver<List<TuiGuang>>() {
                             @Override
@@ -131,10 +134,10 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
                     if (!TextUtils.isEmpty(tuiGuang.getRank())) {
                         viewHolder.setImageResource(R.id.iv_item_mytuiguang, RateData.getRate(tuiGuang.getRank()));
                     }
-                    if ("1".equals(tuiGuang.getAuth())) {
-                        viewHolder.setText(R.id.tv_item_mytuiguang_renzheng, "已认证");
+                    if (AUTH_ALREAD_CODE.equals(tuiGuang.getAuth())) {
+                        viewHolder.setText(R.id.tv_item_mytuiguang_renzheng, AUTH_ALREAD);
                     } else {
-                        viewHolder.setText(R.id.tv_item_mytuiguang_renzheng, "未认证");
+                        viewHolder.setText(R.id.tv_item_mytuiguang_renzheng, AUTH_NO);
                     }
 
                 }

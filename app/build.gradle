@@ -55,6 +55,7 @@ android {
             betterda{
                 applicationId "com.betterda.betterdapay" /*使用不同的包名*/
                 resValue "string","app_name","来逗阵"
+                resValue "string","appCode","A"
                 resValue "string","share_title","来逗阵"/*分享的标题*/
                 resValue "string","share_content","来逗阵注册有礼"/*分享的内容*/
                 resValue "string","wx_key","wx55b0b0b52e12a8de"/*微信的key*/
@@ -68,9 +69,10 @@ android {
                         BAIDU_APIKEY:"GGet03IlqaFQnYbbx6DnjCwl542WSMy8" /*清单文件中的百度地图key*/
                 ]
             }
-            ananpay{
+        betterdaTwo{
                 applicationId "com.betterda.betterdaTwo" /*使用不同的包名*/
                 resValue "string","app_name","来逗阵2"
+                resValue "string","appCode","A"
                 resValue "string","share_title","来逗阵2"/*分享的标题*/
                 resValue "string","share_content","来逗阵2注册有礼"/*分享的内容*/
                 resValue "string","wx_key","wx55b0b0b52e12a8de"/*微信的key*/
@@ -86,11 +88,12 @@ android {
             }
         betterdaThree{
                 applicationId "com.betterda.betterdaThree" /*使用不同的包名*/
+                resValue "string","appCode","A"
                 resValue "string","app_name","来逗阵3" /*app的名字*/
                 resValue "string","share_title","来逗阵3"/*分享的标题*/
                 resValue "string","share_content","来逗阵3注册有礼"/*分享的内容*/
-            resValue "string","wx_key","wx55b0b0b52e12a8de"/*微信的key*/
-            resValue "string","wx_value","7a40ddb1853720bb643a06ed407c9ef6"/*微信的value*/
+                resValue "string","wx_key","wx55b0b0b52e12a8de"/*微信的key*/
+                 resValue "string","wx_value","7a40ddb1853720bb643a06ed407c9ef6"/*微信的value*/
                 manifestPlaceholders = [
                         JUPSH_PERMISSION:"com.betterda.betterdaThree",
                         JPUSH_PKGNAME : applicationId,

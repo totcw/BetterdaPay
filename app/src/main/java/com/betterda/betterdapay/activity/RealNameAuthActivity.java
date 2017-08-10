@@ -162,14 +162,11 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
 
     private void chooseAddress() {
         WheelDialog wheelDialog = new WheelDialog(this);
-        wheelDialog.setOnAddressCListener(new WheelDialog.OnAddressCListener() {
-            @Override
-            public void onClick(String province, String city, String area) {
-                mTvRealnameauthBankAddress.setText(province + city );
-                address = province + city;
-                RealNameAuthActivity.this.province = province;
-                RealNameAuthActivity.this.city = city;
-            }
+        wheelDialog.setOnAddressCListener((province1, city1, area) -> {
+            mTvRealnameauthBankAddress.setText(province1 + city1);
+            address = province1 + city1;
+            RealNameAuthActivity.this.province = province1;
+            RealNameAuthActivity.this.city = city1;
         });
         wheelDialog.show();
         wheelDialog.setViewDistrictShow(false);

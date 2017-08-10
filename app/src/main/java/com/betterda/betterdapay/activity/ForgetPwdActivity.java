@@ -175,7 +175,7 @@ public class ForgetPwdActivity extends BaseActivity implements CountDown.onSelec
             UtilMethod.showDialog(getmActivity(), dialog);
             mRxManager.add(
                     NetWork.getNetService()
-                            .getPwdUpdate(number, pwd,Constants.APPCODE)
+                            .getPwdUpdate(number, pwd,getString(R.string.appCode))
                             .compose(NetWork.handleResult(new BaseCallModel<String>()))
                             .subscribe(new MyObserver<String>() {
                                 @Override

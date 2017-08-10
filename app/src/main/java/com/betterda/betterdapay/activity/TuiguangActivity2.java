@@ -59,7 +59,7 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
     public final static String AGENTS_CODE = "10";
     public final static String USER_CODE = "20";
     public final static String INVITE_CODE = "邀请码:";
-    public final static int  QR_SIZE = 72;
+    public final static int  QR_SIZE = 72; //二维码大小
     private ShareInfo mShareInfoMember; //用户的信息
     private ShareInfo mShareInfo; //代理商的信息
     private String url="http://www.baidu.com";
@@ -118,7 +118,7 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
 
             mRxManager.add(
                     NetWork.getNetService()
-                            .getCode(UtilMethod.getAccout(getmActivity()), Constants.APPCODE)
+                            .getCode(UtilMethod.getAccout(getmActivity()), getString(R.string.appCode))
                             .compose(NetWork.handleResult(new BaseCallModel<>()))
                             .subscribe(new MyObserver<List<ShareInfo>>() {
                                 @Override

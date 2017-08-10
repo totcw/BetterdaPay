@@ -58,12 +58,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
         setTopBar();
         getIntentData();
         setRecycleview();
-        loadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getData();
-            }
-        });
+        loadpagerLayout.setonErrorClickListener(v -> getData());
     }
 
     @Override
@@ -85,7 +80,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     private void getData() {
         loadpagerLayout.setLoadVisable();
         NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, () -> NetWork.getNetService()
-                .getBandGet(UtilMethod.getAccout(getmActivity()), Constants.APPCODE)
+                .getBandGet(UtilMethod.getAccout(getmActivity()), getString(R.string.appCode))
                 .compose(NetWork.handleResult(new BaseCallModel<>()))
                 .subscribe(new MyObserver<List<BankCard>>() {
                     @Override

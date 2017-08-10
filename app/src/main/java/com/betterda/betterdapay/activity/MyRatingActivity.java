@@ -38,7 +38,6 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.loadpager_myrating)
     LoadingPager loadingPager;
 
-    private String rate = "员工";
     private HeaderAndFooterRecyclerViewAdapter adapter;
     private List<Rating.RateDetail> list;
 
@@ -58,51 +57,40 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void init() {
         setTopBar();
-        getRate();
         setRecycleview();
         getData();
-        loadingPager.setonErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getData();
-            }
-        });
+        loadingPager.setonErrorClickListener(v -> getData());
     }
 
     private void getData() {
         loadingPager.setLoadVisable();
-        NetworkUtils.isNetWork(getmActivity(), loadingPager, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getRatingForMe(UtilMethod.getAccout(getmActivity()))
-                                .compose(NetWork.handleResult(new BaseCallModel<Rating>()))
-                                .subscribe(new MyObserver<Rating>() {
-                                    @Override
-                                    protected void onSuccess(Rating data, String resultMsg) {
+        NetworkUtils.isNetWork(getmActivity(), loadingPager, () -> mRxManager.add(
+                NetWork.getNetService()
+                        .getRatingForMe(UtilMethod.getAccout(getmActivity()),getString(R.string.appCode))
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
+                        .subscribe(new MyObserver<Rating>() {
+                            @Override
+                            protected void onSuccess(Rating data, String resultMsg) {
 
-                                        if (data != null) {
-                                            parser(data);
-                                        }
-                                        UtilMethod.judgeData(list, loadingPager);
-                                    }
+                                if (data != null) {
+                                    parser(data);
+                                }
+                                UtilMethod.judgeData(list, loadingPager);
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (loadingPager != null) {
-                                            loadingPager.setErrorVisable();
-                                        }
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (loadingPager != null) {
+                                    loadingPager.setErrorVisable();
+                                }
+                            }
 
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        ExitToLogin(resultMsg);
-                                    }
-                                })
-                );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 
     private void parser(Rating data) {
@@ -120,12 +108,6 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void getRate() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            rate = intent.getStringExtra("rate");
-        }
-    }
 
     private void setRecycleview() {
         list = new ArrayList<>();
@@ -165,9 +147,7 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void setTopBar() {
-        //  topbarMyrating.setActionText("升级");
         topbarMyrating.setTitle("我的扣率");
-        //topbarMyrating.setActionTextVisibility(true);
     }
 
     @Override

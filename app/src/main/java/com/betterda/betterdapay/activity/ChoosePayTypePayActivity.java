@@ -43,7 +43,6 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     private String rank;//升级到的等级
     private int mMoney;//单位为分
 
-    private ShapeLoadingDialog dialog;
 
 
     @Override
@@ -58,7 +57,6 @@ public class ChoosePayTypePayActivity extends BaseActivity {
         super.init();
         getInitData();
         topbarChose.setTitle("选择支付通道");
-        dialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
         initRecycleView();
 
     }
@@ -77,21 +75,18 @@ public class ChoosePayTypePayActivity extends BaseActivity {
                     holder.setImageResource(R.id.iv_my_information, R.mipmap.yinlian);
                     holder.setText(R.id.tv_item_choosepaytype_type, ratingCalculateEntity.getPayWay());
 
-                    holder.setOnClickListener(R.id.relative_choose_zhifubao, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (holder.getAdapterPosition() == 0) {
-                                Intent intent = new Intent(getmActivity(), MyYinHangKa.class);
-                                intent.putExtra("rank", rank);
-                                intent.putExtra("rankId", rankId);
-                                intent.putExtra("isPay", true);
-                                intent.putExtra("money", mMoney);
-                                intent.putExtra("isClick", true);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                //TODO 无跳转
-                            }
+                    holder.setOnClickListener(R.id.relative_choose_zhifubao, v -> {
+                        if (holder.getAdapterPosition() == 0) {
+                            Intent intent = new Intent(getmActivity(), MyYinHangKa.class);
+                            intent.putExtra("rank", rank);
+                            intent.putExtra("rankId", rankId);
+                            intent.putExtra("isPay", true);
+                            intent.putExtra("money", mMoney);
+                            intent.putExtra("isClick", true);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            //TODO 无跳转
                         }
                     });
                 }

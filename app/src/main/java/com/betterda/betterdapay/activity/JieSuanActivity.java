@@ -174,45 +174,42 @@ public class JieSuanActivity extends BaseActivity {
         }
 
         if (sum <= money) {
-            NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-                @Override
-                public void getDataApi() {
-                    if (mDialog == null) {
-                        mDialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
-                    }
-                    UtilMethod.showDialog(getmActivity(), mDialog);
-                    mRxManager.add(
-                            NetWork.getNetService()
-                                    .getJiesuan(UtilMethod.getAccout(getmActivity()), sum + "")
-                                    .compose(NetWork.handleResult(new BaseCallModel<WithDraw>()))
-                                    .subscribe(new MyObserver<WithDraw>() {
-                                        @Override
-                                        protected void onSuccess(WithDraw data, String resultMsg) {
-                                            if (BuildConfig.LOG_DEBUG) {
-
-                                                System.out.println("结算:" + data);
-                                            }
-                                            UtilMethod.dissmissDialog(getmActivity(), mDialog);
-                                            createWithDrawDialog(resultMsg);
-                                        }
-
-                                        @Override
-                                        public void onFail(String resultMsg) {
-                                            if (BuildConfig.LOG_DEBUG) {
-                                                System.out.println("结算fail:" + resultMsg);
-                                            }
-                                            UtilMethod.dissmissDialog(getmActivity(), mDialog);
-                                            showToast(resultMsg);
-                                        }
-
-                                        @Override
-                                        public void onExit(String resultMsg) {
-                                            UtilMethod.dissmissDialog(getmActivity(), mDialog);
-                                            ExitToLogin(resultMsg);
-                                        }
-                                    })
-                    );
+            NetworkUtils.isNetWork(getmActivity(), null, () -> {
+                if (mDialog == null) {
+                    mDialog = UtilMethod.createDialog(getmActivity(), "正在提交...");
                 }
+                UtilMethod.showDialog(getmActivity(), mDialog);
+                mRxManager.add(
+                        NetWork.getNetService()
+                                .getJiesuan(UtilMethod.getAccout(getmActivity()), sum + "",getString(R.string.appCode))
+                                .compose(NetWork.handleResult(new BaseCallModel<>()))
+                                .subscribe(new MyObserver<WithDraw>() {
+                                    @Override
+                                    protected void onSuccess(WithDraw data, String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+
+                                            System.out.println("结算:" + data);
+                                        }
+                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                        createWithDrawDialog(resultMsg);
+                                    }
+
+                                    @Override
+                                    public void onFail(String resultMsg) {
+                                        if (BuildConfig.LOG_DEBUG) {
+                                            System.out.println("结算fail:" + resultMsg);
+                                        }
+                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                        showToast(resultMsg);
+                                    }
+
+                                    @Override
+                                    public void onExit(String resultMsg) {
+                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
+                                        ExitToLogin(resultMsg);
+                                    }
+                                })
+                );
             });
         } else {
             showToast("余额不足");
@@ -228,12 +225,9 @@ public class JieSuanActivity extends BaseActivity {
             TextView mTvContent = (TextView) view.findViewById(R.id.tv_dialog_call_content);
             mTvContent.setText(content);
             Button mBtnComfirm = (Button) view.findViewById(R.id.btn_dialog_call_comfrim);
-            mBtnComfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    UtilMethod.dissmissDialog(getmActivity(), mAlertDialog);
-                    getmActivity().finish();
-                }
+            mBtnComfirm.setOnClickListener(v -> {
+                UtilMethod.dissmissDialog(getmActivity(), mAlertDialog);
+                getmActivity().finish();
             });
             AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
             mAlertDialog = builder.setView(view).create();

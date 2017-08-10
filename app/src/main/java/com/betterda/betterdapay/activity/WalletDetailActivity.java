@@ -45,6 +45,7 @@ public class WalletDetailActivity extends BaseActivity {
 
     private List<Income> list,mIncomeList;
     private int page = 1;
+    private String start = "1";
     @Override
     public void initView() {
         super.initView();
@@ -76,12 +77,10 @@ public class WalletDetailActivity extends BaseActivity {
         mRvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
             @Override
             public void onLoadNextPage(View view) {
-                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, new RecyclerViewStateUtils.nextListener() {
-                    @Override
-                    public void load() {
-                        page++;
-                        getData();
-                    }
+                RecyclerViewStateUtils.next(getmActivity(), mRvLayout, () -> {
+                    page++;
+                    start = UtilMethod.getStart(page);
+                    getData();
                 });
 
             }
@@ -95,13 +94,11 @@ public class WalletDetailActivity extends BaseActivity {
         mRvLayout.setAdapter(mAdapter);
         mLoadpagerLayout.setLoadVisable();
         getData();
-        mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLoadpagerLayout.setLoadVisable();
-                page = 1;
-                getData();
-            }
+        mLoadpagerLayout.setonErrorClickListener(v -> {
+            mLoadpagerLayout.setLoadVisable();
+            page = 1;
+            start = page+"";
+            getData();
         });
     }
 
@@ -119,44 +116,39 @@ public class WalletDetailActivity extends BaseActivity {
 
     private void getData() {
 
-        NetworkUtils.isNetWork(this, mLoadpagerLayout, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getIncomeList(UtilMethod.getAccout(getmActivity()),page+"", Constants.PAGE_SIZE+"")
-                                .compose(NetWork.handleResult(new BaseCallModel<List<Income>>()))
-                                .subscribe(new MyObserver<List<Income>>() {
-                                    @Override
-                                    protected void onSuccess(List<Income> data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("分润明细:"+data);
-                                        }
-                                        if (data != null) {
-                                            parserData(data);
-                                        }
+        NetworkUtils.isNetWork(this, mLoadpagerLayout, () -> mRxManager.add(
+                NetWork.getNetService()
+                        .getIncomeList(UtilMethod.getAccout(getmActivity()),start, Constants.PAGE_SIZE+"",getString(R.string.appCode))
+                        .compose(NetWork.handleResult(new BaseCallModel<List<Income>>()))
+                        .subscribe(new MyObserver<List<Income>>() {
+                            @Override
+                            protected void onSuccess(List<Income> data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("分润明细:"+data);
+                                }
+                                if (data != null) {
+                                    parserData(data);
+                                }
 
-                                        UtilMethod.judgeData(list,mLoadpagerLayout);
-                                    }
+                                UtilMethod.judgeData(list,mLoadpagerLayout);
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("分润明细fail:"+resultMsg);
-                                        }
-                                        if (mLoadpagerLayout != null) {
-                                            mLoadpagerLayout.setErrorVisable();
-                                        }
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("分润明细fail:"+resultMsg);
+                                }
+                                if (mLoadpagerLayout != null) {
+                                    mLoadpagerLayout.setErrorVisable();
+                                }
+                            }
 
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        ExitToLogin(resultMsg);
-                                    }
-                                })
-                );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 
     private void parserData(List<Income> data) {

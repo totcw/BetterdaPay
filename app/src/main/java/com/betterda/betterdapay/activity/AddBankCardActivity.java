@@ -56,7 +56,6 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
     private String bank;    // 所属银行
     private String cardnum;   // 卡号
     private String number;   // 预留手机号
-    private String cardType = "信用卡";  //银行卡类型
 
     @Override
     public void initView() {
@@ -181,7 +180,7 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
             UtilMethod.showDialog(getmActivity(), dialog);
             mRxManager.add(
                     NetWork.getNetService()
-                            .getBandAdd(UtilMethod.getAccout(getmActivity()),truename,identitycard,bank,cardnum,number,Constants.APPCODE)
+                            .getBandAdd(UtilMethod.getAccout(getmActivity()),truename,identitycard,bank,cardnum,number,getString(R.string.appCode))
                             .compose(NetWork.handleResult(new BaseCallModel<String>()))
                             .subscribe(new MyObserver<String>() {
                                 @Override
@@ -224,14 +223,11 @@ public class AddBankCardActivity extends BaseActivity implements View.OnClickLis
                     viewHolder.setImageResource(R.id.iv_chose_bank, BankData.getBank(s));
                 }
 
-                viewHolder.setOnClickListener(R.id.linear_chose_bank, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        tvAddbankBankname.setText(s);
-                        bank = s;
-                        judge();
-                        closePopupWindow();
-                    }
+                viewHolder.setOnClickListener(R.id.linear_chose_bank, v -> {
+                    tvAddbankBankname.setText(s);
+                    bank = s;
+                    judge();
+                    closePopupWindow();
                 });
             }
         });
