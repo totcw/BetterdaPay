@@ -67,7 +67,7 @@ public class WalletDetailActivity extends BaseActivity {
                 if (holder != null && income != null) {
                     holder.setText(R.id.tv_item_walletdetail, income.getAmount()+"元");
                     holder.setText(R.id.tv_item_walletdetail_type, income.getType());
-                    holder.setText(R.id.tv_item_walletdetail_time, income.getIncomeTime());
+                    holder.setText(R.id.tv_item_walletdetail_time, income.getIncomeTimeStr());
                     holder.setText(R.id.tv_item_walletdetail_account, UtilMethod.transforPhoneNumber(income.getSourceAccount()));
                 }
             }

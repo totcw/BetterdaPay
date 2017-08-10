@@ -126,7 +126,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         viewHolder.setText(R.id.tv_item_fenru2_rate, fenRun.getRank());
                         viewHolder.setText(R.id.tv_item_fenru2_name, fenRun.getName());
                         viewHolder.setText(R.id.tv_item_fenru2_money, fenRun.getDrawCash());
-                        viewHolder.setText(R.id.tv_item_fenru2_time, fenRun.getIncomeTime());
+                        viewHolder.setText(R.id.tv_item_fenru2_time, fenRun.getIncomeTimeStr());
                         viewHolder.setImageResource(R.id.iv_item_fenrun2, RateData.getRank(fenRun.getRank()));
 
                         switch (fenRun.getType()) {

@@ -12,7 +12,7 @@ public class Income {
     private String type;//分润类型
     private String amount;//分润金额
     private String sourceAccount;//用户
-    private String incomeTime;//时间
+    private String incomeTimeStr;//时间
 
     public String getRate() {
         return rate;
@@ -54,12 +54,12 @@ public class Income {
         this.sourceAccount = sourceAccount;
     }
 
-    public String getIncomeTime() {
-        return incomeTime;
+    public String getIncomeTimeStr() {
+        return incomeTimeStr;
     }
 
-    public void setIncomeTime(String incomeTime) {
-        this.incomeTime = incomeTime;
+    public void setIncomeTimeStr(String incomeTimeStr) {
+        this.incomeTimeStr = incomeTimeStr;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class Income {
                 ", type='" + type + '\'' +
                 ", amount='" + amount + '\'' +
                 ", sourceAccount='" + sourceAccount + '\'' +
-                ", incomeTime='" + incomeTime + '\'' +
+                ", incomeTimeStr='" + incomeTimeStr + '\'' +
                 '}';
     }
 }

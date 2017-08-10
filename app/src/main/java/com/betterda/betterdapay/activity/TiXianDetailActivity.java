@@ -66,7 +66,7 @@ public class TiXianDetailActivity extends BaseActivity {
                 if (holder != null && o != null) {
                     holder.setText(R.id.tv_item_withdrawdetail, o.getDrawCash()+"元");
                     holder.setText(R.id.tv_item_withdrawdetail_type, o.getDrawResult());
-                    holder.setText(R.id.tv_item_withdrawdetail_time, o.getDrawTime());
+                    holder.setText(R.id.tv_item_withdrawdetail_time, o.getDrawTimeStr());
 
                 }
             }

@@ -7,7 +7,7 @@ package com.betterda.betterdapay.javabean;
  * email:totcw@qq.com
  * see:
  * 创建日期： 2017/6/22
- * 功能说明：结算
+ * 功能说明：结算明细
  * begin
  * 修改记录:
  * 修改后版本:
@@ -17,9 +17,9 @@ package com.betterda.betterdapay.javabean;
  */
 
 public class WithDraw {
-    private String drawCash;
-    private String status;
-    private String drawTime;
+    private String drawCash;//金额
+    private String status;//状态
+    private String drawTimeStr;//时间
     private String drawResult;
 
     public String getDrawCash() {
@@ -38,12 +38,12 @@ public class WithDraw {
         this.status = status;
     }
 
-    public String getDrawTime() {
-        return drawTime;
+    public String getDrawTimeStr() {
+        return drawTimeStr;
     }
 
-    public void setDrawTime(String drawTime) {
-        this.drawTime = drawTime;
+    public void setDrawTimeStr(String drawTimeStr) {
+        this.drawTimeStr = drawTimeStr;
     }
 
     public String getDrawResult() {
@@ -59,7 +59,7 @@ public class WithDraw {
         return "WithDraw{" +
                 "drawCash='" + drawCash + '\'' +
                 ", status='" + status + '\'' +
-                ", drawTime='" + drawTime + '\'' +
+                ", drawTimeStr='" + drawTimeStr + '\'' +
                 ", drawResult='" + drawResult + '\'' +
                 '}';
     }
