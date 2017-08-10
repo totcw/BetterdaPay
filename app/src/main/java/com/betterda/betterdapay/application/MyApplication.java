@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.betterda.betterdapay.BuildConfig;
+import com.betterda.betterdapay.R;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
@@ -29,8 +30,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-
-        System.out.println("fdfsafd");
         if (null == list) {
             list = new ArrayList<>();
         }
@@ -38,7 +37,7 @@ public class MyApplication extends Application {
         //初始化友盟
         UMShareAPI.get(this);
         //配置微信的分享
-        PlatformConfig.setWeixin("wx55b0b0b52e12a8de", "7a40ddb1853720bb643a06ed407c9ef6");
+        PlatformConfig.setWeixin(getString(R.string.wx_key),getString(R.string.wx_key));
 
         //捕获异常
          //CrashHandler.getInstance().init(getApplicationContext());

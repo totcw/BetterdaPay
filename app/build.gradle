@@ -57,6 +57,8 @@ android {
                 resValue "string","app_name","来逗阵"
                 resValue "string","share_title","来逗阵"/*分享的标题*/
                 resValue "string","share_content","来逗阵注册有礼"/*分享的内容*/
+                resValue "string","wx_key","wx55b0b0b52e12a8de"/*微信的key*/
+                resValue "string","wx_value","7a40ddb1853720bb643a06ed407c9ef6"/*微信的value*/
                 manifestPlaceholders = [
                         JUPSH_PERMISSION:"com.betterda.betterdapay", /*清单文件中的包名*/
                         JPUSH_PKGNAME : applicationId,
@@ -67,12 +69,14 @@ android {
                 ]
             }
             ananpay{
-                applicationId "com.betterda.ananPay" /*使用不同的包名*/
+                applicationId "com.betterda.betterdaTwo" /*使用不同的包名*/
                 resValue "string","app_name","来逗阵2"
                 resValue "string","share_title","来逗阵2"/*分享的标题*/
                 resValue "string","share_content","来逗阵2注册有礼"/*分享的内容*/
+                resValue "string","wx_key","wx55b0b0b52e12a8de"/*微信的key*/
+                resValue "string","wx_value","7a40ddb1853720bb643a06ed407c9ef6"/*微信的value*/
                 manifestPlaceholders = [
-                        JUPSH_PERMISSION:"com.betterda.ananPay",
+                        JUPSH_PERMISSION:"com.betterda.betterdaTwo",
                         JPUSH_PKGNAME : applicationId,
                         JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
                         JPUSH_APPKEY : "81cda0797bce287011a37cd4", //JPush上注册的包名对应的appkey.
@@ -85,6 +89,8 @@ android {
                 resValue "string","app_name","来逗阵3" /*app的名字*/
                 resValue "string","share_title","来逗阵3"/*分享的标题*/
                 resValue "string","share_content","来逗阵3注册有礼"/*分享的内容*/
+            resValue "string","wx_key","wx55b0b0b52e12a8de"/*微信的key*/
+            resValue "string","wx_value","7a40ddb1853720bb643a06ed407c9ef6"/*微信的value*/
                 manifestPlaceholders = [
                         JUPSH_PERMISSION:"com.betterda.betterdaThree",
                         JPUSH_PKGNAME : applicationId,
