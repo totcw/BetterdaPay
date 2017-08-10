@@ -128,7 +128,7 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
             UtilMethod.showDialog(mContext, dialog);
             NetWork.getNetService()
                     .getOrder(UtilMethod.getAccout(mContext),  money+"", rankId, "升级付款",mContext.getString(R.string.appCode))
-                    .compose(NetWork.handleResult(new BaseCallModel<CreateOrderEntity>()))
+                    .compose(NetWork.handleResult(new BaseCallModel<>()))
                     .subscribe(new MyObserver<CreateOrderEntity>() {
                         @Override
                         protected void onSuccess(CreateOrderEntity data1, String resultMsg) {

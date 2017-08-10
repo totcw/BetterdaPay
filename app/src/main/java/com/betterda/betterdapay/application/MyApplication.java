@@ -37,7 +37,7 @@ public class MyApplication extends Application {
         //初始化友盟
         UMShareAPI.get(this);
         //配置微信的分享
-        PlatformConfig.setWeixin(getString(R.string.wx_key),getString(R.string.wx_key));
+        PlatformConfig.setWeixin(getString(R.string.wx_key),getString(R.string.wx_value));
 
         //捕获异常
          //CrashHandler.getInstance().init(getApplicationContext());

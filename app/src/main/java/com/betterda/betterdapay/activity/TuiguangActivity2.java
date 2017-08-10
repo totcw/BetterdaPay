@@ -19,6 +19,7 @@ import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.ImageTools;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
+import com.betterda.betterdapay.view.NormalTopBar;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.umeng.socialize.ShareAction;
@@ -40,10 +41,12 @@ import butterknife.OnClick;
 
 public class TuiguangActivity2 extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.btn_tuiguang2_share)
+    @BindView(R.id.btn_fragment_share)
     Button mBtnTuiguang2Share;
-    @BindView(R.id.loadpager_tuiguang)
+    @BindView(R.id.loadpager_fragmeng_share)
     LoadingPager mLoadingPager;
+    @BindView(R.id.topbar_share)
+    NormalTopBar mNormalTopBar;
 
     @BindView(R.id.iv_fragmeng_share_qrmember)
     ImageView mIvFragmengShareQrmember;//用户二维码
@@ -63,23 +66,23 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
     private ShareInfo mShareInfoMember; //用户的信息
     private ShareInfo mShareInfo; //代理商的信息
     private String url="http://www.baidu.com";
-    private ShapeLoadingDialog mDialog;
     @Override
     public void initView() {
         super.initView();
-        setContentView(R.layout.activity_tuiguang2);
+        setContentView(R.layout.fragment_share);
     }
 
     @Override
     public void init() {
         super.init();
+        mNormalTopBar.setTitle("分享");
         mLoadingPager.setonErrorClickListener(v -> {
             getData();
         });
         getData();
     }
 
-    @OnClick({R.id.btn_fragment_share,R.id.btn_fragment_sharemember})
+    @OnClick({R.id.btn_fragment_share,R.id.btn_fragment_sharemember,R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_fragment_share://分享代理商
@@ -105,22 +108,27 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
             case R.id.tv_share_cancel:
                 closePopupWindow();
                 break;
+            case R.id.bar_back:
+                back();
+                break;
         }
     }
 
     private void getData() {
-        if (mDialog == null) {
-            mDialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
-        }
 
         NetworkUtils.isNetWork(getmActivity(), null, () -> {
-            UtilMethod.showDialog(getmActivity(),mDialog);
 
             mRxManager.add(
                     NetWork.getNetService()
                             .getCode(UtilMethod.getAccout(getmActivity()), getString(R.string.appCode))
                             .compose(NetWork.handleResult(new BaseCallModel<>()))
                             .subscribe(new MyObserver<List<ShareInfo>>() {
+                                @Override
+                                public void onStart() {
+                                    super.onStart();
+                                    mLoadingPager.setLoadVisable();
+                                }
+
                                 @Override
                                 protected void onSuccess(List<ShareInfo> data, String resultMsg) {
                                     if (BuildConfig.LOG_DEBUG) {
