@@ -17,6 +17,8 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.javabean.ShareInfo;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.ImageTools;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -28,6 +30,8 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,19 +52,25 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     @BindView(R.id.loadpager_fragmeng_share)
     LoadingPager mLoadingPager;
     @BindView(R.id.iv_fragmeng_share_qrmember)
-    ImageView mIvFragmengShareQrmember;
+    ImageView mIvFragmengShareQrmember;//用户二维码
     @BindView(R.id.tv_fragmeng_share_qrmember)
-    TextView mTvFragmengShareQrmember;
+    TextView mTvFragmengShareQrmember; //用户邀请码
     @BindView(R.id.iv_fragmeng_share_qr)
-    ImageView mIvFragmengShareQr;
+    ImageView mIvFragmengShareQr;//代理商二维码
     @BindView(R.id.linear_fragment_share)
     LinearLayout mLinearShare; //代理商的内容
     @BindView(R.id.tv_fragmeng_share_qr)
-    TextView mTvFragmengShareQr;
-
+    TextView mTvFragmengShareQr; //代理商邀请码
     private View mView;
-    private String url="http://www.baidu.com";
 
+
+    public final static String AGENTS_CODE = "10"; //代理商
+    public final static String USER_CODE = "20";
+    public final static String INVITE_CODE = "邀请码:";
+    public final static int  QR_SIZE = 72;
+    private ShareInfo mShareInfoMember; //用户的信息
+    private ShareInfo mShareInfo; //代理商的信息
+    private String url="http://www.baidu.com";
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -79,28 +89,59 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         mLoadingPager.setonErrorClickListener(v -> {
             getData();
         });
-        // getData();
-        Bitmap bitmap = ImageTools.generateQRCode("dd", getmActivity(),72);
-        mIvFragmengShareQr.setImageBitmap(bitmap);
-        mIvFragmengShareQrmember.setImageBitmap(bitmap);
+        getData();
+
 
     }
 
     private void getData() {
-        mLoadingPager.setLoadVisable();
+
         NetworkUtils.isNetWork(getmActivity(), null, () -> {
 
             mRxManager.add(
                     NetWork.getNetService()
-                            .getCode(UtilMethod.getAccout(getmActivity()))
+                            .getCode(UtilMethod.getAccout(getmActivity()), Constants.APPCODE)
                             .compose(NetWork.handleResult(new BaseCallModel<>()))
-                            .subscribe(new MyObserver<String>() {
+                            .subscribe(new MyObserver<List<ShareInfo>>() {
                                 @Override
-                                protected void onSuccess(String data, String resultMsg) {
+                                public void onStart() {
+                                    super.onStart();
+                                    mLoadingPager.setLoadVisable();
+                                }
+
+                                @Override
+                                protected void onSuccess(List<ShareInfo> data, String resultMsg) {
                                     if (BuildConfig.LOG_DEBUG) {
-                                        System.out.println("分享:" + data);
+                                        System.out.println("分享:"+data);
                                     }
-                                    url = data;
+                                    if (data != null) {
+                                        int size = data.size();
+                                        for (int i=0;i<size;i++) {
+                                            ShareInfo shareInfo = data.get(i);
+                                            if (shareInfo != null) {
+                                                if (AGENTS_CODE.equals(shareInfo.getUserType())) {
+                                                    mShareInfo = shareInfo;
+                                                } else if (USER_CODE.equals(shareInfo.getUserType())) {
+                                                    mShareInfoMember = shareInfo;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (mShareInfoMember != null) {
+                                        mTvFragmengShareQrmember.setText(INVITE_CODE+mShareInfoMember.getInviteCode());
+                                         Bitmap bitmap = ImageTools.generateQRCode(mShareInfoMember.getUserInviteUrl(), getmActivity(),QR_SIZE);
+                                          mIvFragmengShareQrmember.setImageBitmap(bitmap);
+                                    }
+
+                                    if (mShareInfo != null) {
+                                        mTvFragmengShareQr.setText(INVITE_CODE+mShareInfo.getInviteCode());
+                                        Bitmap bitmap = ImageTools.generateQRCode(mShareInfo.getUserInviteUrl(), getmActivity(),QR_SIZE);
+                                        mIvFragmengShareQr.setImageBitmap(bitmap);
+                                    } else {
+                                        //隐藏代理商
+                                        mLinearShare.setVisibility(View.GONE);
+                                    }
+
                                     mLoadingPager.hide();
 
                                 }
@@ -108,10 +149,11 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                                 @Override
                                 public void onFail(String resultMsg) {
                                     if (BuildConfig.LOG_DEBUG) {
-                                        System.out.println("分享fail:" + resultMsg);
+                                        System.out.println("分享fail:"+resultMsg);
                                     }
                                     showToast(resultMsg);
-                                    mLoadingPager.setErrorVisable();
+                                     mLoadingPager.setErrorVisable();
+
                                 }
 
                                 @Override
@@ -127,6 +169,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
      * 分享
      */
     private void share() {
+
         View view = View.inflate(getmActivity(), R.layout.pp_share, null);
         RelativeLayout relative_wxfriend = (RelativeLayout) view.findViewById(R.id.relative_share_wxfriend);
         RelativeLayout relative_pyquan = (RelativeLayout) view.findViewById(R.id.relative_share_pyquan);
@@ -147,9 +190,15 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_fragment_share://分享代理商
+                if (mShareInfo != null) {
+                    url = mShareInfo.getUserInviteUrl();
+                }
                 share();
                 break;
             case R.id.btn_fragment_sharemember://分享会员
+                if (mShareInfoMember != null) {
+                    url = mShareInfoMember.getUserInviteUrl();
+                }
                 share();
                 break;
             case R.id.relative_share_wxfriend:
@@ -179,9 +228,9 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         if (install) {
             UMImage image = new UMImage(getmActivity(), R.mipmap.ic_launcher);//资源文件
             UMWeb web = new UMWeb(url);
-            web.setTitle("来逗阵");//标题
+            web.setTitle(getString(R.string.share_title));//标题
             web.setThumb(image);  //缩略图
-            web.setDescription("注册有礼");//描述
+            web.setDescription(getString(R.string.share_content));//描述
 
             new ShareAction(getmActivity()).setPlatform(platform)
                     .withMedia(web)

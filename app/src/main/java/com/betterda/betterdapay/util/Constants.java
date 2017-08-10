@@ -45,7 +45,7 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://192.168.0.127:8080/paycloud-walletapi/";
+        public static final String URL = "http://192.168.0.104:8080/paycloud-walletapi/";
       //  public static final String URL = "http://119.23.227.230:7080/wallet/";
         public static final String URL_LOGIN = URL + "api/user/login";
         public static final String URL_REGISTER = URL + "api/user/register";
@@ -57,23 +57,21 @@ public class Constants {
         public static final String URL_MY_RATING = URL + "api/memberRankController.do?getRank";//获取我的等级费率
         public static final String URL_MY_RATINGS = URL + "api/memberRankController.do?getRates";//获取当前等级费率用与计算
         public static final String URL_UPDATE_CONDITION = URL + "api/memberRankController.do?queryUpgrade";//获取升级条件
-        public static final String URL_UPDATE_TO_RATE = URL + "api/upgradeOrderController.do?upgrade";//升级到指定接口(就是订单生成接口)
         public static final String URL_JIESUAN = URL + "api/disburseController.do?withdraw";//结算接口
         public static final String URL_BANK_ADD = URL + "api/bankcard/add";//银行卡添加接口
         public static final String URL_BANK_GET = URL + "api/bankcard/get";//银行卡查询接口
         public static final String URL_BANK_DELETE = URL + "api/bankcard/delete";//银行卡删除接口
-        public static final String URL_CDOE_GET = URL + "api/shareController.do?share";//获取分享链接
+        public static final String URL_CDOE_GET = URL + "api/member/invite/get";//获取分享链接
         public static final String URL_AUTH_ADD = URL + "api/certController.do?validate";//实名认证接口
         public static final String URL_GET_INCOME = URL + "api/incomeController.do?getIncomes";//分润明细
         public static final String URL_GET_JIESUAN = URL + "api/disburseController.do?getDisburse";//结算明细
-        public static final String URL_SUB_GET = URL + "api/mySpreadController.do?mySpread";//我的推广接口
+        public static final String URL_SUB_GET = URL + "api/member/myspread/get";//我的推广接口
         public static final String URL_WALLET_GET = URL + "api/balanceController.do?getBalance";//钱包获取接口
         public static final String URL_FEEDBACK_ADD = URL + "api/feedback/submit";//意见反馈
-        public static final String URL_SEARCH_POST = URL + "appAPI.do?api/account/search/post";//搜索接口
         public static final String URL_IMG_UPLOAD = URL + "fileUpload";//图片上传
         public static final String URL_UPDATE_VERSION = URL + "api/version/newest";//版本更新
         public static final String URL_GET_INFORMATION = "api/memberController.do?getInfo";//我的资料获取
-        public static final String URL_GET_MEMBERS = "api/memberNumController.do?memberNum";//获取会员个数
+        public static final String URL_GET_MEMBERS = "api/member/spread/count";//获取会员个数
         public static final String URL_GET_MESSAGE_LIST = "api/message/get";//获取消息列表
         public static final String URL_CHECK_WITHDRAW = "api/disburseController.do?isWithdraw";//查询结算状态
         public static final String URL_UNIONGATEWAYT0ORDER = "api/payController.do?unionPay";//生成银联网关t0订单

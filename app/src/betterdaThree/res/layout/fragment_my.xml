@@ -29,10 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <FrameLayout
-                    android:background="@color/bg_blue"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"></FrameLayout>
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
@@ -48,7 +44,7 @@
 
                     <RelativeLayout
                         android:id="@+id/relative_my_touxiang"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="20dp"
                         >
@@ -57,17 +53,16 @@
                             android:id="@+id/sv_touxiang"
                             android:layout_width="72dp"
                             android:layout_height="72dp"
-                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
 
                             />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_toRightOf="@id/sv_touxiang"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_below="@id/sv_touxiang"
                             android:orientation="vertical">
 
                             <TextView

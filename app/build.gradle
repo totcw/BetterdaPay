@@ -55,6 +55,8 @@ android {
             betterda{
                 applicationId "com.betterda.betterdapay" /*使用不同的包名*/
                 resValue "string","app_name","来逗阵"
+                resValue "string","share_title","来逗阵"/*分享的标题*/
+                resValue "string","share_content","来逗阵注册有礼"/*分享的内容*/
                 manifestPlaceholders = [
                         JUPSH_PERMISSION:"com.betterda.betterdapay", /*清单文件中的包名*/
                         JPUSH_PKGNAME : applicationId,
@@ -67,6 +69,8 @@ android {
             ananpay{
                 applicationId "com.betterda.ananPay" /*使用不同的包名*/
                 resValue "string","app_name","来逗阵2"
+                resValue "string","share_title","来逗阵2"/*分享的标题*/
+                resValue "string","share_content","来逗阵2注册有礼"/*分享的内容*/
                 manifestPlaceholders = [
                         JUPSH_PERMISSION:"com.betterda.ananPay",
                         JPUSH_PKGNAME : applicationId,
@@ -78,7 +82,9 @@ android {
             }
         betterdaThree{
                 applicationId "com.betterda.betterdaThree" /*使用不同的包名*/
-                resValue "string","app_name","来逗阵3"
+                resValue "string","app_name","来逗阵3" /*app的名字*/
+                resValue "string","share_title","来逗阵3"/*分享的标题*/
+                resValue "string","share_content","来逗阵3注册有礼"/*分享的内容*/
                 manifestPlaceholders = [
                         JUPSH_PERMISSION:"com.betterda.betterdaThree",
                         JPUSH_PKGNAME : applicationId,

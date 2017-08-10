@@ -131,7 +131,11 @@
                                     android:textSize="@dimen/textsize_largest_38sp"/>
 
                             </FrameLayout>
-
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/lv_divider"
+                                ></View>
 
                             <FrameLayout
                                 android:id="@+id/iv_shoukuan_four"
@@ -150,7 +154,11 @@
                                     android:textSize="@dimen/textsize_largest_38sp"/>
 
                             </FrameLayout>
-
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/lv_divider"
+                                ></View>
 
                             <FrameLayout
                                 android:id="@+id/iv_shoukuan_seven"
@@ -169,7 +177,11 @@
                                     android:textSize="@dimen/textsize_largest_38sp"/>
 
                             </FrameLayout>
-
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/lv_divider"
+                                ></View>
                             <FrameLayout
                                 android:id="@+id/iv_shoukuan_zero"
                                 android:layout_width="match_parent"
@@ -189,6 +201,12 @@
                             </FrameLayout>
 
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/lv_divider"
+                            ></View>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -213,7 +231,11 @@
                                     android:textSize="@dimen/textsize_largest_38sp"/>
 
                             </FrameLayout>
-
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/lv_divider"
+                                ></View>
 
                             <FrameLayout
                                 android:id="@+id/iv_shoukuan_five"
@@ -232,7 +254,11 @@
                                     android:textSize="@dimen/textsize_largest_38sp"/>
 
                             </FrameLayout>
-
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/lv_divider"
+                                ></View>
                             <FrameLayout
                                 android:id="@+id/iv_shoukuan_eight"
                                 android:layout_width="match_parent"
@@ -250,7 +276,11 @@
                                     android:textSize="@dimen/textsize_largest_38sp"/>
 
                             </FrameLayout>
-
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/lv_divider"
+                                ></View>
 
                             <FrameLayout
                                 android:id="@+id/iv_shoukuan_point"
@@ -271,7 +301,11 @@
                             </FrameLayout>
 
                         </LinearLayout>
-
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/lv_divider"
+                            ></View>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -297,7 +331,11 @@
                                     android:textSize="@dimen/textsize_largest_38sp"/>
 
                             </FrameLayout>
-
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/lv_divider"
+                                ></View>
 
                             <FrameLayout
                                 android:id="@+id/iv_shoukuan_six"
@@ -316,7 +354,11 @@
                                     android:textSize="@dimen/textsize_largest_38sp"/>
 
                             </FrameLayout>
-
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/lv_divider"
+                                ></View>
 
                             <FrameLayout
                                 android:id="@+id/iv_shoukuan_nine"
@@ -335,7 +377,11 @@
                                     android:textSize="@dimen/textsize_largest_38sp"/>
 
                             </FrameLayout>
-
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/lv_divider"
+                                ></View>
 
                             <RelativeLayout
                                 android:id="@+id/relative_shoukuan_qr"

@@ -45,7 +45,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
     private List<TuiGuang> list, tuiGuangList;
     private HeaderAndFooterRecyclerViewAdapter adapter;
     private int page = 1;
-
+    private String start="1";//分页的开始下标
     @Override
     public void initView() {
         setContentView(R.layout.activity_mytuiguang);
@@ -57,56 +57,49 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
         setRecycleview();
         loadpagerLayout.setLoadVisable();
         getData();
-        loadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadpagerLayout.setLoadVisable();
-                page = 1;
-                getData();
-            }
+        loadpagerLayout.setonErrorClickListener(v -> {
+            loadpagerLayout.setLoadVisable();
+            page = 1;
+            start = "1";
+            getData();
         });
     }
 
     private void getData() {
 
-        NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getSub(UtilMethod.getAccout(getmActivity()), page + "", Constants.PAGE_SIZE + "")
-                                .compose(NetWork.handleResult(new BaseCallModel<List<TuiGuang>>()))
-                                .subscribe(new MyObserver<List<TuiGuang>>() {
-                                    @Override
-                                    protected void onSuccess(List<TuiGuang> data, String resultMsg) {
+        NetworkUtils.isNetWork(getmActivity(), loadpagerLayout, () -> mRxManager.add(
+                NetWork.getNetService()
+                        .getSub(UtilMethod.getAccout(getmActivity()),start, Constants.PAGE_SIZE+"",Constants.APPCODE)
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
+                        .subscribe(new MyObserver<List<TuiGuang>>() {
+                            @Override
+                            protected void onSuccess(List<TuiGuang> data, String resultMsg) {
 
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("我的推广:"+data);
-                                        }
-                                        if (data != null) {
-                                            parser(data);
-                                        }
-                                        UtilMethod.judgeData(list, loadpagerLayout);
-                                    }
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("我的推广:"+data);
+                                }
+                                if (data != null) {
+                                    parser(data);
+                                }
+                                UtilMethod.judgeData(list, loadpagerLayout);
+                            }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("我的推广fails:"+resultMsg);
-                                        }
-                                        if (loadpagerLayout != null) {
-                                            loadpagerLayout.setErrorVisable();
-                                        }
-                                    }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("我的推广fails:"+resultMsg);
+                                }
+                                if (loadpagerLayout != null) {
+                                    loadpagerLayout.setErrorVisable();
+                                }
+                            }
 
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        ExitToLogin(resultMsg);
-                                    }
-                                })
-                );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 
     private void parser(List<TuiGuang> data) {
@@ -159,12 +152,10 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
         rvLayout.addOnScrollListener(new EndlessRecyclerOnScrollListener(getmActivity()) {
             @Override
             public void onLoadNextPage(View view) {
-                RecyclerViewStateUtils.next(getmActivity(), rvLayout, new RecyclerViewStateUtils.nextListener() {
-                    @Override
-                    public void load() {
-                        page++;
-                        getData();
-                    }
+                RecyclerViewStateUtils.next(getmActivity(), rvLayout, () -> {
+                    page++;
+                    start = UtilMethod.getStart(page);
+                    getData();
                 });
 
             }

@@ -1,8 +1,11 @@
 package com.betterda.betterdapay.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -11,6 +14,9 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.javabean.ShareInfo;
+import com.betterda.betterdapay.util.Constants;
+import com.betterda.betterdapay.util.ImageTools;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.mylibrary.LoadingPager;
@@ -21,6 +27,8 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,7 +44,25 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
     Button mBtnTuiguang2Share;
     @BindView(R.id.loadpager_tuiguang)
     LoadingPager mLoadingPager;
-    private String url = "http://www.baidu.com";
+
+    @BindView(R.id.iv_fragmeng_share_qrmember)
+    ImageView mIvFragmengShareQrmember;//用户二维码
+    @BindView(R.id.tv_fragmeng_share_qrmember)
+    TextView mTvFragmengShareQrmember; //用户邀请码
+    @BindView(R.id.iv_fragmeng_share_qr)
+    ImageView mIvFragmengShareQr;//代理商二维码
+    @BindView(R.id.linear_fragment_share)
+    LinearLayout mLinearShare; //代理商的内容
+    @BindView(R.id.tv_fragmeng_share_qr)
+    TextView mTvFragmengShareQr; //代理商邀请码
+
+    public final static String AGENTS_CODE = "10";
+    public final static String USER_CODE = "20";
+    public final static String INVITE_CODE = "邀请码:";
+    public final static int  QR_SIZE = 72;
+    private ShareInfo mShareInfoMember; //用户的信息
+    private ShareInfo mShareInfo; //代理商的信息
+    private String url="http://www.baidu.com";
     private ShapeLoadingDialog mDialog;
     @Override
     public void initView() {
@@ -44,13 +70,29 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_tuiguang2);
     }
 
+    @Override
+    public void init() {
+        super.init();
+        mLoadingPager.setonErrorClickListener(v -> {
+            getData();
+        });
+        getData();
+    }
 
-
-    @OnClick(R.id.btn_tuiguang2_share)
+    @OnClick({R.id.btn_fragment_share,R.id.btn_fragment_sharemember})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_tuiguang2_share:
-                getData();
+            case R.id.btn_fragment_share://分享代理商
+                if (mShareInfo != null) {
+                    url = mShareInfo.getUserInviteUrl();
+                }
+                share();
+                break;
+            case R.id.btn_fragment_sharemember://分享会员
+                if (mShareInfoMember != null) {
+                    url = mShareInfoMember.getUserInviteUrl();
+                }
+                share();
                 break;
             case R.id.relative_share_wxfriend:
                 shareToWx(SHARE_MEDIA.WEIXIN);
@@ -71,41 +113,67 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
             mDialog = UtilMethod.createDialog(getmActivity(), "正在加载...");
         }
 
-        NetworkUtils.isNetWork(getmActivity(), null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-                UtilMethod.showDialog(getmActivity(),mDialog);
-                mRxManager.add(
-                        NetWork.getNetService()
-                                .getCode(UtilMethod.getAccout(getmActivity()))
-                                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                .subscribe(new MyObserver<String>() {
-                                    @Override
-                                    protected void onSuccess(String data, String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("分享:"+data);
+        NetworkUtils.isNetWork(getmActivity(), null, () -> {
+            UtilMethod.showDialog(getmActivity(),mDialog);
+
+            mRxManager.add(
+                    NetWork.getNetService()
+                            .getCode(UtilMethod.getAccout(getmActivity()), Constants.APPCODE)
+                            .compose(NetWork.handleResult(new BaseCallModel<>()))
+                            .subscribe(new MyObserver<List<ShareInfo>>() {
+                                @Override
+                                protected void onSuccess(List<ShareInfo> data, String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("分享:"+data);
+                                    }
+                                    if (data != null) {
+                                        int size = data.size();
+                                        for (int i=0;i<size;i++) {
+                                            ShareInfo shareInfo = data.get(i);
+                                            if (shareInfo != null) {
+                                                if (AGENTS_CODE.equals(shareInfo.getUserType())) {
+                                                    mShareInfo = shareInfo;
+                                                } else if (USER_CODE.equals(shareInfo.getUserType())) {
+                                                    mShareInfoMember = shareInfo;
+                                                }
+                                            }
                                         }
-                                        url = data;
-                                        UtilMethod.dissmissDialog(getmActivity(),mDialog);
-                                        share();
+                                    }
+                                    if (mShareInfoMember != null) {
+                                        mTvFragmengShareQrmember.setText(INVITE_CODE+mShareInfoMember.getInviteCode());
+                                        Bitmap bitmap = ImageTools.generateQRCode(mShareInfoMember.getUserInviteUrl(), getmActivity(),QR_SIZE);
+                                        mIvFragmengShareQrmember.setImageBitmap(bitmap);
                                     }
 
-                                    @Override
-                                    public void onFail(String resultMsg) {
-                                        if (BuildConfig.LOG_DEBUG) {
-                                            System.out.println("分享fail:"+resultMsg);
-                                        }
-                                        UtilMethod.dissmissDialog(getmActivity(),mDialog);
+                                    if (mShareInfo != null) {
+                                        mTvFragmengShareQr.setText(INVITE_CODE+mShareInfo.getInviteCode());
+                                        Bitmap bitmap = ImageTools.generateQRCode(mShareInfo.getUserInviteUrl(), getmActivity(),QR_SIZE);
+                                        mIvFragmengShareQr.setImageBitmap(bitmap);
+                                    } else {
+                                        //隐藏代理商
+                                        mLinearShare.setVisibility(View.GONE);
                                     }
 
-                                    @Override
-                                    public void onExit(String resultMsg) {
-                                        UtilMethod.dissmissDialog(getmActivity(), mDialog);
-                                        ExitToLogin(resultMsg);
+                                    mLoadingPager.hide();
+
+                                }
+
+                                @Override
+                                public void onFail(String resultMsg) {
+                                    if (BuildConfig.LOG_DEBUG) {
+                                        System.out.println("分享fail:"+resultMsg);
                                     }
-                                })
-                );
-            }
+                                    showToast(resultMsg);
+                                    mLoadingPager.setErrorVisable();
+
+                                }
+
+                                @Override
+                                public void onExit(String resultMsg) {
+                                    ExitToLogin(resultMsg);
+                                }
+                            })
+            );
         });
     }
 
@@ -136,9 +204,9 @@ public class TuiguangActivity2 extends BaseActivity implements View.OnClickListe
         if (install) {
             UMImage image = new UMImage(getmActivity(), R.mipmap.ic_launcher);//资源文件
             UMWeb web = new UMWeb(url);
-            web.setTitle("来逗阵");//标题
+            web.setTitle(getString(R.string.share_title));//标题
             web.setThumb(image);  //缩略图
-            web.setDescription("注册有礼");//描述
+            web.setDescription(getString(R.string.share_content));//描述
             new ShareAction(getmActivity()).setPlatform(platform)
                     .withMedia(web)
                     .setCallback(new UMShareListener() {

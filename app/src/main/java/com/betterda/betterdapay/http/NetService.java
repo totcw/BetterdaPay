@@ -9,6 +9,7 @@ import com.betterda.betterdapay.javabean.MemberCounts;
 import com.betterda.betterdapay.javabean.Messages;
 import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
+import com.betterda.betterdapay.javabean.ShareInfo;
 import com.betterda.betterdapay.javabean.TransactionRecord;
 import com.betterda.betterdapay.javabean.TuiGuang;
 import com.betterda.betterdapay.javabean.UpdateCondition;
@@ -25,6 +26,7 @@ import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -35,6 +37,14 @@ import rx.Observable;
  * Created by Administrator on 2016/7/29.
  */
 public interface NetService {
+
+    /*使用全路径复写baseUrl，适用于非统一baseUrl的场景
+    @Headers("Cache-Control: public, max-age=3600") //标注缓存的时间,单位秒,一些显示的不常改动的可以设置
+    @GET
+    Call<ResponseBody> v3(@Url String url);
+
+    */
+
     /**
      * 注册
      *
@@ -80,6 +90,7 @@ public interface NetService {
      * @param password
      * @return
      */
+
     @FormUrlEncoded
     @POST(Constants.Url.URL_PWD_UPDATE)
     Observable<BaseCallModel<String>> getPwdUpdate(@Field("account") String account,
@@ -105,10 +116,11 @@ public interface NetService {
 
     /**
      * 扫描收款
+     *
      * @param account
      * @param amount
      * @param body
-     * @param payType  1为支付宝 2为微信
+     * @param payType 1为支付宝 2为微信
      * @return
      */
 
@@ -131,6 +143,7 @@ public interface NetService {
      * @param
      * @return
      */
+    @Headers("Cache-Control: public, max-age=1800")
     @GET(Constants.Url.URL_RATING)
     Observable<BaseCallModel<List<Rating>>> getRating();
 
@@ -142,6 +155,7 @@ public interface NetService {
      * @param
      * @return
      */
+    @Headers("Cache-Control: public, max-age=1800")
     @FormUrlEncoded
     @POST(Constants.Url.URL_MY_RATING)
     Observable<BaseCallModel<Rating>> getRatingForMe(@Field("account") String account);
@@ -153,6 +167,7 @@ public interface NetService {
      * @param
      * @return
      */
+    @Headers("Cache-Control: public, max-age=1800")
     @FormUrlEncoded
     @POST(Constants.Url.URL_MY_RATINGS)
     Observable<BaseCallModel<List<RatingCalculateEntity>>> getRatingForCalculate(@Field("account") String account);
@@ -171,19 +186,6 @@ public interface NetService {
 
 
     /**
-     * 升级到指定接口(现在就用订单生成)
-     *
-     * @param account
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Constants.Url.URL_UPDATE_TO_RATE)
-    Observable<BaseCallModel<String>> getUpdateToRate(@Field("account") String account,
-                                                      @Field("rankId") String rateId
-    );
-
-
-    /**
      * 结算
      *
      * @param account
@@ -193,7 +195,7 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_JIESUAN)
     Observable<BaseCallModel<WithDraw>> getJiesuan(@Field("account") String account,
-                                                 @Field("money") String money
+                                                   @Field("money") String money
     );
 
 
@@ -242,9 +244,11 @@ public interface NetService {
      * @param account
      * @return
      */
+    @Headers("Cache-Control: public, max-age=3600")
     @FormUrlEncoded
     @POST(Constants.Url.URL_CDOE_GET)
-    Observable<BaseCallModel<String>> getCode(@Field("account") String account
+    Observable<BaseCallModel<List<ShareInfo>>> getCode(@Field("account") String account,
+                                                       @Field("appCode") String appCode
 
     );
 
@@ -297,8 +301,9 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_SUB_GET)
     Observable<BaseCallModel<List<TuiGuang>>> getSub(@Field("account") String account,
-                                                     @Field("pageNo") String pageNo,
-                                                     @Field("pageSize") String pageSize
+                                                     @Field("start") String pageNo,
+                                                     @Field("length") String pageSize,
+                                                     @Field("appCode") String appCode
 
     );
 
@@ -341,7 +346,6 @@ public interface NetService {
     );
 
 
-
     /**
      * @author : lyf
      * @创建日期： 2017/6/16
@@ -349,7 +353,8 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_MEMBERS)
-    Observable<BaseCallModel<MemberCounts>> getMemberCounts(@Field("account") String account);
+    Observable<BaseCallModel<MemberCounts>> getMemberCounts(@Field("account") String account,
+                                                            @Field("appCode") String appCode);
 
     /**
      * 图片上传
@@ -400,8 +405,8 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_INCOME)
     Observable<BaseCallModel<List<Income>>> getIncomeList(@Field("account") String account,
-                                                          @Field("pageNo") String pageNo,
-                                                          @Field("pageSize") String pageSize
+                                                          @Field("start") String pageNo,
+                                                          @Field("length") String pageSize
     );
 
     /**
@@ -465,8 +470,8 @@ public interface NetService {
 
     @FormUrlEncoded
     @POST(Constants.Url.URL_ERRORLOG)
-    Observable<BaseCallModel<String>> getErrorlog(@Field("type") String type ,
-                                                                 @Field("content") String content
+    Observable<BaseCallModel<String>> getErrorlog(@Field("type") String type,
+                                                  @Field("content") String content
 
     );
 

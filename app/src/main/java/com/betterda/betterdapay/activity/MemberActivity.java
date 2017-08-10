@@ -1,21 +1,20 @@
 package com.betterda.betterdapay.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.MemberCounts;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
-import com.betterda.betterdapay.view.GradientTextView;
 import com.betterda.betterdapay.view.NormalTopBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -70,44 +69,41 @@ public class MemberActivity extends BaseActivity {
     }
 
     private void getData() {
-        NetworkUtils.isNetWork(this, null, new NetworkUtils.SetDataInterface() {
-            @Override
-            public void getDataApi() {
-              mRxManager.add(
-                      NetWork.getNetService().getMemberCounts(UtilMethod.getAccout(MemberActivity.this))
-                              .compose(NetWork.handleResult(new BaseCallModel<MemberCounts>()))
-                              .subscribe(new MyObserver<MemberCounts>() {
-                                  @Override
-                                  protected void onSuccess(MemberCounts data, String resultMsg) {
+        NetworkUtils.isNetWork(this, null, () -> mRxManager.add(
+                NetWork.getNetService().getMemberCounts(UtilMethod.getAccout(MemberActivity.this), Constants.APPCODE)
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
+                        .subscribe(new MyObserver<MemberCounts>() {
+                            @Override
+                            protected void onSuccess(MemberCounts data, String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println(data);
+                                }
+                                if (data != null) {
+                                    if (gttvMemberCount != null) {
+                                        gttvMemberCount.setText(data.getCount());
+                                    }
+                                    if (tvMemberMy != null) {
+                                        tvMemberMy.setText(data.getMySpreadCount());
+                                    }
+                                    if (tvMemberTwo != null) {
+                                        tvMemberTwo.setText(data.getTwoSpreadCount());
+                                    }
+                                    if (tvMemberThree != null) {
+                                        tvMemberThree.setText(data.getThredSpreadCount());
+                                    }
+                                }
+                            }
 
-                                      if (data != null) {
-                                          if (gttvMemberCount != null) {
-                                              gttvMemberCount.setText(data.getCount());
-                                          }
-                                          if (tvMemberMy != null) {
-                                              tvMemberMy.setText(data.getMySpreadCount());
-                                          }
-                                          if (tvMemberTwo != null) {
-                                              tvMemberTwo.setText(data.getTwoSpreadCount());
-                                          }
-                                          if (tvMemberThree != null) {
-                                              tvMemberThree.setText(data.getThredSpreadCount());
-                                          }
-                                      }
-                                  }
+                            @Override
+                            public void onFail(String resultMsg) {
 
-                                  @Override
-                                  public void onFail(String resultMsg) {
+                            }
 
-                                  }
-
-                                  @Override
-                                  public void onExit(String resultMsg) {
-                                      ExitToLogin(resultMsg);
-                                  }
-                              })
-              );
-            }
-        });
+                            @Override
+                            public void onExit(String resultMsg) {
+                                ExitToLogin(resultMsg);
+                            }
+                        })
+        ));
     }
 }
