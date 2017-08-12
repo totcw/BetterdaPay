@@ -19,6 +19,7 @@ import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.JsActivity;
 import com.betterda.betterdapay.activity.LoginActivity;
+import com.betterda.betterdapay.activity.TransactionRecordActivity;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.BankData;
 import com.betterda.betterdapay.http.NetWork;
@@ -43,6 +44,7 @@ import java.util.List;
  */
 
 public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.Adapter<MyYinHangKaItemAdapter.MainViewHolder> {
+
     public static final String PUB_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKqQ8mG2VN2rRi5pF4drOi9pB2kdIAiO6YR7LQGDWQkP2DkAI19apajGxDt3q1m2kmWdytX5dmI8AhxEgK+Ak+qoaf7qNv/6NRQUesnJ8kB7sACzEG79CNwxeZy0jLP2E0RC69r/vyyqcD5PwkIuaMNc5KIJhapl0pPmsMZ+F85QIDAQAB";
     public static final String APP_ID = "47cb95e8badd4521b3bd17da1516d5db";
     public static final String SERVICE_URL = "http://www.laidouzhen.cn/paycloud-openapi/api/unionpay/app/ctrl/getform/%s/%s";
@@ -124,7 +126,7 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
 
 
     /**
-     * 获取银联手机控件支付的订单号
+     * 获取银联手机控件支付的tn
      */
     public void getDataForUnionMobilePay(final String cardNum) {
         NetworkUtils.isNetWork(mContext, null, () -> {
@@ -132,39 +134,35 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
                 dialog = UtilMethod.createDialog(mContext, "正在加载...");
             }
             UtilMethod.showDialog(mContext, dialog);
+
+
             NetWork.getNetService()
-                    .getOrder(UtilMethod.getAccout(mContext),  money+"", rank, "升级付款",mContext.getString(R.string.appCode))
+                    .getOrder(UtilMethod.getAccout(mContext),  money+"",cardNum,channelId,rank, TransactionRecordActivity.PAYTMENT_PAY, mContext.getString(R.string.appCode))
                     .compose(NetWork.handleResult(new BaseCallModel<>()))
-                    .subscribe(new MyObserver<CreateOrderEntity>() {
+                    .subscribe(new MyObserver<String>() {
                         @Override
-                        protected void onSuccess(CreateOrderEntity data1, String resultMsg) {
+                        protected void onSuccess(String data1, String resultMsg) {
                             if (BuildConfig.LOG_DEBUG) {
                                 System.out.println("手机支付控件:" + data1);
                             }
                             if (data1 != null) {
-                                unionMobilePay(data1,cardNum);
+                                unionMobilePay(data1);
                             } else {
                                 UtilMethod.dissmissDialog(mContext, dialog);
-                                UtilMethod.Toast(mContext,"获取支付订单失败");
+                                UtilMethod.Toast(mContext,"获取tn失败");
                             }
                         }
 
                         @Override
                         public void onFail(String resultMsg) {
-                            UtilMethod.Toast(mContext,"获取支付订单失败");
+                            UtilMethod.Toast(mContext,"获取tn失败");
                             UtilMethod.dissmissDialog(mContext, dialog);
                         }
 
                         @Override
                         public void onExit(String resultMsg) {
-                            UtilMethod.Toast(mContext,resultMsg);
-                            UtilMethod.dissmissDialog(mContext, dialog);
-                            Intent intent = new Intent();
-                            intent.setClass(mContext, LoginActivity.class);
-                            //添加清除任务栈中所有activity的log,如果要启动的activity不在任务栈中了,还需要添加FLAG_ACTIVITY_NEW_TASK,才会关闭任务栈中的其他activity
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            mContext.startActivity(intent);
-                            mContext.finish();
+                            //直接回到登录界面
+                            startToLogin(resultMsg);
                         }
                     });
         });
@@ -173,18 +171,9 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
     /**
      * 银联手机控件支付
      */
-    public void unionMobilePay(CreateOrderEntity data,String cardNum) {
+    public void unionMobilePay(String tn) {
 
-        PayCloudReqModel payCloudReqModel = new PayCloudReqModel();
-        payCloudReqModel.setAppid(APP_ID);
-        payCloudReqModel.setPublicKey(PUB_KEY);
-        payCloudReqModel.setBackUrl(data.getNotifyUrl());
-        payCloudReqModel.setOrderId(data.getOrderId());
-        payCloudReqModel.setTxnTime(data.getTxnTime());
-        payCloudReqModel.setAccNo(cardNum);
-        payCloudReqModel.setTxnAmt(money+"");
-        payCloudReqModel.setServiceUrl(SERVICE_URL);
-        BtPay.getInstance(mContext).requestPay(payCloudReqModel, result -> {
+        BtPay.getInstance(mContext).requestPayAndTn(tn,result -> {
             UtilMethod.dissmissDialog(mContext, dialog);
             BtPayResult payResult = (BtPayResult) result;
             if (payResult != null) {
@@ -199,6 +188,7 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
             }
             BtPay.clear();
         });
+
     }
 
 
@@ -266,20 +256,24 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
 
                             @Override
                             public void onExit(String resultMsg) {
-                                UtilMethod.Toast(mContext,resultMsg);
-                                UtilMethod.dissmissDialog(mContext, dialog);
-                                Intent intent = new Intent();
-                                intent.setClass(mContext, LoginActivity.class);
-                                //添加清除任务栈中所有activity的log,如果要启动的activity不在任务栈中了,还需要添加FLAG_ACTIVITY_NEW_TASK,才会关闭任务栈中的其他activity
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                mContext.startActivity(intent);
-                                mContext.finish();
+                                startToLogin(resultMsg);
                             }
                         });
 
             }
 
         });
+    }
+
+    public void startToLogin(String resultMsg) {
+        UtilMethod.Toast(mContext,resultMsg);
+        UtilMethod.dissmissDialog(mContext, dialog);
+        Intent intent = new Intent();
+        intent.setClass(mContext, LoginActivity.class);
+        //添加清除任务栈中所有activity的log,如果要启动的activity不在任务栈中了,还需要添加FLAG_ACTIVITY_NEW_TASK,才会关闭任务栈中的其他activity
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        mContext.startActivity(intent);
+        mContext.finish();
     }
 
     @Override

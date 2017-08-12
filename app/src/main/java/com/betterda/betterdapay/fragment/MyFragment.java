@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.activity.AlreadAuthAcitity;
+import com.betterda.betterdapay.activity.ChoosePayTypePayActivity;
 import com.betterda.betterdapay.activity.FWalletActivity;
 import com.betterda.betterdapay.activity.InformationActivity;
 import com.betterda.betterdapay.activity.JsActivity;
@@ -117,7 +118,7 @@ public class MyFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_my_rating://我的钱包
-                UtilMethod.startIntent(getmActivity(), FWalletActivity.class);
+                UtilMethod.startIntent(getmActivity(), ChoosePayTypePayActivity.class);
                 break;
             case R.id.relative_my_yinhangka://实名认证
                 if (AUTH_NOT.equals(mIsAuth)) {

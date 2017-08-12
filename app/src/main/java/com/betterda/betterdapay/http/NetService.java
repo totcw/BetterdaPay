@@ -68,7 +68,7 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_SENDMSG)
-    Observable<BaseCallModel<String>> getSendMsg(@Field("phone") String phone,
+    Observable<BaseCallModel<String>> getSendMsg(@Field("account") String phone,
                                                  @Field("appCode") String appCode
                                                  );
 
@@ -102,19 +102,22 @@ public interface NetService {
 
     /**
      * 生成手机控件付款订单
-     *
-     * @param account 帐号
-     * @param amount  金额 单位为分
-     * @param body    商品描述
+     * @param account
+     * @param txnAmt
+     * @param accNo
+     * @param channelId
+     * @param paymentType 10收款  20付款
+     * @param appCode
      * @return
      */
-
     @FormUrlEncoded
     @POST(Constants.Url.URL_ORDER_CREATE)
-    Observable<BaseCallModel<CreateOrderEntity>> getOrder(@Field("account") String account,
-                                                          @Field("amount") String amount,
+    Observable<BaseCallModel<String>> getOrder(@Field("account") String account,
+                                                          @Field("txnAmt") String txnAmt,
+                                                          @Field("accNo") String accNo,
+                                                          @Field("channelId") String channelId,
                                                           @Field("rankId") String rankId,
-                                                          @Field("body") String body,
+                                                          @Field("paymentType") String paymentType,
                                                           @Field("appCode") String appCode);
 
     /**

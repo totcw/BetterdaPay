@@ -149,11 +149,11 @@
     <orderEntry type="library" exported="" name="support-media-compat-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="mylibrary-2.6.2" level="project" />
     <orderEntry type="library" exported="" name="javax.annotation-10.0-b28" level="project" />
+    <orderEntry type="library" exported="" name="btsdk-0.1.0" level="project" />
     <orderEntry type="library" exported="" name="core-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="design-26.0.0-alpha1" level="project" />
     <orderEntry type="library" exported="" name="BaiduLBS_Android" level="project" />
-    <orderEntry type="library" exported="" name="btsdk-0.0.9" level="project" />
     <orderEntry type="library" exported="" name="base-adapter-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="SwipeDelMenuLayout-V1.2.3" level="project" />
     <orderEntry type="library" exported="" name="vlayout-1.0.4" level="project" />
