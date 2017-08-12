@@ -38,6 +38,12 @@ public class TransactionRecordActivity extends BaseActivity {
     public final static String PAYTMENT_PAY = "20";//付款
     public final static String PAYTMENT_GET = "10";//收款
 
+    public final static String PAYSTATUS_NO = "N";//待付款
+    public final static String PAYSTATUS_SUCCESS = "Y";//交易成功
+    public final static String PAYSTATUS_FAIL = "C";//交易失败
+
+
+
 
     @BindView(R.id.topbar_tranastionrecord)
     NormalTopBar mTopbarTranastionrecord;
@@ -88,10 +94,20 @@ public class TransactionRecordActivity extends BaseActivity {
                         holder.setText(R.id.tv_mingxi_money,"-"+ transactionRecord.getTxnAmt() + "元");
                         holder.setTextColor(R.id.tv_mingxi_time, Color.BLACK);
                     }
+
+                    if (PAYSTATUS_SUCCESS.equals(transactionRecord.getPayStatus())) {
+                        holder.setText(R.id.tv_mingxi_status,"交易成功");
+                    } else if (PAYSTATUS_FAIL.equals(transactionRecord.getPayStatus())) {
+                        holder.setText(R.id.tv_mingxi_status,"交易失败");
+                    } else {
+                        holder.setText(R.id.tv_mingxi_status,"待支付");
+                    }
+
+
                     holder.setText(R.id.tv_mingxi_type, transactionRecord.getPlatMerId());
                     holder.setText(R.id.tv_mingxi_order, "订单号:"+transactionRecord.getOrderId());
                     holder.setText(R.id.tv_mingxi_time, transactionRecord.getTxnTime());
-                    holder.setText(R.id.tv_mingxi_status, transactionRecord.getPayStatus());
+
 
                 }
             }

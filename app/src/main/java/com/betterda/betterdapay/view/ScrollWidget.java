@@ -61,6 +61,7 @@ public class ScrollWidget extends LinearLayout {
     private void init(Context context) {
         mSwitcherList = new ArrayList<>();
         mIntegerList = new ArrayList<>();
+        mData = new ArrayList<>();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -1);
 
         for (int i = 0; i < visableItem; i++) {
@@ -108,7 +109,10 @@ public class ScrollWidget extends LinearLayout {
      * @param data
      */
     public void upDate(List<String> data){
-        mData = data;
+        if (mData != null) {
+            mData.clear();
+            mData.addAll(data);
+        }
     }
 
 
@@ -119,7 +123,7 @@ public class ScrollWidget extends LinearLayout {
         if (mRunnable == null) {
             mRunnable = () -> {
                 for (int i = 0; i < visableItem; i++) {
-                    if (mIntegerList != null && mData != null && mSwitcherList != null) {
+                    if (mIntegerList != null && mData != null &&mData.size()>0&& mSwitcherList != null) {
                         Integer integer = mIntegerList.get(i);
                         mIntegerList.set(i, ++integer);
                         TextSwitcher textSwitcher = mSwitcherList.get(i);

@@ -44,7 +44,7 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://192.168.0.104:8080/paycloud-walletapi/";
+        public static final String URL = "http://192.168.0.127:8080/paycloud-walletapi/";
       //  public static final String URL = "http://119.23.227.230:7080/wallet/";
         public static final String URL_LOGIN = URL + "api/user/login";
         public static final String URL_REGISTER = URL + "api/user/register";
@@ -74,6 +74,7 @@ public class Constants {
         public static final String URL_GET_MESSAGE_LIST = "api/message/get";//获取消息列表
         public static final String URL_CHECK_WITHDRAW = "api/wallet/drawStatus/get";//查询结算状态(已经不需要)
         public static final String URL_ERRORLOG = "api/errorLogController.do?errorLog";//错误日志
+        public static final String URL_SUBRUN = "api/wallet/profit/get";//最新分润列表
         public static final String URL_GET_ORDERFORSCAN = "api/channel/oneyardpay/consume";//扫码收款
         public static final String URL_CHANNEL_D0 = "api/channel/getdoform";//银联快捷D0
         public static final String URL_CHANNEL_T1 = "api/channel/getform";//银联快捷T1

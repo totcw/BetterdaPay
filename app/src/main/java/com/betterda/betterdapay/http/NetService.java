@@ -151,7 +151,7 @@ public interface NetService {
      * @param
      * @return
      */
-    @Headers("Cache-Control: public, max-age=0")
+    @Headers("Cache-Control: public, max-age=1800")
     @FormUrlEncoded
     @POST(Constants.Url.URL_RATING)
     Observable<BaseCallModel<List<Rating>>> getRating(@Field("appCode") String appCode);
@@ -164,7 +164,7 @@ public interface NetService {
      * @param
      * @return
      */
-    @Headers("Cache-Control: public, max-age=0")
+    @Headers("Cache-Control: public, max-age=1800")
     @FormUrlEncoded
     @POST(Constants.Url.URL_MY_RATING)
     Observable<BaseCallModel<List<Rating.RateDetail>>> getRatingForMe(@Field("account") String account,
@@ -480,6 +480,20 @@ public interface NetService {
     @POST(Constants.Url.URL_ERRORLOG)
     Observable<BaseCallModel<String>> getErrorlog(@Field("type") String type,
                                                   @Field("content") String content,
+                                                  @Field("appCode") String appCode
+
+    );
+
+    /**
+     * 获取最新分润列表
+     *
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_SUBRUN)
+    Observable<BaseCallModel<List<String>>> getSubRun(@Field("start") String start,
+                                                  @Field("length") String length,
                                                   @Field("appCode") String appCode
 
     );

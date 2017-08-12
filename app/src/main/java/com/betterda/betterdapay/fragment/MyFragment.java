@@ -118,7 +118,7 @@ public class MyFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_my_rating://我的钱包
-                UtilMethod.startIntent(getmActivity(), ChoosePayTypePayActivity.class);
+                UtilMethod.startIntent(getmActivity(), FWalletActivity.class);
                 break;
             case R.id.relative_my_yinhangka://实名认证
                 if (AUTH_NOT.equals(mIsAuth)) {

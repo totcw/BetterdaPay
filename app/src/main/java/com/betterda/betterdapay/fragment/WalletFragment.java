@@ -51,7 +51,8 @@ public class WalletFragment extends BaseFragment {
     ScrollWidget mScrollWidget;
 
 
-    private List<String> mList;
+    private final static String START = "1";
+    private final static String LENGTH = "60";
 
 
     @Override
@@ -62,10 +63,8 @@ public class WalletFragment extends BaseFragment {
     @Override
     public void initData() {
         super.initData();
-
         initRxBus();
-        startScroll();
-
+        mScrollWidget.startRunning();
     }
 
 
@@ -78,12 +77,13 @@ public class WalletFragment extends BaseFragment {
         }
         judgeMessage();
         getData();
-
+        getDataForSubRun();
         //设置5.0以下 兼容着色 tint
 
         ColorStateList list = ContextCompat.getColorStateList(getmActivity(), R.color.tint_color);
         mGttvWalletMoney.setSupportBackgroundTintList(list);
     }
+
 
 
     /**
@@ -148,6 +148,38 @@ public class WalletFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 获取最新的分润列表
+     */
+    private void getDataForSubRun() {
+        NetworkUtils.isNetWork(getmActivity(), null, () -> NetWork.getNetService()
+                .getSubRun(START,LENGTH,getString(R.string.appCode))
+                .compose(NetWork.handleResult(new BaseCallModel<>()))
+                .subscribe(new MyObserver<List<String>>() {
+                    @Override
+                    protected void onSuccess(List<String> data, String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("获取最新分润列表:"+data);
+                        }
+                        mScrollWidget.upDate(data);
+                    }
+
+                    @Override
+                    public void onFail(String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("获取最新分润列表fail:"+resultMsg);
+                        }
+                    }
+
+                    @Override
+                    public void onExit(String resultMsg) {
+                        ExitToLogin(resultMsg);
+                    }
+                }));
+    }
+
+
+
 
     @OnClick({R.id.relative_shouye_message, R.id.gttv_wallet_money, R.id.relative_shouye_bianjie, R.id.relative_wallet_banli, R.id.relative_shouye_check, R.id.relative_shouye_haidai, R.id.relative_shouye_life})
     public void onClick(View view) {
@@ -199,19 +231,7 @@ public class WalletFragment extends BaseFragment {
         }
     }
 
-    /**
-     * 快报开始滑动
-     */
-    private void startScroll() {
-        mList = new ArrayList<>();
-        for ( int i=0;i<30;i++) {
-            mList.add("用户" + i + "获取到" + i + "分润");
-        }
-        mScrollWidget.setData(mList);
-        mScrollWidget.startRunning();
 
-
-    }
 
 
 }
