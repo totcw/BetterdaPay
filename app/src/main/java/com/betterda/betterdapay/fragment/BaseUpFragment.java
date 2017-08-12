@@ -12,6 +12,8 @@ import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.data.RateData;
 import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.interfac.RatingListener;
+import com.betterda.betterdapay.interfacImpl.RatringListnerImpl;
 import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
@@ -47,12 +49,12 @@ public abstract class BaseUpFragment extends BaseFragment {
     protected boolean isVisible; //是否用户可见该fragment,只有通过setcurrentitem才会为true,所以配合isCurrent一起使用
     protected int item; //表示viewpager 当前的item
     protected String rate; //当前等级
-
+    private RatingListener mRatingListener;//显示费率逻辑的接口
 
     @Override
     public void initData() {
         super.initData();
-
+        mRatingListener = new RatringListnerImpl();
     }
 
     /**
@@ -61,13 +63,10 @@ public abstract class BaseUpFragment extends BaseFragment {
     public void regiseterRxBus(String name, final LoadingPager loadingPager) {
         observable = RxBus.get().register(name);
         subscribe = observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Object>() {
-                    @Override
-                    public void call(Object o) {
-                        isCurrent = true;
-                        show(item);
-                        getData(loadingPager);
-                    }
+                .subscribe(o -> {
+                    isCurrent = true;
+                    show(item);
+                    getData(loadingPager);
                 });
     }
 
@@ -95,7 +94,7 @@ public abstract class BaseUpFragment extends BaseFragment {
                     if (((UpFragment) getParentFragment()).tvUpUp != null) {
                         String rank = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.RANK, "1");
                         int rate2 = RateData.getRateForRank(rank);
-
+                        rate2--;
                         if (rate2 < item) {
                             ((UpFragment) getParentFragment()).tvUpUp.setVisibility(View.VISIBLE);
                         } else {
@@ -156,21 +155,8 @@ public abstract class BaseUpFragment extends BaseFragment {
 
             @Override
             public void convert(ViewHolder viewHolder, Rating.RateDetail rating) {
-                if (rating != null) {
-                    viewHolder.setText(R.id.tv_item_up_name, rating.getType());
-                    viewHolder.setText(R.id.tv_item_up_rating, rating.getT1TradeRate());
-                    viewHolder.setText(R.id.tv_item_up_rating2, rating.getT0TradeRate());
-                    viewHolder.setText(R.id.tv_item_up_jiesuan, rating.getT1DrawFee());
-                    viewHolder.setText(R.id.tv_item_up_jiesuan2, rating.getT0DrawFee());
-                    viewHolder.setText(R.id.tv_item_up_edu, rating.getT1TradeQuota() + "," + rating.getT1DayQuota());
-                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getT0TradeQuota() + "," + rating.getT0DayQuota());
-                    if (Constants.ZHIFUBAO.equals(rating.getType())) {
-                        viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.zhifubao);
-                    } else if (Constants.WEIXIN.equals(rating.getType())) {
-                        viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.weixin);
-                    } else {
-                        viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.yinlian);
-                    }
+                if (mRatingListener != null) {
+                    mRatingListener.showRating(viewHolder,rating);
                 }
 
 
@@ -203,6 +189,10 @@ public abstract class BaseUpFragment extends BaseFragment {
                         .subscribe(new MyObserver<List<Rating>>() {
                             @Override
                             protected void onSuccess(List<Rating> data, String resultMsg) {
+
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("等级费率:"+data);
+                                }
 
                                 if (data != null) {
                                     parser(data);
@@ -245,7 +235,7 @@ public abstract class BaseUpFragment extends BaseFragment {
     public void parser(List<Rating> data) {
         if (item >= 0 && item < data.size()) {
             Rating currentRating = data.get(item);
-            rateDetail = currentRating.getRates();
+            rateDetail = currentRating.getWalletMerberChannelRates();
             if (rateDetail != null) {
                 if (list != null) {
                     list.clear();
@@ -259,7 +249,7 @@ public abstract class BaseUpFragment extends BaseFragment {
                 }
             }
 
-            String condition = currentRating.getRemarks();
+            String condition = currentRating.getUpExplain();
             String nextRate = currentRating.getNextRankName();
             String rate = currentRating.getRankName();
             if (TextUtils.isEmpty(condition)) {

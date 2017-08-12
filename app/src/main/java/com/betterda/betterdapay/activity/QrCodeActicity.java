@@ -15,6 +15,7 @@ import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.util.CacheUtils;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.ImageTools;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -55,11 +56,11 @@ public class QrCodeActicity extends BaseActivity {
     @BindView(R.id.loadpager_qrcode)
     LoadingPager mLoadpagerQrcode;
 
-    public final static String WX = "微信";
     public final static String WX_PAYTYPE = "2";
 
-    private String payType;//类型  1为支付宝 2为微信
-    private String body;//商品内容
+    private String walletType ;//类型  1为支付宝 2为微信
+    private String typeName ;//通道名
+    private String channelId ;//通道id
     private int money;
     private String longitude;//经度
     private String latitude ;//经度
@@ -90,8 +91,8 @@ public class QrCodeActicity extends BaseActivity {
     private void getData() {
         mLoadpagerQrcode.setLoadVisable();
         NetworkUtils.isNetWork(getmActivity(), mLoadpagerQrcode, () -> mRxManager.add(
-                NetWork.getNetService().getOrderForScan(UtilMethod.getAccout(getmActivity()),money+"", body, payType
-                        ,longitude,latitude,province,city,area,street,getString(R.string.appCode))
+                NetWork.getNetService().getOrderForScan(UtilMethod.getAccout(getmActivity()),money+"", "", walletType
+                        ,longitude,latitude,province,city,area,street,channelId,getString(R.string.appCode))
                         .compose(NetWork.handleResult(new BaseCallModel<>()))
                         .subscribe(new MyObserver<String>() {
                             @Override
@@ -100,7 +101,7 @@ public class QrCodeActicity extends BaseActivity {
                                     System.out.println("扫码:" + data);
                                 }
                                 Bitmap bitmap ;
-                                if (WX_PAYTYPE.equals(payType)) {
+                                if (WX_PAYTYPE.equals(walletType )) {
                                     bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.wx_qr);
                                 } else {
                                     bitmap=  BitmapFactory.decodeResource(getResources(), R.mipmap.zfb_qr);
@@ -129,21 +130,19 @@ public class QrCodeActicity extends BaseActivity {
 
     private void getIntentData() {
         Intent intent = getIntent();
-        String type = intent.getStringExtra("type");
-
+        String typeCode = intent.getStringExtra("typeCode");
         money = intent.getIntExtra("money", 0);
+        typeName = intent.getStringExtra("typeName");
+        channelId = intent.getStringExtra("channelId");
 
-        mTvQrcodeType.setText(type + "收款");
-        if (WX.equals(type)) {
-            payType = "2";
-            body = type + "收款";
+        mTvQrcodeType.setText(typeName);
+        if (Constants.WEIXIN.equals(typeCode)) {
+            walletType  = "2";
             mIvQrcodeIcon.setImageResource(R.mipmap.wxshoukuan);
         } else {
-            payType = "1";
-            body = type + "收款";
+            walletType  = "1";
             mIvQrcodeIcon.setImageResource(R.mipmap.zfbshoukuan);
         }
-
         longitude= CacheUtils.getString(getmActivity(),"longitude",longitude);
         latitude = CacheUtils.getString(getmActivity(),"latitude",latitude);
         province = CacheUtils.getString(getmActivity(),"province",province);

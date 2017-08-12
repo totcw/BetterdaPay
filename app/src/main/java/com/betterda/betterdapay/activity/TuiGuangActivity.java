@@ -5,15 +5,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
-import com.betterda.betterdapay.callback.MyObserver;
-import com.betterda.betterdapay.http.NetWork;
-import com.betterda.betterdapay.javabean.BaseCallModel;
-import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
-import com.betterda.mylibrary.ShapeLoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,8 +28,8 @@ public class TuiGuangActivity extends BaseActivity {
     TextView mTvTuiguangMoney;
 
 
-    private String payUp, rateId;
-    private String mRate; //升级到的等级
+    private String payUp;
+    private String rankName,rank; //升级到的等级
 
     @Override
     public void initView() {
@@ -49,14 +43,13 @@ public class TuiGuangActivity extends BaseActivity {
         topbarTuiguang.setTitle("升级");
         Intent intent = getIntent();
         if (intent != null) {
-            mRate = intent.getStringExtra("rate");
-            mTvTuiguangRate.setText("升级到" + mRate);
+            rank = intent.getStringExtra("rank");
             payUp = intent.getStringExtra("payUp");
-            rateId = intent.getStringExtra("rateId");
+            rankName = intent.getStringExtra("rankName");
+            mTvTuiguangRate.setText("升级到" + rankName);
             mTvTuiguangMoney.setText(payUp+"元");
         }
 
-        System.out.println("rankId:"+rateId);
     }
 
     @OnClick({R.id.relative_tuiguang_my, R.id.linear_tuiguang_up, R.id.bar_back})
@@ -78,8 +71,8 @@ public class TuiGuangActivity extends BaseActivity {
     private void chosePayChannel() {
         Intent intent = new Intent(getmActivity(), ChoosePayTypePayActivity.class);
         intent.putExtra("money", payUp);
-        intent.putExtra("rateId", rateId);
-        intent.putExtra("rank", mRate);
+        intent.putExtra("rankName", rankName);
+        intent.putExtra("rank", rank);
         startActivity(intent);
         finish();
     }

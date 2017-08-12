@@ -39,8 +39,8 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     private CommonAdapter<RatingCalculateEntity> mAdapter;
     private List<RatingCalculateEntity> mList;
     private String payUp;//支付金额
-    private String rankId;//升级到指定等级
-    private String rank;//升级到的等级
+    private String rankName;//升级到指定等级
+    private String rank;//升级到的等级id
     private int mMoney;//单位为分
 
 
@@ -79,7 +79,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
                         if (holder.getAdapterPosition() == 0) {
                             Intent intent = new Intent(getmActivity(), MyYinHangKa.class);
                             intent.putExtra("rank", rank);
-                            intent.putExtra("rankId", rankId);
+                            intent.putExtra("rankName", rankName);
                             intent.putExtra("isPay", true);
                             intent.putExtra("money", mMoney);
                             intent.putExtra("isClick", true);
@@ -105,7 +105,7 @@ public class ChoosePayTypePayActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent != null) {
             payUp = intent.getStringExtra("money");
-            rankId = intent.getStringExtra("rateId");
+            rankName = intent.getStringExtra("rankName");
             rank = intent.getStringExtra("rank");
         }
         if (TextUtils.isEmpty(payUp)) {

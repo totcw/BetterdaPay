@@ -9,8 +9,8 @@ import java.util.List;
 public class Rating {
     private String rankName;//当前等级
     private String nextRankName;//下一等级
-    private String remarks;//升级条件
-    private List<RateDetail> rates;
+    private String upExplain;//升级条件
+    private List<RateDetail> walletMerberChannelRates;
 
     public String getRankName() {
         return rankName;
@@ -28,72 +28,47 @@ public class Rating {
         this.nextRankName = nextRankName;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getUpExplain() {
+        return upExplain;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setUpExplain(String upExplain) {
+        this.upExplain = upExplain;
     }
 
-    public List<RateDetail> getRates() {
-        return rates;
+    public List<RateDetail> getWalletMerberChannelRates() {
+        return walletMerberChannelRates;
     }
 
-    public void setRates(List<RateDetail> rates) {
-        this.rates = rates;
+    public void setWalletMerberChannelRates(List<RateDetail> walletMerberChannelRates) {
+        this.walletMerberChannelRates = walletMerberChannelRates;
     }
 
     public class RateDetail{
         private String introduce;//通道介绍
-        private String t1TradeRate;//隔天费率
-        private String t0TradeRate;//实时费率
-        private String t1DrawFee;//隔天结算笔数
-        private String t0DrawFee;//实时结算笔数
-        private String t0TradeQuota;//t0单笔额度
-        private String t0DayQuota;//t0当天额度
-        private String t1TradeQuota;//t1当天额度
-        private String t1DayQuota;//t1当天额度
-        private String type;//通道类型
+        private String typeName;//渠道类型名称
+        private String type;//区分 T+0和T+1
+        private String tradeRate;//费率
+        private String tradeQuota;//单笔额度
+        private String dayQuota;//当天额度
+        private String leastTradeRate;//最小手续费
+        private String typeCode;//每条渠道对应的唯一值
+        private String channelId;//通道id
 
-        public String getT0TradeQuota() {
-            return t0TradeQuota;
+        public String getChannelId() {
+            return channelId;
         }
 
-        public void setT0TradeQuota(String t0TradeQuota) {
-            this.t0TradeQuota = t0TradeQuota;
+        public void setChannelId(String channelId) {
+            this.channelId = channelId;
         }
 
-        public String getT0DayQuota() {
-            return t0DayQuota;
+        public String getTypeCode() {
+            return typeCode;
         }
 
-        public void setT0DayQuota(String t0DayQuota) {
-            this.t0DayQuota = t0DayQuota;
-        }
-
-        public String getT1TradeQuota() {
-            return t1TradeQuota;
-        }
-
-        public void setT1TradeQuota(String t1TradeQuota) {
-            this.t1TradeQuota = t1TradeQuota;
-        }
-
-        public String getT1DayQuota() {
-            return t1DayQuota;
-        }
-
-        public void setT1DayQuota(String t1DayQuota) {
-            this.t1DayQuota = t1DayQuota;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
+        public void setTypeCode(String typeCode) {
+            this.typeCode = typeCode;
         }
 
         public String getIntroduce() {
@@ -104,52 +79,66 @@ public class Rating {
             this.introduce = introduce;
         }
 
-        public String getT1TradeRate() {
-            return t1TradeRate;
+        public String getTypeName() {
+            return typeName;
         }
 
-        public void setT1TradeRate(String t1TradeRate) {
-            this.t1TradeRate = t1TradeRate;
+        public void setTypeName(String typeName) {
+            this.typeName = typeName;
         }
 
-        public String getT0TradeRate() {
-            return t0TradeRate;
+        public String getType() {
+            return type;
         }
 
-        public void setT0TradeRate(String t0TradeRate) {
-            this.t0TradeRate = t0TradeRate;
+        public void setType(String type) {
+            this.type = type;
         }
 
-        public String getT1DrawFee() {
-            return t1DrawFee;
+        public String getTradeRate() {
+            return tradeRate;
         }
 
-        public void setT1DrawFee(String t1DrawFee) {
-            this.t1DrawFee = t1DrawFee;
+        public void setTradeRate(String tradeRate) {
+            this.tradeRate = tradeRate;
         }
 
-        public String getT0DrawFee() {
-            return t0DrawFee;
+        public String getTradeQuota() {
+            return tradeQuota;
         }
 
-        public void setT0DrawFee(String t0DrawFee) {
-            this.t0DrawFee = t0DrawFee;
+        public void setTradeQuota(String tradeQuota) {
+            this.tradeQuota = tradeQuota;
         }
 
+        public String getDayQuota() {
+            return dayQuota;
+        }
+
+        public void setDayQuota(String dayQuota) {
+            this.dayQuota = dayQuota;
+        }
+
+        public String getLeastTradeRate() {
+            return leastTradeRate;
+        }
+
+        public void setLeastTradeRate(String leastTradeRate) {
+            this.leastTradeRate = leastTradeRate;
+        }
 
         @Override
         public String toString() {
             return "RateDetail{" +
                     "introduce='" + introduce + '\'' +
-                    ", t1TradeRate='" + t1TradeRate + '\'' +
-                    ", t0TradeRate='" + t0TradeRate + '\'' +
-                    ", t1DrawFee='" + t1DrawFee + '\'' +
-                    ", t0DrawFee='" + t0DrawFee + '\'' +
-                    ", t0TradeQuota='" + t0TradeQuota + '\'' +
-                    ", t0DayQuota='" + t0DayQuota + '\'' +
-                    ", t1TradeQuota='" + t1TradeQuota + '\'' +
-                    ", t1DayQuota='" + t1DayQuota + '\'' +
+                    ", typeName='" + typeName + '\'' +
                     ", type='" + type + '\'' +
+                    ", tradeRate='" + tradeRate + '\'' +
+                    ", tradeQuota='" + tradeQuota + '\'' +
+                    ", dayQuota='" + dayQuota + '\'' +
+                    ", leastTradeRate='" + leastTradeRate + '\'' +
+                    ", typeCode='" + typeCode + '\'' +
+                    ", channelId='" + channelId + '\'' +
                     '}';
         }
     }
@@ -159,8 +148,8 @@ public class Rating {
         return "Rating{" +
                 "rankName='" + rankName + '\'' +
                 ", nextRankName='" + nextRankName + '\'' +
-                ", remarks='" + remarks + '\'' +
-                ", rates=" + rates +
+                ", upExplain='" + upExplain + '\'' +
+                ", walletMerberChannelRates=" + walletMerberChannelRates +
                 '}';
     }
 }

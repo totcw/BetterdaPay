@@ -17,18 +17,21 @@ package com.betterda.betterdapay.javabean;
  */
 
 public class TransactionRecord {
+
+
+
     /**
      *@author : lyf
      *@创建日期： 2017/4/25
      *@功能说明：订单号
      */
-    private String orderNo;
+    private String orderId;
     /**
      *@author : lyf
      *@创建日期： 2017/4/25
      *@功能说明： 金额
      */
-    private String amount;
+    private String txnAmt;
     /**
      *@author : lyf
      *@创建日期： 2017/4/25
@@ -40,28 +43,42 @@ public class TransactionRecord {
      *@创建日期： 2017/4/25
      *@功能说明： 交易状态
      */
-    private String status;
+    private String payStatus;
     /**
      *@author : lyf
      *@创建日期： 2017/6/27
-     *@功能说明： 类型 :1收款，2付款
+     *@功能说明： 类型 :10收款，20付款
      */
-    private String type;
+    private String paymentType;
+    /**
+     *@author : lyf
+     *@创建日期： 2017/6/27
+     *@功能说明： 交易的通道名称, 微信收款
+     */
+    private String platMerId;
 
-    public String getOrderNo() {
-        return orderNo;
+    public String getPlatMerId() {
+        return platMerId;
     }
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
+    public void setPlatMerId(String platMerId) {
+        this.platMerId = platMerId;
     }
 
-    public String getAmount() {
-        return amount;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getTxnAmt() {
+        return txnAmt;
+    }
+
+    public void setTxnAmt(String txnAmt) {
+        this.txnAmt = txnAmt;
     }
 
     public String getTxnTime() {
@@ -72,30 +89,31 @@ public class TransactionRecord {
         this.txnTime = txnTime;
     }
 
-    public String getStatus() {
-        return status;
+    public String getPayStatus() {
+        return payStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPayStatus(String payStatus) {
+        this.payStatus = payStatus;
     }
 
-    public String getType() {
-        return type;
+    public String getPaymentType() {
+        return paymentType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 
     @Override
     public String toString() {
         return "TransactionRecord{" +
-                "orderNo='" + orderNo + '\'' +
-                ", amount='" + amount + '\'' +
+                "orderId='" + orderId + '\'' +
+                ", txnAmt='" + txnAmt + '\'' +
                 ", txnTime='" + txnTime + '\'' +
-                ", status='" + status + '\'' +
-                ", type='" + type + '\'' +
+                ", payStatus='" + payStatus + '\'' +
+                ", paymentType='" + paymentType + '\'' +
+                ", platMerId='" + platMerId + '\'' +
                 '}';
     }
 }

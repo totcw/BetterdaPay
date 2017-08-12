@@ -206,10 +206,10 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
             showToast("手机号不能为空");
             return;
         }
-     /*   if (TextUtils.isEmpty(yzm)) {
+        if (TextUtils.isEmpty(yzm)) {
             showToast("验证码不能为空");
             return;
-        }*/
+        }
         if (TextUtils.isEmpty(pwd)) {
             showToast("密码不能为空");
             return;
@@ -246,7 +246,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
                 showToast("请填写正确的手机号码");
                 return;
             } else {
-              /*  if (!number.equals(verficationNumber)) {
+                if (!number.equals(verficationNumber)) {
                     showToast("验证码错误");
                     return;
                 } else {
@@ -254,7 +254,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
                         showToast("验证码错误");
                         return;
                     }
-                }*/
+                }
             }
 
 
@@ -270,7 +270,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
      */
     private void getVerification() {
         NetworkUtils.isNetWork(this, btnRegister, () -> mRxManager.add(
-                NetWork.getNetService().getSendMsg(number)
+                NetWork.getNetService().getSendMsg(number,getString(R.string.appCode))
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {
                             @Override
@@ -283,6 +283,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
 
                             @Override
                             public void onFail(String resultMsg) {
+                                showToast(resultMsg);
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("验证码fail:"+resultMsg);
                                 }
@@ -290,7 +291,7 @@ public class RegisterActivity extends BaseActivity implements CountDown.onSelect
 
                             @Override
                             public void onExit(String resultMsg) {
-
+                                showToast(resultMsg);
                             }
                         })
         ));

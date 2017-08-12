@@ -15,6 +15,7 @@ import com.betterda.betterdapay.activity.JsActivity;
 import com.betterda.betterdapay.activity.MemberActivity;
 import com.betterda.betterdapay.activity.MyRatingActivity;
 import com.betterda.betterdapay.activity.MyYinHangKa;
+import com.betterda.betterdapay.activity.QrCodeActicity;
 import com.betterda.betterdapay.activity.RealNameAuthActivity;
 import com.betterda.betterdapay.activity.SettingActivity;
 import com.betterda.betterdapay.activity.TransactionRecordActivity;
@@ -53,6 +54,10 @@ public class MyFragment extends BaseFragment {
     RelativeLayout relativeMyShanghu;
     @BindView(R.id.tv_information_auth)
     TextView mTvAuth;
+
+    public final static String AUTH_NOT = "0";
+    public final static String AUTH_ALREAD = "1";
+    public final static String AUTHING = "2";
 
     private String mIsAuth;
     private String rate="1";
@@ -96,11 +101,11 @@ public class MyFragment extends BaseFragment {
         }
 
         mIsAuth = CacheUtils.getString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.AUTH, "0");
-        if ("0".equals(mIsAuth)) {
+        if (AUTH_NOT.equals(mIsAuth)) {
             mTvAuth.setText("未认证");
-        } else if ("1".equals(mIsAuth)) {
+        } else if (AUTH_ALREAD.equals(mIsAuth)) {
             mTvAuth.setText("已认证");
-        }else if ("2".equals(mIsAuth)) {
+        }else if (AUTHING.equals(mIsAuth)) {
             mTvAuth.setText("审核中");
         }
 
@@ -115,11 +120,11 @@ public class MyFragment extends BaseFragment {
                 UtilMethod.startIntent(getmActivity(), FWalletActivity.class);
                 break;
             case R.id.relative_my_yinhangka://实名认证
-                if ("0".equals(mIsAuth)) {
+                if (AUTH_NOT.equals(mIsAuth)) {
                     UtilMethod.startIntent(getmActivity(), RealNameAuthActivity.class);
-                } else if ("1".equals(mIsAuth)) {
+                } else if (AUTH_ALREAD.equals(mIsAuth)) {
                     showToast("已经实名认证");
-                }else if ("2".equals(mIsAuth)) {
+                }else if (AUTHING.equals(mIsAuth)) {
                     showToast("正在审核中");
                 }
                 break;

@@ -1,6 +1,5 @@
 package com.betterda.betterdapay.activity;
 
-import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +8,8 @@ import android.view.View;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.interfac.RatingListener;
+import com.betterda.betterdapay.interfacImpl.RatringListnerImpl;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.util.Constants;
@@ -41,6 +42,8 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     private HeaderAndFooterRecyclerViewAdapter adapter;
     private List<Rating.RateDetail> list;
 
+    private RatingListener mRatingListener;//显示费率逻辑的接口
+
     @Override
     public void initView() {
         super.initView();
@@ -57,9 +60,11 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void init() {
         setTopBar();
+        mRatingListener = new RatringListnerImpl();
         setRecycleview();
         getData();
         loadingPager.setonErrorClickListener(v -> getData());
+
     }
 
     private void getData() {
@@ -68,9 +73,9 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
                 NetWork.getNetService()
                         .getRatingForMe(UtilMethod.getAccout(getmActivity()),getString(R.string.appCode))
                         .compose(NetWork.handleResult(new BaseCallModel<>()))
-                        .subscribe(new MyObserver<Rating>() {
+                        .subscribe(new MyObserver<List<Rating.RateDetail>>() {
                             @Override
-                            protected void onSuccess(Rating data, String resultMsg) {
+                            protected void onSuccess(List<Rating.RateDetail> data, String resultMsg) {
 
                                 if (data != null) {
                                     parser(data);
@@ -93,13 +98,11 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
         ));
     }
 
-    private void parser(Rating data) {
+    private void parser(List<Rating.RateDetail> data) {
 
         if (list != null) {
             list.clear();
-            for (Rating.RateDetail rateDetail : data.getRates()) {
-                list.add(rateDetail);
-            }
+            list.addAll(data);
         }
 
 
@@ -115,23 +118,10 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public void convert(ViewHolder viewHolder, Rating.RateDetail rating) {
-                log(rating.getIntroduce());
-                if (rating != null) {
-                    viewHolder.setText(R.id.tv_item_up_name, rating.getType());
-                    viewHolder.setText(R.id.tv_item_up_rating, rating.getT1TradeRate());
-                    viewHolder.setText(R.id.tv_item_up_rating2, rating.getT0TradeRate());
-                    viewHolder.setText(R.id.tv_item_up_jiesuan, rating.getT1DrawFee());
-                    viewHolder.setText(R.id.tv_item_up_jiesuan2, rating.getT0DrawFee());
-                    viewHolder.setText(R.id.tv_item_up_edu, rating.getT1TradeQuota()+","+rating.getT1DayQuota());
-                    viewHolder.setText(R.id.tv_item_up_edu2, rating.getT0TradeQuota()+","+rating.getT0DayQuota());
-                    if (Constants.ZHIFUBAO.equals(rating.getType())) {
-                        viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.zhifubao);
-                    } else if (Constants.WEIXIN.equals(rating.getType())) {
-                        viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.weixin);
-                    } else {
-                        viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.yinlian);
-                    }
+                if (mRatingListener != null) {
+                    mRatingListener.showRating(viewHolder,rating);
                 }
+
             }
         });
         rvMyrating.addItemDecoration(new RecyclerView.ItemDecoration() {

@@ -42,14 +42,16 @@ public class JsActivity extends BaseActivity {
 
 
     private int money;
-    private String paybankcard;
+    private String paybankcard;//银行卡号
 
     private String longitude;//经度
-    private String latitude ;//经度
-    private String province ;//经度
-    private String city ;//经度
-    private String area ;//经度
-    private String street ;//经度
+    private String latitude ;//纬度
+    private String province ;//省
+    private String city ;//市
+    private String area ;//区
+    private String street ;//街道
+    private String channelId;//通道id
+    private String typeCode;//通道id
 
 
     @Override
@@ -136,24 +138,25 @@ public class JsActivity extends BaseActivity {
         //使用默认缓存
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
-        getWindow().getDecorView().post(new Runnable() {
-            @Override
-            public void run() {
-
-                String url = Constants.Url.URL+"api/payController.do?unionPay";
-                String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&body=银联收款&amount="+money+"&paybankcard="+paybankcard
-                        +"&longitude="+longitude+"&latitude="+latitude+"&province="+province+"&city="+city+"&area="+area+"&street="+street;
-
-                try {
-                    webView.postUrl(url,postDate.getBytes("utf-8"));
-                    // webView.loadUrl(url);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-
-
-
+        getWindow().getDecorView().post(() -> {
+            String url = "http://www.baidu.com";
+            if (Constants.UNION_D0.equals(typeCode)) {
+                url = Constants.Url.URL+Constants.Url.URL_CHANNEL_D0;
+            } else if (Constants.UNION_T1.equals(typeCode)) {
+                url = Constants.Url.URL+Constants.Url.URL_CHANNEL_T1;
             }
+
+            String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&txnAmt="+money+"&accNo="+paybankcard+"&appCode="+getString(R.string.appCode)+"&channelId="+channelId
+                    +"&longitude="+longitude+"&latitude="+latitude+"&province="+province+"&city="+city+"&area="+area+"&street="+street;
+
+            try {
+                webView.postUrl(url,postDate.getBytes("utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+
+
         });
     }
 
@@ -162,6 +165,8 @@ public class JsActivity extends BaseActivity {
         if (intent != null) {
             money = intent.getIntExtra("money",0);
             paybankcard = intent.getStringExtra("paybankcard");
+            channelId = intent.getStringExtra("channelId");
+            typeCode = intent.getStringExtra("typeCode");
         }
         longitude= CacheUtils.getString(getmActivity(),"longitude",longitude);
         latitude = CacheUtils.getString(getmActivity(),"latitude",latitude);

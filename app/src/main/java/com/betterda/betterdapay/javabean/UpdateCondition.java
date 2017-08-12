@@ -18,18 +18,18 @@ package com.betterda.betterdapay.javabean;
 
 public class UpdateCondition {
     private String rankName;//等级名字
-    private String rankId; //等级id
+    private String rank; //等级id
     private String rating; //费率
-    private String remarks;//升级条件
+    private String upExplain;//升级条件
     private String award;//奖励加成
     private String payUp;//金额
 
-    public String getRankId() {
-        return rankId;
+    public String getRank() {
+        return rank;
     }
 
-    public void setRankId(String rankId) {
-        this.rankId = rankId;
+    public void setRank(String rank) {
+        this.rank = rank;
     }
 
     public String getRankName() {
@@ -48,12 +48,12 @@ public class UpdateCondition {
         this.rating = rating;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getUpExplain() {
+        return upExplain;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setUpExplain(String upExplain) {
+        this.upExplain = upExplain;
     }
 
     public String getAward() {
@@ -77,9 +77,9 @@ public class UpdateCondition {
     public String toString() {
         return "UpdateCondition{" +
                 "rankName='" + rankName + '\'' +
-                ", rankId='" + rankId + '\'' +
+                ", rank='" + rank + '\'' +
                 ", rating='" + rating + '\'' +
-                ", remarks='" + remarks + '\'' +
+                ", upExplain='" + upExplain + '\'' +
                 ", award='" + award + '\'' +
                 ", payUp='" + payUp + '\'' +
                 '}';

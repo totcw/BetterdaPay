@@ -68,7 +68,9 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_SENDMSG)
-    Observable<BaseCallModel<String>> getSendMsg(@Field("phone") String phone);
+    Observable<BaseCallModel<String>> getSendMsg(@Field("phone") String phone,
+                                                 @Field("appCode") String appCode
+                                                 );
 
     /**
      * 登录
@@ -128,15 +130,16 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_ORDERFORSCAN)
     Observable<BaseCallModel<String>> getOrderForScan(@Field("account") String account,
-                                                      @Field("amount") String amount,
+                                                      @Field("txnAmt") String amount,
                                                       @Field("body") String body,
-                                                      @Field("payType") String payType,
+                                                      @Field("walletType") String payType,
                                                       @Field("longitude") String longitude,
                                                       @Field("latitude") String latitude,
                                                       @Field("province") String province,
                                                       @Field("city") String city,
                                                       @Field("area") String area,
                                                       @Field("street") String street,
+                                                      @Field("channelId") String channelId,
                                                       @Field("appCode") String appCode);
 
     /**
@@ -145,7 +148,7 @@ public interface NetService {
      * @param
      * @return
      */
-    @Headers("Cache-Control: public, max-age=1800")
+    @Headers("Cache-Control: public, max-age=0")
     @FormUrlEncoded
     @POST(Constants.Url.URL_RATING)
     Observable<BaseCallModel<List<Rating>>> getRating(@Field("appCode") String appCode);
@@ -158,14 +161,14 @@ public interface NetService {
      * @param
      * @return
      */
-    @Headers("Cache-Control: public, max-age=1800")
+    @Headers("Cache-Control: public, max-age=0")
     @FormUrlEncoded
     @POST(Constants.Url.URL_MY_RATING)
-    Observable<BaseCallModel<Rating>> getRatingForMe(@Field("account") String account,
-                                                     @Field("appCode") String appCode);
+    Observable<BaseCallModel<List<Rating.RateDetail>>> getRatingForMe(@Field("account") String account,
+                                                                      @Field("appCode") String appCode);
 
     /**
-     * 获取我的费率用于计算
+     * 获取我的费率用于计算(暂时不用)
      *
      * @param account
      * @param
@@ -376,7 +379,7 @@ public interface NetService {
     @POST(Constants.Url.URL_IMG_UPLOAD)
     Observable<BaseCallModel<String>> getImgUpload(@Part("account") RequestBody account,
                                                    @Part MultipartBody.Part file,
-                                                   @Field("appCode") String appCode
+                                                   @Part("appCode") RequestBody appCode
     );
 
 

@@ -105,12 +105,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 @Override
                 public void convert(ViewHolder viewHolder, Order order) {
                     if (order != null) {
-                        viewHolder.setText(R.id.tv_item_balance_orderNum, order.getOrderNo());
+                        viewHolder.setText(R.id.tv_item_balance_orderNum, order.getOrderId());
                         viewHolder.setText(R.id.tv_item_balance_time, order.getTxnTime());
                         viewHolder.setText(R.id.tv_item_balance_type, order.getChannel());
                         viewHolder.setText(R.id.tv_item_balance_money, order.getDrawCash() + "元");
                         viewHolder.setText(R.id.tv_item_balance_money2, order.getBalance() + "元");
-                        setOrderType(viewHolder, order);
+                        setPaymentType(viewHolder, order);
                     }
                 }
             });
@@ -129,7 +129,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         viewHolder.setText(R.id.tv_item_fenru2_time, fenRun.getIncomeTimeStr());
                         viewHolder.setImageResource(R.id.iv_item_fenrun2, RateData.getRank(fenRun.getRank()));
 
-                        switch (fenRun.getType()) {
+                        switch (fenRun.getPaymentType()) {
                             case Constants.FEN_RUN_HUI:
                                 viewHolder.setText(R.id.tv_item_fenru2_type, Constants.FEN_RUN_HUI2);
                                 break;
@@ -382,8 +382,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
      * @param order
      *//*
 
-    private void setOrderType(ViewHolder viewHolder, Order order) {
-        switch (order.getOrderType()) {
+    private void setPaymentType(ViewHolder viewHolder, Order order) {
+        switch (order.getPaymentType()) {
             case Constants.SHOU_KUAN:
                 viewHolder.setText(R.id.tv_item_balance_ordetype, "收款");
                 break;

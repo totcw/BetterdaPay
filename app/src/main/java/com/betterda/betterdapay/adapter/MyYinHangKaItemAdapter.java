@@ -53,17 +53,21 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
     private List<BankCard> data;
     private boolean isClick,isPay;
     private int money;
-    private String rankId,rank;
+    private String rankName,rank;
+    private String channelId;
+    private String typeCode;
     private ShapeLoadingDialog dialog;
-    public MyYinHangKaItemAdapter(Activity mContext, LayoutHelper mLayoutHelper, List<BankCard> data , boolean isClick,boolean isPay, int money,String rankId,String rank) {
+    public MyYinHangKaItemAdapter(Activity mContext, LayoutHelper mLayoutHelper, List<BankCard> data , boolean isClick,boolean isPay, int money,String rankName,String rank,String channelId,String typeCode) {
         this.mLayoutHelper = mLayoutHelper;
         this.data = data;
         this.mContext = mContext;
         this.isClick = isClick;
         this.money = money;
         this.isPay = isPay;
-        this.rankId = rankId;
+        this.rankName = rankName;
         this.rank = rank;
+        this.channelId = channelId;
+        this.typeCode = typeCode;
     }
 
     @Override
@@ -104,6 +108,8 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
                         Intent intent = new Intent(mContext, JsActivity.class);
                         intent.putExtra("money", money);
                         intent.putExtra("paybankcard", bankCard.getBankCard());
+                        intent.putExtra("channelId", channelId);
+                        intent.putExtra("typeCode", typeCode);
                         mContext.startActivity(intent);
                         mContext.finish();
                     }
@@ -127,7 +133,7 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
             }
             UtilMethod.showDialog(mContext, dialog);
             NetWork.getNetService()
-                    .getOrder(UtilMethod.getAccout(mContext),  money+"", rankId, "升级付款",mContext.getString(R.string.appCode))
+                    .getOrder(UtilMethod.getAccout(mContext),  money+"", rank, "升级付款",mContext.getString(R.string.appCode))
                     .compose(NetWork.handleResult(new BaseCallModel<>()))
                     .subscribe(new MyObserver<CreateOrderEntity>() {
                         @Override

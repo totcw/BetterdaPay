@@ -35,6 +35,10 @@ import butterknife.OnClick;
 
 public class TransactionRecordActivity extends BaseActivity {
 
+    public final static String PAYTMENT_PAY = "20";//付款
+    public final static String PAYTMENT_GET = "10";//收款
+
+
     @BindView(R.id.topbar_tranastionrecord)
     NormalTopBar mTopbarTranastionrecord;
     @BindView(R.id.rv_layout)
@@ -58,14 +62,11 @@ public class TransactionRecordActivity extends BaseActivity {
         super.init();
         mTopbarTranastionrecord.setTitle("交易记录");
         initRecycleview();
-        mLoadpagerLayout.setonErrorClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLoadpagerLayout.setLoadVisable();
-                page = 1;
-                start = page + "";
-                getData();
-            }
+        mLoadpagerLayout.setonErrorClickListener(v -> {
+            mLoadpagerLayout.setLoadVisable();
+            page = 1;
+            start = page + "";
+            getData();
         });
         mLoadpagerLayout.setLoadVisable();
         getData();
@@ -78,18 +79,20 @@ public class TransactionRecordActivity extends BaseActivity {
             @Override
             public void convert(ViewHolder holder, TransactionRecord transactionRecord) {
                 if (transactionRecord != null && holder != null) {
-                    if ("1" .equals(transactionRecord.getType())) {
-                        holder.setText(R.id.tv_mingxi_type, "收款");
-                        holder.setText(R.id.tv_mingxi_time,"+"+ transactionRecord.getAmount() + "元");
+                    if (PAYTMENT_GET .equals(transactionRecord.getPaymentType())) {
+
+                        holder.setText(R.id.tv_mingxi_money,"+"+ transactionRecord.getTxnAmt() + "元");
                         holder.setTextColor(R.id.tv_mingxi_time, Color.RED);
-                    } else if ("2".equals(transactionRecord.getType())) {
-                        holder.setText(R.id.tv_mingxi_type, "付款");
-                        holder.setText(R.id.tv_mingxi_time,"-"+ transactionRecord.getAmount() + "元");
+                    } else if (PAYTMENT_PAY.equals(transactionRecord.getPaymentType())) {
+
+                        holder.setText(R.id.tv_mingxi_money,"-"+ transactionRecord.getTxnAmt() + "元");
                         holder.setTextColor(R.id.tv_mingxi_time, Color.BLACK);
                     }
-                    //TODO 显示订单号
-                    holder.setText(R.id.tv_mingxi_money, transactionRecord.getTxnTime());
-                    holder.setText(R.id.tv_mingxi_money2, transactionRecord.getStatus());
+                    holder.setText(R.id.tv_mingxi_type, transactionRecord.getPlatMerId());
+                    holder.setText(R.id.tv_mingxi_order, "订单号:"+transactionRecord.getOrderId());
+                    holder.setText(R.id.tv_mingxi_time, transactionRecord.getTxnTime());
+                    holder.setText(R.id.tv_mingxi_status, transactionRecord.getPayStatus());
+
                 }
             }
 

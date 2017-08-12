@@ -46,7 +46,9 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     private int money;
     private boolean isClick;
     private boolean isPay;//是否是付款
-    private String rankId,rank;//升级的id
+    private String rankName,rank;//升级的名称和id
+    private String channelId;//通道id
+    private String typeCode;//通道code
 
     @Override
     public void initView() {
@@ -69,8 +71,10 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
     private void getIntentData() {
         Intent intent = getIntent();
         money= intent.getIntExtra("money", 0);
-        rankId = intent.getStringExtra("rankId");
+        rankName = intent.getStringExtra("rankName");
         rank = intent.getStringExtra("rank");
+        channelId = intent.getStringExtra("channelId");
+        typeCode = intent.getStringExtra("typeCode");
         isClick = intent.getBooleanExtra("isClick", false);
         isPay = intent.getBooleanExtra("isPay", false);
     }
@@ -143,7 +147,7 @@ public class MyYinHangKa extends BaseActivity implements View.OnClickListener {
                 outRect.set(padding,padding2,padding,padding2);
             }
         });
-        mItemAdapter = new MyYinHangKaItemAdapter<BankCard>(getmActivity(),new LinearLayoutHelper(),list,isClick,isPay,money,rankId,rank);
+        mItemAdapter = new MyYinHangKaItemAdapter<BankCard>(getmActivity(),new LinearLayoutHelper(),list,isClick,isPay,money,rankName,rank,channelId,typeCode);
         delegateAdapter.addAdapter(mItemAdapter);
 
         delegateAdapter.addAdapter(new MyYinHangKaAddAdapter(getmActivity(),new LinearLayoutHelper(),1));

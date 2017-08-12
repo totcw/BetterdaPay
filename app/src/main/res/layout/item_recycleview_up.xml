@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/shape_bottom_top_line"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/shape_bottom_top_line"
+              android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,62 +16,57 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="15dp">
+            >
 
             <ImageView
                 android:id="@+id/iv_item_up"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                 />
+                />
 
             <TextView
-                android:id="@+id/tv_item_up_name"
+                android:id="@+id/tv_item_up_typename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="10dp"
                 android:text=""
                 android:textColor="@color/shouye_renmen_tv"
-                android:textSize="13sp" />
+                android:textSize="13sp"/>
 
         </LinearLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/lv_divider"></View>
 
         <LinearLayout
+            android:minHeight="48dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2.5">
+            android:layout_weight="2.5"
+            android:orientation="vertical">
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_item_up_name"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="T+0实时到账"
+                android:textColor="@color/shouye_renmen_tv"
+                android:textSize="12sp"/>
 
             <LinearLayout
-
-                android:layout_width="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="T+1隔天到账"
-                    android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/lv_divider"></View>
+                android:orientation="horizontal"
+                >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -80,139 +75,82 @@
                         android:layout_marginTop="10dp"
                         android:text="费率"
                         android:textColor="@color/shouye_renmen_tv"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <TextView
-                        android:layout_marginRight="5dp"
                         android:id="@+id/tv_item_up_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
                         android:text="0.50%"
                         android:textColor="@color/shouye_renmen_tv"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
+
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingRight="5dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/withdraw"
-                        android:textColor="@color/shouye_renmen_tv"
-                        android:textSize="12sp" />
+                        android:layout_marginLeft="10dp">
 
-                    <TextView
-                        android:layout_marginRight="5dp"
-                        android:id="@+id/tv_item_up_jiesuan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="1.00/笔"
-                        android:textColor="@color/shouye_renmen_tv"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/withdraw"
+                            android:textColor="@color/shouye_renmen_tv"
+                            android:textSize="12sp"/>
+
+
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp"
-                        android:text="额度"
-                        android:textColor="@color/shouye_renmen_tv"
-                        android:textSize="12sp" />
-
-                    <TextView
-
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:id="@+id/tv_item_up_edu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="单笔2万元"
-                        android:textColor="@color/shouye_renmen_tv"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
 
             </LinearLayout>
 
             <LinearLayout
 
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:text="T+0实时到账"
+                    android:text="额度"
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/lv_divider"></View>
-
+                    android:textSize="12sp"/>
 
                 <TextView
-                    android:id="@+id/tv_item_up_rating2"
+                    android:id="@+id/tv_item_up_edu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="0.50%"
-                    android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="12sp" />
-
-
-                <TextView
-                    android:id="@+id/tv_item_up_jiesuan2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="1.00/笔"
-                    android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="12sp" />
-
-
-                <TextView
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:id="@+id/tv_item_up_edu2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="单笔2万元"
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="12sp" />
-
+                    android:textSize="12sp"/>
 
             </LinearLayout>
-
 
         </LinearLayout>
     </LinearLayout>

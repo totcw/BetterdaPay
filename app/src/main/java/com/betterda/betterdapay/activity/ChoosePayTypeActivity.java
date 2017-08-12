@@ -13,9 +13,13 @@ import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
+import com.betterda.betterdapay.interfac.ChoosePayTypeListener;
+import com.betterda.betterdapay.interfacImpl.ChoosePayTypeListenerImpl;
 import com.betterda.betterdapay.javabean.BaseCallModel;
+import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
 import com.betterda.betterdapay.util.CacheUtils;
+import com.betterda.betterdapay.util.Constants;
 import com.betterda.betterdapay.util.LocationUtil;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
@@ -48,17 +52,18 @@ public class ChoosePayTypeActivity extends BaseActivity {
     RecyclerView mRecyclerView;
     @BindView(R.id.loadpager_choosepaytype)
     LoadingPager mLoadingPager;
-    private CommonAdapter<RatingCalculateEntity> mAdapter;
+    private CommonAdapter<Rating.RateDetail> mAdapter;
 
-    private List<RatingCalculateEntity> mList;
+    private List<Rating.RateDetail> mList;
     private String money;//支付金额
-    private String channel;//通道类型
     private String longitude;//经度
     private String latitude ;//
     private String province ;//
     private String city ;//
     private String area ;//
     private String street ;//
+
+    private ChoosePayTypeListener mChoosePayTypeListener;
 
     @Override
     public void initView() {
@@ -73,7 +78,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
         getInitData();
         topbarChose.setTitle("选择支付通道");
         tvItemBalanceMoney.setText(money + "元");
-
+        mChoosePayTypeListener = new ChoosePayTypeListenerImpl();
         initRecycleView();
 
         mLoadingPager.setonErrorClickListener(v -> {
@@ -100,44 +105,18 @@ public class ChoosePayTypeActivity extends BaseActivity {
             CacheUtils.putString(getmActivity(),"area",area);
             CacheUtils.putString(getmActivity(),"street",street);
 
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    getDataForRate();
-                }
-            });
+            runOnUiThread(() -> getDataForRate());
         });
 
     }
 
     private void initRecycleView() {
         mList = new ArrayList<>();
-        mAdapter = new CommonAdapter<RatingCalculateEntity>(this, R.layout.rv_item_choosepaytype, mList) {
+        mAdapter = new CommonAdapter<Rating.RateDetail>(this, R.layout.rv_item_choosepaytype, mList) {
             @Override
-            public void convert(ViewHolder holder, final RatingCalculateEntity ratingCalculateEntity) {
-                if (holder != null && ratingCalculateEntity != null) {
-                    holder.setText(R.id.tv_item_choosepaytype, "单笔额度:" + ratingCalculateEntity.getT0TradeQuota() + "元" +
-                            "当天额度:" + ratingCalculateEntity.getT0DayQuota() + "最低手续费:" + ratingCalculateEntity.getT0LeastTradeRate() + "元");
-                    channel = "银联";
-                    if ("UnionPay".equals(ratingCalculateEntity.getPayWay())) {
-                        channel = "银联";
-                        holder.setImageResource(R.id.iv_my_information, R.mipmap.yinlian);
-                    } else if ("WeChat".equals(ratingCalculateEntity.getPayWay())) {
-                        channel = "微信";
-                        holder.setImageResource(R.id.iv_my_information, R.mipmap.weixin);
-                    } else if ("AliPay".equals(ratingCalculateEntity.getPayWay())) {
-                        channel = "支付宝";
-                        holder.setImageResource(R.id.iv_my_information, R.mipmap.zhifubao);
-                    }
-                    holder.setText(R.id.tv_item_choosepaytype_type, channel);
-
-                    holder.setOnClickListener(R.id.relative_choose_zhifubao, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            toActivity(ratingCalculateEntity.getPayWay(), ratingCalculateEntity.getT0TradeQuota());
-                        }
-                    });
+            public void convert(ViewHolder holder, final Rating.RateDetail ratingCalculateEntity) {
+                if (mChoosePayTypeListener != null) {
+                    mChoosePayTypeListener.showRating(holder,ratingCalculateEntity,money,getmActivity());
                 }
             }
         };
@@ -175,11 +154,11 @@ public class ChoosePayTypeActivity extends BaseActivity {
 
         NetworkUtils.isNetWork(getmActivity(), mLoadingPager, () -> mRxManager.add(
                 NetWork.getNetService()
-                        .getRatingForCalculate(UtilMethod.getAccout(getmActivity()),getString(R.string.appCode))
-                        .compose(NetWork.handleResult(new BaseCallModel<List<RatingCalculateEntity>>()))
-                        .subscribe(new MyObserver<List<RatingCalculateEntity>>() {
+                        .getRatingForMe(UtilMethod.getAccout(getmActivity()),getString(R.string.appCode))
+                        .compose(NetWork.handleResult(new BaseCallModel<List<Rating.RateDetail>>()))
+                        .subscribe(new MyObserver<List<Rating.RateDetail>>() {
                             @Override
-                            protected void onSuccess(List<RatingCalculateEntity> data, String resultMsg) {
+                            protected void onSuccess(List<Rating.RateDetail> data, String resultMsg) {
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("收款:" + data);
                                 }
@@ -209,7 +188,7 @@ public class ChoosePayTypeActivity extends BaseActivity {
         ));
     }
 
-    private void parserData(List<RatingCalculateEntity> data) {
+    private void parserData(List<Rating.RateDetail> data) {
         if (mList != null) {
             mList.addAll(data);
         }
@@ -219,42 +198,6 @@ public class ChoosePayTypeActivity extends BaseActivity {
     }
 
 
-    private void toActivity(String payway, String tradeQuota) {
-
-        try {
-            Float payUp = Float.valueOf(this.money);
-            Float trade = Float.valueOf(tradeQuota);
-            int money = (int) (payUp * 100);
-            if (payUp <= trade) {
-                if ("UnionPay".equals(payway)) {
-                    Intent intent = new Intent(getmActivity(), MyYinHangKa.class);
-                    intent.putExtra("isClick", true);
-                    intent.putExtra("money", money);
-                    startActivity(intent);
-                    finish();
-                } else if ("WeChat".equals(payway)) {
-                    Intent intent = new Intent(getmActivity(), QrCodeActicity.class);
-                    intent.putExtra("type", "微信");
-                    intent.putExtra("money", money);
-                    startActivity(intent);
-                    finish();
-                } else if ("AliPay".equals(payway)) {
-                    Intent intent = new Intent(getmActivity(), QrCodeActicity.class);
-                    intent.putExtra("type", "支付宝");
-                    intent.putExtra("money", money);
-                    startActivity(intent);
-                    finish();
-                }
-
-            } else {
-                showToast("超过单笔额度");
-            }
-
-        } catch (Exception e) {
-
-        }
-
-    }
 
 
 }

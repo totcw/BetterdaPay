@@ -15,11 +15,18 @@ import java.util.Map;
 public class RateData {
     public  static Map<String,Integer> rateMap;
     public  static Map<String,Integer> rateMap2;
+
     public final static String UP_YUANGONG = "1";
     public final static String UP_DIANZHANG = "2";
     public final static String UP_JINGLI= "3";
     public final static String UP_ZONGJINGLI = "4";
     public final static String UP_BOSS = "5";
+
+    public final static String UP_YUANGONG_NAME = "员工";
+    public final static String UP_DIANZHANG_NAME = "店长";
+    public final static String UP_JINGLI_NAME= "经理";
+    public final static String UP_ZONGJINGLI_NAME = "总经理";
+    public final static String UP_BOSS_NAME = "老板";
 
 
 

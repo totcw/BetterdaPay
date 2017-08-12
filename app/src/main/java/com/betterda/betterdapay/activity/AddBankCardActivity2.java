@@ -209,7 +209,9 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
                                     if (BuildConfig.LOG_DEBUG) {
                                         System.out.println("实名认证:"+data);
                                     }
+
                                     UtilMethod.dissmissDialog(getmActivity(), dialog);
+                                    UtilMethod.Toast(getmActivity(),resultMsg);
                                     //修改认证状态
                                     CacheUtils.putString(getmActivity(), UtilMethod.getAccout(getmActivity()) + Constants.Cache.AUTH, "1");
                                     UtilMethod.startIntent(getmActivity(), HomeActivity.class);
@@ -348,7 +350,6 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
             return;
         }
         // 防止内存溢出,压缩图片
-       // Bitmap pic = ImageTools.scacleToBitmap(Constants.PHOTOPATHFORCROP, this);
         Luban.with(this)
                 .load(file)                     //传人要压缩的图片
                 .setCompressListener(new OnCompressListener() { //设置回调
@@ -442,21 +443,22 @@ public class AddBankCardActivity2 extends BaseActivity implements View.OnClickLi
 
         //封装普通的string字段
         RequestBody account = RequestBody.create(MediaType.parse("text/plain"), UtilMethod.getAccout(getmActivity()));
+        RequestBody appCode = RequestBody.create(MediaType.parse("text/plain"), getString(R.string.appCode));
         //封装文件
-        // RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATH, name + ".png"));
         RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(Constants.PHOTOPATHFORCROP));
-        //第一个参数是key,第二是文件名,如果没有文件名不会被当成文件
+        //第一个参数是key要与后台一致,第二是文件名,如果没有文件名不会被当成文件
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("images", name + ".png", file);
         mRxManager.add(
                 NetWork.getNetService()
-                        .getImgUpload(account, filePart,getString(R.string.appCode))
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                        .getImgUpload(account, filePart,appCode)
+                        .compose(NetWork.handleResult(new BaseCallModel<>()))
                         .subscribe(new MyObserver<String>() {
                             @Override
                             protected void onSuccess(String data, String resultMsg) {
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("图片上传:" + data);
                                 }
+                                UtilMethod.Toast(getmActivity(),resultMsg);
                                 switch (isLogo) {
                                     case 0:
                                         url_identity = data;

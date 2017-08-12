@@ -74,7 +74,6 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
     private String province;//开户地址
     private String city;//开户地址
     private String bankNo;//联行号
-    private String cardType = "储蓄卡";//银行卡类型
     String appId = "40289edd58f0d7c40158f0d7c4c50000";
     String appCode = "40289edd58f0d7fe0158f0d7fe000000";
     String PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNN6pMibqG6iZI7+XFzkZZUPPRis8vcLW+mHePfLIeX4/sDjFgGnXs9XueccDcIxUWZBTzffOTfRQALKxNPR7fnPWKjbdyCsgHLfMc6uIgX5GXSFpgNBmhVmhaYAAK5aumXDEscOoD5svdv+14RQA1ZuzuMAyoeWT+uKsgJuUWKQIDAQAB";
@@ -175,7 +174,7 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
     public void changeToUpload() {
 
 
-            if (TextUtils.isEmpty(realName)) {
+          /*  if (TextUtils.isEmpty(realName)) {
                 showToast("真实姓名不能为空");
                 return;
             }
@@ -215,68 +214,11 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 next();
             } else {
                 showToast(idCardValidate);
-            }
+            }*/
 
-
+         next();
     }
 
-    /**
-     * 四要素验证
-     */
-    private void authService() {
-
-
-        Map<String, String> param = new HashMap<String, String>();
-        param.put("appId", appId);
-        param.put("appCode", appCode);
-        param.put("realname", realName);
-        param.put("idcard", identityCard);
-        param.put("bankcard", cardNum);
-        param.put("mobile", number);
-        String jsonString = GsonTools.getJsonString(param);
-
-        String data = "";
-        try {
-            byte[] encodeData = KeyGenerator.encryptByPublicKey(jsonString.getBytes("utf-8"), PUBLIC_KEY);
-            data = Base64Util.encode(encodeData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        OkHttpClient client = new OkHttpClient.Builder()
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(client)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl("http://www.meichebang.com.cn/EffersonPay/")
-                .build();
-        Api api = retrofit.create(Api.class);
-        api.getAuth(data, appId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            System.out.println("res:" + responseBody.string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-    }
 
     /**
      * 下一步

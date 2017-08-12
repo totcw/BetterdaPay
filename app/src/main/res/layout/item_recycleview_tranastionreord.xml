@@ -22,8 +22,8 @@
             android:textSize="14sp" />
 
         <TextView
-            android:text="来源"
-            android:id="@+id/tv_mingxi_time"
+            android:text="金额"
+            android:id="@+id/tv_mingxi_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/shouye_renmen_tv"
@@ -37,16 +37,16 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="来源"
-            android:id="@+id/tv_mingxi_money"
+            android:text="时间"
+            android:id="@+id/tv_mingxi_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/shouye_renmen_tv"
             android:textSize="12sp" />
 
         <TextView
-            android:text="来源"
-            android:id="@+id/tv_mingxi_money2"
+            android:text="交易状态"
+            android:id="@+id/tv_mingxi_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
