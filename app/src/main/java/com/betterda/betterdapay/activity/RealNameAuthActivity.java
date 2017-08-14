@@ -173,8 +173,7 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
 
     public void changeToUpload() {
 
-
-          /*  if (TextUtils.isEmpty(realName)) {
+            if (TextUtils.isEmpty(realName)) {
                 showToast("真实姓名不能为空");
                 return;
             }
@@ -214,9 +213,8 @@ public class RealNameAuthActivity extends BaseActivity implements View.OnClickLi
                 next();
             } else {
                 showToast(idCardValidate);
-            }*/
+            }
 
-         next();
     }
 
 

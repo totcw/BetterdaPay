@@ -30,7 +30,7 @@ public class RatringListnerImpl implements RatingListener{
             viewHolder.setText(R.id.tv_item_up_name, rating.getType());
             viewHolder.setText(R.id.tv_item_up_rating, rating.getTradeRate());
             viewHolder.setText(R.id.tv_item_up_edu, "单笔额度:" + rating.getTradeQuota() + "元" +
-                    ",当天额度:" + rating.getDayQuota());
+                    ",当天额度:" + rating.getDayQuota() + "元");
             if (Constants.ZHIFUBAO.equals(rating.getTypeCode())) {
                 viewHolder.setImageResource(R.id.iv_item_up, R.mipmap.zhifubao);
             } else if (Constants.WEIXIN.equals(rating.getTypeCode())) {

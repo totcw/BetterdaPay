@@ -236,7 +236,7 @@
             android:background="@null"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="请输入邀请人手机号码"
+            android:hint="请输入推荐人邀请码"
             style="@style/editStyle"
             />
         </android.support.design.widget.TextInputLayout>
