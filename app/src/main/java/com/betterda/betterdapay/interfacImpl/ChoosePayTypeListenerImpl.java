@@ -65,7 +65,8 @@ public class ChoosePayTypeListenerImpl implements ChoosePayTypeListener {
             Float trade = Float.valueOf(tradeQuota);
             int money2 = (int) (payUp * 100);
             if (payUp <= trade) {
-                if (Constants.UNION_D0.equals(typeCode)) {
+                if (Constants.UNION_D0.equals(typeCode)||Constants.UNION_T1.equals(typeCode)
+                        ||Constants.UNION_CONTROL_D0.equals(typeCode)||Constants.UNION_CONTROL_T1.equals(typeCode)) {
                     Intent intent = new Intent(context, MyYinHangKa.class);
                     intent.putExtra("isClick", true);
                     intent.putExtra("typeCode", typeCode);
@@ -73,22 +74,16 @@ public class ChoosePayTypeListenerImpl implements ChoosePayTypeListener {
                     intent.putExtra("channelId", channelId);
                     context.startActivity(intent);
                     context.finish();
-                } else if (Constants.UNION_D0.equals(typeCode)) {
-                    Intent intent = new Intent(context, MyYinHangKa.class);
-                    intent.putExtra("isClick", true);
-                    intent.putExtra("typeCode", typeCode);
-                    intent.putExtra("money", money2);
-                    intent.putExtra("channelId", channelId);
-                    context.startActivity(intent);
-                    context.finish();
-                } else  {
+                } else if (Constants.ZHIFUBAO.equals(typeCode) || Constants.WEIXIN.equals(typeCode)) {
                     Intent intent = new Intent(context, QrCodeActicity.class);
                     intent.putExtra("typeCode", typeCode);
                     intent.putExtra("typeName", typeName);
                     intent.putExtra("money", money2);
                     intent.putExtra("channelId", channelId);
-                    context. startActivity(intent);
+                    context.startActivity(intent);
                     context.finish();
+                } else {
+                    UtilMethod.Toast(context,"交易通道出错");
                 }
 
             } else {

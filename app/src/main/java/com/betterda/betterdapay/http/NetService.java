@@ -164,24 +164,10 @@ public interface NetService {
      * @param
      * @return
      */
-    @Headers("Cache-Control: public, max-age=1800")
     @FormUrlEncoded
     @POST(Constants.Url.URL_MY_RATING)
     Observable<BaseCallModel<List<Rating.RateDetail>>> getRatingForMe(@Field("account") String account,
                                                                       @Field("appCode") String appCode);
-
-    /**
-     * 获取我的费率用于计算(暂时不用)
-     *
-     * @param account
-     * @param
-     * @return
-     */
-    @Headers("Cache-Control: public, max-age=1800")
-    @FormUrlEncoded
-    @POST(Constants.Url.URL_MY_RATINGS)
-    Observable<BaseCallModel<List<RatingCalculateEntity>>> getRatingForCalculate(@Field("account") String account,
-                                                                                 @Field("appCode") String appCode);
 
 
     /**

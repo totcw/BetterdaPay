@@ -32,6 +32,8 @@ public class ShouKuanFragment extends BaseFragment {
     @BindView(R.id.et_shoukuan_money)
     AppCompatEditText mAppCompatEditText;
 
+    private static final int minAmt =0 ; //收款的最小金额
+
     private StringBuilder sb;
 
     @Override
@@ -99,9 +101,9 @@ public class ShouKuanFragment extends BaseFragment {
                 deleteOne();
                 break;
             case R.id.btn_shoukuan://收款
-              /*  if (UtilMethod.showNotice(getmActivity())) {
-                }*/
+                if (UtilMethod.showNotice(getmActivity())) {
                     pay();
+                }
                 break;
         }
     }
@@ -117,8 +119,8 @@ public class ShouKuanFragment extends BaseFragment {
 
         try {
             float sum = Float.valueOf(sb.toString());
-            if (sum < 10) {
-                showToast("收款金额必须大于10元");
+            if (sum < minAmt) {
+                showToast("收款金额必须大于"+minAmt+"元");
             } else  {
                 UtilMethod.startIntent(getmActivity(), ChoosePayTypeActivity.class, "money", sb.toString());
             }

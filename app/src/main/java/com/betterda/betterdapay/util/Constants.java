@@ -23,6 +23,8 @@ public class Constants {
     public final static String WEIXIN = "86";//微信的code值
     public final static String UNION_T1 = "87";//快捷T+1的code值
     public final static String UNION_D0 = "88";//快捷D+0的code值
+    public final static String UNION_CONTROL_T1 = "89";//快捷控件T1的code值
+    public final static String UNION_CONTROL_D0 = "90";//快捷控件D0的code值
 
     public final static String WITHDRAW = "提现";
     public final static String NUMBER_REGULAR = "^1(3[0-9]|4[0-9]|5[0-9]|7[0-9]|8[0-9])\\d{8}$";//判断手机的正则
@@ -44,7 +46,7 @@ public class Constants {
 
 
     public static class Url {
-        public static final String URL = "http://120.42.4.157:8999/paycloud-walletapi/";
+        public static final String URL = "http://192.168.0.104:8080/paycloud-walletapi/";
       //  public static final String URL = "http://119.23.227.230:7080/wallet/";
         public static final String URL_LOGIN = URL + "api/user/login";
         public static final String URL_REGISTER = URL + "api/user/register";
@@ -54,7 +56,6 @@ public class Constants {
         public static final String URL_ORDER_GET = URL + "api/order/get";//账单获取
         public static final String URL_RATING = URL + "api/rate/list/get";//获取各等级费率
         public static final String URL_MY_RATING = URL + "api/rate/my/get";//获取我的等级费率
-        public static final String URL_MY_RATINGS = URL + "api/rate/my/get";//获取当前等级费率用与计算(已经不需要)
         public static final String URL_UPDATE_CONDITION = URL + "api/rate/rank/list/get";//获取升级条件
         public static final String URL_JIESUAN = URL + "api/wallet/draw";//结算接口
         public static final String URL_BANK_ADD = URL + "api/bankcard/add";//银行卡添加接口

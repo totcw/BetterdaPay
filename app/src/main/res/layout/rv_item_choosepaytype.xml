@@ -21,7 +21,7 @@
             android:id="@+id/iv_my_information"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@mipmap/zfb_qr"
+
             />
 
         <TextView
@@ -38,7 +38,7 @@
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -68,7 +68,7 @@
         android:id="@+id/tv_item_choosepaytype_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+
         android:text="dfd"
         android:textColor="@color/bg_blue"
         android:textSize="13sp"/>

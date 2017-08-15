@@ -37,7 +37,7 @@ public class TransactionRecord {
      *@创建日期： 2017/4/25
      *@功能说明： 时间
      */
-    private String txnTime;
+    private String orderTime;
     /**
      *@author : lyf
      *@创建日期： 2017/4/25
@@ -81,12 +81,12 @@ public class TransactionRecord {
         this.txnAmt = txnAmt;
     }
 
-    public String getTxnTime() {
-        return txnTime;
+    public String getOrderTime() {
+        return orderTime;
     }
 
-    public void setTxnTime(String txnTime) {
-        this.txnTime = txnTime;
+    public void setOrderTime(String orderTime) {
+        this.orderTime = orderTime;
     }
 
     public String getPayStatus() {
@@ -110,7 +110,7 @@ public class TransactionRecord {
         return "TransactionRecord{" +
                 "orderId='" + orderId + '\'' +
                 ", txnAmt='" + txnAmt + '\'' +
-                ", txnTime='" + txnTime + '\'' +
+                ", orderTime='" + orderTime + '\'' +
                 ", payStatus='" + payStatus + '\'' +
                 ", paymentType='" + paymentType + '\'' +
                 ", platMerId='" + platMerId + '\'' +

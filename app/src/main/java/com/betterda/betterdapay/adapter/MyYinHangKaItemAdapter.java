@@ -45,20 +45,18 @@ import java.util.List;
 
 public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.Adapter<MyYinHangKaItemAdapter.MainViewHolder> {
 
-    public static final String PUB_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCKqQ8mG2VN2rRi5pF4drOi9pB2kdIAiO6YR7LQGDWQkP2DkAI19apajGxDt3q1m2kmWdytX5dmI8AhxEgK+Ak+qoaf7qNv/6NRQUesnJ8kB7sACzEG79CNwxeZy0jLP2E0RC69r/vyyqcD5PwkIuaMNc5KIJhapl0pPmsMZ+F85QIDAQAB";
-    public static final String APP_ID = "47cb95e8badd4521b3bd17da1516d5db";
-    public static final String SERVICE_URL = "http://www.laidouzhen.cn/paycloud-openapi/api/unionpay/app/ctrl/getform/%s/%s";
-
 
     private Activity mContext;
     private LayoutHelper mLayoutHelper;
     private List<BankCard> data;
-    private boolean isClick,isPay;
+    private boolean isClick,isPay;//是否可以点击,是否是支付
     private int money;
     private String rankName,rank;
     private String channelId;
     private String typeCode;
     private ShapeLoadingDialog dialog;
+    private String paymentType = TransactionRecordActivity.PAYTMENT_GET ;//交易类型
+
     public MyYinHangKaItemAdapter(Activity mContext, LayoutHelper mLayoutHelper, List<BankCard> data , boolean isClick,boolean isPay, int money,String rankName,String rank,String channelId,String typeCode) {
         this.mLayoutHelper = mLayoutHelper;
         this.data = data;
@@ -105,15 +103,27 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
             if (isClick) {
                 holder.mLinearAdd.setOnClickListener(v -> {
                     if (isPay) {
+                        //付款
+                        paymentType = TransactionRecordActivity.PAYTMENT_PAY;
                         getDataForUnionMobilePay(bankCard.getBankCard());
                     } else {
-                        Intent intent = new Intent(mContext, JsActivity.class);
-                        intent.putExtra("money", money);
-                        intent.putExtra("paybankcard", bankCard.getBankCard());
-                        intent.putExtra("channelId", channelId);
-                        intent.putExtra("typeCode", typeCode);
-                        mContext.startActivity(intent);
-                        mContext.finish();
+                        //收款
+                        if (Constants.UNION_CONTROL_T1.equals(typeCode) || Constants.UNION_CONTROL_D0.equals(typeCode)) {
+                            paymentType = TransactionRecordActivity.PAYTMENT_GET;
+                            rank = null;
+                            getDataForUnionMobilePay(bankCard.getBankCard());
+                        } else {
+                            Intent intent = new Intent(mContext, JsActivity.class);
+                            intent.putExtra("money", money);
+                            intent.putExtra("paybankcard", bankCard.getBankCard());
+                            intent.putExtra("channelId", channelId);
+                            intent.putExtra("typeCode", typeCode);
+                            mContext.startActivity(intent);
+                            mContext.finish();
+                        }
+
+
+
                     }
 
                 });
@@ -137,7 +147,7 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
 
 
             NetWork.getNetService()
-                    .getOrder(UtilMethod.getAccout(mContext),  money+"",cardNum,channelId,rank, TransactionRecordActivity.PAYTMENT_PAY, mContext.getString(R.string.appCode))
+                    .getOrder(UtilMethod.getAccout(mContext),  money+"",cardNum,channelId,rank, paymentType, mContext.getString(R.string.appCode))
                     .compose(NetWork.handleResult(new BaseCallModel<>()))
                     .subscribe(new MyObserver<String>() {
                         @Override

@@ -50,7 +50,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="员工"
                     android:textColor="@color/shouye_renmen_tv"
                     android:textSize="15sp"/>
 
@@ -96,6 +95,7 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:id="@+id/tv_activity_up_diangzhang"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="店长"
@@ -203,7 +203,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/tv_activity_up_jingli"
                             android:text="经理"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
@@ -309,7 +309,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/tv_activity_up_zongjingli"
                             android:text="总经理"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>
@@ -415,6 +415,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tv_activity_up_boss"
                             android:text="老板"
                             android:textColor="@color/shouye_renmen_tv"
                             android:textSize="15sp"/>

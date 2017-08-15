@@ -47,7 +47,7 @@ public class Rating {
     public class RateDetail{
         private String introduce;//通道介绍
         private String typeName;//渠道类型名称
-        private String type;//区分 T+0和T+1
+        private String type;//区分 T+0和T+1(已经不需要了)
         private String tradeRate;//费率
         private String tradeQuota;//单笔额度
         private String dayQuota;//当天额度

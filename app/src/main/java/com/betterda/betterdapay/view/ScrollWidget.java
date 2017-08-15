@@ -109,7 +109,7 @@ public class ScrollWidget extends LinearLayout {
      * @param data
      */
     public void upDate(List<String> data){
-        if (mData != null) {
+        if (mData != null&&data!=null) {
             mData.clear();
             mData.addAll(data);
         }

@@ -8,7 +8,16 @@ public class TuiGuang {
     private String account;//帐号
     private String time;//注册时间
     private String auth;//状态
-    private String rank;//等级
+    private String rankName;//等级
+    private String rank;//等级id
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
 
     public String getAccount() {
         return account;
@@ -34,12 +43,12 @@ public class TuiGuang {
         this.auth = auth;
     }
 
-    public String getRank() {
-        return rank;
+    public String getRankName() {
+        return rankName;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void setRankName(String rankName) {
+        this.rankName = rankName;
     }
 
     @Override
@@ -48,6 +57,7 @@ public class TuiGuang {
                 "account='" + account + '\'' +
                 ", time='" + time + '\'' +
                 ", auth='" + auth + '\'' +
+                ", rankName='" + rankName + '\'' +
                 ", rank='" + rank + '\'' +
                 '}';
     }

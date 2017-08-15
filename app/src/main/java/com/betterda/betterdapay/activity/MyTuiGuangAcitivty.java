@@ -128,12 +128,12 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
             @Override
             public void convert(ViewHolder viewHolder, TuiGuang tuiGuang) {
                 if (tuiGuang != null) {
-                    viewHolder.setText(R.id.tv_item_mytuiguang_account, tuiGuang.getRank());
+                    viewHolder.setText(R.id.tv_item_mytuiguang_account, tuiGuang.getRankName());
                     viewHolder.setText(R.id.tv_item_mytuiguang_number, UtilMethod.transforPhoneNumber(tuiGuang.getAccount()));
                     viewHolder.setText(R.id.tv_item_mytuiguang_time, "注册时间:" + tuiGuang.getTime());
-                    if (!TextUtils.isEmpty(tuiGuang.getRank())) {
-                        viewHolder.setImageResource(R.id.iv_item_mytuiguang, RateData.getRate(tuiGuang.getRank()));
-                    }
+
+                    viewHolder.setImageResource(R.id.iv_item_mytuiguang, RateData.getRate(tuiGuang.getRank()));
+
                     if (AUTH_ALREAD_CODE.equals(tuiGuang.getAuth())) {
                         viewHolder.setText(R.id.tv_item_mytuiguang_renzheng, AUTH_ALREAD);
                     } else {

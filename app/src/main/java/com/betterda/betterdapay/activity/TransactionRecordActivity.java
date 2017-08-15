@@ -88,11 +88,11 @@ public class TransactionRecordActivity extends BaseActivity {
                     if (PAYTMENT_GET .equals(transactionRecord.getPaymentType())) {
 
                         holder.setText(R.id.tv_mingxi_money,"+"+ transactionRecord.getTxnAmt() + "元");
-                        holder.setTextColor(R.id.tv_mingxi_time, Color.RED);
+                        holder.setTextColor(R.id.tv_mingxi_money, Color.RED);
                     } else if (PAYTMENT_PAY.equals(transactionRecord.getPaymentType())) {
 
                         holder.setText(R.id.tv_mingxi_money,"-"+ transactionRecord.getTxnAmt() + "元");
-                        holder.setTextColor(R.id.tv_mingxi_time, Color.BLACK);
+                        holder.setTextColor(R.id.tv_mingxi_money, Color.BLACK);
                     }
 
                     if (PAYSTATUS_SUCCESS.equals(transactionRecord.getPayStatus())) {
@@ -106,7 +106,7 @@ public class TransactionRecordActivity extends BaseActivity {
 
                     holder.setText(R.id.tv_mingxi_type, transactionRecord.getPlatMerId());
                     holder.setText(R.id.tv_mingxi_order, "订单号:"+transactionRecord.getOrderId());
-                    holder.setText(R.id.tv_mingxi_time, transactionRecord.getTxnTime());
+                    holder.setText(R.id.tv_mingxi_time, transactionRecord.getOrderTime());
 
 
                 }

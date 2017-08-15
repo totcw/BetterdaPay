@@ -87,7 +87,7 @@ public class MyFragment extends BaseFragment {
         super.onStart();
         String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
         rate = CacheUtils.getString(getmActivity(), account + Constants.Cache.RANK, "1");
-        rankName = CacheUtils.getString(getmActivity(), account + Constants.Cache.RANKNAME, "员工");
+        rankName = CacheUtils.getString(getmActivity(), account + Constants.Cache.RANKNAME, "");
         if (tvMyNumber != null) {
             tvMyNumber.setText(account);
         }

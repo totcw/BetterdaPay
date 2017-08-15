@@ -106,7 +106,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 public void convert(ViewHolder viewHolder, Order order) {
                     if (order != null) {
                         viewHolder.setText(R.id.tv_item_balance_orderNum, order.getOrderId());
-                        viewHolder.setText(R.id.tv_item_balance_time, order.getTxnTime());
+                        viewHolder.setText(R.id.tv_item_balance_time, order.getOrderTime());
                         viewHolder.setText(R.id.tv_item_balance_type, order.getChannel());
                         viewHolder.setText(R.id.tv_item_balance_money, order.getDrawCash() + "元");
                         viewHolder.setText(R.id.tv_item_balance_money2, order.getBalance() + "元");
@@ -123,11 +123,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 public void convert(ViewHolder viewHolder, Income fenRun) {
                     if (fenRun != null) {
                         viewHolder.setText(R.id.tv_item_fenru2_account, fenRun.getSourceAccount());
-                        viewHolder.setText(R.id.tv_item_fenru2_rate, fenRun.getRank());
+                        viewHolder.setText(R.id.tv_item_fenru2_rate, fenRun.getRankName());
                         viewHolder.setText(R.id.tv_item_fenru2_name, fenRun.getName());
                         viewHolder.setText(R.id.tv_item_fenru2_money, fenRun.getDrawCash());
                         viewHolder.setText(R.id.tv_item_fenru2_time, fenRun.getIncomeTimeStr());
-                        viewHolder.setImageResource(R.id.iv_item_fenrun2, RateData.getRank(fenRun.getRank()));
+                        viewHolder.setImageResource(R.id.iv_item_fenrun2, RateData.getRankName(fenRun.getRankName()));
 
                         switch (fenRun.getPaymentType()) {
                             case Constants.FEN_RUN_HUI:

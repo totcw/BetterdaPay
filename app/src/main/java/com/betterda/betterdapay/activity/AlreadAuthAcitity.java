@@ -70,7 +70,7 @@ public class AlreadAuthAcitity extends BaseActivity {
                                            }
 
                                    /* if (ivAlreadauth != null) {
-                                        ivAlreadauth.setImageResource(RateData.getRank(data.getRank()));
+                                        ivAlreadauth.setImageResource(RateData.getRankName(data.getRankName()));
                                     }*/
 
                                        }

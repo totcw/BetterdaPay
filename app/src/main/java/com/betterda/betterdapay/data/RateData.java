@@ -22,11 +22,6 @@ public class RateData {
     public final static String UP_ZONGJINGLI = "4";
     public final static String UP_BOSS = "5";
 
-    public final static String UP_YUANGONG_NAME = "员工";
-    public final static String UP_DIANZHANG_NAME = "店长";
-    public final static String UP_JINGLI_NAME= "经理";
-    public final static String UP_ZONGJINGLI_NAME = "总经理";
-    public final static String UP_BOSS_NAME = "老板";
 
 
 
@@ -39,7 +34,7 @@ public class RateData {
             rateMap.put(UP_ZONGJINGLI, R.mipmap.up_zongjingli);
             rateMap.put(UP_BOSS, R.mipmap.up_boss);
         }
-        if (TextUtils.isEmpty(key)) {
+        if (rateMap.get(key) == null) {
             return R.mipmap.up_yuangong;
         }
         return rateMap.get(key);
@@ -54,9 +49,11 @@ public class RateData {
             rateMap2.put(UP_ZONGJINGLI, 4);
             rateMap2.put(UP_BOSS, 5);
         }
-        if (TextUtils.isEmpty(key)) {
+
+        if (rateMap2.get(key) == null) {
             return 1;
         }
+
         return rateMap2.get(key);
     }
 }
