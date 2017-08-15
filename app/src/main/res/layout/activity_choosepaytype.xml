@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f1f1f1"
+              android:orientation="vertical">
     <com.betterda.betterdapay.view.NormalTopBar
         android:id="@+id/topbar_chose"
         android:layout_width="match_parent"
@@ -21,62 +21,61 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="5dp"
                 android:background="@color/lv_divider"></View>
 
 
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
-                android:paddingBottom="5dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingTop="5dp">
+                android:paddingTop="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="交易类型:"
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/tv_item_balance_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:text="收款"
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="14sp" />
-            </RelativeLayout>
+                    android:textSize="14sp"/>
+            </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
-                android:paddingBottom="5dp"
+                android:paddingBottom="20dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingTop="5dp">
+                android:paddingTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="交易金额:"
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
                 <TextView
+
                     android:id="@+id/tv_item_balance_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
                     android:text=""
-                    android:textColor="@color/shouye_fenlei_red"
-                    android:textSize="14sp" />
-            </RelativeLayout>
+                    android:textColor="@color/bg"
+                    android:textSize="14sp"/>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -85,26 +84,21 @@
 
             </View>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/lv_divider">
 
-            </View>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:padding="10dp">
+                android:layout_height="43dp"
+                >
 
                 <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="请选择支付通道"
                     android:textColor="@color/shouye_renmen_tv"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
             </RelativeLayout>
 
             <View
@@ -130,8 +124,8 @@
         </com.betterda.mylibrary.LoadingPager>
 
 
-
     </FrameLayout>
+
 
 
 </LinearLayout>

@@ -56,8 +56,8 @@ android {
             betterda{
                 applicationId "com.betterda.betterdapay" /*使用不同的包名*/
                 resValue "string","app_name","来逗阵"
-               // resValue "string","appCode","BTA001"
-                resValue "string","appCode","BTDAPP"
+                resValue "string","appCode","BTA001"
+               // resValue "string","appCode","BTDAPP"
                 resValue "string","share_title","来逗阵"/*分享的标题*/
                 resValue "string","share_content","来逗阵注册有礼"/*分享的内容*/
                 resValue "string","wx_key","wx55b0b0b52e12a8de"/*微信的key*/
@@ -74,7 +74,7 @@ android {
         betterdaTwo{
                 applicationId "com.betterda.betterdaTwo" /*使用不同的包名*/
                 resValue "string","app_name","来逗阵2"
-                resValue "string","appCode","A"
+                resValue "string","appCode","BTA001"
                 resValue "string","share_title","来逗阵2"/*分享的标题*/
                 resValue "string","share_content","来逗阵2注册有礼"/*分享的内容*/
                 resValue "string","wx_key","wx55b0b0b52e12a8de"/*微信的key*/
@@ -90,7 +90,7 @@ android {
             }
         betterdaThree{
                 applicationId "com.betterda.betterdaThree" /*使用不同的包名*/
-                resValue "string","appCode","A"
+                resValue "string","appCode","BTA001"
                 resValue "string","app_name","来逗阵3" /*app的名字*/
                 resValue "string","share_title","来逗阵3"/*分享的标题*/
                 resValue "string","share_content","来逗阵3注册有礼"/*分享的内容*/

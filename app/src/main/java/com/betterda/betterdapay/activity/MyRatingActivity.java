@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.betterda.betterdapay.BuildConfig;
 import com.betterda.betterdapay.R;
 import com.betterda.betterdapay.callback.MyObserver;
 import com.betterda.betterdapay.http.NetWork;
@@ -77,6 +78,10 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
                             @Override
                             protected void onSuccess(List<Rating.RateDetail> data, String resultMsg) {
 
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("我的扣率:"+data);
+                                }
+
                                 if (data != null) {
                                     parser(data);
                                 }
@@ -85,6 +90,9 @@ public class MyRatingActivity extends BaseActivity implements View.OnClickListen
 
                             @Override
                             public void onFail(String resultMsg) {
+                                if (BuildConfig.LOG_DEBUG) {
+                                    System.out.println("我的扣率fail:"+resultMsg);
+                                }
                                 if (loadingPager != null) {
                                     loadingPager.setErrorVisable();
                                 }

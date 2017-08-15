@@ -45,13 +45,14 @@ public class JsActivity extends BaseActivity {
     private String paybankcard;//银行卡号
 
     private String longitude;//经度
-    private String latitude ;//纬度
-    private String province ;//省
-    private String city ;//市
-    private String area ;//区
-    private String street ;//街道
+    private String latitude;//纬度
+    private String province;//省
+    private String city;//市
+    private String area;//区
+    private String street;//街道
     private String channelId;//通道id
     private String typeCode;//通道id
+    private String mUrl = "http://www.baidu.com";
 
 
     @Override
@@ -81,7 +82,6 @@ public class JsActivity extends BaseActivity {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                System.out.println("进度:"+newProgress);
                 if (mIndexProgressBar != null) {
                     mIndexProgressBar.setProgress(newProgress);
                     if (newProgress >= 100) {
@@ -89,7 +89,7 @@ public class JsActivity extends BaseActivity {
                     }
                 }
 
-              //  super.onProgressChanged(view, newProgress);
+                //  super.onProgressChanged(view, newProgress);
             }
 
         });
@@ -121,7 +121,6 @@ public class JsActivity extends BaseActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 //处理网页加载成功时
-                // setParams("dsaf454","100");
                 if (BuildConfig.LOG_DEBUG) {
                     System.out.println("加载完成");
                 }
@@ -139,58 +138,54 @@ public class JsActivity extends BaseActivity {
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         getWindow().getDecorView().post(() -> {
-            String url = "http://www.baidu.com";
+
             if (Constants.UNION_D0.equals(typeCode)) {
-                url = Constants.Url.URL+Constants.Url.URL_CHANNEL_D0;
+                mUrl = Constants.Url.URL + Constants.Url.URL_CHANNEL_D0;
             } else if (Constants.UNION_T1.equals(typeCode)) {
-                url = Constants.Url.URL+Constants.Url.URL_CHANNEL_T1;
+                mUrl = Constants.Url.URL + Constants.Url.URL_CHANNEL_T1;
             }
 
-            String postDate = "account="+UtilMethod.getAccout(getmActivity())+"&txnAmt="+money+"&accNo="+paybankcard+"&appCode="+getString(R.string.appCode)+"&channelId="+channelId
-                    +"&longitude="+longitude+"&latitude="+latitude+"&province="+province+"&city="+city+"&area="+area+"&street="+street;
+            String postDate = "account=" + UtilMethod.getAccout(getmActivity()) + "&txnAmt=" + money + "&accNo=" + paybankcard + "&appCode=" + getString(R.string.appCode) + "&channelId=" + channelId
+                    + "&longitude=" + longitude + "&latitude=" + latitude + "&province=" + province + "&city=" + city + "&area=" + area + "&street=" + street;
 
             try {
-                webView.postUrl(url,postDate.getBytes("utf-8"));
+                webView.postUrl(mUrl, postDate.getBytes("utf-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
 
 
-
         });
+
+
     }
 
     public void getIntentData() {
         Intent intent = getIntent();
         if (intent != null) {
-            money = intent.getIntExtra("money",0);
+            money = intent.getIntExtra("money", 0);
             paybankcard = intent.getStringExtra("paybankcard");
             channelId = intent.getStringExtra("channelId");
             typeCode = intent.getStringExtra("typeCode");
         }
-        longitude= CacheUtils.getString(getmActivity(),"longitude",longitude);
-        latitude = CacheUtils.getString(getmActivity(),"latitude",latitude);
-        province = CacheUtils.getString(getmActivity(),"province",province);
-        city = CacheUtils.getString(getmActivity(),"city",city);
-        area= CacheUtils.getString(getmActivity(),"area",area);
-        street = CacheUtils.getString(getmActivity(),"street",street);
+        longitude = CacheUtils.getString(getmActivity(), "longitude", longitude);
+        latitude = CacheUtils.getString(getmActivity(), "latitude", latitude);
+        province = CacheUtils.getString(getmActivity(), "province", province);
+        city = CacheUtils.getString(getmActivity(), "city", city);
+        area = CacheUtils.getString(getmActivity(), "area", area);
+        street = CacheUtils.getString(getmActivity(), "street", street);
     }
 
 
     public class JsInterce {
-        //在js中调用window.AndroidWebView.showInfoFromJs(name)，便会触发此方法。
+        //在js中调用window.AndroidWebView.showInfoFromJs()，便会触发此方法。
+        //支付成功
         @JavascriptInterface
-        public String showInfoFromJs(String name) {
+        public void showInfoFromJs() {
+            UtilMethod.startIntent(getmActivity(), HomeActivity.class);
             finish();
-            return name;
         }
 
-
-        @JavascriptInterface
-        public void isMember(boolean isMember) {
-            System.out.println("js中调用了showToast方法");
-
-        }
     }
 
     //在java中调用js代码
@@ -200,17 +195,18 @@ public class JsActivity extends BaseActivity {
         webView.loadUrl("javascript:showInfoFromJava('" + msg + "')");
     }
 
-    public void setParams(String orderId, String money) {
-        webView.loadUrl(String.format("javascript:setParams(" + orderId + ", " + money + ")"));
-    }
 
     @Override
     public void onBackPressed() {
-      /*  if (webView.canGoBack()) {
+        finish();
+    /*    if (webView.canGoBack()) {
             webView.goBack();
-        } else {*/
-            super.onBackPressed();
-        //}
+        } else {
+            System.out.println("22");
+            //看能不能调用 js的逻辑来判断当前页面是否是支付成功,然后返回到不同的界面
+            UtilMethod.startIntent(getmActivity(), HomeActivity.class);
+            finish();
+        }*/
 
     }
 }

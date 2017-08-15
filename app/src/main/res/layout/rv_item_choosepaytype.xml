@@ -5,6 +5,7 @@
               android:id="@+id/relative_choose_zhifubao"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+
               android:background="#ffffff"
               android:orientation="vertical"
               android:padding="10dp">

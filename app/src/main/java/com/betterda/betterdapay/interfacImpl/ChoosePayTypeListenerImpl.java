@@ -73,7 +73,7 @@ public class ChoosePayTypeListenerImpl implements ChoosePayTypeListener {
                     intent.putExtra("money", money2);
                     intent.putExtra("channelId", channelId);
                     context.startActivity(intent);
-                    context.finish();
+                    //context.finish();
                 } else if (Constants.ZHIFUBAO.equals(typeCode) || Constants.WEIXIN.equals(typeCode)) {
                     Intent intent = new Intent(context, QrCodeActicity.class);
                     intent.putExtra("typeCode", typeCode);
@@ -81,7 +81,7 @@ public class ChoosePayTypeListenerImpl implements ChoosePayTypeListener {
                     intent.putExtra("money", money2);
                     intent.putExtra("channelId", channelId);
                     context.startActivity(intent);
-                    context.finish();
+                    //context.finish();
                 } else {
                     UtilMethod.Toast(context,"交易通道出错");
                 }
