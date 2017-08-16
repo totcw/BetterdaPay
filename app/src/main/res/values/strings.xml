@@ -9,6 +9,6 @@
     <string name="withdrawmoney">提现金额</string>
     <string name="input_withdraw_money">输入提现金额</string>
     <string name="withdraw_all">全部提现</string>
-    <string name="withdraw_notice">特别提醒:结算金额必须大于1元,手续费参考费率表</string>
+    <string name="withdraw_notice">特别提醒:提现金额必须大于1元</string>
     <string name="fragment_wallet">钱包</string>
 </resources>

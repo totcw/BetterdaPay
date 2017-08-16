@@ -33,8 +33,8 @@ public class ChoosePayTypeListenerImpl implements ChoosePayTypeListener {
     @Override
     public void showRating(ViewHolder holder, Rating.RateDetail ratingCalculateEntity,  String money , Activity context) {
         if (holder != null && ratingCalculateEntity != null) {
-            holder.setText(R.id.tv_item_choosepaytype, "单笔额度:" + ratingCalculateEntity.getTradeQuota() + "元" +
-                    ",当天额度:" + ratingCalculateEntity.getDayQuota() + "元" + "最低手续费:" + ratingCalculateEntity.getLeastTradeRate() + "元");
+            holder.setText(R.id.tv_item_choosepaytype, "单笔额度:" + UtilMethod.getMoney(ratingCalculateEntity.getTradeQuota()) + "元" +
+                    ",当天额度:" + UtilMethod.getMoney(ratingCalculateEntity.getDayQuota()) + "元" + ",最低手续费:" + UtilMethod.getMoney(ratingCalculateEntity.getLeastTradeRate()) + "元");
 
 
             if (Constants.ZHIFUBAO.equals(ratingCalculateEntity.getTypeCode())) {
@@ -51,6 +51,8 @@ public class ChoosePayTypeListenerImpl implements ChoosePayTypeListener {
             holder.setOnClickListener(R.id.relative_choose_zhifubao, v -> chosePayType(ratingCalculateEntity.getTypeCode(), ratingCalculateEntity.getChannelId(),ratingCalculateEntity.getTradeQuota(),money,context,ratingCalculateEntity.getTypeName()));
         }
     }
+
+
 
     /**
      * 选择对应的通道

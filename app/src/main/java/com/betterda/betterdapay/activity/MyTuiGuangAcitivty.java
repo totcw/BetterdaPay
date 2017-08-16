@@ -3,7 +3,6 @@ package com.betterda.betterdapay.activity;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.betterda.betterdapay.BuildConfig;
@@ -130,7 +129,7 @@ public class MyTuiGuangAcitivty extends BaseActivity implements View.OnClickList
                 if (tuiGuang != null) {
                     viewHolder.setText(R.id.tv_item_mytuiguang_account, tuiGuang.getRankName());
                     viewHolder.setText(R.id.tv_item_mytuiguang_number, UtilMethod.transforPhoneNumber(tuiGuang.getAccount()));
-                    viewHolder.setText(R.id.tv_item_mytuiguang_time, "注册时间:" + tuiGuang.getTime());
+                    viewHolder.setText(R.id.tv_item_mytuiguang_time, "注册时间:" + tuiGuang.getRegisterTime());
 
                     viewHolder.setImageResource(R.id.iv_item_mytuiguang, RateData.getRate(tuiGuang.getRank()));
 

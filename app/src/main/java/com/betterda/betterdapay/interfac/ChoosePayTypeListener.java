@@ -30,4 +30,6 @@ public interface ChoosePayTypeListener {
      */
     void showRating(ViewHolder viewHolder, Rating.RateDetail rating, String money , Activity context);
 
+
+
 }

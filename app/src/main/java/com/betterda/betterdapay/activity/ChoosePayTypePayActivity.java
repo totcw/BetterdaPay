@@ -13,7 +13,9 @@ import com.betterda.betterdapay.http.NetWork;
 import com.betterda.betterdapay.javabean.BaseCallModel;
 import com.betterda.betterdapay.javabean.Rating;
 import com.betterda.betterdapay.javabean.RatingCalculateEntity;
+import com.betterda.betterdapay.util.CacheUtils;
 import com.betterda.betterdapay.util.Constants;
+import com.betterda.betterdapay.util.LocationUtil;
 import com.betterda.betterdapay.util.NetworkUtils;
 import com.betterda.betterdapay.util.UtilMethod;
 import com.betterda.betterdapay.view.NormalTopBar;
@@ -50,7 +52,12 @@ public class ChoosePayTypePayActivity extends BaseActivity {
     private String rank;//升级到的等级id
     private int mMoney;//单位为分
 
-
+    private String longitude;//经度
+    private String latitude ;//
+    private String province ;//
+    private String city ;//
+    private String area ;//
+    private String street ;//
 
     @Override
     public void initView() {
@@ -71,7 +78,27 @@ public class ChoosePayTypePayActivity extends BaseActivity {
             getDataForRate();
         });
         mLoadingPager.setLoadVisable();
-        getDataForRate();
+        LocationUtil locationUtil = new LocationUtil();
+        locationUtil.start(getmActivity(), location -> {
+
+            if (location != null) {
+                longitude = location.getLongitude()+"";
+                latitude = location.getLatitude()+"";
+                province = location.getProvince();
+                city = location.getCity();
+                area = location.getDistrict();
+                street = location.getStreet();
+            }
+
+            CacheUtils.putString(getmActivity(),"longitude",longitude);
+            CacheUtils.putString(getmActivity(),"latitude",latitude);
+            CacheUtils.putString(getmActivity(),"province",province);
+            CacheUtils.putString(getmActivity(),"city",city);
+            CacheUtils.putString(getmActivity(),"area",area);
+            CacheUtils.putString(getmActivity(),"street",street);
+
+            runOnUiThread(() -> getDataForRate());
+        });
     }
 
     private void initRecycleView() {

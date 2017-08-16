@@ -70,7 +70,7 @@ public interface NetService {
     @POST(Constants.Url.URL_SENDMSG)
     Observable<BaseCallModel<String>> getSendMsg(@Field("account") String phone,
                                                  @Field("appCode") String appCode
-                                                 );
+    );
 
     /**
      * 登录
@@ -102,6 +102,7 @@ public interface NetService {
 
     /**
      * 生成手机控件付款订单
+     *
      * @param account
      * @param txnAmt
      * @param accNo
@@ -113,12 +114,18 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_ORDER_CREATE)
     Observable<BaseCallModel<String>> getOrder(@Field("account") String account,
-                                                          @Field("txnAmt") String txnAmt,
-                                                          @Field("accNo") String accNo,
-                                                          @Field("channelId") String channelId,
-                                                          @Field("rankId") String rankId,
-                                                          @Field("paymentType") String paymentType,
-                                                          @Field("appCode") String appCode);
+                                               @Field("txnAmt") String txnAmt,
+                                               @Field("accNo") String accNo,
+                                               @Field("channelId") String channelId,
+                                               @Field("rankId") String rankId,
+                                               @Field("paymentType") String paymentType,
+                                               @Field("longitude") String longitude,
+                                               @Field("latitude") String latitude,
+                                               @Field("province") String province,
+                                               @Field("city") String city,
+                                               @Field("area") String area,
+                                               @Field("street") String street,
+                                               @Field("appCode") String appCode);
 
     /**
      * 扫描收款
@@ -479,8 +486,8 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_SUBRUN)
     Observable<BaseCallModel<List<String>>> getSubRun(@Field("start") String start,
-                                                  @Field("length") String length,
-                                                  @Field("appCode") String appCode
+                                                      @Field("length") String length,
+                                                      @Field("appCode") String appCode
 
     );
 

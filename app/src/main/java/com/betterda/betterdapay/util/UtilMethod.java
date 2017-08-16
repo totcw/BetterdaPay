@@ -586,4 +586,25 @@ public class UtilMethod {
     public static String getStart(int page) {
         return String.valueOf((page-1)*Constants.PAGE_SIZE+1);
     }
+
+    /**
+     * 格式化金额去掉小数点
+     */
+    public static String getMoney(String money) {
+        if (TextUtils.isEmpty(money)) {
+            return "0";
+        } else {
+            String substring;
+            if (money.contains(".")) {
+                int indexOf = money.indexOf(".");
+                substring = money.substring(0, indexOf);
+            } else {
+                substring = money;
+            }
+            return substring;
+        }
+    }
+
+
+
 }

@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 结算
+ * 提现
  * Created by Administrator on 2016/8/5.
  */
 public class JieSuanActivity extends BaseActivity {
@@ -44,8 +44,8 @@ public class JieSuanActivity extends BaseActivity {
     @BindView(R.id.btn_jiesuan_comfirm)
     Button btnJiesuanComfirm;
 
-    private float money ;//可结算的余额
-    private float sum;//输入的结算金额
+    private float money ;//可提现的余额
+    private float sum;//输入的提现金额
     private ShapeLoadingDialog mDialog;
     private AlertDialog mAlertDialog;
 

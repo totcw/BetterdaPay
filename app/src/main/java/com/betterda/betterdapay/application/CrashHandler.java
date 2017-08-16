@@ -199,8 +199,17 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * 将发送给后台。
      */
     private void sendCrashLog2PM(String content) {
+
+       // 1. 获取手机型号：
+
+        String   model= android.os.Build.MODEL+":";
+
+       // 2. 获取手机厂商：
+
+        String carrier= android.os.Build.MANUFACTURER;
+
         //TODO 将异常信息发送到后台
-        NetWork.getNetService().getErrorlog("android",content,mContext.getString(R.string.appCode))
+        NetWork.getNetService().getErrorlog("android",carrier+model+content,mContext.getString(R.string.appCode))
                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                 .subscribe(new MyObserver<String>() {
                     @Override

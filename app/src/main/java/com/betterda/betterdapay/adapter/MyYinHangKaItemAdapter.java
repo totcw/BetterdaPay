@@ -57,6 +57,12 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
     private String typeCode;
     private ShapeLoadingDialog dialog;
     private String paymentType = TransactionRecordActivity.PAYTMENT_GET;//交易类型
+    private String longitude;//经度
+    private String latitude;//纬度
+    private String province;//省
+    private String city;//市
+    private String area;//区
+    private String street;//街道
 
     public MyYinHangKaItemAdapter(Activity mContext, LayoutHelper mLayoutHelper, List<BankCard> data, boolean isClick, boolean isPay, int money, String rankName, String rank, String channelId, String typeCode) {
         this.mLayoutHelper = mLayoutHelper;
@@ -144,9 +150,15 @@ public class MyYinHangKaItemAdapter<T extends BankCard> extends DelegateAdapter.
                 dialog = UtilMethod.createDialog(mContext, "正在加载...");
             }
             UtilMethod.showDialog(mContext, dialog);
-
+            longitude = CacheUtils.getString(mContext, "longitude", longitude);
+            latitude = CacheUtils.getString(mContext, "latitude", latitude);
+            province = CacheUtils.getString(mContext, "province", province);
+            city = CacheUtils.getString(mContext, "city", city);
+            area = CacheUtils.getString(mContext, "area", area);
+            street = CacheUtils.getString(mContext, "street", street);
             NetWork.getNetService()
-                    .getOrder(UtilMethod.getAccout(mContext), money + "", cardNum, channelId, rank, paymentType, mContext.getString(R.string.appCode))
+                    .getOrder(UtilMethod.getAccout(mContext), money + "", cardNum, channelId, rank, paymentType,
+                            longitude,latitude,province,city,area,street,mContext.getString(R.string.appCode))
                     .compose(NetWork.handleResult(new BaseCallModel<>()))
                     .subscribe(new MyObserver<String>() {
                         @Override

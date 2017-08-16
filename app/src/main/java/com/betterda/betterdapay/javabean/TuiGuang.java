@@ -6,7 +6,7 @@ package com.betterda.betterdapay.javabean;
  */
 public class TuiGuang {
     private String account;//帐号
-    private String time;//注册时间
+    private String registerTime;//注册时间
     private String auth;//状态
     private String rankName;//等级
     private String rank;//等级id
@@ -27,12 +27,12 @@ public class TuiGuang {
         this.account = account;
     }
 
-    public String getTime() {
-        return time;
+    public String getRegisterTime() {
+        return registerTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
     }
 
     public String getAuth() {
@@ -55,7 +55,7 @@ public class TuiGuang {
     public String toString() {
         return "TuiGuang{" +
                 "account='" + account + '\'' +
-                ", time='" + time + '\'' +
+                ", registerTime='" + registerTime + '\'' +
                 ", auth='" + auth + '\'' +
                 ", rankName='" + rankName + '\'' +
                 ", rank='" + rank + '\'' +
