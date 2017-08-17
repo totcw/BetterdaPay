@@ -84,8 +84,10 @@ public class UpActivity extends BaseActivity {
     @BindView(R.id.loadpager_up)
     LoadingPager mLoadpagerUp;
 
-    private String payUpForShopower, payUpForMnager, payUpForTopManager, payUpForBoss;//升级到各个条件的金额
+    private float currentPayUp;//当前等级对应的累积金额
+    private float payUpForShopower, payUpForMnager, payUpForTopManager, payUpForBoss;//各个条件对应的累积金额
     private String payUpForShopowerId, payUpForMnagerId, payUpForTopManagerId, payUpForBossId;//各个等级对应的id
+    private String shopowerName, managerName, topManagerName, bossName;//各个等级对应的名字
 
     @Override
     public void initView() {
@@ -111,16 +113,16 @@ public class UpActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_up_dianzhang:
-                startToTuiguang("", payUpForShopower, payUpForShopowerId);
+                startToTuiguang(shopowerName, calculateActualAmount(payUpForShopower), payUpForShopowerId);
                 break;
             case R.id.tv_up_jingli:
-                startToTuiguang("", payUpForMnager, payUpForMnagerId);
+                startToTuiguang(managerName, calculateActualAmount(payUpForMnager), payUpForMnagerId);
                 break;
             case R.id.tv_up_zongjingli:
-                startToTuiguang("", payUpForTopManager, payUpForTopManagerId);
+                startToTuiguang(topManagerName, calculateActualAmount(payUpForTopManager), payUpForTopManagerId);
                 break;
             case R.id.tv_up_boss:
-                startToTuiguang("", payUpForBoss, payUpForBossId);
+                startToTuiguang(bossName, calculateActualAmount(payUpForBoss), payUpForBossId);
                 break;
             case R.id.bar_back:
                 back();
@@ -192,7 +194,7 @@ public class UpActivity extends BaseActivity {
                         if (mTvActivityUpRate != null) {
                             mTvActivityUpRate.setText("当前等级: " + updateCondition.getRankName());
                         }
-
+                        currentPayUp = updateCondition.getPayUp();
                     } else {
                         //因为是按等级顺序返回的,所以只显示当前等级后面的数据
                         switch (rate) {
@@ -200,6 +202,7 @@ public class UpActivity extends BaseActivity {
                                 mTvActivityUpDianzhang.setText(updateCondition.getRankName());
                                 payUpForShopower = updateCondition.getPayUp();
                                 payUpForShopowerId = updateCondition.getRank();
+                                shopowerName = updateCondition.getRankName();
                                 setConditionInformation(updateCondition, mLinearActivityUpStaff, mTvActivityUpStaffRating
                                         , mTvActivityUpStaffAward, mTvActivityUpStaffCondition, RateData.UP_DIANZHANG);
                                 break;
@@ -207,6 +210,7 @@ public class UpActivity extends BaseActivity {
                                 mTvActivityUpJingli.setText(updateCondition.getRankName());
                                 payUpForMnager = updateCondition.getPayUp();
                                 payUpForMnagerId = updateCondition.getRank();
+                                managerName = updateCondition.getRankName();
                                 setConditionInformation(updateCondition, mLinearActivityUpManager, mTvActivityUpManagerRating
                                         , mTvActivityUpManagerAward, mTvActivityUpManagerCondition, RateData.UP_JINGLI);
                                 break;
@@ -214,6 +218,7 @@ public class UpActivity extends BaseActivity {
                                 mTvActivityUpZongjingli.setText(updateCondition.getRankName());
                                 payUpForTopManager = updateCondition.getPayUp();
                                 payUpForTopManagerId = updateCondition.getRank();
+                                topManagerName = updateCondition.getRankName();
                                 setConditionInformation(updateCondition, mLinearActivityUpTopmanager, mTvActivityUpTopmangerRating
                                         , mTvActivityUpTopmanagerAward, mTvActivityUpTopmanagerCondition, RateData.UP_ZONGJINGLI);
                                 break;
@@ -221,6 +226,7 @@ public class UpActivity extends BaseActivity {
                                 mTvActivityUpBoss.setText(updateCondition.getRankName());
                                 payUpForBoss = updateCondition.getPayUp();
                                 payUpForBossId = updateCondition.getRank();
+                                bossName = updateCondition.getRankName();
                                 setConditionInformation(updateCondition, mLinearActivityUpBoss, mTvActivityUpBossRating
                                         , mTvActivityUpBossAward, mTvActivityUpBossCondition, RateData.UP_BOSS);
                                 break;
@@ -275,5 +281,10 @@ public class UpActivity extends BaseActivity {
 
     }
 
+
+    public String calculateActualAmount(float rankPayUp) {
+        float money = rankPayUp - currentPayUp;
+        return money + "";
+    }
 
 }

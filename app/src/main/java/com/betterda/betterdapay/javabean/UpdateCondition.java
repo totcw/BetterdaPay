@@ -22,7 +22,7 @@ public class UpdateCondition {
     private String rating; //费率
     private String upExplain;//升级条件
     private String award;//奖励加成
-    private String payUp;//金额
+    private float payUp;//金额
 
     public String getRank() {
         return rank;
@@ -65,11 +65,11 @@ public class UpdateCondition {
     }
 
 
-    public String getPayUp() {
+    public float getPayUp() {
         return payUp;
     }
 
-    public void setPayUp(String payUp) {
+    public void setPayUp(float payUp) {
         this.payUp = payUp;
     }
 

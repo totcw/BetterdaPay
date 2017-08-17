@@ -108,8 +108,8 @@ public class ChoosePayTypePayActivity extends BaseActivity {
             @Override
             public void convert(final ViewHolder holder, Rating.RateDetail ratingCalculateEntity) {
                 if (holder != null && ratingCalculateEntity != null) {
-                    holder.setText(R.id.tv_item_choosepaytype, "单笔额度:" + ratingCalculateEntity.getTradeQuota() + "元" +
-                            ",当天额度:" + ratingCalculateEntity.getDayQuota() + "元" + "最低手续费:" + ratingCalculateEntity.getLeastTradeRate() + "元");
+                    holder.setText(R.id.tv_item_choosepaytype, "单笔额度:" + UtilMethod.getMoney(ratingCalculateEntity.getTradeQuota()) + "元" +
+                            ",当天额度:" + UtilMethod.getMoney(ratingCalculateEntity.getDayQuota()) + "元" + "最低手续费:" + UtilMethod.getMoney(ratingCalculateEntity.getLeastTradeRate()) + "元");
 
 
                     if (Constants.ZHIFUBAO.equals(ratingCalculateEntity.getTypeCode())) {

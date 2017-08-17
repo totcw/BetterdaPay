@@ -46,7 +46,8 @@ public class TuiGuangActivity extends BaseActivity {
             rank = intent.getStringExtra("rank");
             payUp = intent.getStringExtra("payUp");
             rankName = intent.getStringExtra("rankName");
-            mTvTuiguangMoney.setText(payUp+"元");
+           // mTvTuiguangMoney.setText(payUp+"元");
+            mTvTuiguangRate.setText("升级到"+rankName+"还需支付"+payUp+"元");
         }
 
     }
