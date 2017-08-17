@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
 
         android:text="dfd"
-        android:textColor="@color/bg_blue"
+        android:textColor="@color/bg"
         android:textSize="13sp"/>
 
 

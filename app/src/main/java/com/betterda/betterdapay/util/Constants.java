@@ -46,8 +46,8 @@ public class Constants {
 
 
     public static class Url {
-       // public static final String URL = "http://www.laidouzhen.cn/paycloud-walletapi/";
-        public static final String URL = "http://120.42.4.157:8999/paycloud-walletapi/";
+        public static final String URL = "http://www.laidouzhen.cn/paycloud-walletapi/";
+       // public static final String URL = "http://120.42.4.157:8999/paycloud-walletapi/";
         public static final String URL_LOGIN = URL + "api/user/login";
         public static final String URL_REGISTER = URL + "api/user/register";
         public static final String URL_SENDMSG = URL + "api/user/verifcode/get";//短信验证

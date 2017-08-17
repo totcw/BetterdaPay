@@ -123,11 +123,6 @@ public class ChoosePayTypePayActivity extends BaseActivity {
                     holder.setText(R.id.tv_item_choosepaytype_type, ratingCalculateEntity.getTypeName());
                     holder.setText(R.id.tv_item_choosepaytype_rating, "费率:"+ratingCalculateEntity.getTradeRate());
 
-                    if (Constants.UNION_CONTROL_T1.equals(ratingCalculateEntity.getTypeCode())) {
-                        holder.setVisible(R.id.relative_choose_zhifubao, true);
-                    } else {
-                        holder.setVisible(R.id.relative_choose_zhifubao, false);
-                    }
 
                     holder.setOnClickListener(R.id.relative_choose_zhifubao, v -> {
                         if (holder.getAdapterPosition() == 0) {
@@ -217,7 +212,16 @@ public class ChoosePayTypePayActivity extends BaseActivity {
 
     private void parserData(List<Rating.RateDetail> data) {
         if (mList != null) {
-            mList.addAll(data);
+            mList.clear();
+            for (Rating.RateDetail rateDetail : data) {
+                if (rateDetail != null) {
+                    if (Constants.UNION_CONTROL_T1.equals(rateDetail.getTypeCode())) {
+                        mList.add(rateDetail);
+                        break;
+                    }
+                }
+
+            }
         }
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
